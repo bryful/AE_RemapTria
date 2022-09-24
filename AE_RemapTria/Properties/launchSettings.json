@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AE_RemapTria": {
+      "commandName": "Project",
+      "commandLineArgs": "-load aaaa.txt -save bbbb.txt\r\n"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="sampleCode\TS\TS_Caption.cs" />
+    <Compile Remove="sampleCode\TS\TS_CellData.cs" />
+    <Compile Remove="sampleCode\TS\TS_CellLayer.cs" />
+    <Compile Remove="sampleCode\TS\TS_Frame.cs" />
+    <Compile Remove="sampleCode\TS\TS_Grid.cs" />
+    <Compile Remove="sampleCode\TS\TS_GridBase.cs" />
+    <Compile Remove="sampleCode\TS\TS_GridColor.cs" />
+    <Compile Remove="sampleCode\TS\TS_GridSize.cs" />
+    <Compile Remove="sampleCode\TS\TS_HScrol.cs" />
+    <Compile Remove="sampleCode\TS\TS_Input.cs" />
+    <Compile Remove="sampleCode\TS\TS_Kagi.cs" />
+    <Compile Remove="sampleCode\TS\TS_Position.cs" />
+    <Compile Remove="sampleCode\TS\TS_Selection.cs" />
+    <Compile Remove="sampleCode\TS\TS_VScrol.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="sampleCode\TS\TS_Caption.cs" />
+    <None Include="sampleCode\TS\TS_CellData.cs" />
+    <None Include="sampleCode\TS\TS_CellLayer.cs" />
+    <None Include="sampleCode\TS\TS_Frame.cs" />
+    <None Include="sampleCode\TS\TS_Grid.cs" />
+    <None Include="sampleCode\TS\TS_GridBase.cs" />
+    <None Include="sampleCode\TS\TS_GridColor.cs" />
+    <None Include="sampleCode\TS\TS_GridSize.cs" />
+    <None Include="sampleCode\TS\TS_HScrol.cs" />
+    <None Include="sampleCode\TS\TS_Input.cs" />
+    <None Include="sampleCode\TS\TS_Kagi.cs" />
+    <None Include="sampleCode\TS\TS_Position.cs" />
+    <None Include="sampleCode\TS\TS_Selection.cs" />
+    <None Include="sampleCode\TS\TS_VScrol.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
