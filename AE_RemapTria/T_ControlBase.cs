@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_ContolBase : Control
+	public partial class T_ControlBase : Control
 	{
 		private Font m_font =new Font("Arial",14);
 		private int m_MFontIndex = 5;
@@ -29,9 +29,9 @@ namespace AE_RemapTria
 		private FontStyle m_FontStyle_Bak;
 		[System.Runtime.InteropServices.DllImport("gdi32.dll")]
 		public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont,IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
-		public PrivateFontCollection MyFonts = null;// new PrivateFontCollection();
+		public PrivateFontCollection? MyFonts = null;// new PrivateFontCollection();
 		// ************************************************************************
-		public T_ContolBase()
+		public T_ControlBase()
 		{
 			this.Size = new Size(100, 100);
 			InitializeComponent();
@@ -55,7 +55,7 @@ namespace AE_RemapTria
 		{
 			try
 			{
-				Font f = MFontMake(idx, m_MFontSize);
+				Font? f = MFontMake(idx, m_MFontSize);
 				if (f != null)
 				{
 					m_font = f;
@@ -72,7 +72,7 @@ namespace AE_RemapTria
 		{
 			try
 			{
-				Font f = MFontMake(m_MFontIndex, sz);
+				Font? f = MFontMake(m_MFontIndex, sz);
 				if (f != null)
 				{
 					m_font = f;
@@ -110,7 +110,7 @@ namespace AE_RemapTria
 		// ************************************************************************
 		public Font MFontMake(int idx,float sz)
 		{
-			Font ret = null;
+			Font ret = new Font("Arial", m_MFontSize);
 			if(MyFonts!=null)
 			{
 				if((idx>=0)&& (idx < MyFonts.Families.Length))
@@ -153,8 +153,8 @@ namespace AE_RemapTria
 				ControlStyles.AllPaintingInWmPaint |
 				ControlStyles.SupportsTransparentBackColor,
 				true);
-			this.UpdateStyles();
 			this.BackColor = Color.Transparent;
+			this.UpdateStyles();
 			m_Alignment_Bak =
 			Alignment = StringAlignment.Far;
 			m_LineAlignment_Bak =

@@ -31,7 +31,17 @@ namespace AE_RemapTria
 		}
 		public bool IsTargerCell(int c)
 		{
-			return ((m_target == c) && (m_target >= 0));
+			return (m_target == c);
+		}
+		public bool IsSelectedFrame(int f)
+		{
+			int ed = m_start + m_length;
+			return ((f>=m_start) && (f<ed));
+		}
+		public bool IsSelected(int c,int f)
+		{
+			int ed = m_start + m_length;
+			return ((m_target == c)&&(f >= m_start) && (f < ed));
 		}
 		// ******************************************************************
 		public T_Selection(T_CellData cellDate)

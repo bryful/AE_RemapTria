@@ -363,6 +363,16 @@ namespace AE_RemapTria.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Kagi02_D {
+            get {
+                object obj = ResourceManager.GetObject("Kagi02_D", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Kagi03 {
             get {
                 object obj = ResourceManager.GetObject("Kagi03", resourceCulture);

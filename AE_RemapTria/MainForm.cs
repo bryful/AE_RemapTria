@@ -1,5 +1,6 @@
 ﻿using BRY;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -7,14 +8,28 @@ using System.Text;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 
 	public partial class MainForm : Form
 	{
-		private Bitmap [] kagi = new Bitmap[4];
+		private enum MDPos
+		{
+			None,
+			Header,
+			BottomRight,
+		}
 
+		private T_Grid? m_grid = null;
 		private string m_FileName = "";
 		public static bool _execution = true;
 		NavBar m_navBar = new NavBar();
+
+		private bool m_IsMouseBR = false;
+		private MDPos m_mdPos = MDPos.None;
+		private Point m_MD = new Point(0, 0);
+		private Size m_MDS = new Size(0, 0);
+
+		private Bitmap[] kagi = new Bitmap[5];
 		// ********************************************************************
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
@@ -26,8 +41,7 @@ namespace AE_RemapTria
 			kagi[1] = Properties.Resources.Kagi01;
 			kagi[2] = Properties.Resources.Kagi02;
 			kagi[3] = Properties.Resources.Kagi03;
-
-
+			kagi[4] = Properties.Resources.Kagi02_D;
 
 			InitializeComponent();
 			NavBarSetup();
@@ -48,7 +62,128 @@ namespace AE_RemapTria
 			m_navBar.Show();
 
 		}
+		// ********************************************************************
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			if (m_mdPos != MDPos.None) return;
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				int headerY = 15;
+				int x0 = 15;
+				int x1 = this.Width - 15;
+				int xmid = this.Width/2;
+				int y1 = this.Height - 15;
+				m_mdPos = MDPos.None;
+				if ((e.Y < headerY)||(e.X<x0))
+				{
+					m_mdPos = MDPos.Header;
+				}
+				else if ((e.X > x1) || (e.Y > y1))
+				{
+					m_mdPos = MDPos.BottomRight;
+				}
+				if (m_mdPos != MDPos.None)
+				{
+					m_MD = new Point(e.X,e.Y);
+					m_MDS = new Size(this.Size.Width, this.Size.Height);
+				}
+			}
+			base.OnMouseDown(e);
+		}
+		// ********************************************************************
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			if (m_IsMouseBR == true)
+			{
+				m_IsMouseBR = false;
+				this.Refresh();
+			}
+			base.OnMouseLeave(e);
+		}
 
+		// ********************************************************************
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			if((e.X>this.Width-20)&& (e.Y > this.Height - 20))
+			{
+				if (m_IsMouseBR == false)
+				{
+					m_IsMouseBR =true;
+					this.Refresh();
+				}
+			}
+			else
+			{
+				if (m_IsMouseBR == true)
+				{
+					m_IsMouseBR = false;
+					this.Refresh();
+				}
+			}
+
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				if (m_mdPos != MDPos.None)
+				{
+					int ax = e.X - m_MD.X;
+					int ay = e.Y - m_MD.Y;
+					switch (m_mdPos)
+					{
+						case MDPos.Header:
+							this.Location = new Point(this.Location.X + ax, this.Location.Y + ay);
+							break;
+						case MDPos.BottomRight:
+							this.Size = new Size(m_MDS.Width + ax, m_MDS.Height + ay);
+							break;
+					}
+					this.Refresh();
+				}
+			}
+			//base.OnMouseMove(e);
+		}
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			if(m_mdPos!=MDPos.None)
+			{
+				m_mdPos = MDPos.None;
+			}
+			base.OnMouseUp(e);
+		}
+		// ********************************************************************
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			base.OnPaint(e);
+			Graphics g = e.Graphics;
+
+			try
+			{
+				int w0 = 5;
+				int w1 = this.Width - 20 - w0;
+				int h0 = 25;
+				int h1 = this.Height -20 -5;
+
+				g.DrawImage(kagi[0], new Point(w0, h0));
+				g.DrawImage(kagi[1], new Point(w1, h0));
+				if (m_IsMouseBR)
+				{
+					g.DrawImage(kagi[4], new Point(w1, h1));
+
+				}
+				else
+				{
+					g.DrawImage(kagi[2], new Point(w1, h1));
+				}
+				g.DrawImage(kagi[3], new Point(w0, h1));
+
+			}
+			finally
+			{
+
+			}
+
+		}
+		// ********************************************************************
+		
 		// ********************************************************************
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -68,6 +203,7 @@ namespace AE_RemapTria
 				}
 			}
 			//
+			ChkGrid();
 			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
 			//this.Text = nameof(MainForm.Parent) + "/aa";
 		}
@@ -79,9 +215,72 @@ namespace AE_RemapTria
 			pf.Save();
 		}
 		// ********************************************************************
-		private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+		public T_Grid Grid
 		{
-			Application.Exit();
+			get { return m_grid; }
+			set
+			{
+				m_grid = value;
+				ChkGrid();
+			}
+		}
+		private void ChkGrid()
+		{
+			if (m_grid != null)
+			{
+				SetMinMax();
+				SetLocSize();
+				m_grid.SizeChanged += M_grid_SizeChanged;
+				m_grid.LocationChanged += M_grid_SizeChanged;
+				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
+			}
+
+		}
+		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
+		{
+			SetMinMax();
+		}
+
+		private void M_grid_SizeChanged(object? sender, EventArgs e)
+		{
+			SetLocSize();
+		}
+
+		// ********************************************************************
+		private void SetLocSize()
+		{
+			if (m_grid == null) return;
+			m_grid.Location = new Point(
+				m_grid.Sizes.FrameWidth+ m_grid.Sizes.InterWidth,
+				25+m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2
+				);
+
+		}
+		// ********************************************************************
+		private void SetMinMax()
+		{
+			if (m_grid == null) return;
+
+			T_Size ts = m_grid.Sizes;
+			int cc = m_grid.CellData.CellCount;
+			int fc = m_grid.CellData.FrameCount;
+
+			Size csz = this.ClientSize;
+			Size sz = this.Size;
+			int x = sz.Width -csz.Width;
+			int y = sz.Height - csz.Height;
+			this.Text = String.Format("x:{0},y:{1}", x, y);
+
+
+			this.MinimumSize = new Size(
+				x +ts.FrameWidth+ ts.InterWidth+ts.CellWidth*6+ ts.InterWidth + 22 +10,
+				y + 25 + ts.CaptionHeight2 
+					+ ts.CaptionHeight +ts.InterHeight + ts.CellHeight*6+ ts.InterHeight+22 + 10
+				);
+			this.MaximumSize = new Size(
+				x + ts.FrameWidth + ts.InterWidth + ts.CellWidth * cc + 22 + 10,
+				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + 22 + 10
+				);
 		}
 		// ********************************************************************
 		public void ToCenter()
@@ -144,18 +343,6 @@ namespace AE_RemapTria
 			SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
 		}
 		// ********************************************************************
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint(e);
-			Graphics g = e.Graphics;
-			Rectangle f = this.ClientRectangle;
-
-			g.DrawImage(kagi[0], new Point(f.Left + 10, f.Top + 30));
-			g.DrawImage(kagi[1], new Point(f.Left+f.Width - 30, f.Top + 30));
-			g.DrawImage(kagi[2], new Point(f.Left + f.Width - 30, f.Top+f.Height - 30));
-			g.DrawImage(kagi[3], new Point(f.Left + 10, f.Top + f.Height - 30));
-
-		}
 		// ********************************************************************
 		public void Command(string[] args, PIPECALL IsPipe = PIPECALL.StartupExec)
 		{
@@ -266,5 +453,6 @@ namespace AE_RemapTria
 
 	}
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
 
 }

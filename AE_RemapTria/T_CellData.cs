@@ -2,10 +2,8 @@
 {
 	public enum T_Fps
 	{
-		fps12 = 12,
-		fps15 = 15,
-		fps24 = 24,
-		fps30 = 30
+		FPS24 = 24,
+		FPS30 = 30
 	}
 	//**************************************************************
 	//１ページのフレーム数
@@ -46,6 +44,8 @@
 		private T_Selection m_sel = new();
 		public T_Selection Selection { get { return m_sel; } }
 		public bool IsTargetCell(int idx) { return  m_sel.IsTargerCell(idx); }
+		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
+		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
 		private int[][] m_data = new int[1][];
 		private string[] m_Caption = new string[1];
 		public int CellCount { get { return m_data.Length; } set { SetCellCount(value); } }
@@ -80,9 +80,22 @@
 			}
 		}
 		// ******************************************************
-		private T_Fps m_FrameRate = T_Fps.fps24;
+		private T_Fps m_FrameRate = T_Fps.FPS24;
+		public T_Fps FrameRate
+		{
+			get { return m_FrameRate; }
+			set { m_FrameRate = value; OnValueChangedEvent(new EventArgs()); }
+		}
+
 		private T_PageSec m_PageSec = T_PageSec.sec6;
 		private T_FrameDisp m_FrameDisp = T_FrameDisp.pageFrame;
+
+		private int m_StartDispFrame = 1;
+		public int StartDispFrame 
+		{ 
+			get { return m_StartDispFrame; } 
+			set { m_StartDispFrame = value;OnValueChangedEvent(new EventArgs()); }
+		}
 
 		public string SheetName = "";
 		public string FileName = "";

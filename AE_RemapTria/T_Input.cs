@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 namespace AE_RemapTria
 {
-	public partial class T_Input : T_ContolBase
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
+	public partial class T_Input : T_ControlBase
 	{
-		private T_Grid m_grid = null;
+		private T_Grid? m_grid = null;
 
 		private int m_value = 0;
 
@@ -26,6 +26,12 @@ namespace AE_RemapTria
 			//FontBold = true;
 
 			SizeFix();
+			ChkGrid();
+		}
+		protected override void InitLayout()
+		{
+			base.InitLayout();
+			ChkGrid();
 		}
 		//-------------------------------------------
 		public T_Grid Grid
@@ -38,24 +44,52 @@ namespace AE_RemapTria
 				ChkGrid();
 			}
 		}
-		//------------------------------------------
 		private void ChkGrid()
 		{
 			if (m_grid != null)
 			{
-				MyFonts = m_grid.MyFonts;
-				SetMyFont(MFontIndex,MFontSize);
+				if (MyFonts == null)
+				{
+					MyFonts = m_grid.MyFonts;
+					SetMyFont(MFontIndex, MFontSize);
+				}
+				SizeFix();
+				SetLoc();
 				m_grid.Sizes.ChangeGridSize += M_Size_ChangeGridSize;
 				m_grid.Colors.ColorChangedEvent += M_Colors_ColorChangedEvent;
-				SizeFix();
+				m_grid.LocationChanged += M_grid_LocationChanged; ;
+				m_grid.SizeChanged += M_grid_LocationChanged;
+
 			}
+
+		}
+
+		private void M_grid_LocationChanged(object? sender, EventArgs e)
+		{
+			SetLoc();
+		}
+
+		//------------------------------------------
+		private void SetLoc()
+		{
+			if (m_grid == null) return;
+			this.Location = new Point(
+				m_grid.Left -(m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth),
+				m_grid.Top -(m_grid.Sizes.InterHeight + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2)
+				);
+		}
+		//------------------------------------------
+		protected override void OnLocationChanged(EventArgs e)
+		{
+			SetLoc();
+			base.OnLocationChanged(e);
 		}
 		//------------------------------------------
 		public void SizeFix()
 		{
 			if (m_grid != null)
 			{
-				this.Size = new Size(m_grid.Sizes.FrameWidth, m_grid.Sizes.CaptionHeight);
+				this.Size = new Size(m_grid.Sizes.FrameWidth, m_grid.Sizes.CaptionHeight+ m_grid.Sizes.CaptionHeight2);
 				this.MinimumSize = this.Size;
 				this.MaximumSize = this.Size;
 				this.Invalidate();
@@ -88,7 +122,7 @@ namespace AE_RemapTria
 
 				if (m_grid != null)
 				{
-					Rectangle rct = this.Rect();
+					Rectangle rct = new Rectangle(m_grid.Sizes.FrameWidth2, m_grid.Sizes.CaptionHeight2,m_grid.Sizes.FrameWidth- m_grid.Sizes.FrameWidth2, m_grid.Sizes.CaptionHeight);
 					sb.Color = m_grid.Colors.Moji;
 					DrawStr(g, m_value.ToString(), sb, rct);
 					p.Color = m_grid.Colors.InputLine;
@@ -103,5 +137,6 @@ namespace AE_RemapTria
 
 		}
 	}
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
 
 }
