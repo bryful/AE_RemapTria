@@ -14,7 +14,7 @@ namespace AE_RemapTria
 {
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
-	public class T_Frame :T_ControlBase
+	public class T_Frame :T_BaseControl
 	{
 		private T_Grid? m_grid = null;
 
@@ -26,14 +26,15 @@ namespace AE_RemapTria
 		{
 			Init();
 			Alignment = StringAlignment.Far;
-			Font_Size = 16;
-			FontBold = true;
+			MyFontSize = 9;
 
 		}
 		protected override void InitLayout()
 		{
 			base.InitLayout();
 			ChkGrid();
+			MyFontSize = 9;
+			Alignment = StringAlignment.Far;
 		}
 		//-------------------------------------------
 		public T_Grid Grid
@@ -51,21 +52,25 @@ namespace AE_RemapTria
 		{
 			if (m_grid != null)
 			{
-				MyFonts = m_grid.MyFonts;
-				SetMyFont(MFontIndex, MFontSize);
 
 				ChkMinMax();
 				SetLocSize();
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 				m_grid.Sizes.ChangeDispMax += Sizes_ChangeDispMax;
+				m_grid.Sizes.ChangeDisp += Sizes_ChangeDisp;
 
-				m_grid.CellData.SelChangedEvent += ChangedEvent; ;
-				m_grid.CellData.ValueChangedEvent += ChangedEvent;
+				m_grid.CellData.SelChanged += ChangedEvent; ;
+				m_grid.CellData.ValueChanged += ChangedEvent;
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
 
 				m_grid.LocationChanged += M_grid_LocationChanged;
 				m_grid.SizeChanged+= M_grid_LocationChanged;
 			}
+		}
+
+		private void Sizes_ChangeDisp(object? sender, EventArgs e)
+		{
+			this.Invalidate();
 		}
 
 		private void M_grid_LocationChanged(object? sender, EventArgs e)
@@ -86,6 +91,7 @@ namespace AE_RemapTria
 
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
+
 			this.Invalidate();
 		}
 		// ********************************************************************
@@ -144,6 +150,17 @@ namespace AE_RemapTria
 			SetLocSize();
 			base.OnLocationChanged(e);
 		}
+		private Point m_MD = new Point(0, 0);
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			/*
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				m_MD= new Point(e.X, e.Y);
+			}
+			*/
+			base.OnMouseDown(e);
+		}
 		//-------------------------------------------------
 		private void DrawFrame(Graphics g, SolidBrush sb, Pen p, int f, Rectangle rct)
 		{
@@ -158,7 +175,8 @@ namespace AE_RemapTria
 			}
 
 			sb.Color = m_grid.Colors.Moji;
-			DrawStr(g, (f + m_grid.CellData.StartDispFrame).ToString(), sb, rct);
+			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 5, rct.Height);
+			DrawStr(g, (f + m_grid.CellData.StartDispFrame).ToString(), sb, rct2);
 
 			p.Color = m_grid.Colors.LineB;
 			p.Width = 1;

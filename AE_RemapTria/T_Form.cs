@@ -10,7 +10,7 @@ namespace AE_RemapTria
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 
-	public partial class MainForm : Form
+	public partial class T_Form : Form
 	{
 		private enum MDPos
 		{
@@ -35,7 +35,7 @@ namespace AE_RemapTria
 		[return: MarshalAs(UnmanagedType.Bool)]
 		private static extern bool SetForegroundWindow(IntPtr hWnd);
 		// ********************************************************************
-		public MainForm()
+		public T_Form()
 		{
 			kagi[0] = Properties.Resources.Kagi00;
 			kagi[1] = Properties.Resources.Kagi01;
@@ -52,6 +52,7 @@ namespace AE_RemapTria
 				ControlStyles.SupportsTransparentBackColor,
 				true);
 			this.UpdateStyles();
+			this.KeyPreview = true;
 		}
 		// ********************************************************************
 		private void NavBarSetup()
@@ -61,6 +62,12 @@ namespace AE_RemapTria
 			m_navBar.LocSet();
 			m_navBar.Show();
 
+		}
+		// ********************************************************************
+		protected override void InitLayout()
+		{
+			base.InitLayout();
+			this.KeyPreview = true;
 		}
 		// ********************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -154,7 +161,7 @@ namespace AE_RemapTria
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
-
+			Pen p = new Pen(Color.White);
 			try
 			{
 				int w0 = 5;
@@ -175,10 +182,13 @@ namespace AE_RemapTria
 				}
 				g.DrawImage(kagi[3], new Point(w0, h1));
 
+				if (m_grid != null) p.Color = m_grid.Colors.LineA;
+				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
+				g.DrawRectangle(p, r);
 			}
 			finally
 			{
-
+				p.Dispose();
 			}
 
 		}
@@ -187,20 +197,11 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			PrefFile pf = new PrefFile();
+			PrefFile pf = new PrefFile((Form)this);
 			this.Text = pf.AppName;
 			if (pf.Load() == true)
 			{
-				bool ok = false;
-				Rectangle r = pf.GetRect("Bound", out ok);
-				if ((ok) && (PrefFile.ScreenIn(r) == true))
-				{
-					this.Bounds = r;
-				}
-				else
-				{
-					ToCenter();
-				}
+				pf.RestoreForm();
 			}
 			//
 			ChkGrid();
@@ -210,8 +211,8 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			PrefFile pf = new PrefFile();
-			pf.SetRect("Bound", this.Bounds);
+			PrefFile pf = new PrefFile((Form)this);
+			pf.StoreForm();
 			pf.Save();
 		}
 		// ********************************************************************
@@ -250,11 +251,22 @@ namespace AE_RemapTria
 		private void SetLocSize()
 		{
 			if (m_grid == null) return;
-			m_grid.Location = new Point(
-				m_grid.Sizes.FrameWidth+ m_grid.Sizes.InterWidth,
-				25+m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2
+			int leftW = m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth;
+			int topW = 25 + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2;
+			m_grid.Location = new Point(leftW,topW);
+			int ww = leftW + m_grid.Sizes.InterWidth + 22 + 5;
+			int hh = topW + m_grid.Sizes.InterHeight + 22 + 5;
+			m_grid.Size = new Size(
+				this.ClientSize.Width -ww,
+				this.ClientSize.Height-hh
 				);
 
+		}
+		// ********************************************************************
+		protected override void OnResize(EventArgs e)
+		{
+			SetLocSize();
+			base.OnResize(e);
 		}
 		// ********************************************************************
 		private void SetMinMax()
@@ -269,7 +281,6 @@ namespace AE_RemapTria
 			Size sz = this.Size;
 			int x = sz.Width -csz.Width;
 			int y = sz.Height - csz.Height;
-			this.Text = String.Format("x:{0},y:{1}", x, y);
 
 
 			this.MinimumSize = new Size(
@@ -337,6 +348,47 @@ namespace AE_RemapTria
 
 			return ret;
 		}
+		// ********************************************************************
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			//this.Text = String.Format("{0}", keyData.ToString());
+			if (m_grid != null)
+			{
+				FuncItem fi = m_grid.Funcs.FindKeys(keyData);
+				if (fi != null)
+				{
+					if (fi.Func()) this.Invalidate();
+					return true;
+				}
+			}
+			return base.ProcessDialogKey(keyData);
+		}
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			if(m_grid!=null)
+			{
+				int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
+				m_grid.Sizes.DispY -= v;
+			}
+			base.OnMouseWheel(e);
+		}
+		// ********************************************************************
+		/*
+		protected override void OnKeyDown(KeyEventArgs e)
+		//protected override bool ProcessDialogKey(Keys keyData)
+		{
+			//this.Text = String.Format("{0}/{1}/{2}", e.KeyCode.ToString(), e.KeyData.ToString(),e.KeyValue.ToString());
+			if(m_grid!=null)
+			{
+				FuncItem fi = m_grid.Funcs.FindKeys(e.KeyData);
+				if(fi !=null)
+				{
+					if (fi.Func()) this.Invalidate();
+				}
+			}
+			base.OnKeyDown(e);
+		}
+		*/
 		// ********************************************************************
 		public void ForegroundWindow()
 		{
@@ -439,7 +491,7 @@ namespace AE_RemapTria
 							if (apcl.Count > 0)
 							{
 								PipeData pd = new PipeData(read);
-								((MainForm)apcl[0]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
+								((T_Form)apcl[0]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
 							}
 
 							if (!_execution)

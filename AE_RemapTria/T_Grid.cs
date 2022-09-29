@@ -13,29 +13,42 @@ using System.Windows.Forms;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
-	public partial class T_Grid : T_ControlBase
+	public partial class T_Grid : T_BaseControl
 	{
 		public T_CellData CellData = new T_CellData();
 		public T_Size Sizes = new T_Size();
 		public T_Colors Colors = new T_Colors();
+		public T_Funcs Funcs = new T_Funcs();
 
 		private T_HScrol? m_HScrol = null;
 		private T_VScrol? m_VScrol = null;
 
+		private T_Input? m_Input = null;
+		public void SetT_Input(T_Input ti)
+		{
+			m_Input = ti;
+		}
+		private T_Menu? m_Menu = null;
+		public void SetT_Menu(T_Menu tm)
+		{
+			m_Menu = tm;
+		}
 		// ************************************************************************************
 		public T_Grid()
 		{
 			InitializeComponent();
 
 			Init();
-			MFontInit();
-			SetMyFont( 2, 14.0F);
 			ChkMinMax();
-			CellData.ValueChangedEvent += CellData_ValueChangedEvent;
-			CellData.SelChangedEvent += CellData_SelChangedEvent;
+			MyFontSize = 9;
+			Alignment = StringAlignment.Center;
+
+			CellData.ValueChanged += CellData_ValueChangedEvent;
+			CellData.SelChanged += CellData_SelChangedEvent;
 			Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			Sizes.ChangeDisp += Sizes_ChangeDisp;
 			Sizes.ChangeDispMax += Sizes_ChangeDisp;
+			MakeFuncs();
 		}
 		protected override void InitLayout()
 		{
@@ -45,6 +58,8 @@ namespace AE_RemapTria
 			ChkHScrl();
 			ChkVScrl();
 			//ChkGrid();
+			MyFontSize = 9;
+			Alignment = StringAlignment.Center;
 		}
 		// ************************************************************************************
 		private void Sizes_ChangeDisp(object? sender, EventArgs e)
@@ -95,7 +110,7 @@ namespace AE_RemapTria
 		{
 			if (m_HScrol != null)
 			{
-				m_HScrol.ValueChangedEvent += M_HScrol_ValueChangedEvent;
+				m_HScrol.ValueChangedEvent += M_VScrol_ValueChangedEvent;
 				m_HScrol.Maximum = Sizes.DispMax.X;
 				m_HScrol.Value = Sizes.Disp.X;
 			}
@@ -117,19 +132,26 @@ namespace AE_RemapTria
 		{
 			if (m_VScrol != null)
 			{
-				m_VScrol.ValueChangedEvent += M_HScrol_ValueChangedEvent;
+				m_VScrol.ValueChangedEvent += M_VScrol_ValueChangedEvent;
 				m_VScrol.Maximum = Sizes.DispMax.Y;
 				m_VScrol.Value = Sizes.Disp.Y;
 			}
 
 		}
-		// ************************************************************************************
 
-		private void M_HScrol_ValueChangedEvent(object? sender, EventArgs e)
+		// ************************************************************************************
+		private void M_VScrol_ValueChangedEvent(object? sender, EventArgs e)
 		{
-			this.Invalidate();
+			if (m_VScrol != null) {
+				Sizes.DispY = m_VScrol.Value;
+			}
+			if (m_HScrol != null)
+			{
+				Sizes.DispX = m_HScrol.Value;
+			}
 		}
 
+		// ************************************************************************************
 		protected override void OnResize(EventArgs e)
 		{
 			SetSize();
@@ -145,6 +167,69 @@ namespace AE_RemapTria
 			}
 			base.OnResize(e);
 			this.Invalidate();
+		}
+		//-------------------------------------------------
+		public Point PosCell(int x,int y)
+		{
+			return  Sizes.PosCell(x,y);
+		}
+		//-------------------------------------------------
+		private int m_mdFrame = -1;
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				Point cp = Sizes.PosCell(e.X, e.Y);
+				if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+				{
+					int y0 = CellData.Selection.Start;
+					int y1 = CellData.Selection.LastFrame;
+					if(cp.Y <= y0)
+					{
+						y0 = cp.Y;
+					}
+					else
+					{ 
+						y1 = cp.Y;
+					}
+					CellData.Selection.Set2Frame(y0,y1);
+				}
+				else
+				{
+					m_mdFrame = cp.Y;
+
+					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
+				}
+				Sizes.CallOnChangeDisp();
+				this.Invalidate();
+			}
+			base.OnMouseDown(e);
+		}
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				if(m_mdFrame>=0)
+				{
+					if(e.Y>=this.Height)
+					{
+						Sizes.DispY += Sizes.CellHeight;
+					}else if(e.Y<0)
+					{
+						Sizes.DispY -= Sizes.CellHeight;
+					}
+					Point cp = Sizes.PosCell(e.X, e.Y);
+					CellData.Selection.Set2Frame(m_mdFrame, cp.Y);
+					Sizes.CallOnChangeDisp();
+					this.Invalidate();
+				}
+			}
+				base.OnMouseMove(e);
+		}
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			m_mdFrame = -1;
+			base.OnMouseUp(e);
 		}
 		//-------------------------------------------------
 		private void DrawCell(Graphics g, SolidBrush sb, Pen p, int l, int f)
@@ -216,6 +301,25 @@ namespace AE_RemapTria
 				case T_Fps.FPS30:
 					break;
 			}
+			CellSatus cs = CellData.GetCellStatus(l, f);
+			switch (cs.Status)
+			{
+				case CellType.Normal:
+					sb.Color = Colors.Moji;
+					DrawStr(g, CellData.GetCellData(l, f).ToString(), sb, r);
+					break;
+				case CellType.SameAsBefore:
+					p.Color = Colors.Moji;
+					DrawVerLine(g,p, r.Left + r.Width / 2, r.Top, r.Bottom);
+					break;
+				case CellType.EmptyStart:
+					p.Color = Colors.Moji;
+					DrawBatsu(g, p, r);
+					break;
+				case CellType.None:
+					break;
+			}
+
 		}
 		protected override void OnPaint(PaintEventArgs pe)
 		{

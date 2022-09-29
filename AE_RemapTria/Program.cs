@@ -18,11 +18,11 @@ namespace AE_RemapTria
 
 			if (_mutex.WaitOne(0, false))
 			{//起動していない
-				MainForm._execution = true;
-				MainForm.ArgumentPipeServer(ApplicationId);
+				T_Form._execution = true;
+				T_Form.ArgumentPipeServer(ApplicationId);
 				ApplicationConfiguration.Initialize();
 				Application.Run(new Form1());
-				MainForm._execution = false;
+				T_Form._execution = false;
 			}
 			else
 			{ //起動している

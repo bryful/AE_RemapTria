@@ -21,13 +21,38 @@ namespace AE_RemapTria
 		public int StartTrue { get { return m_startTrue; } }
 		private int m_lengthTrue = 1;
 		public int LengthTrue { get { return m_length; } }
-		private int m_LastIndex = 1;
-		public int LastIndex { get { return m_LastIndex; } }
+		private int m_LastFrameTrue = 1;
+		public int LastIndex { get { return m_LastFrameTrue; } }
+
+		private int m_LastFrame = 0;
+		public int LastFrame
+		{
+			get { return m_LastFrame; }
+			set
+			{
+				int v = value;
+				if(v==m_start)
+				{
+					m_length=1;
+				}else if(v>m_start)
+				{
+					m_length = v - m_start + 1;
+				}else if(v < m_start)
+				{
+					int ms = m_start;
+					m_start = v;
+					m_length = v - ms + 1;
+				}
+				CalcTrue();
+			}
+		}
+
 
 		// ******************************************************************
 		public T_Selection()
 		{
 			m_cellDate = null;
+			CalcTrue();
 		}
 		public bool IsTargerCell(int c)
 		{
@@ -46,7 +71,7 @@ namespace AE_RemapTria
 		// ******************************************************************
 		public T_Selection(T_CellData cellDate)
 		{
-			m_cellDate = cellDate;
+			SetCellData(cellDate);
 		}
 		// ******************************************************************
 		public T_Selection(T_Selection sel)
@@ -61,7 +86,7 @@ namespace AE_RemapTria
 			m_start = sel.m_start;
 			m_length = sel.m_length;
 			m_lengthTrue = sel.m_lengthTrue;
-			m_LastIndex = sel.m_LastIndex;
+			m_LastFrameTrue = sel.m_LastFrameTrue;
 		}
 		// ******************************************************************
 		public void SetCellData(T_CellData cd)
@@ -87,6 +112,35 @@ namespace AE_RemapTria
 			CalcTrue();
 		}
 		// ******************************************************************
+		public void SetTargetStartLength(int t,int s, int l)
+		{
+			m_start = s;
+			if (l <= 0) l = 1;
+			m_length = l;
+			m_target = t;
+			CalcTrue();
+		}
+		// ******************************************************************
+		public void Set2Frame(int f0, int f1)
+		{
+			if(f0==f1)
+			{
+				m_start = f0;
+				m_length = 1;
+			}else if (f0 < f1)
+			{
+				m_start = f0;
+				m_length = f1 - f0 + 1;
+			}
+			else
+			{
+				m_start = f1;
+				m_length = f0 - f1 + 1;
+			}
+			CalcTrue();
+
+		}
+		// ******************************************************************
 		public void SetStart(int s)
 		{
 			m_start = s;
@@ -104,12 +158,14 @@ namespace AE_RemapTria
 		{
 			m_startTrue = m_start;
 			if (m_startTrue < 0) m_startTrue = 0;
-			m_LastIndex = m_start + m_length - 1;
+			
+			m_LastFrame = m_start + m_length - 1;
+			m_LastFrameTrue = m_LastFrame;
 			if (m_cellDate != null)
 			{
-				if (m_LastIndex >= m_cellDate.FrameCount) m_LastIndex = m_cellDate.FrameCount - 1;
+				if (m_LastFrameTrue >= m_cellDate.FrameCount) m_LastFrameTrue = m_cellDate.FrameCount - 1;
 			}
-			m_lengthTrue = m_LastIndex - m_startTrue + 1;
+			m_lengthTrue = m_LastFrameTrue - m_startTrue + 1;
 
 		}
 		// ******************************************************************

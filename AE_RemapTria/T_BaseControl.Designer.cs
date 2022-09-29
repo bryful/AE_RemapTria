@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_ControlBase
+	partial class T_BaseControl
 	{
 		/// <summary>
 		/// 必要なデザイナー変数です。

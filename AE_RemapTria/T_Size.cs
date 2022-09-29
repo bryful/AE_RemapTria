@@ -63,6 +63,10 @@ namespace AE_RemapTria
 				ChangeGridSize(this, e);
 			}
 		}
+		public void CallOnChangeGridSize()
+		{
+			OnChangeGridSize(new EventArgs());
+		}
 		//---------------------------------------
 		protected virtual void OnChangeDispMax(EventArgs e)
 		{
@@ -71,6 +75,10 @@ namespace AE_RemapTria
 				ChangeDispMax(this, e);
 			}
 		}
+		public void CallChangeDispMax()
+		{
+			OnChangeDispMax(new EventArgs());
+		}
 		//---------------------------------------
 		protected virtual void OnChangeDisp(EventArgs e)
 		{
@@ -78,7 +86,12 @@ namespace AE_RemapTria
 			{
 				ChangeDisp(this, e);
 			}
-		}       //---------------------------------------
+		}
+		public void CallOnChangeDisp()
+		{
+			OnChangeDisp(new EventArgs());
+		}
+		//---------------------------------------
 		public int CellWidth
 		{
 			get { return m_CellWidth; }
@@ -185,12 +198,9 @@ namespace AE_RemapTria
 				int v = value;
 				if (v < 0) v = 0;
 				else if (v > m_DispMax.X) v = m_DispMax.X;
-				if (m_Disp.X != v)
-				{
-					m_Disp.X = v;
-					ChkDisp();
-					OnChangeDisp(new EventArgs());
-				}
+				m_Disp.X = v;
+				ChkDisp();
+				OnChangeDisp(new EventArgs());
 			}
 		}
 		//---------------------------------------
@@ -202,12 +212,9 @@ namespace AE_RemapTria
 				int v = value;
 				if (v < 0) v = 0;
 				else if (v > m_DispMax.Y) v = m_DispMax.Y;
-				if (m_Disp.Y != v)
-				{
-					m_Disp.Y = v;
-					ChkDisp();
-					OnChangeDisp(new EventArgs());
-				}
+				m_Disp.Y = v;
+				ChkDisp();
+				OnChangeDisp(new EventArgs());
 			}
 		}
 		//---------------------------------------
@@ -225,5 +232,11 @@ namespace AE_RemapTria
 			get { return m_DispCell; }
 		}
 		//---------------------------------------
+		public Point PosCell(int x,int y)
+		{
+			int y2 = (m_Disp.Y + y)/m_CellHeight;
+			int x2 = (m_Disp.X + x)/m_CellWidth;
+			return new Point(x2, y2);
+		}
 	}
 }

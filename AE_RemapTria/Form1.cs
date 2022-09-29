@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class Form1 : MainForm
+	public partial class Form1 : T_Form
 	{
 		public Form1()
 		{
 			InitializeComponent();
+
 		}
 
 	}

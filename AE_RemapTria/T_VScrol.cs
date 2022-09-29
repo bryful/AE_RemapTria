@@ -149,9 +149,19 @@ namespace AE_RemapTria
 				SetLocSize();
 				m_grid.SizeChanged += M_grid_SizeChanged;
 				m_grid.LocationChanged += M_grid_SizeChanged;
+				m_grid.Sizes.ChangeDisp += Sizes_ChangeDisp;
 			}
 
 		}
+
+		private void Sizes_ChangeDisp(object? sender, EventArgs e)
+		{
+			if(m_grid!=null)
+			{
+				Value = m_grid.Sizes.DispY;
+			}
+		}
+
 		// ********************************************************************
 		private void M_grid_SizeChanged(object? sender, EventArgs e)
 		{
@@ -201,9 +211,6 @@ namespace AE_RemapTria
 				sb.Color = m_LineDark;
 				g.FillRectangle(sb, new Rectangle(0, m_ValueTop, 10, m_ValuePos - m_ValueTop));
 				g.FillRectangle(sb, new Rectangle(0, m_ValuePos + ARW.Height, 10, m_ValueBottom - m_ValuePos - ARW.Height));
-
-
-
 
 				//アイコンの描画
 				Rectangle r = new Rectangle(0, 0, 20, 22);
@@ -379,8 +386,8 @@ namespace AE_RemapTria
 				m_Value = m_DownValue + (dy * m_Maximum / m_ValueArea);
 				if (m_Value < 0) m_Value = 0;
 				else if (m_Value > m_Maximum) m_Value = m_Maximum;
-				this.Invalidate();
 				OnChangeValueEvent(new EventArgs());
+				this.Invalidate();
 			}
 			//base.OnMouseMove(e);
 		}

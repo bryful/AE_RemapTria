@@ -13,7 +13,7 @@ using System.Windows.Forms;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-	public class T_Caption :T_ControlBase
+	public class T_Caption :T_BaseControl
 	{
 		private Bitmap CellArrow = Properties.Resources.CellArrow;
 		private Bitmap CellArrowNone = Properties.Resources.CellArrowNone;
@@ -25,13 +25,14 @@ namespace AE_RemapTria
 			Init();
 
 			Alignment = StringAlignment.Center;
-			Font_Size = 10;
-			FontBold = true;
+			MyFontSize = 9;
 		}
 		protected override void InitLayout()
 		{
 			base.InitLayout();
 			ChkGrid();
+			Alignment = StringAlignment.Center;
+			MyFontSize = 9;
 		}
 		//--------------------------------------------
 		public T_Grid Grid
@@ -50,15 +51,11 @@ namespace AE_RemapTria
 
 			if (m_grid != null)
 			{
-				MyFonts = m_grid.MyFonts;
-				MFontIndex = 5;
-				MFontSize = 10;
-				SetMyFont(MFontIndex, MFontSize);
 				ChkMinMax();
 				SetLocSize();
 
-				m_grid.CellData.SelChangedEvent += ChangedEvent;
-				m_grid.CellData.ValueChangedEvent += ChangedEvent;
+				m_grid.CellData.SelChanged += ChangedEvent;
+				m_grid.CellData.ValueChanged += ChangedEvent;
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 				m_grid.Sizes.ChangeDisp += ChangedEvent;
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
@@ -83,6 +80,7 @@ namespace AE_RemapTria
 		// ***********************************************
 		private void ChangedEvent(object? sender, EventArgs e)
 		{
+
 			this.Invalidate();
 		}
 		// ********************************************************************
@@ -119,7 +117,8 @@ namespace AE_RemapTria
 		{
 			SetLocSize();
 			base.OnLocationChanged(e);
-		}           //-------------------------------------------------
+		}           
+		//-------------------------------------------------
 		private void DrawCaption(Graphics g, SolidBrush sb, Pen p, int l)
 		{
 			if (m_grid == null) return;
@@ -180,12 +179,18 @@ namespace AE_RemapTria
 		// *****************************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			base.OnMouseDown(e);
 			if (m_grid == null) return;
 			int t = (e.Location.X + m_grid.Sizes.Disp.X)/ m_grid.Sizes.CellWidth;
 			m_grid.CellData.SetTarget(t);
+			base.OnMouseDown(e);
 		}
 		// *****************************************************************************
+		protected override void OnDoubleClick(EventArgs e)
+		{
+			if (m_grid == null) return;
+			m_grid.CellData.SelectionAll();
+			base.OnDoubleClick(e);
+		}
 	}
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
 }
