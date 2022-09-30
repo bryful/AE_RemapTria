@@ -51,7 +51,6 @@ namespace AE_RemapTria
 			if (m_Menu == null) return;
 			m_Menu.AddMenu("AE_RemapTria", 95);
 			m_Menu.AddMenu("Edit", 45);
-			m_Menu.AddMenu("Preview Version", 120);
 			m_Menu.AddSubMenu(0, "Open ctrl+O", Open);
 			m_Menu.AddSubMenu(0, "Quit ctrl+Q", Quit);
 			m_Menu.AddSubMenu(1, "Undo ctrl+Z", Undo);

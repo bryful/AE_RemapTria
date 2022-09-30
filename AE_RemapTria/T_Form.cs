@@ -197,11 +197,22 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			PrefFile pf = new PrefFile((Form)this);
-			this.Text = pf.AppName;
-			if (pf.Load() == true)
+			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
 			{
-				pf.RestoreForm();
+				ToCenter();
+			}
+			else
+			{
+				PrefFile pf = new PrefFile((Form)this);
+				this.Text = pf.AppName;
+				if (pf.Load() == true)
+				{
+					pf.RestoreForm();
+				}
+				else
+				{
+					ToCenter();
+				}
 			}
 			//
 			ChkGrid();
