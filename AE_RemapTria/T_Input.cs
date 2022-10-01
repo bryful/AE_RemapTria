@@ -16,7 +16,6 @@ namespace AE_RemapTria
 	public partial class T_Input : T_BaseControl
 	{
 		private T_Grid? m_grid = null;
-
 		private int m_value = -1;
 		public int Value
 		{
@@ -183,6 +182,7 @@ namespace AE_RemapTria
 					if (m_value >= 0)
 					{
 						sb.Color = m_grid.Colors.Moji;
+						Alignment = StringAlignment.Far;
 						DrawStr(g, m_value.ToString(), sb, rct);
 					}
 					if(m_value >= 0)
@@ -195,6 +195,7 @@ namespace AE_RemapTria
 						p.Color = m_grid.Colors.InputLine;
 					}
 					DrawFrame(g, p, rct, 1);
+
 				}
 			}
 			finally

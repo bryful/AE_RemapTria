@@ -54,13 +54,53 @@ namespace AE_RemapTria
 			this.UpdateStyles();
 			this.KeyPreview = true;
 		}
+
+		// ********************************************************************
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+			{
+				ToCenter();
+			}
+			else
+			{
+				PrefFile pf = new PrefFile((Form)this);
+				this.Text = pf.AppName;
+				if (pf.Load() == true)
+				{
+					pf.RestoreForm();
+				}
+				else
+				{
+					ToCenter();
+				}
+			}
+			//
+			ChkGrid();
+			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
+		}
+		private void Form1_Load(object sender, EventArgs e)
+		{
+			//this.Text = nameof(MainForm.Parent) + "/aa";
+		}
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			PrefFile pf = new PrefFile((Form)this);
+			pf.StoreForm();
+			pf.Save();
+			base.OnFormClosed(e);
+		}
 		// ********************************************************************
 		private void NavBarSetup()
 		{
-			m_navBar.Form = this;
-			m_navBar.SizeSet();
-			m_navBar.LocSet();
-			m_navBar.Show();
+			if (DesignMode == false)
+			{
+				m_navBar.Form = this;
+				m_navBar.SizeSet();
+				m_navBar.LocSet();
+				m_navBar.Show();
+			}
 
 		}
 		// ********************************************************************
@@ -216,38 +256,7 @@ namespace AE_RemapTria
 		}
 		// ********************************************************************
 		
-		// ********************************************************************
-		private void Form1_Load(object sender, EventArgs e)
-		{
-			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
-			{
-				ToCenter();
-			}
-			else
-			{
-				PrefFile pf = new PrefFile((Form)this);
-				this.Text = pf.AppName;
-				if (pf.Load() == true)
-				{
-					pf.RestoreForm();
-				}
-				else
-				{
-					ToCenter();
-				}
-			}
-			//
-			ChkGrid();
-			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
-			//this.Text = nameof(MainForm.Parent) + "/aa";
-		}
-		// ********************************************************************
-		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			PrefFile pf = new PrefFile((Form)this);
-			pf.StoreForm();
-			pf.Save();
-		}
+
 		// ********************************************************************
 		public T_Grid Grid
 		{
@@ -420,7 +429,7 @@ namespace AE_RemapTria
 			Rectangle r = PrefFile.NowScreen(this.Bounds);
 			if(r.Width>100)
 			{
-				int h = r.Height - 60;
+				int h = r.Height - 25;
 				this.Location = new Point(this.Left, r.Top + 25);
 				this.Size = new Size(this.Width, h);
 				ret = true;

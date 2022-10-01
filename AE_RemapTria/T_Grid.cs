@@ -20,6 +20,19 @@ namespace AE_RemapTria
 		public T_Colors Colors = new T_Colors();
 		public T_Funcs Funcs = new T_Funcs();
 
+		public int FrameCount
+		{
+			get { return CellData.FrameCount; }
+			set
+			{
+				if(CellData.FrameCount!=value)
+				{
+					CellData.FrameCount = value;
+					ChkMinMax();
+				}
+			}
+		}
+
 		private T_HScrol? m_HScrol = null;
 		private T_VScrol? m_VScrol = null;
 
@@ -50,11 +63,21 @@ namespace AE_RemapTria
 
 			CellData.ValueChanged += CellData_ValueChangedEvent;
 			CellData.SelChanged += CellData_SelChangedEvent;
+			CellData.CountChanged += CellData_CountChanged;
 			Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			Sizes.ChangeDisp += Sizes_ChangeDisp;
 			Sizes.ChangeDispMax += Sizes_ChangeDisp;
 			MakeFuncs();
 		}
+
+		private void CellData_CountChanged(object? sender, EventArgs e)
+		{
+			SizeSetting();
+			ChkMinMax();
+			ChkHScrl();
+			ChkVScrl();
+		}
+
 		protected override void InitLayout()
 		{
 			base.InitLayout();
@@ -95,6 +118,7 @@ namespace AE_RemapTria
 			this.MinimumSize = new Size(Sizes.CellWidth * 6, Sizes.CellHeight * 6);
 			this.MaximumSize = new Size(Sizes.CellWidth * CellData.CellCount, Sizes.CellHeight * CellData.FrameCount);
 			Sizes.SizeSetting(this.Size, CellData);
+
 		}
 		// ************************************************************************************
 		public void SizeSetting()
@@ -283,33 +307,43 @@ namespace AE_RemapTria
 				//DrawVerLine(g, p, x, y, y2);
 				//DrawVerLine(g, p, x2, y, y2);
 			}
+			int Sec = 24;
+			int HSec = 12;
+			int HHSec = 6;
 
 			switch (CellData.FrameRate)
 			{
 				case T_Fps.FPS24:
-					if (f % 24 == 0)
-					{
-						p.Color = Colors.Line;
-						DrawHorLine(g, p, x, x2, y);
-						DrawHorLine(g, p, x, x2, y - 1);
-					}
-					else if (f % 12 == 0)
-					{
-						p.Color = Colors.Line;
-						DrawHorLine(g, p, x, x2, y);
-
-					}
-					else
-					{
-						if (f % 6 == 0)
-						{
-							p.Color = Colors.LineA;
-							DrawHorLine(g, p, x, x2, y);
-						}
-					}
+					Sec = 24;
+					HSec = 12;
+					HHSec = 6;
 					break;
 				case T_Fps.FPS30:
+					Sec = 30;
+					HSec = 15;
+					HHSec = 5;
 					break;
+
+			}
+			if (f % Sec == 0)
+			{
+				p.Color = Colors.Line;
+				DrawHorLine(g, p, x, x2, y);
+				DrawHorLine(g, p, x, x2, y - 1);
+			}
+			else if (f % HSec == 0)
+			{
+				p.Color = Colors.Line;
+				DrawHorLine(g, p, x, x2, y);
+
+			}
+			else
+			{
+				if (f % HHSec == 0)
+				{
+					p.Color = Colors.LineA;
+					DrawHorLine(g, p, x, x2, y);
+				}
 			}
 			CellSatus cs = CellData.GetCellStatus(l, f);
 			switch (cs.Status)
@@ -338,11 +372,11 @@ namespace AE_RemapTria
 		{
 			Pen p = new Pen(Color.Black);
 			SolidBrush sb = new SolidBrush(Color.White);
+			Graphics g = pe.Graphics;
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			try
 			{
-				Graphics g = pe.Graphics;
-				g.SmoothingMode = SmoothingMode.AntiAlias;
-				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 				sb.Color = Colors.Base;
 				Fill(g, sb);
 				Rectangle r = Sizes.DispCell;

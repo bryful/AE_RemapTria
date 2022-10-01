@@ -39,6 +39,7 @@ namespace AE_RemapTria
 
 	public class T_Menu :T_BaseControl
 	{
+		public const int MyHeight = 20;
 		public delegate void MenuEventHandler(object sender, MenuEventArgs e);
 
 		//イベントデリゲートの宣言
@@ -63,7 +64,7 @@ namespace AE_RemapTria
 		// ****************************************************************
 		public T_Menu()
 		{
-			this.Size = new Size(100, 20);
+			this.Size = new Size(100, MyHeight);
 			ChkGrid();
 		}
 
@@ -79,8 +80,9 @@ namespace AE_RemapTria
 			m_Submenu[cnt] = new ContextMenuStrip();
 			m_Submenu[cnt].BackColor = Color.Black;
 			m_Submenu[cnt].ForeColor = Color.White;
-			this.Size = new Size(MenuWidthAll(), 20);
+			this.Size = new Size(MenuWidthAll(), MyHeight);
 		}
+		// ****************************************************************
 		public void AddSubMenu(int idx, string cap, FuncType ft)
 		{
 			Array.Resize(ref m_SubmenuFunc, m_SubmenuFunc.Length + 1);
@@ -91,6 +93,7 @@ namespace AE_RemapTria
 			a.Tag = m_SubmenuFunc.Length - 1;
 			m_Submenu[idx].Items.Add(a);
 		}
+		// ****************************************************************
 		private void A_Click(object? sender, EventArgs e)
 		{
 			ToolStripMenuItem m = (ToolStripMenuItem)sender;
@@ -126,7 +129,7 @@ namespace AE_RemapTria
 		{
 			base.InitLayout();
 			ChkGrid();
-			this.Size = new Size(MenuWidthAll(), 20);
+			this.Size = new Size(MenuWidthAll(), MyHeight);
 
 		}
 		// ****************************************************************
@@ -178,6 +181,7 @@ namespace AE_RemapTria
 		{
 			SetLoc();
 		}
+		// ******************************************************************
 		private int m_mm = -1;
 		private bool mmPos(int x)
 		{
@@ -235,7 +239,7 @@ namespace AE_RemapTria
 					//項目
 					for (int i=0; i < m_MenuItems.Length; i++)
 					{
-						r = new Rectangle(m_MenuItems[i].PosLeft, 0, m_MenuItems[i].Width, 20);
+						r = new Rectangle(m_MenuItems[i].PosLeft, 0, m_MenuItems[i].Width, MyHeight);
 						if(m_mm==i)
 						{
 							sb.Color = m_grid.Colors.Selection;

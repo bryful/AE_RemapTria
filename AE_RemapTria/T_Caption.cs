@@ -15,9 +15,10 @@ namespace AE_RemapTria
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
 	public class T_Caption :T_BaseControl
 	{
+		private T_Grid m_grid = null;
+
 		private Bitmap CellArrow = Properties.Resources.CellArrow;
 		private Bitmap CellArrowNone = Properties.Resources.CellArrowNone;
-		private T_Grid m_grid = null;
 
 		// ***********************************************
 		public T_Caption()
@@ -42,7 +43,6 @@ namespace AE_RemapTria
 			{
 				m_grid = value;
 				ChkGrid();
-				ChkMinMax();
 			}
 		}
 		// ***********************************************
@@ -56,6 +56,7 @@ namespace AE_RemapTria
 
 				m_grid.CellData.SelChanged += ChangedEvent;
 				m_grid.CellData.ValueChanged += ChangedEvent;
+				m_grid.CellData.CountChanged += CellData_CountChanged;
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 				m_grid.Sizes.ChangeDisp += ChangedEvent;
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
@@ -63,6 +64,13 @@ namespace AE_RemapTria
 				m_grid.SizeChanged+= M_grid_LocationChanged;
 
 			}
+		}
+
+		private void CellData_CountChanged(object? sender, EventArgs e)
+		{
+			ChkMinMax();
+			SetLocSize();
+			this.Invalidate();
 		}
 
 		private void M_grid_LocationChanged(object? sender, EventArgs e)
@@ -106,12 +114,12 @@ namespace AE_RemapTria
 		//-------------------------------------------------
 		protected override void OnResize(EventArgs e)
 		{
-			base.OnResize(e);
 			if (m_grid != null)
 			{
 				SetLocSize();
 				m_grid.SizeSetting();
 			}
+			base.OnResize(e);
 			this.Invalidate();
 		}
 		protected override void OnLocationChanged(EventArgs e)
@@ -180,16 +188,20 @@ namespace AE_RemapTria
 		// *****************************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (m_grid == null) return;
-			int t = (e.Location.X + m_grid.Sizes.Disp.X)/ m_grid.Sizes.CellWidth;
-			m_grid.CellData.SetTarget(t);
+			if (m_grid != null)
+			{
+				int t = (e.Location.X + m_grid.Sizes.Disp.X) / m_grid.Sizes.CellWidth;
+				m_grid.CellData.SetTarget(t);
+			}
 			base.OnMouseDown(e);
 		}
 		// *****************************************************************************
 		protected override void OnDoubleClick(EventArgs e)
 		{
-			if (m_grid == null) return;
-			m_grid.SelectionAll();
+			if (m_grid != null)
+			{
+				m_grid.SelectionAll();
+			}
 			base.OnDoubleClick(e);
 		}
 	}

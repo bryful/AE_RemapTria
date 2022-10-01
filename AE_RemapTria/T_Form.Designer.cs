@@ -30,7 +30,7 @@
 		{
 			this.SuspendLayout();
 			// 
-			// MainForm
+			// T_Form
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -41,9 +41,7 @@
 			this.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(4);
-			this.Name = "MainForm";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-			this.Load += new System.EventHandler(this.Form1_Load);
+			this.Name = "T_Form";
 			this.ResumeLayout(false);
 
 		}

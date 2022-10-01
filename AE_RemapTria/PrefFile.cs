@@ -57,12 +57,17 @@ namespace BRY
 			if (m_Form == null) return;
 			SetRect("FormBounds", m_Form.Bounds);
 		}
+		// ****************************************************
 		public void RestoreForm()
 		{
 			if (m_Form == null) return;
 			bool ok = false;
 			Rectangle r = GetRect("FormBounds", out ok);
-			if(ok) m_Form.Bounds = r;
+			if (ok)
+			{
+				m_Form.MaximumSize = new Size(65536, 65536);
+				m_Form.Bounds = r;
+			}
 			if ((ok==false)||(ScreenIn(r) == false))
 			{
 				Rectangle rct = Screen.PrimaryScreen.Bounds;
@@ -92,7 +97,7 @@ namespace BRY
 			bool ret = false;
 			foreach (Screen s in Screen.AllScreens)
 			{
-				Rectangle r = s.Bounds;
+				Rectangle r = s.WorkingArea;
 				if (IsInRect(r, rct))
 				{
 					ret = true;
@@ -107,7 +112,7 @@ namespace BRY
 			Rectangle ret = new Rectangle(0,0,0,0);
 			foreach (Screen s in Screen.AllScreens)
 			{
-				Rectangle r = s.Bounds;
+				Rectangle r = s.WorkingArea;
 				if (IsInRect(r, rct))
 				{
 					ret = r;

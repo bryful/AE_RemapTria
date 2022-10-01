@@ -62,10 +62,18 @@ namespace AE_RemapTria
 				m_grid.CellData.SelChanged += ChangedEvent; ;
 				m_grid.CellData.ValueChanged += ChangedEvent;
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
+				m_grid.CellData.CountChanged += CellData_CountChanged;
 
 				m_grid.LocationChanged += M_grid_LocationChanged;
 				m_grid.SizeChanged+= M_grid_LocationChanged;
 			}
+		}
+
+		private void CellData_CountChanged(object? sender, EventArgs e)
+		{
+			ChkMinMax();
+			SetLocSize();
+			this.Invalidate();
 		}
 
 		private void Sizes_ChangeDisp(object? sender, EventArgs e)
@@ -154,12 +162,16 @@ namespace AE_RemapTria
 		private Point m_MD = new Point(0, 0);
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			/*
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			if (e.Button == MouseButtons.Left)
 			{
-				m_MD= new Point(e.X, e.Y);
+				if (m_grid != null)
+				{
+					int y = (e.Y + m_grid.Sizes.DispY)/m_grid.Sizes.CellHeight;
+
+					m_grid.CellData.SetStart(y);
+
+				}
 			}
-			*/
 			base.OnMouseDown(e);
 		}
 		//-------------------------------------------------
@@ -291,6 +303,10 @@ namespace AE_RemapTria
 
 		}
 		//-------------------------------------------------
+		protected override void OnMouseClick(MouseEventArgs e)
+		{
+			base.OnMouseClick(e);
+		}
 	}
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning restore CS8603 // Null 参照戻り値である可能性があります。

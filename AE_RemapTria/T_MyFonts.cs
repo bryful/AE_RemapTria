@@ -14,11 +14,17 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
+	/// <summary>
+	/// リソースにあるフォントを管理するコンポーネント
+	/// </summary>
 	public partial class T_MyFonts : Component
 	{
 		[System.Runtime.InteropServices.DllImport("gdi32.dll")]
 		public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
 		public PrivateFontCollection? MyFonts = null;// new PrivateFontCollection();
+		/// <summary>
+		/// フォントの数
+		/// </summary>
 		public int FontCount
 		{
 			get
@@ -44,22 +50,33 @@ namespace AE_RemapTria
 			InitializeComponent();
 		}
 		// *****************************************************
-		private void MyFontsInit(bool isInit = false)
+		/// <summary>
+		///　リソースフォントを読み込む
+		/// </summary>
+		/// <param name="isInit">trueで強制的に読み込む</param>
+		private void MyFontsInit(byte[] fontData, bool isInit = false)
 		{
 			//SourceHanCodeJP
 			//MyricaM
 			//Myrica
 			if ((MyFonts == null) || (isInit == true))
 			{
-				byte[] fontData = Properties.Resources.SourceHanCodeJP;
+				//byte[] fontData = Properties.Resources.SourceHanCodeJP;
 				IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
 				System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
 				uint dummy = 0;
 				MyFonts = new PrivateFontCollection();
-				MyFonts.AddMemoryFont(fontPtr, Properties.Resources.SourceHanCodeJP.Length);
-				AddFontMemResourceEx(fontPtr, (uint)Properties.Resources.SourceHanCodeJP.Length, IntPtr.Zero, ref dummy);
+				MyFonts.AddMemoryFont(fontPtr, fontData.Length);
+				AddFontMemResourceEx(fontPtr, (uint)fontData.Length, IntPtr.Zero, ref dummy);
 				System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
 			}
+		}
+		private void MyFontsInit( bool isInit = false)
+		{
+			//SourceHanCodeJP
+			//MyricaM
+			//Myrica
+			MyFontsInit(Properties.Resources.SourceHanCodeJP, isInit);
 		}
 		public Font MyFont(int idx, float sz, FontStyle fs)
 		{

@@ -313,6 +313,16 @@ namespace AE_RemapTria.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap BackGrad {
+            get {
+                object obj = ResourceManager.GetObject("BackGrad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap CellArrow {
             get {
                 object obj = ResourceManager.GetObject("CellArrow", resourceCulture);

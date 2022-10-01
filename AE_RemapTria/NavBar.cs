@@ -89,7 +89,12 @@ namespace AE_RemapTria
 			InitializeComponent();
 			SizeSet();
 			IsFront = true;
+			if(DesignMode==true)
+			{
+				this.Visible = false;
+			}
 		}
+
 		// *****************************************************************
 		public void LocSet()
 		{

@@ -198,9 +198,12 @@ namespace AE_RemapTria
 				int v = value;
 				if (v < 0) v = 0;
 				else if (v > m_DispMax.X) v = m_DispMax.X;
-				m_Disp.X = v;
-				ChkDisp();
-				OnChangeDisp(new EventArgs());
+				if (m_Disp.X != v)
+				{
+					m_Disp.X = v;
+					ChkDisp();
+					OnChangeDisp(new EventArgs());
+				}
 			}
 		}
 		//---------------------------------------
@@ -212,9 +215,12 @@ namespace AE_RemapTria
 				int v = value;
 				if (v < 0) v = 0;
 				else if (v > m_DispMax.Y) v = m_DispMax.Y;
-				m_Disp.Y = v;
-				ChkDisp();
-				OnChangeDisp(new EventArgs());
+				if (m_Disp.Y != v)
+				{
+					m_Disp.Y = v;
+					ChkDisp();
+					OnChangeDisp(new EventArgs());
+				}
 			}
 		}
 		//---------------------------------------
@@ -223,15 +229,27 @@ namespace AE_RemapTria
 			get { return m_Disp; }
 		}
 		//---------------------------------------
+		/// <summary>
+		///表示されていない範囲のサイズ
+		/// </summary>
 		public Point DispMax
 		{
 			get { return m_DispMax; }
 		}
+		/// <summary>
+		/// 表示されているセルフレーム
+		/// </summary>
 		public Rectangle DispCell
 		{
 			get { return m_DispCell; }
 		}
 		//---------------------------------------
+		/// <summary>
+		/// 座標からセルフレームの位置を求める
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public Point PosCell(int x,int y)
 		{
 			int y2 = (m_Disp.Y + y)/m_CellHeight;

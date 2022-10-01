@@ -59,4 +59,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Ctrl\" />
+  </ItemGroup>
+
 </Project>

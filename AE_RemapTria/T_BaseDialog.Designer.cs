@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_DialogBase
+	partial class T_BaseDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -34,7 +34,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.White;
+			this.BackColor = System.Drawing.Color.Black;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(339, 166);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -4,6 +4,9 @@ using System.Numerics;
 
 namespace AE_RemapTria
 {
+	/// <summary>
+	/// フレームレターと
+	/// </summary>
 	public enum T_Fps
 	{
 		FPS24 = 24,
@@ -16,6 +19,7 @@ namespace AE_RemapTria
 		sec3 = 3,
 		sec6 = 6
 	}
+	//フレームの表示設定
 	public enum T_FrameDisp
 	{
 		frame = 0,
@@ -25,80 +29,30 @@ namespace AE_RemapTria
 		Count
 	}
 
-	public enum BackupSratus
-	{
-		None,
-		NumberInput,
-		SelectionChange,
-		FrameEnabled,
-		All
-	}
-
-	public class BackupCellData
-	{
-		public T_Selection sel = new();
-		public int[] ints = Array.Empty<int>();
-		public int[][] aints = new int [0][];
-		public string[] caps = new string[0];
-		public bool[] enableds = new bool[0];
-		public BackupSratus stat = BackupSratus.None;
-		public BackupCellData(T_CellData cd,BackupSratus bs)
-		{
-			stat = bs;
-			switch (bs)
-			{
-				case BackupSratus.All:
-					this.sel = new T_Selection(sel);
-					aints = cd.BackupCellData();
-					caps = cd.BackupCaption();
-					enableds = cd.GetFrameEnabled();
-					break;
-				case BackupSratus.NumberInput:
-					this.sel = new T_Selection(cd.Selection);
-					this.ints = cd.GetCellNum();
-					break;
-				case BackupSratus.SelectionChange:
-					this.sel = new T_Selection(cd.Selection);
-					break;
-				case BackupSratus.FrameEnabled:
-					this.sel = new T_Selection(cd.Selection);
-					this.enableds = cd.GetFrameEnabled();
-					break;
-			}
-
-		}
-		public void Restore(T_CellData cd)
-		{
-			switch (stat)
-			{
-				case BackupSratus.All:
-					cd.RestoreCellData(aints);
-					cd.RestoreCaption(caps);
-					cd.Selection.Copy(sel);
-					cd.SetFrameEnabled(enableds);
-					break;
-				case BackupSratus.NumberInput:
-					cd.Selection.Copy(sel);
-					cd.SetCellNum(ints);
-					break;
-				case BackupSratus.SelectionChange:
-					cd.Selection.Copy(sel);
-					break;
-				case BackupSratus.FrameEnabled:
-					cd.Selection.Copy(sel);
-					cd.SetFrameEnabled(enableds);
-					break;
-			}
-		}
-	}
+	//セルフレームの表示タイプ
 	public enum CellType
 	{
+		/// <summary>
+		/// 表示なし
+		/// </summary>
 		None,
+		/// <summary>
+		/// 数字表示
+		/// </summary>
 		Normal,
+		/// <summary>
+		/// 前のコマと同じ数値
+		/// </summary>
 		SameAsBefore,
+		/// <summary>
+		/// 空セルはじめ
+		/// </summary>
 		EmptyStart
 	}
 
+	/// <summary>
+	/// セルフレームの表示データ
+	/// </summary>
 	public struct CellSatus
 	{
 		public int Cell = -1;
@@ -119,21 +73,27 @@ namespace AE_RemapTria
 		}
 	}
 
+	/// <summary>
+	/// セルのコマ打ちデータ
+	/// </summary>
 	public partial class T_CellData 
 	{
+		/// <summary>
+		/// イベント発生フラグ。falseでイベント発生しない。
+		/// </summary>
 		public bool _eventFlag = true;
-		public bool _undePushFlag = true;
 
 		public event EventHandler? ValueChanged = null;
 		public event EventHandler? SelChanged = null;
-
-		private List<BackupCellData> m_BackupCells = new List<BackupCellData>();
+		public event EventHandler? CountChanged = null;
+		// ******************************************************************************
 		private T_Selection m_sel = new();
 		public T_Selection Selection { get { return m_sel; } }
 		public bool IsTargetCell(int idx) { return  m_sel.IsTargerCell(idx); }
 		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
 		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
-
+		// ******************************************************************************
+		private bool[] m_FrameEnabled = new bool[1];
 		public bool EnabledFrame(int f) 
 		{
 			bool ret = true;
@@ -144,11 +104,21 @@ namespace AE_RemapTria
 			return ret;
 		}
 		private int[][] m_data = new int[1][];
-		private bool[] m_FrameEnabled = new bool[1];
 		private string[] m_Caption = new string[1];
+
+		private string m_Info = "";
+		public string Info
+		{
+			get { return m_Info; }
+		}
+
+
 		public int CellCount { get { return m_data.Length; } set { SetCellCount(value); } }
 		public int FrameCount { get { return m_data[0].Length; } set { SetFrameCount(value); } }
 		private int m_FrameCountTrue = 1;
+		/// <summary>
+		/// EnabledFrameを考慮したフレーム数
+		/// </summary>
 		public int FrameCountTrue { get { return m_FrameCountTrue; } }
 		public int[] Cell(int c) { return m_data[c]; }
 		public string[] Captions { get { return m_Caption; } }
@@ -258,17 +228,22 @@ namespace AE_RemapTria
 			get { return m_FrameRate; }
 			set { m_FrameRate = value; OnValueChanged(new EventArgs()); }
 		}
-
+		// ******************************************************
 		private T_PageSec m_PageSec = T_PageSec.sec6;
 		private T_FrameDisp m_FrameDisp = T_FrameDisp.pageFrame;
 
+		// ******************************************************
 		private int m_StartDispFrame = 1;
+		/// <summary>
+		/// 表示フレーム数のスタート番号
+		/// </summary>
 		public int StartDispFrame 
 		{ 
 			get { return m_StartDispFrame; } 
 			set { m_StartDispFrame = value;OnValueChanged(new EventArgs()); }
 		}
 
+		// ******************************************************
 		public string SheetName = "";
 		public string FileName = "";
 
@@ -301,6 +276,15 @@ namespace AE_RemapTria
 			}
 		}
 		// ******************************************************
+		protected virtual void OnCountChanged(EventArgs e)
+		{
+			if (_eventFlag == false) return;
+			if (CountChanged != null)
+			{
+				CountChanged(this, e);
+			}
+		}
+		// ******************************************************
 		public void InitSize(int cc,int fc)
 		{
 			if (cc < 10) cc = 10;
@@ -325,6 +309,7 @@ namespace AE_RemapTria
 					m_data[i][j] = 0;
 				}
 			}
+
 			CalcFrameEnabled();
 		}
 		// ******************************************************
@@ -357,7 +342,7 @@ namespace AE_RemapTria
 					}
 				}
 				CalcFrameEnabled();
-				OnValueChanged(new EventArgs());
+				OnCountChanged(new EventArgs());
 			}
 		}
 		// ******************************************************
@@ -384,7 +369,7 @@ namespace AE_RemapTria
 						m_Caption[i] = Char.ConvertFromUtf32(c + i + 1);
 					}
 				}
-				OnValueChanged(new EventArgs());
+				OnCountChanged(new EventArgs());
 			}
 		}
 		// ******************************************************
@@ -399,6 +384,8 @@ namespace AE_RemapTria
 			SetFrameCount(f);
 			_eventFlag = b;
 			_undePushFlag = b2;
+			OnValueChanged(new EventArgs());
+
 		}
 		// ******************************************************
 		public bool[] GetFrameEnabled()
@@ -438,7 +425,15 @@ namespace AE_RemapTria
 				}
 			}
 			m_FrameCountTrue = ret;
-
+			CalcInfo();
+		}
+		private void CalcInfo()
+		{
+			m_Info = string.Format("{0}+{1}:{2}",
+				m_FrameCountTrue / (int)m_FrameRate,
+				m_FrameCountTrue % (int)m_FrameRate,
+				(int)m_FrameRate
+				);
 		}
 		// ******************************************************
 		public bool InitFrameEnabled()
@@ -558,11 +553,24 @@ namespace AE_RemapTria
 		{
 			int cc = c;
 			if (cc < 0) cc = 0;
-			else if (cc >= m_data.Length) cc = m_data.Length;
+			else if (cc >= m_data.Length) cc = m_data.Length-1;
 			if( cc != m_sel.Target)
 			{
 				PushUndo(BackupSratus.SelectionChange);
 				m_sel.SetTarget(cc);
+				OnSelChanged(new EventArgs());
+			}
+		}
+		// ******************************************************
+		public void SetStart(int f)
+		{
+			int ff = f;
+			if (ff < 0) ff = 0;
+			else if (ff >= m_data[0].Length) ff = m_data.Length-1;
+			if (ff != m_sel.Start)
+			{
+				PushUndo(BackupSratus.SelectionChange);
+				m_sel.SetStart(ff);
 				OnSelChanged(new EventArgs());
 			}
 		}
@@ -589,6 +597,7 @@ namespace AE_RemapTria
 			}
 
 		}
+		/*
 		// ******************************************************
 		public int[] CopyData()
 		{
@@ -614,6 +623,7 @@ namespace AE_RemapTria
 			}
 			OnValueChanged(new EventArgs());
 		}
+		*/
 		// ******************************************************
 		public int[] GetCellNum()
 		{
@@ -775,31 +785,7 @@ namespace AE_RemapTria
 			OnValueChanged(new EventArgs());
 
 		}
-		// ******************************************************
-		public void PushUndo(BackupSratus bs)
-		{
-			if (_undePushFlag == false) return;
-			m_BackupCells.Add(new BackupCellData(this, bs));
-			if(m_BackupCells.Count>2000)
-			{
-				m_BackupCells.RemoveAt(0);
-			}
-		}
-		// ******************************************************
-		public void PopUndo()
-		{
-			int idx = m_BackupCells.Count - 1;
-			if ( idx < 0) return;
-			bool b = _undePushFlag;
-			bool b2 = _eventFlag;
-			_undePushFlag = false;
-			_eventFlag = false;
-			m_BackupCells[idx].Restore(this);
-			m_BackupCells.RemoveAt(idx);
-			_undePushFlag = b;
-			_eventFlag = b2;
-			OnValueChanged(new EventArgs());
-		}
+
 		// ******************************************************
 		public bool SelectionAdd(int v)
 		{

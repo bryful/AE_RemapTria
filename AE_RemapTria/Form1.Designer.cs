@@ -37,6 +37,7 @@
 			this.t_Frame1 = new AE_RemapTria.T_Frame();
 			this.t_Input1 = new AE_RemapTria.T_Input();
 			this.t_Menu1 = new AE_RemapTria.T_Menu();
+			this.t_Label1 = new AE_RemapTria.T_LabelInfo();
 			this.SuspendLayout();
 			// 
 			// t_Grid1
@@ -44,6 +45,7 @@
 			this.t_Grid1.Alignment = System.Drawing.StringAlignment.Center;
 			this.t_Grid1.BackColor = System.Drawing.Color.Transparent;
 			this.t_Grid1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Grid1.FrameCount = 72;
 			this.t_Grid1.HScrol = this.t_hScrol1;
 			this.t_Grid1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Grid1.Location = new System.Drawing.Point(94, 65);
@@ -162,11 +164,35 @@
 			this.t_Menu1.TabIndex = 4;
 			this.t_Menu1.Text = "t_Menu1";
 			// 
+			// t_Label1
+			// 
+			this.t_Label1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.t_Label1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label1.BottomBar = new System.Drawing.Size(100, 0);
+			this.t_Label1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label1.Grid = this.t_Grid1;
+			this.t_Label1.LeftBar = new System.Drawing.Size(0, 0);
+			this.t_Label1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Label1.Location = new System.Drawing.Point(21, 552);
+			this.t_Label1.MyFontIndex = 5;
+			this.t_Label1.MyFonts = this.t_MyFonts1;
+			this.t_Label1.MyFontSize = 9F;
+			this.t_Label1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Label1.Name = "t_Label1";
+			this.t_Label1.RightBar = new System.Drawing.Size(0, 0);
+			this.t_Label1.Size = new System.Drawing.Size(67, 15);
+			this.t_Label1.TabIndex = 8;
+			this.t_Label1.Text = "3+0:24";
+			this.t_Label1.TopBar = new System.Drawing.Size(100, 0);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(451, 579);
+			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_hScrol1);
 			this.Controls.Add(this.t_vScrol1);
 			this.Controls.Add(this.t_Menu1);
@@ -194,5 +220,6 @@
 		private T_Menu t_Menu1;
 		private T_VScrol t_vScrol1;
 		private T_HScrol t_hScrol1;
+		private T_LabelInfo t_Label1;
 	}
 }
