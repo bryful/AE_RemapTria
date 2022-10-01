@@ -68,6 +68,7 @@ namespace AE_RemapTria
 		{
 			base.InitLayout();
 			this.KeyPreview = true;
+			this.MaximumSize = new Size(65536,65536);
 		}
 		// ********************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -75,7 +76,7 @@ namespace AE_RemapTria
 			if (m_mdPos != MDPos.None) return;
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
-				int headerY = 15;
+				int headerY = 25;
 				int x0 = 15;
 				int x1 = this.Width - 15;
 				int xmid = this.Width/2;
@@ -148,6 +149,7 @@ namespace AE_RemapTria
 			}
 			//base.OnMouseMove(e);
 		}
+		// ********************************************************************
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if(m_mdPos!=MDPos.None)
@@ -157,11 +159,23 @@ namespace AE_RemapTria
 			base.OnMouseUp(e);
 		}
 		// ********************************************************************
+		protected override void OnDoubleClick(EventArgs e)
+		{
+			if (m_mdPos == MDPos.Header)
+			{
+				HeightMax();
+				m_mdPos=MDPos.None;	
+			}
+			base.OnDoubleClick(e);
+		}
+
+		// ********************************************************************
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
 			Pen p = new Pen(Color.White);
+			SolidBrush sb = new SolidBrush(Color.Black);
 			try
 			{
 				int w0 = 5;
@@ -182,6 +196,13 @@ namespace AE_RemapTria
 				}
 				g.DrawImage(kagi[3], new Point(w0, h1));
 
+				if (m_grid != null)
+				{
+					Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
+					sb.Color = m_grid.Colors.TopBar;
+					g.FillRectangle(sb, r0);
+				}
+
 				if (m_grid != null) p.Color = m_grid.Colors.LineA;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
 				g.DrawRectangle(p, r);
@@ -189,6 +210,7 @@ namespace AE_RemapTria
 			finally
 			{
 				p.Dispose();
+				sb.Dispose();
 			}
 
 		}
@@ -242,6 +264,7 @@ namespace AE_RemapTria
 			{
 				SetMinMax();
 				SetLocSize();
+				m_grid.SetForm(this);
 				m_grid.SizeChanged += M_grid_SizeChanged;
 				m_grid.LocationChanged += M_grid_SizeChanged;
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
@@ -264,13 +287,15 @@ namespace AE_RemapTria
 			if (m_grid == null) return;
 			int leftW = m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth;
 			int topW = 25 + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2;
-			m_grid.Location = new Point(leftW,topW);
+			Point p = new Point(leftW, topW);
+			if (m_grid.Location != p) m_grid.Location = p;
 			int ww = leftW + m_grid.Sizes.InterWidth + 22 + 5;
 			int hh = topW + m_grid.Sizes.InterHeight + 22 + 5;
-			m_grid.Size = new Size(
-				this.ClientSize.Width -ww,
-				this.ClientSize.Height-hh
+			Size sz = new Size(
+				this.ClientSize.Width - ww,
+				this.ClientSize.Height - hh
 				);
+			if (m_grid.Size != sz) m_grid.Size = sz;
 
 		}
 		// ********************************************************************
@@ -362,7 +387,7 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			//this.Text = String.Format("{0}", keyData.ToString());
+			this.Text = String.Format("{0}", keyData.ToString());
 			if (m_grid != null)
 			{
 				FuncItem fi = m_grid.Funcs.FindKeys(keyData);
@@ -384,28 +409,24 @@ namespace AE_RemapTria
 			base.OnMouseWheel(e);
 		}
 		// ********************************************************************
-		/*
-		protected override void OnKeyDown(KeyEventArgs e)
-		//protected override bool ProcessDialogKey(Keys keyData)
-		{
-			//this.Text = String.Format("{0}/{1}/{2}", e.KeyCode.ToString(), e.KeyData.ToString(),e.KeyValue.ToString());
-			if(m_grid!=null)
-			{
-				FuncItem fi = m_grid.Funcs.FindKeys(e.KeyData);
-				if(fi !=null)
-				{
-					if (fi.Func()) this.Invalidate();
-				}
-			}
-			base.OnKeyDown(e);
-		}
-		*/
-		// ********************************************************************
 		public void ForegroundWindow()
 		{
 			SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
 		}
 		// ********************************************************************
+		public bool HeightMax()
+		{
+			bool ret = false;
+			Rectangle r = PrefFile.NowScreen(this.Bounds);
+			if(r.Width>100)
+			{
+				int h = r.Height - 60;
+				this.Location = new Point(this.Left, r.Top + 25);
+				this.Size = new Size(this.Width, h);
+				ret = true;
+			}
+			return ret;
+		}
 		// ********************************************************************
 		public void Command(string[] args, PIPECALL IsPipe = PIPECALL.StartupExec)
 		{

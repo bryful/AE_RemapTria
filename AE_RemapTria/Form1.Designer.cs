@@ -54,7 +54,7 @@
 			this.t_Grid1.MyFontSize = 9F;
 			this.t_Grid1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Grid1.Name = "t_Grid1";
-			this.t_Grid1.Size = new System.Drawing.Size(247, 274);
+			this.t_Grid1.Size = new System.Drawing.Size(326, 483);
 			this.t_Grid1.TabIndex = 0;
 			this.t_Grid1.Text = "t_Grid1";
 			this.t_Grid1.VScrol = this.t_vScrol1;
@@ -63,12 +63,12 @@
 			// 
 			this.t_hScrol1.BackColor = System.Drawing.Color.Transparent;
 			this.t_hScrol1.Grid = this.t_Grid1;
-			this.t_hScrol1.Location = new System.Drawing.Point(94, 343);
-			this.t_hScrol1.Maximum = 113;
+			this.t_hScrol1.Location = new System.Drawing.Point(94, 552);
+			this.t_hScrol1.Maximum = 34;
 			this.t_hScrol1.MaximumSize = new System.Drawing.Size(65536, 22);
 			this.t_hScrol1.MinimumSize = new System.Drawing.Size(123, 22);
 			this.t_hScrol1.Name = "t_hScrol1";
-			this.t_hScrol1.Size = new System.Drawing.Size(247, 22);
+			this.t_hScrol1.Size = new System.Drawing.Size(326, 22);
 			this.t_hScrol1.TabIndex = 6;
 			this.t_hScrol1.Text = "t_hScrol1";
 			this.t_hScrol1.Value = 0;
@@ -77,12 +77,12 @@
 			// 
 			this.t_vScrol1.BackColor = System.Drawing.Color.Transparent;
 			this.t_vScrol1.Grid = this.t_Grid1;
-			this.t_vScrol1.Location = new System.Drawing.Point(345, 65);
-			this.t_vScrol1.Maximum = 1166;
+			this.t_vScrol1.Location = new System.Drawing.Point(424, 65);
+			this.t_vScrol1.Maximum = 957;
 			this.t_vScrol1.MaximumSize = new System.Drawing.Size(22, 65536);
 			this.t_vScrol1.MinimumSize = new System.Drawing.Size(22, 123);
 			this.t_vScrol1.Name = "t_vScrol1";
-			this.t_vScrol1.Size = new System.Drawing.Size(22, 274);
+			this.t_vScrol1.Size = new System.Drawing.Size(22, 483);
 			this.t_vScrol1.TabIndex = 5;
 			this.t_vScrol1.Text = "t_vScrol1";
 			this.t_vScrol1.Value = 0;
@@ -102,7 +102,7 @@
 			this.t_Caption1.MyFontSize = 9F;
 			this.t_Caption1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Caption1.Name = "t_Caption1";
-			this.t_Caption1.Size = new System.Drawing.Size(247, 40);
+			this.t_Caption1.Size = new System.Drawing.Size(326, 40);
 			this.t_Caption1.TabIndex = 1;
 			this.t_Caption1.Text = "t_Caption1";
 			// 
@@ -121,7 +121,7 @@
 			this.t_Frame1.MyFontSize = 9F;
 			this.t_Frame1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Frame1.Name = "t_Frame1";
-			this.t_Frame1.Size = new System.Drawing.Size(90, 274);
+			this.t_Frame1.Size = new System.Drawing.Size(90, 483);
 			this.t_Frame1.TabIndex = 2;
 			this.t_Frame1.Text = "t_Frame1";
 			// 
@@ -143,7 +143,7 @@
 			this.t_Input1.Size = new System.Drawing.Size(90, 40);
 			this.t_Input1.TabIndex = 3;
 			this.t_Input1.Text = "t_Input1";
-			this.t_Input1.Value = 0;
+			this.t_Input1.Value = -1;
 			// 
 			// t_Menu1
 			// 
@@ -158,7 +158,7 @@
 			this.t_Menu1.MyFontSize = 8F;
 			this.t_Menu1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Menu1.Name = "t_Menu1";
-			this.t_Menu1.Size = new System.Drawing.Size(160, 20);
+			this.t_Menu1.Size = new System.Drawing.Size(153, 20);
 			this.t_Menu1.TabIndex = 4;
 			this.t_Menu1.Text = "t_Menu1";
 			// 
@@ -166,7 +166,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(372, 370);
+			this.ClientSize = new System.Drawing.Size(451, 579);
 			this.Controls.Add(this.t_hScrol1);
 			this.Controls.Add(this.t_vScrol1);
 			this.Controls.Add(this.t_Menu1);
@@ -175,7 +175,7 @@
 			this.Controls.Add(this.t_Caption1);
 			this.Controls.Add(this.t_Grid1);
 			this.Grid = this.t_Grid1;
-			this.MaximumSize = new System.Drawing.Size(426, 577);
+			this.MaximumSize = new System.Drawing.Size(65536, 65536);
 			this.MinimumSize = new System.Drawing.Size(310, 225);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

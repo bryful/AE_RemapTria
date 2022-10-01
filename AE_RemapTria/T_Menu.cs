@@ -161,10 +161,11 @@ namespace AE_RemapTria
 		private void SetLoc()
 		{
 			if (m_grid == null) return;
-			this.Location = new Point(
+			Point p = new Point(
 				m_grid.Left - (m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth),
-				m_grid.Top - (m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 + m_grid.Sizes.InterHeight+this.Height)
-				); 
+				m_grid.Top - (m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 + m_grid.Sizes.InterHeight + this.Height)
+				);
+			if (this.Location != p) this.Location = p;
 		}
 		// ******************************************************************
 		protected override void OnLocationChanged(EventArgs e)

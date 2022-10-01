@@ -31,7 +31,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(InputClear, "InputClear", Keys.Delete));
 			lst.Add(new FuncItem(InputBS, "InputBS", Keys.Back));
 			lst.Add(new FuncItem(InputEnter, "InputEnter", Keys.Enter,Keys.Return));
-			lst.Add(new FuncItem(InputSame, "InputSame", Keys.Decimal, Keys.OemPeriod));
+			lst.Add(new FuncItem(InputEmpty, "Inputempty", Keys.Decimal, Keys.OemPeriod));
 			lst.Add(new FuncItem(InputInc, "InputInc", Keys.Add));
 			lst.Add(new FuncItem(InputDec, "InputDec", Keys.Subtract));
 			lst.Add(new FuncItem(SelMoveUp, "SelMoveUp", Keys.Up));
@@ -42,6 +42,8 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SelDec, "SelDec", Keys.Shift | Keys.Up,Keys.Divide));
 			lst.Add(new FuncItem(Undo, "Undo", Keys.Z|Keys.Control));
 			lst.Add(new FuncItem(Open, "Open", Keys.Control | Keys.O));
+			lst.Add(new FuncItem(ToggleFrameEnabled, "ToggleFrameEnabled", Keys.Control | Keys.Oemtilde));
+			lst.Add(new FuncItem(HeightMax, "HeightMax", Keys.Control | Keys.Oem5));
 
 			Funcs.SetFuncs(lst.ToArray());
 		}
@@ -49,11 +51,13 @@ namespace AE_RemapTria
 		public void MakeMenu()
 		{
 			if (m_Menu == null) return;
-			m_Menu.AddMenu("AE_RemapTria", 95);
-			m_Menu.AddMenu("Edit", 45);
+			m_Menu.AddMenu("AE_RemapTria", 93);
+			m_Menu.AddMenu("Edit", 40);
 			m_Menu.AddSubMenu(0, "Open ctrl+O", Open);
 			m_Menu.AddSubMenu(0, "Quit ctrl+Q", Quit);
 			m_Menu.AddSubMenu(1, "Undo ctrl+Z", Undo);
+			m_Menu.AddSubMenu(1, "ToggleFrameEnabled ctrl+@", ToggleFrameEnabled);
+			m_Menu.AddSubMenu(1, "HeightMax ctrl+\\", HeightMax);
 		}
 		public void T_Menu_MenuExec(object sender, MenuEventArgs e)
 		{
@@ -82,6 +86,11 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ************************************************************************************
+		public bool ToggleFrameEnabled()
+		{
+			return CellData.ToggleFrameEnabled();
+		}
+		// ************************************************************************************
 		public bool Inputnum(int v)
 		{
 			bool ret = false;
@@ -101,13 +110,45 @@ namespace AE_RemapTria
 		public bool InputClear()
 		{
 			bool ret = false;
-			if (m_Input != null) ret = m_Input.InputClear();
+			if (m_Input != null)
+			{
+				if (m_Input.Value >= 0)
+				{
+					ret = m_Input.InputClear();
+				}
+				else
+				{
+					CellData.SetCellNumEmpty(false);
+					ret = true;
+				}
+			}
 			return ret;
 		}
 		public bool InputBS()
 		{
 			bool ret = false;
-			if (m_Input != null) ret = m_Input.InputBS();
+			if (m_Input != null)
+			{
+				if (m_Input.Value >= 0)
+				{
+					ret = m_Input.InputBS();
+				}
+				else
+				{
+					CellData.SetCellNumBS();
+					ret = true;
+				}
+			}
+			return ret;
+		}
+		public bool InputEmpty()
+		{
+			bool ret = false;
+			if (m_Input != null)
+			{
+				CellData.SetCellNumEmpty(true);
+				ret = true;
+			}
 			return ret;
 		}
 		public void ChkSelectionV()
@@ -228,7 +269,32 @@ namespace AE_RemapTria
 		}
 		public bool SelDec()
 		{
-			return CellData.SelectionAdd(-1);
+			bool ret = false;
+			if (CellData.Selection.Length > 1)
+			{
+				ret = CellData.SelectionAdd(-1);
+			}
+			return ret;
+		}
+		public bool SelectionAll()
+		{
+			bool ret = false;
+			if (CellData.Selection.Length < CellData.FrameCount)
+			{
+				CellData.PushUndo(BackupSratus.SelectionChange);
+				ret = CellData.SelectionAll();
+			}
+			return ret;
+		}
+		// ************************************************************************************
+		public bool HeightMax()
+		{
+			bool ret = false;
+			if (m_Form != null)
+			{
+				ret = m_Form.HeightMax();
+			}
+			return ret;
 		}
 		// ************************************************************************************
 	}

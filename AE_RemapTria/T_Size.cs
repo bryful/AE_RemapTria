@@ -140,7 +140,7 @@ namespace AE_RemapTria
 			set { m_InterHeight = value; OnChangeGridSize(new EventArgs()); }
 		}
 		//---------------------------------------
-		public void SetSize(Size sz, T_CellData cd)
+		public void SizeSetting(Size sz, T_CellData cd)
 		{
 			m_DispSize = sz;
 			m_FrameCount = cd.FrameCount;

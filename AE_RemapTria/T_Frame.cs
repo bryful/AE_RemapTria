@@ -100,8 +100,9 @@ namespace AE_RemapTria
 			if (m_grid == null) return;
 			int x = m_grid.Left - (m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth);
 
-			this.Location = new Point(x, m_grid.Top);
-			this.Height = m_grid.Height;
+			Point p = new Point(x, m_grid.Top);
+			if(this.Location != p) this.Location = p;
+			if(this.Height != m_grid.Height) this.Height = m_grid.Height;
 		}
 		//-------------------------------------------------
 		private void ChkMinMax()
@@ -140,7 +141,7 @@ namespace AE_RemapTria
 			base.OnResize(e);
 			if (m_grid != null)
 			{
-				m_grid.SetSize();
+				m_grid.SizeSetting();
 				SetLocSize();
 				this.Invalidate();
 			}
@@ -168,60 +169,86 @@ namespace AE_RemapTria
 			int y = f * m_grid.Sizes.CellHeight - m_grid.Sizes.Disp.Y;
 			rct.Y = y;
 
-			if (m_grid.CellData.IsSelectedFrame(f) == true)
+			bool isNoEnabled = ! m_grid.CellData.EnabledFrame(f);
+			bool isSelected = m_grid.CellData.IsSelectedFrame(f);
+			//フレームの背景
+			if (isSelected == true)
 			{
 				sb.Color = m_grid.Colors.Selection;
 				Fill(g, sb, rct);
+			}else if (isNoEnabled)
+			{
+				sb.Color = m_grid.Colors.Gray;
+				Fill(g, sb, rct);
 			}
-
-			sb.Color = m_grid.Colors.Moji;
+			//フレーム番号を描く
+			if(isNoEnabled) sb.Color = m_grid.Colors.GrayMoji;
+			else sb.Color = m_grid.Colors.Moji;
 			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 5, rct.Height);
 			DrawStr(g, (f + m_grid.CellData.StartDispFrame).ToString(), sb, rct2);
 
-			p.Color = m_grid.Colors.LineB;
+			// 下の横線を描く
+			//p.Color = m_grid.Colors.LineB;
+			//p.Width = 1;
+			//DrawHorLine(g, p, m_grid.Sizes.FrameWidth2, rct.Right - 1, y);
+
 			p.Width = 1;
-			DrawHorLine(g, p, m_grid.Sizes.FrameWidth2, rct.Right - 1, y);
 
 			sb.Color = m_grid.Colors.Kagi;
+			int SecBar = 24;
+			int HSecBar = 12;
+			int HHSecBar = 6;
 			switch (m_grid.CellData.FrameRate)
 			{
 				case T_Fps.FPS24:
-					if (f % 24 == 0)
-					{
-						Rectangle r = new Rectangle(Dot1.Location, Dot1.Size);
-						r.Y += y;
-						Fill(g, sb, r);
-						p.Color = m_grid.Colors.Line;
-						int y2 = y - 1;
-						DrawHorLine(g, p, rct.Left, rct.Right, y2);
-						y2--;
-						DrawHorLine(g, p, rct.Left, rct.Right, y2);
-					}
-					else if (f % 12 == 0)
-					{
-						Rectangle r = new Rectangle(Dot2.Location, Dot2.Size);
-						r.Y += y;
-						Fill(g, sb, r);
-						p.Color = m_grid.Colors.Line;
-						int y2 = y - 1;
-						DrawHorLine(g, p, rct.Left, rct.Right, y2);
-
-					}
-					else
-					{
-						Rectangle r = new Rectangle(Dot3.Location, Dot3.Size);
-						r.Y += y;
-						Fill(g, sb, r);
-						if (f % 6 == 0)
-						{
-							p.Color = m_grid.Colors.LineA;
-							int y2 = y - 1;
-							DrawHorLine(g, p, rct.Left, rct.Right, y2);
-						}
-					}
+					SecBar = 24;
+					HSecBar = 12;
+					HHSecBar = 6;
 					break;
 				case T_Fps.FPS30:
+					SecBar = 30;
+					HSecBar = 15;
+					HHSecBar = 5;
 					break;
+			}
+			if (f % SecBar == 0)
+			{
+				Rectangle r = new Rectangle(Dot1.Location, Dot1.Size);
+				r.Y += y;
+				Fill(g, sb, r);
+				p.Color = m_grid.Colors.Line;
+				int y2 = y - 1;
+				DrawHorLine(g, p, rct.Left, rct.Right, y2);
+				y2--;
+				DrawHorLine(g, p, rct.Left, rct.Right, y2);
+			}
+			else if (f % HSecBar == 0)
+			{
+				Rectangle r = new Rectangle(Dot2.Location, Dot2.Size);
+				r.Y += y;
+				Fill(g, sb, r);
+				p.Color = m_grid.Colors.Line;
+				int y2 = y - 1;
+				DrawHorLine(g, p, rct.Left, rct.Right, y2);
+
+			}
+			else
+			{
+				Rectangle r = new Rectangle(Dot3.Location, Dot3.Size);
+				r.Y += y;
+				Fill(g, sb, r);
+				if (f % HHSecBar == 0)
+				{
+					p.Color = m_grid.Colors.LineA;
+					int y2 = y - 1;
+					DrawHorLine(g, p, rct.Left, rct.Right, y2);
+				}
+				else
+				{
+					p.Color = m_grid.Colors.LineB;
+					DrawHorLine(g, p, m_grid.Sizes.FrameWidth2, rct.Right - 1, y);
+
+				}
 			}
 		}
 		//-------------------------------------------------

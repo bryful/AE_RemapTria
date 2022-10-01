@@ -14,22 +14,75 @@ namespace AE_RemapTria
 {
 	public partial class T_DialogBase : Form
 	{
+		private T_Form? m_Form = null;
 		private T_Grid? m_grid = null;
-		private bool m_IsClose = false;
-		private Font m_font = new Font("Arial", 14);
-		private int m_MFontIndex = 5;
-		public int MFontIndex { get { return m_MFontIndex; } set { SetMFontIndex(value); } }
-		private float m_MFontSize = 14;
-		public float MFontSize { get { return m_MFontSize; } set { SetMFontSize(value); } }
-		public Font MFont { get { return m_font; } }
+		private T_MyFonts? m_MyFonts = null;
+		public T_MyFonts? MyFonts
+		{
+			get { return m_MyFonts; }
+			set
+			{
+				m_MyFonts = value;
+				if (m_MyFonts != null)
+				{
+					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+				}
+			}
+		}
+		private int m_MyFontIndex = 5;
+		public int MyFontIndex
+		{
+			get { return m_MyFontIndex; }
+			set
+			{
+				m_MyFontIndex = value;
+				if (m_MyFontIndex < 0) m_MyFontIndex = 0;
+				if (this.MyFonts != null)
+				{
+					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+				}
+			}
+		}
+		public float MyFontSize
+		{
+			get { return this.Font.Size; }
+			set
+			{
+				SetFontSizeStyle(value, this.Font.Style);
+			}
+		}
+		public FontStyle MyFontStyle
+		{
+			get { return this.Font.Style; }
+			set
+			{
+				SetFontSizeStyle(this.Font.Size, value);
+			}
+		}
+		public void SetFontSizeStyle(float sz, FontStyle fs)
+		{
+			if (this.MyFonts != null)
+			{
+				this.Font = m_MyFonts.MyFont(m_MyFontIndex, sz, fs);
+			}
+			else
+			{
+				this.Font = new Font(this.Font.FontFamily, sz, fs);
+			}
+		}
 		private StringFormat m_format = new StringFormat();
-		private StringAlignment m_Alignment_Bak;
-		private StringAlignment m_LineAlignment_Bak;
-		private float m_FontSize_Bak;
-		private FontStyle m_FontStyle_Bak;
-		[System.Runtime.InteropServices.DllImport("gdi32.dll")]
-		public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
-		public PrivateFontCollection? MyFonts = null;// new PrivateFontCollection();
+		// ************************************************************************
+		public StringAlignment Alignment
+		{
+			get { return m_format.Alignment; }
+			set { m_format.Alignment = value; }
+		}
+		// ************************************************************************
+		public StringAlignment LineAlignment
+		{
+			get { return m_format.LineAlignment; }
+			set { m_format.LineAlignment = value; }
+		}
 
 		public T_DialogBase()
 		{
@@ -48,169 +101,63 @@ namespace AE_RemapTria
 				true);
 			this.BackColor = Color.Transparent;
 			this.UpdateStyles();
-			m_Alignment_Bak =
 			Alignment = StringAlignment.Far;
-			m_LineAlignment_Bak =
 			LineAlignment = StringAlignment.Center;
-			m_FontSize_Bak = this.Font.Size;
-			m_FontStyle_Bak = this.Font.Style;
 			this.FormBorderStyle = FormBorderStyle.None;
 			this.TopMost = true;
 
 
 		}
+		protected override void InitLayout()
+		{
+			if (m_MyFonts != null)
+			{
+				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+			}
+			base.InitLayout();
+		}       
 		// *****************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			ChkGrid();
 		}
 		// *****************************************************************
-		public DialogResult ShowDialogM(Form fm, T_Grid g, Point p,bool isClose = false)
+		public void SetForm(T_Form fm)
 		{
-			m_grid = g;
-			ChkGrid();
-			this.Location = p;
-			m_IsClose = isClose;
-			return ShowDialog(fm);
+			m_Form = fm;
+			if (m_Form == null) return;
+			m_grid = fm.Grid;
+			m_MyFonts = fm.Grid.MyFonts;
 		}
-		// *****************************************************************
-		protected override void OnMouseLeave(EventArgs e)
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnMouseLeave(e);
-			if(m_IsClose==true)
-			{
-				this.DialogResult = DialogResult.Cancel;
-				Close();
-			}
-		}
-		protected override void OnMouseClick(MouseEventArgs e)
-		{
-			base.OnMouseClick(e);
-			this.Close();
-		}
-		// *****************************************************************
-		public T_Grid Grid
-		{
-			get { return m_grid; }
-			set
-			{
-				m_grid = value;
-				ChkGrid();
-			}
-		}
-		// *****************************************************************
-		private void ChkGrid()
-		{
-			if (m_grid != null)
-			{
-
-			}
-		}
-		// *****************************************************************
-		public int MyFontsCount
-		{
-			get
-			{
-				int ret = 0;
-				if (MyFonts != null)
-				{
-					ret = MyFonts.Families.Length;
-				}
-				return ret;
-			}
-		}
-		// ************************************************************************
-		public void SetMFontIndex(int idx)
-		{
+			base.OnPaint(e);
+			Graphics g = e.Graphics;
+			//if(m_grid == null) return;
+			SolidBrush sb = new SolidBrush(Color.FromArgb(128,50,50,100));
 			try
 			{
-				Font? f = MFontMake(idx, m_MFontSize);
-				if (f != null)
+				g.FillRectangle(sb,this.ClientRectangle);
+				if (m_grid != null)
 				{
-					m_font = f;
-					this.Invalidate();
+					sb.Color = m_grid.Colors.Moji;
 				}
-			}
-			catch
-			{
+				else
+				{
+					sb.Color = Color.White;
+				}
+				Rectangle r = new Rectangle(10, 5, 15,15);
+				g.FillRectangle(sb, r);
+				r = new Rectangle(30, 5, this.Width-30,25);
+				m_format.Alignment = StringAlignment.Near;
+				m_format.LineAlignment = StringAlignment.Center;
+				g.DrawString(this.Text,this.Font,sb,r);
 
 			}
-		}
-		// ************************************************************************
-		public void SetMFontSize(float sz)
-		{
-			try
+			finally
 			{
-				Font? f = MFontMake(m_MFontIndex, sz);
-				if (f != null)
-				{
-					m_font = f;
-					this.Invalidate();
-				}
+				sb.Dispose();
 			}
-			catch
-			{
-
-			}
-		}
-		// ************************************************************************
-		public void MFontInit()
-		{
-			//SourceHanCodeJP
-			//MyricaM
-			//Myrica
-			byte[] fontData = Properties.Resources.SourceHanCodeJP;
-			IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
-			System.Runtime.InteropServices.Marshal.Copy(fontData, 0, fontPtr, fontData.Length);
-			uint dummy = 0;
-			MyFonts = new PrivateFontCollection();
-			MyFonts.AddMemoryFont(fontPtr, Properties.Resources.SourceHanCodeJP.Length);
-			AddFontMemResourceEx(fontPtr, (uint)Properties.Resources.SourceHanCodeJP.Length, IntPtr.Zero, ref dummy);
-			System.Runtime.InteropServices.Marshal.FreeCoTaskMem(fontPtr);
-			SetMyFont(m_MFontIndex, m_MFontSize);
-		}
-		// ************************************************************************
-		public void SetMyFont(int idx, float sz)
-		{
-			m_font = MFontMake(idx, sz);
-			this.Font = m_font;
-			this.Invalidate();
-		}
-		// ************************************************************************
-		public Font MFontMake(int idx, float sz)
-		{
-			Font ret = new Font("Arial", m_MFontSize);
-			if (MyFonts != null)
-			{
-				if ((idx >= 0) && (idx < MyFonts.Families.Length))
-				{
-					try
-					{
-						ret = new Font(MyFonts.Families[idx], sz);
-						m_MFontIndex = idx;
-						m_MFontSize = sz;
-					}
-					catch
-					{
-						m_MFontIndex = 0;
-						ret = new Font(MyFonts.Families[0], m_MFontSize);
-					}
-				}
-			}
-			return ret;
-		}
-		// ************************************************************************
-		public StringAlignment Alignment
-		{
-			get { return m_format.Alignment; }
-			set { m_format.Alignment = value; }
-		}
-		// ************************************************************************
-		public StringAlignment LineAlignment
-		{
-			get { return m_format.LineAlignment; }
-			set { m_format.LineAlignment = value; }
 		}
 	}
 }

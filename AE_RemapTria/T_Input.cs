@@ -17,7 +17,7 @@ namespace AE_RemapTria
 	{
 		private T_Grid? m_grid = null;
 
-		private int m_value = 0;
+		private int m_value = -1;
 		public int Value
 		{
 			get { return m_value; } 
@@ -46,6 +46,7 @@ namespace AE_RemapTria
 			base.InitLayout();
 			ChkGrid();
 			MyFontSize = 9;
+			m_value = -1;
 		}
 		//-------------------------------------------
 		public T_Grid Grid
@@ -83,10 +84,11 @@ namespace AE_RemapTria
 		private void SetLoc()
 		{
 			if (m_grid == null) return;
-			this.Location = new Point(
-				m_grid.Left -(m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth),
-				m_grid.Top -(m_grid.Sizes.InterHeight + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2)
+			Point p = new Point(
+				m_grid.Left - (m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth),
+				m_grid.Top - (m_grid.Sizes.InterHeight + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2)
 				);
+			if (this.Location != p) this.Location = p;
 		}
 		//------------------------------------------
 		protected override void OnLocationChanged(EventArgs e)
@@ -183,7 +185,15 @@ namespace AE_RemapTria
 						sb.Color = m_grid.Colors.Moji;
 						DrawStr(g, m_value.ToString(), sb, rct);
 					}
-					p.Color = m_grid.Colors.InputLine;
+					if(m_value >= 0)
+					{
+						p.Color = m_grid.Colors.InputLineA;
+
+					}
+					else
+					{
+						p.Color = m_grid.Colors.InputLine;
+					}
 					DrawFrame(g, p, rct, 1);
 				}
 			}

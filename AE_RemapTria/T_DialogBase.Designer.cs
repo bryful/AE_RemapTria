@@ -35,9 +35,8 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
-			this.BackgroundImage = global::AE_RemapTria.Properties.Resources.Back;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(441, 236);
+			this.ClientSize = new System.Drawing.Size(339, 166);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "T_DialogBase";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

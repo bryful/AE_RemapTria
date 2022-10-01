@@ -33,6 +33,11 @@ namespace AE_RemapTria
 		{
 			m_Menu = tm;
 		}
+		private T_Form? m_Form = null;
+		public void SetForm(T_Form fm)
+		{
+			m_Form = fm;
+		}
 		// ************************************************************************************
 		public T_Grid()
 		{
@@ -53,7 +58,7 @@ namespace AE_RemapTria
 		protected override void InitLayout()
 		{
 			base.InitLayout();
-			SetSize();
+			SizeSetting();
 			ChkMinMax();
 			ChkHScrl();
 			ChkVScrl();
@@ -89,12 +94,12 @@ namespace AE_RemapTria
 		{
 			this.MinimumSize = new Size(Sizes.CellWidth * 6, Sizes.CellHeight * 6);
 			this.MaximumSize = new Size(Sizes.CellWidth * CellData.CellCount, Sizes.CellHeight * CellData.FrameCount);
-			Sizes.SetSize(this.Size, CellData);
+			Sizes.SizeSetting(this.Size, CellData);
 		}
 		// ************************************************************************************
-		public void SetSize()
+		public void SizeSetting()
 		{
-			Sizes.SetSize(this.Size, CellData);
+			Sizes.SizeSetting(this.Size, CellData);
 		}
 		//-------------------------------------------------
 		public T_HScrol HScrol
@@ -154,7 +159,7 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		protected override void OnResize(EventArgs e)
 		{
-			SetSize();
+			SizeSetting();
 			if (m_HScrol != null)
 			{
 				m_HScrol.Maximum = Sizes.DispMax.X;
@@ -240,9 +245,14 @@ namespace AE_RemapTria
 			Rectangle r = new Rectangle(x, y, Sizes.CellWidth, Sizes.CellHeight);
 			//塗りつぶし
 			bool IsSel = (CellData.IsSelected(l, f));
+			bool IsUnEnabled = !CellData.EnabledFrame(f);
 			if (IsSel == true)
 			{
 				sb.Color = Colors.Selection;
+			}
+			else if (IsUnEnabled)
+			{
+				sb.Color = Colors.Gray;
 			}
 			else
 			{
@@ -305,15 +315,18 @@ namespace AE_RemapTria
 			switch (cs.Status)
 			{
 				case CellType.Normal:
-					sb.Color = Colors.Moji;
+					if (IsUnEnabled) sb.Color = Colors.GrayMoji;
+					else sb.Color = Colors.Moji;
 					DrawStr(g, CellData.GetCellData(l, f).ToString(), sb, r);
 					break;
 				case CellType.SameAsBefore:
-					p.Color = Colors.Moji;
+					if (IsUnEnabled) p.Color = Colors.GrayMoji;
+					else p.Color = Colors.Moji;
 					DrawVerLine(g,p, r.Left + r.Width / 2, r.Top, r.Bottom);
 					break;
 				case CellType.EmptyStart:
-					p.Color = Colors.Moji;
+					if (IsUnEnabled) p.Color = Colors.GrayMoji;
+					else p.Color = Colors.Moji;
 					DrawBatsu(g, p, r);
 					break;
 				case CellType.None:

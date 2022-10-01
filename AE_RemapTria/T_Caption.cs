@@ -90,8 +90,9 @@ namespace AE_RemapTria
 			int y = m_grid.Top 
 				- (m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2  + m_grid.Sizes.InterHeight);
 
-			this.Location = new Point(m_grid.Left, y);
-			this.Width = m_grid.Width;
+			Point p = new Point(m_grid.Left, y);
+			if (this.Location != p) this.Location = p;
+			if(this.Width != m_grid.Width) this.Width = m_grid.Width;
 		}       
 		// ***********************************************
 		private void ChkMinMax()
@@ -109,7 +110,7 @@ namespace AE_RemapTria
 			if (m_grid != null)
 			{
 				SetLocSize();
-				m_grid.SetSize();
+				m_grid.SizeSetting();
 			}
 			this.Invalidate();
 		}
@@ -188,7 +189,7 @@ namespace AE_RemapTria
 		protected override void OnDoubleClick(EventArgs e)
 		{
 			if (m_grid == null) return;
-			m_grid.CellData.SelectionAll();
+			m_grid.SelectionAll();
 			base.OnDoubleClick(e);
 		}
 	}

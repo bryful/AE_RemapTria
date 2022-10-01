@@ -1,4 +1,5 @@
 ﻿using AE_RemapTria;
+using System.Configuration.Internal;
 using System.Numerics;
 
 namespace AE_RemapTria
@@ -29,6 +30,7 @@ namespace AE_RemapTria
 		None,
 		NumberInput,
 		SelectionChange,
+		FrameEnabled,
 		All
 	}
 
@@ -38,6 +40,7 @@ namespace AE_RemapTria
 		public int[] ints = Array.Empty<int>();
 		public int[][] aints = new int [0][];
 		public string[] caps = new string[0];
+		public bool[] enableds = new bool[0];
 		public BackupSratus stat = BackupSratus.None;
 		public BackupCellData(T_CellData cd,BackupSratus bs)
 		{
@@ -48,6 +51,7 @@ namespace AE_RemapTria
 					this.sel = new T_Selection(sel);
 					aints = cd.BackupCellData();
 					caps = cd.BackupCaption();
+					enableds = cd.GetFrameEnabled();
 					break;
 				case BackupSratus.NumberInput:
 					this.sel = new T_Selection(cd.Selection);
@@ -55,6 +59,10 @@ namespace AE_RemapTria
 					break;
 				case BackupSratus.SelectionChange:
 					this.sel = new T_Selection(cd.Selection);
+					break;
+				case BackupSratus.FrameEnabled:
+					this.sel = new T_Selection(cd.Selection);
+					this.enableds = cd.GetFrameEnabled();
 					break;
 			}
 
@@ -67,6 +75,7 @@ namespace AE_RemapTria
 					cd.RestoreCellData(aints);
 					cd.RestoreCaption(caps);
 					cd.Selection.Copy(sel);
+					cd.SetFrameEnabled(enableds);
 					break;
 				case BackupSratus.NumberInput:
 					cd.Selection.Copy(sel);
@@ -74,6 +83,10 @@ namespace AE_RemapTria
 					break;
 				case BackupSratus.SelectionChange:
 					cd.Selection.Copy(sel);
+					break;
+				case BackupSratus.FrameEnabled:
+					cd.Selection.Copy(sel);
+					cd.SetFrameEnabled(enableds);
 					break;
 			}
 		}
@@ -120,10 +133,23 @@ namespace AE_RemapTria
 		public bool IsTargetCell(int idx) { return  m_sel.IsTargerCell(idx); }
 		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
 		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
+
+		public bool EnabledFrame(int f) 
+		{
+			bool ret = true;
+			if((f>=0)&&(f<m_FrameEnabled.Length))
+			{
+				ret = m_FrameEnabled[f];
+			}
+			return ret;
+		}
 		private int[][] m_data = new int[1][];
+		private bool[] m_FrameEnabled = new bool[1];
 		private string[] m_Caption = new string[1];
 		public int CellCount { get { return m_data.Length; } set { SetCellCount(value); } }
 		public int FrameCount { get { return m_data[0].Length; } set { SetFrameCount(value); } }
+		private int m_FrameCountTrue = 1;
+		public int FrameCountTrue { get { return m_FrameCountTrue; } }
 		public int[] Cell(int c) { return m_data[c]; }
 		public string[] Captions { get { return m_Caption; } }
 		public int[][] BackupCellData()
@@ -278,11 +304,18 @@ namespace AE_RemapTria
 		public void InitSize(int cc,int fc)
 		{
 			if (cc < 10) cc = 10;
+			if (fc < 6) fc = 6;
 			m_Caption = new string[cc];
 			for(int i=0; i<cc;i++)
 			{
 				m_Caption[i] = Char.ConvertFromUtf32('A' + i);
 			}
+			m_FrameEnabled = new bool[fc];
+			for (int i = 0; i < fc; i++)
+			{
+				m_FrameEnabled[i] = true;
+			}
+			m_FrameCountTrue = fc;
 			m_data = new int[cc][];
 			for (int i = 0; i < cc; i++)
 			{
@@ -292,6 +325,7 @@ namespace AE_RemapTria
 					m_data[i][j] = 0;
 				}
 			}
+			CalcFrameEnabled();
 		}
 		// ******************************************************
 		public void SetFrameCount(int fc)
@@ -302,6 +336,7 @@ namespace AE_RemapTria
 				PushUndo(BackupSratus.All);
 				int cc = CellCount;
 				int oldfc = FrameCount;
+
 				for (int i = 0; i < cc; i++)
 				{
 					Array.Resize(ref m_data[i], fc);
@@ -313,6 +348,15 @@ namespace AE_RemapTria
 						}
 					}
 				}
+				Array.Resize(ref m_FrameEnabled, fc);
+				if (fc > oldfc)
+				{
+					for (int j = oldfc; j < fc; j++)
+					{
+						m_FrameEnabled[j] = true;
+					}
+				}
+				CalcFrameEnabled();
 				OnValueChanged(new EventArgs());
 			}
 		}
@@ -342,6 +386,102 @@ namespace AE_RemapTria
 				}
 				OnValueChanged(new EventArgs());
 			}
+		}
+		// ******************************************************
+		public void SetCellFrame(int c,int f)
+		{
+			bool b = _eventFlag;
+			_eventFlag = false;
+			bool b2 = _undePushFlag;
+			_undePushFlag = false;
+			PushUndo(BackupSratus.All);
+			SetCellCount(c);
+			SetFrameCount(f);
+			_eventFlag = b;
+			_undePushFlag = b2;
+		}
+		// ******************************************************
+		public bool[] GetFrameEnabled()
+		{
+			bool[] ret = new bool[Selection.Length];
+			for(int i = 0; i < Selection.Length; i++)
+			{
+				int f = Selection.Start + i;
+				if (f < 0) f = 0;
+				else if (f < m_FrameEnabled.Length) f = m_FrameEnabled.Length - 1;
+				ret[i] = m_FrameEnabled[f];
+			}
+			return ret;
+		}
+		public void SetFrameEnabled(bool[]bb)
+		{
+			int l = bb.Length;
+			if (l > Selection.Length) l = Selection.Length;
+			for (int i = 0; i < l; i++)
+			{
+				int f = Selection.Start + i;
+				if ((f >= 0) && (f < m_FrameEnabled.Length))
+				{
+					m_FrameEnabled[f] = bb[i];
+				}
+			}
+		}
+		// ******************************************************
+		private void CalcFrameEnabled()
+		{
+			int ret = 0;
+			for(int i=0; i<m_FrameEnabled.Length;i++)
+			{
+				if (m_FrameEnabled[i]==true)
+				{
+					ret++;
+				}
+			}
+			m_FrameCountTrue = ret;
+
+		}
+		// ******************************************************
+		public bool InitFrameEnabled()
+		{
+			PushUndo(BackupSratus.FrameEnabled);
+			for (int i = 0; i < m_FrameEnabled.Length; i++)
+			{
+				m_FrameEnabled[i] = true;
+			}
+			m_FrameCountTrue = m_FrameEnabled.Length;
+			return true;
+		}
+		// ******************************************************
+		public bool SetFrameEnabled(bool b)
+		{
+			PushUndo(BackupSratus.FrameEnabled);
+			for (int i=0; i<Selection.Length;i++)
+			{
+				int f = Selection.Start + i;
+				if((f>=0) && (f<m_FrameEnabled.Length))
+				{
+					m_FrameEnabled[f] = b;
+				}
+			}
+			CalcFrameEnabled();
+			OnValueChanged(new EventArgs());
+			return true;
+		}
+		// ******************************************************
+		public bool ToggleFrameEnabled()
+		{
+			PushUndo(BackupSratus.FrameEnabled);
+			for (int i = 0; i < Selection.Length; i++)
+			{
+				int f = Selection.Start + i;
+				if ((f >= 0) && (f < m_FrameEnabled.Length))
+				{
+					m_FrameEnabled[f] = !m_FrameEnabled[f];
+				}
+			}
+			CalcFrameEnabled();
+			OnValueChanged(new EventArgs());
+			return true;
 		}
 		// ******************************************************
 		public int GetCellData(int c, int f)
@@ -536,6 +676,7 @@ namespace AE_RemapTria
 			OnValueChanged(new EventArgs());
 
 		}
+
 		public void SetCellNumDec()
 		{
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
@@ -561,7 +702,7 @@ namespace AE_RemapTria
 		/// 選択範囲にセル番号を入力
 		/// </summary>
 		/// <param name="v"></param>
-		public void SetCellNum(int v)
+		public void SetCellNum(int v,bool IsMove =true)
 		{
 			if (v < 0) v = 0;
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
@@ -574,11 +715,40 @@ namespace AE_RemapTria
 					m_data[m_sel.Target][idx] = v;
 				}
 			}
-			m_sel.MoveDown();
+			if (IsMove)
+			{
+				m_sel.MoveDown();
+			}
 			OnValueChanged(new EventArgs());
 
 		}
 		// ******************************************************
+		public void SetCellNumEmpty(bool IsMove=true)
+		{
+			bool b = true;
+			if(IsMove==false)
+			{
+				b = false;
+				int[] v = GetCellNum();
+				for (int i = 0; i < v.Length; i++)
+				{
+					if(v[i] != 0)
+					{
+						b = true;
+						break;
+					}
+				}
+			}
+			if (b) SetCellNum(0,IsMove);
+		}
+		// ******************************************************
+		public void SetCellNumBS()
+		{
+			if (Selection.MoveUp())
+			{
+				SetCellNumEmpty(false);
+			}
+		}
 		/// <summary>
 		/// 選択範囲にセル番号配列を入力
 		/// 要素数が元の選択範囲より多ければ選択範囲を拡張
@@ -610,6 +780,10 @@ namespace AE_RemapTria
 		{
 			if (_undePushFlag == false) return;
 			m_BackupCells.Add(new BackupCellData(this, bs));
+			if(m_BackupCells.Count>2000)
+			{
+				m_BackupCells.RemoveAt(0);
+			}
 		}
 		// ******************************************************
 		public void PopUndo()
@@ -617,10 +791,13 @@ namespace AE_RemapTria
 			int idx = m_BackupCells.Count - 1;
 			if ( idx < 0) return;
 			bool b = _undePushFlag;
+			bool b2 = _eventFlag;
 			_undePushFlag = false;
+			_eventFlag = false;
 			m_BackupCells[idx].Restore(this);
 			m_BackupCells.RemoveAt(idx);
 			_undePushFlag = b;
+			_eventFlag = b2;
 			OnValueChanged(new EventArgs());
 		}
 		// ******************************************************

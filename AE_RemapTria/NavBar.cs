@@ -103,7 +103,7 @@ namespace AE_RemapTria
 					this.Location = new Point(m_form.Left - this.Width, m_form.Top);
 					break;
 				case ModePos.TOPLEFT:
-					this.Location = new Point(m_form.Left+7, m_form.Top-this.Height);
+					this.Location = new Point(m_form.Left, m_form.Top-this.Height);
 					break;
 				case ModePos.TOPRIGHT:
 					this.Location = new Point(m_form.Left+m_form.Width- this.Width, m_form.Top - this.Height);
@@ -115,7 +115,7 @@ namespace AE_RemapTria
 					this.Location = new Point(m_form.Left + m_form.Width - this.Width, m_form.Top + m_form.Height);
 					break;
 				case ModePos.BOTTOMLEFT:
-					this.Location = new Point(m_form.Left+7 , m_form.Top + m_form.Height);
+					this.Location = new Point(m_form.Left , m_form.Top + m_form.Height);
 					break;
 			}
 			_refFlag = true;
@@ -158,7 +158,7 @@ namespace AE_RemapTria
 							m_form.Location = new Point(this.Location.X + this.Width, this.Location.Y);
 							break;
 						case ModePos.TOPLEFT:
-							m_form.Location = new Point(this.Location.X-7, this.Location.Y + this.Height);
+							m_form.Location = new Point(this.Location.X, this.Location.Y + this.Height);
 							break;
 						case ModePos.TOPRIGHT:
 							m_form.Location = new Point(this.Location.X - m_form.Width + this.Width, this.Location.Y + this.Height);
@@ -170,7 +170,7 @@ namespace AE_RemapTria
 							m_form.Location = new Point(this.Location.X - m_form.Width + this.Width, this.Location.Y-m_form.Height);
 							break;
 						case ModePos.BOTTOMLEFT:
-							m_form.Location = new Point(this.Location.X -7, this.Location.Y - m_form.Height);
+							m_form.Location = new Point(this.Location.X, this.Location.Y - m_form.Height);
 							break;
 					}
 

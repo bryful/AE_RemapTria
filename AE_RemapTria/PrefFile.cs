@@ -101,6 +101,21 @@ namespace BRY
 			}
 			return ret;
 		}
+		// ****************************************************
+		static public Rectangle NowScreen(Rectangle rct)
+		{
+			Rectangle ret = new Rectangle(0,0,0,0);
+			foreach (Screen s in Screen.AllScreens)
+			{
+				Rectangle r = s.Bounds;
+				if (IsInRect(r, rct))
+				{
+					ret = r;
+					break;
+				}
+			}
+			return ret;
+		}
 		static public bool ScreenIn(Point p,Size sz)
 		{
 			return ScreenIn(new Rectangle(p, sz));
