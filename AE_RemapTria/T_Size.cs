@@ -38,11 +38,11 @@ namespace AE_RemapTria
 			ChangeDisp = null;
 
 			m_CellWidth = 30;
-			m_CellHeight = 20;
+			m_CellHeight = 16;
 			m_FrameWidth = 90;
 			m_FrameWidth2 = 20;
-			m_CaptionHeight = 20;
-			m_CaptionHeight2 = 20;
+			m_CaptionHeight = 16;
+			m_CaptionHeight2 = 16;
 
 			m_Disp = new Point(0, 0);
 			m_DispMax = new Point(0, 0);

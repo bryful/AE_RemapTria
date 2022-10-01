@@ -225,5 +225,22 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public bool SelToEnd()
+		{
+			bool ret = false;
+			if(m_cellDate!=null)
+			{
+				m_length = m_cellDate.FrameCount-m_start;
+				CalcTrue();
+				ret = true;
+				/*
+				 * 0
+				 * 1
+				 * 2
+				 * 3
+				 */
+			}
+			return ret;
+		}
 	}
 }

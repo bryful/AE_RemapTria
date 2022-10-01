@@ -221,12 +221,18 @@ namespace AE_RemapTria
 					{ 
 						y1 = cp.Y;
 					}
+					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.Set2Frame(y0,y1);
+				}else if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+				{
+					CellData.PushUndo(BackupSratus.SelectionChange);
+					CellData.Selection.SelToEnd();
 				}
 				else
 				{
 					m_mdFrame = cp.Y;
 
+					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
 				}
 				Sizes.CallOnChangeDisp();

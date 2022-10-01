@@ -18,6 +18,7 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
+			lst.Add(new FuncItem(Undo, "Undo", Keys.Z | Keys.Control));
 			lst.Add(new FuncItem(Input0, "Input0", Keys.D0, Keys.NumPad0));
 			lst.Add(new FuncItem(Input1, "Input1", Keys.D1, Keys.NumPad1));
 			lst.Add(new FuncItem(Input2, "Input2", Keys.D2, Keys.NumPad2));
@@ -46,7 +47,9 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(DispDown, "DispDown", Keys.Down | Keys.Control));
 			lst.Add(new FuncItem(DispLeft, "DispLeft", Keys.Left | Keys.Control));
 			lst.Add(new FuncItem(DispRight, "DispRight", Keys.Right | Keys.Control));
-			lst.Add(new FuncItem(Undo, "Undo", Keys.Z | Keys.Control));
+			lst.Add(new FuncItem(Home, "Home", Keys.Home));
+			lst.Add(new FuncItem(End, "End", Keys.End));
+
 			lst.Add(new FuncItem(Open, "Open", Keys.Control | Keys.O));
 			lst.Add(new FuncItem(ToggleFrameEnabled, "ToggleFrameEnabled", Keys.Control | Keys.Oemtilde));
 			lst.Add(new FuncItem(HeightMax, "HeightMax", Keys.Control | Keys.Oem5));
@@ -310,6 +313,18 @@ namespace AE_RemapTria
 			bool b = CellData.Selection.MoveLeft();
 			ChkSelectionH();
 			return b;
+		}
+		public bool Home()
+		{
+			Sizes.DispY = 0;
+			return true;
+
+		}
+		public bool End()
+		{
+			Sizes.DispY = Sizes.DispMax.Y;
+			return true;
+
 		}
 		public bool PageDown()
 		{
