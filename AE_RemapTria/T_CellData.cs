@@ -95,6 +95,20 @@ namespace AE_RemapTria
 		private T_CellLayer m_FrameEnabled = new T_CellLayer(1,true);
 		public bool EnableFrame(int f) { return m_FrameEnabled.Enable(f); }
 		private T_CellLayer[] m_cells = new T_CellLayer[1];  
+
+		public int[][][] cell
+		{
+			get
+			{
+				int[][][] ret = new int[CellCount][][];
+				for(int i= 0; i < CellCount; i++)
+				{
+					ret[i] = m_cells[i].ToArray();
+				}
+				return ret;
+			}
+		}
+
 		private string m_Info = "";
 		public string Info
 		{
@@ -173,6 +187,13 @@ namespace AE_RemapTria
 		// ******************************************************
 		private T_PageSec m_PageSec = T_PageSec.sec6;
 		private T_FrameDisp m_FrameDisp = T_FrameDisp.pageFrame;
+
+		public string TITLE { get; set; }
+		public string SUB_TITLE { get; set; }
+		public string OPUS { get; set; }
+		public string SCECNE { get; set; }
+		public string CUT { get; set; }
+		public string CAMPANY_NAME { get; set; }
 
 		// ******************************************************
 		private int m_StartDispFrame = 1;

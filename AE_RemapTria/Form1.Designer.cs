@@ -38,6 +38,7 @@
 			this.t_Input1 = new AE_RemapTria.T_Input();
 			this.t_Menu1 = new AE_RemapTria.T_Menu();
 			this.t_Label1 = new AE_RemapTria.T_LabelInfo();
+			this.button1 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// t_Grid1
@@ -135,14 +136,14 @@
 			this.t_Input1.Grid = this.t_Grid1;
 			this.t_Input1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Input1.Location = new System.Drawing.Point(0, 21);
-			this.t_Input1.MaximumSize = new System.Drawing.Size(90, 40);
-			this.t_Input1.MinimumSize = new System.Drawing.Size(90, 30);
+			this.t_Input1.MaximumSize = new System.Drawing.Size(90, 32);
+			this.t_Input1.MinimumSize = new System.Drawing.Size(90, 32);
 			this.t_Input1.MyFontIndex = 5;
 			this.t_Input1.MyFonts = this.t_MyFonts1;
 			this.t_Input1.MyFontSize = 9F;
 			this.t_Input1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Input1.Name = "t_Input1";
-			this.t_Input1.Size = new System.Drawing.Size(90, 34);
+			this.t_Input1.Size = new System.Drawing.Size(90, 32);
 			this.t_Input1.TabIndex = 3;
 			this.t_Input1.Text = "t_Input1";
 			this.t_Input1.Value = -1;
@@ -187,11 +188,22 @@
 			this.t_Label1.Text = "3+0:24";
 			this.t_Label1.TopBar = new System.Drawing.Size(100, 0);
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(147, 186);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(78, 40);
+			this.button1.TabIndex = 9;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(451, 579);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_hScrol1);
 			this.Controls.Add(this.t_vScrol1);
@@ -221,5 +233,6 @@
 		private T_VScrol t_vScrol1;
 		private T_HScrol t_hScrol1;
 		private T_LabelInfo t_Label1;
+		private Button button1;
 	}
 }

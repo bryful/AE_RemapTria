@@ -126,6 +126,7 @@ namespace AE_RemapTria
 			}
 			CalcEnableFrame();
 		}
+		// *********************************************************************
 		public bool SetFrameCount(int v)
 		{
 			bool ret = false;
@@ -147,6 +148,7 @@ namespace AE_RemapTria
 
 			return ret;
 		}
+		// *********************************************************************
 		public void CalcEnableFrame()
 		{
 			int fc = FrameCount;
@@ -164,6 +166,82 @@ namespace AE_RemapTria
 				m_FrameCountTrue = fc;
 			}
 		}
+		// *********************************************************************
+		public int[][] ToArray()
+		{
+			return ToArraySub(m_cells);
+		}
+		// *********************************************************************
+		public int[][] ToArray(T_CellLayer ec)
+		{
+			if(ec.FrameCount == ec.FrameCountTrue)
+			{
+				return ToArray();
+			}
+			int[] buf = new int[ec.FrameCountTrue];
+			int cnt = 0;
+			for( int i=0;i<ec.FrameCount;i++)
+			{
+				if(ec.Enable(i))
+				{
+					buf[cnt] = m_cells[i];
+					cnt++;
+				}
+			}
+			return ToArraySub(buf);
+		}
+		// *********************************************************************
+		static private int[][] ToArraySub(int[] buf)
+		{
+			List<int[]> list = new List<int[]>();
+			list.Add(new int[] { 0, buf[0] });
+			for (int i = 1; i < buf.Length; i++)
+			{
+				if (buf[i - 1] != buf[i])
+				{
+					list.Add(new int[] { i, buf[i] });
+				}
+			}
+			int[][] ret = new int[list.Count][];
+			for (int i = 0; i < list.Count; i++)
+			{
+				ret[i] = list[i];
+			}
+			return ret;
+		}
+		// *********************************************************************
+		public void FromArray(int[][] buf, int fc)
+		{
+			m_cells = FromArraySub(buf, fc);
+		}
+		// *********************************************************************
+		static private int[] FromArraySub(int[][] buf,int fc)
+		{
+			int[] ret = new int[fc];
+			// とりあえず-1
+			for (int i = 0; i < fc; i++) ret[i] = -1;
+			//スタートは念のため０を入れておく
+			ret[0] = 0;
+			for (int i=0; i<buf.Length;i++)
+			{
+				if (buf[i].Length>=2)
+				{
+					if ( (buf[i][0]>=0)&& (buf[i][0] <fc))
+					{
+						ret[buf[i][0]] = buf[i][1];
+					}
+				}
+			}
+			for (int i = 1; i < fc; i++)
+			{
+				if (ret[i] == -1)
+				{
+					ret[i] = ret[i - 1];
+				}
+			}
+			return ret;
+		}
+		// *********************************************************************
 
 	}
 }

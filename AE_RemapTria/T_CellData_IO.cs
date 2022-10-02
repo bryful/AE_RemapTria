@@ -25,6 +25,14 @@ namespace AE_RemapTria
 				OnValueChanged(new EventArgs());
 			}
 		}
+		public int[][] ToArray(int c)
+		{
+			return m_cells[c].ToArray();
+		}
+		public int[][] ToArrayFromTarget()
+		{
+			return m_cells[Selection.Target].ToArray();
+		}
 		/*
 		/// <summary>
 		/// セルの配列を[フレーム、セル番号]２次元の配列に変換
