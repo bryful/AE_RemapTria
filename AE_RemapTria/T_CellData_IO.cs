@@ -7,6 +7,19 @@ namespace AE_RemapTria
 	public partial class T_CellData
 	{
 		// ******************************************************
+		public int[][][] cell
+		{
+			get
+			{
+				int[][][] ret = new int[CellCount][][];
+				for (int i = 0; i < CellCount; i++)
+				{
+					ret[i] = m_cells[i].ToArray();
+				}
+				return ret;
+			}
+		}
+		// ******************************************************
 		public int GetCellData(int c, int f)
 		{
 			int ret = -1;

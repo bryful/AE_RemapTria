@@ -11,6 +11,82 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSData.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSdef.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSFunctions.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSHistory.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSJson.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSParams.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSPrint.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSSaveFile.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSSelection.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\FloatEdit.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\IntEdit.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\IntEditD.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\TSCellCaption.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\TSFrame.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\TSGrid.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\TSInput.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\CustumCtrl\TSNav.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting - コピー.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg - コピー.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\NameDialg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\NameDialg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog - コピー.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg - コピー.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\DynamicJson.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\JsonPref.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeyBind.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeyBind.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeyDataBtn.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeyDataDialog.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeyDataDialog.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeySettings.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Key\KeySettings.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\NavBar.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\NavBar.designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\NavBtn.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\PictureFileList.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\PictureView.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\PictureView\Targa.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Program.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Properties\AssemblyInfo.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Properties\Resources.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\Properties\Settings.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\TSForm.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\TSForm.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.Designer.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.cs" />
+    <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.Designer.cs" />
     <Compile Remove="sampleCode\TS\TS_Caption.cs" />
     <Compile Remove="sampleCode\TS\TS_CellData.cs" />
     <Compile Remove="sampleCode\TS\TS_CellLayer.cs" />
@@ -28,6 +104,131 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog - コピー.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\NameDialg.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Key\KeyBind.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Key\KeyDataDialog.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Key\KeySettings.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\NavBar.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Properties\Resources.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\TSForm.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.resx" />
+    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSData.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSdef.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSFunctions.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSHistory.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSJson.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSParams.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSPrint.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSSaveFile.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSSelection.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\FloatEdit.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\IntEdit.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\IntEditD.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSCellCaption.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSFrame.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSGrid.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSInput.cs" />
+    <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSNav.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog - コピー.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting - コピー.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg - コピー.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog - コピー.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg - コピー.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\DynamicJson.cs" />
+    <None Include="sampleCode\AE_RemapExceed\JsonPref.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyBind.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyBind.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyBind.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyDataBtn.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyDataDialog.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyDataDialog.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeyDataDialog.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeySettings.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeySettings.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Key\KeySettings.resx" />
+    <None Include="sampleCode\AE_RemapExceed\NavBar.cs" />
+    <None Include="sampleCode\AE_RemapExceed\NavBar.designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\NavBar.resx" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\NavBtn.cs" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\PictureFileList.cs" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\PictureView.cs" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.cs" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.resx" />
+    <None Include="sampleCode\AE_RemapExceed\PictureView\Targa.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Program.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Properties\AssemblyInfo.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Properties\Resources.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\Properties\Resources.resx" />
+    <None Include="sampleCode\AE_RemapExceed\Properties\Settings.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\TSForm.cs" />
+    <None Include="sampleCode\AE_RemapExceed\TSForm.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\TSForm.resx" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.resx" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.resx" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.Designer.cs" />
+    <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.resx" />
     <None Include="sampleCode\TS\TS_Caption.cs" />
     <None Include="sampleCode\TS\TS_CellData.cs" />
     <None Include="sampleCode\TS\TS_CellLayer.cs" />
@@ -50,6 +251,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +267,13 @@
 
   <ItemGroup>
     <Folder Include="Ctrl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

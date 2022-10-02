@@ -11,6 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace AE_RemapTria
 {
+	public class KeyBind
+	{
+		public enum FuncId
+		{
+			Input0,
+			Input1,
+			Input2,
+			Input3,
+			Input4,
+			Input5,
+		}
+	}
 	partial class T_Grid
 	{
 		// ************************************************************************************
@@ -18,7 +30,6 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
-			lst.Add(new FuncItem(Undo, "Undo", Keys.Z | Keys.Control));
 			lst.Add(new FuncItem(Input0, "Input0", Keys.D0, Keys.NumPad0));
 			lst.Add(new FuncItem(Input1, "Input1", Keys.D1, Keys.NumPad1));
 			lst.Add(new FuncItem(Input2, "Input2", Keys.D2, Keys.NumPad2));
@@ -66,6 +77,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SetSelection10, "SetSelection10", Keys.F10));
 			lst.Add(new FuncItem(SetSelection11, "SetSelection11", Keys.F11));
 			lst.Add(new FuncItem(SetSelection12, "SetSelection12", Keys.F12));
+			lst.Add(new FuncItem(Undo, "Undo", Keys.Z | Keys.Control));
 
 			Funcs.SetFuncs(lst.ToArray());
 		}

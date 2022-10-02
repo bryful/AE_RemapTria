@@ -159,8 +159,8 @@ namespace BRY
 			Call
 		}
 		// ************************************************************************
-		private string m_AppID = "SkeltonWinForm";
-		private string m_MyID = "SkeltonWinFormCall";
+		private string m_AppID = "AE_RemapTria";
+		private string m_MyID = "AE_RemapTriaCall";
 		/// <summary>
 		/// 実行するアプリの名前
 		/// </summary>
@@ -257,7 +257,7 @@ namespace BRY
 						string s = pd.ToJson();
 						PipeClient(m_AppID, s).Wait();
 						int cnt = 0;
-						while(_execution)
+						while (_execution)
 						{
 							Thread.Sleep(300);
 							cnt++;
@@ -268,13 +268,22 @@ namespace BRY
 					}
 					else
 					{
-						Process exec2 = new Process();
-						exec2.StartInfo.FileName = CallExePath(AppID);
-						exec2.StartInfo.Arguments = ArgsString(args);
-						if (exec2.Start())
+						string exename = CallExePath(AppID);
+						if (File.Exists(exename) == true)
 						{
-							ret = 1;
-							rets = "true";
+							Process exec2 = new Process();
+							exec2.StartInfo.FileName = exename;
+							exec2.StartInfo.Arguments = ArgsString(args);
+							if (exec2.Start())
+							{
+								ret = 1;
+								rets = "true";
+							}
+
+						}
+						else
+						{
+							rets = "false";
 						}
 					}
 					break;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace AE_RemapTria
@@ -9,7 +11,8 @@ namespace AE_RemapTria
 	public delegate bool FuncType();
 	public class FuncItem
 	{
-		public string Caption { get; set; }
+		public string? Caption { get; set; }
+		public string? Info { get; set; }
 		public FuncType? Func { get; set; }
 		private Keys[] m_Keys = new Keys[2];
 
@@ -85,6 +88,31 @@ namespace AE_RemapTria
 		public void SetFuncs(FuncItem[] fs)
 		{
 			m_FuncItems = fs;
+		}
+		public string ToJson()
+		{
+			JsonObject jo = new JsonObject();
+			JsonArray ja = new JsonArray();
+
+			foreach(FuncItem item in m_FuncItems)
+			{
+				JsonObject jo2 = new JsonObject();
+				jo2.Add("funcName", item.Caption);
+				JsonArray ja2 = new JsonArray();
+				if(item.Keys.Length>0)
+				{
+					foreach(Keys k in item.Keys)
+					{
+						ja2.Add(k);
+					}
+				}
+				jo2.Add("keys", ja2);
+				ja.Add(jo2);
+			}
+			jo.Add("KeyBind", ja);
+			//JsonSerializerOptions options = new() { WriteIndented = true };
+			return jo.ToJsonString();
+
 		}
 	}
 }

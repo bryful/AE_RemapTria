@@ -439,7 +439,9 @@ namespace AE_RemapTria
 		// ********************************************************************
 		public void Command(string[] args, PIPECALL IsPipe = PIPECALL.StartupExec)
 		{
+			bool QuitFlag = false; 
 			bool err = true;
+
 			Args args1 = new Args(args);
 			if (args1.OptionCount > 0)
 			{
@@ -481,9 +483,9 @@ namespace AE_RemapTria
 							break;
 						case "exit":
 						case "quit":
-							if ((args1.ParamsCount == 1) && (IsPipe == PIPECALL.DoubleExec))
+							if ((args1.ParamsCount == 1) && ((IsPipe == PIPECALL.DoubleExec) || (IsPipe == PIPECALL.PipeExec)))
 							{
-								Application.Exit();
+								QuitFlag = true;
 							}
 							break;
 					}
@@ -499,10 +501,24 @@ namespace AE_RemapTria
 					}
 					else
 					{
-						//textBox1.Lines = args1.ParamStrings;
-						//textBox1.Select(0, 0);
+						/*
+						this.Invoke((Action)(() => {
+							textBox1.Lines = args1.ParamStrings;
+							textBox1.Select(0, 0);
+						}));
+						*/
 					}
 				}
+			}
+			if (IsPipe == PIPECALL.PipeExec)
+			{
+				PipeData pd = new PipeData(args, IsPipe);
+				CallExe.PipeClient("AE_RamepTriaCall", pd.ToJson()).Wait();
+			}
+			if (QuitFlag) Application.Exit();
+			if (IsPipe == PIPECALL.PipeExec)
+			{
+				//this.Text += "Pi";
 			}
 		}
 		// *******************************************************************************

@@ -3,75 +3,7 @@ using System.Numerics;
 
 namespace AE_RemapTria
 {
-	/// <summary>
-	/// フレームレターと
-	/// </summary>
-	public enum T_Fps
-	{
-		FPS24 = 24,
-		FPS30 = 30
-	}
 	//**************************************************************
-	//１ページのフレーム数
-	public enum T_PageSec
-	{
-		sec3 = 3,
-		sec6 = 6
-	}
-	//フレームの表示設定
-	public enum T_FrameDisp
-	{
-		frame = 0,
-		pageFrame,
-		paseSecFrame,
-		SecFrame,
-		Count
-	}
-
-	//セルフレームの表示タイプ
-	public enum CellType
-	{
-		/// <summary>
-		/// 表示なし
-		/// </summary>
-		None,
-		/// <summary>
-		/// 数字表示
-		/// </summary>
-		Normal,
-		/// <summary>
-		/// 前のコマと同じ数値
-		/// </summary>
-		SameAsBefore,
-		/// <summary>
-		/// 空セルはじめ
-		/// </summary>
-		EmptyStart
-	}
-
-	/// <summary>
-	/// セルフレームの表示データ
-	/// </summary>
-	public struct CellSatus
-	{
-		public int Cell = -1;
-		public int Frame = -1;
-		public int Value = 0;
-		public CellType Status = CellType.None;
-
-		public CellSatus()
-		{
-			Init();
-		}
-		public void Init()
-		{
-			Cell = -1;
-			Frame = -1;
-			Value = 0;
-			Status = CellType.None;
-		}
-	}
-
 	/// <summary>
 	/// セルのコマ打ちデータ
 	/// </summary>
@@ -92,37 +24,37 @@ namespace AE_RemapTria
 		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
 		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
 		// ******************************************************************************
+		/// <summary>
+		/// 抜きセル用のフラグ配列
+		/// </summary>
 		private T_CellLayer m_FrameEnabled = new T_CellLayer(1,true);
 		public bool EnableFrame(int f) { return m_FrameEnabled.Enable(f); }
-		private T_CellLayer[] m_cells = new T_CellLayer[1];  
-
-		public int[][][] cell
-		{
-			get
-			{
-				int[][][] ret = new int[CellCount][][];
-				for(int i= 0; i < CellCount; i++)
-				{
-					ret[i] = m_cells[i].ToArray();
-				}
-				return ret;
-			}
-		}
-
+		/// <summary>
+		/// セルデータ
+		/// </summary>
+		private T_CellLayer[] m_cells = new T_CellLayer[1];
+		// ******************************************************************************
 		private string m_Info = "";
 		public string Info
 		{
 			get { return m_Info; }
 		}
-
-
+		/// <summary>
+		/// セルのレイヤ―数
+		/// </summary>
 		public int CellCount { get { return m_cells.Length; } set { SetCellCount(value); } }
+		/// <summary>
+		/// フレーム数（物理的な）
+		/// </summary>
 		public int FrameCount { get { return m_cells[0].FrameCount; } set { SetFrameCount(value); } }
 		/// <summary>
 		/// EnabledFrameを考慮したフレーム数
 		/// </summary>
 		public int FrameCountTrue { get { return m_FrameEnabled.FrameCountTrue; } }
-		public T_CellLayer Cell(int c) { return m_cells[c]; }
+		public T_CellLayer CellLayer(int c) { return m_cells[c]; }
+		/// <summary>
+		/// セル名の配列
+		/// </summary>
 		public string[] Captions {
 			get
 			{
@@ -132,6 +64,11 @@ namespace AE_RemapTria
 				return ret; 
 			} 
 		}
+		/// <summary>
+		/// セル名をインデックスで獲得
+		/// </summary>
+		/// <param name="c">セルのインデックス</param>
+		/// <returns>セルの名前</returns>
 		public string Caption(int c) 
 		{
 			string ret = "";

@@ -39,5 +39,13 @@ namespace AE_RemapTria
 			string s = jo.ToJsonString();
 			MessageBox.Show(s);
 		}
+
+
+		private void button1_Click_2(object sender, EventArgs e)
+		{
+			string s = t_Grid1.Funcs.ToJson();
+			MessageBox.Show(s);
+
+		}
 	}
 }
