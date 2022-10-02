@@ -28,16 +28,18 @@ namespace AE_RemapTria
 			Caption = caption;
 			m_Keys = keys;
 		}
-		public FuncItem(FuncType fnc, string caption, Keys key)
+		public FuncItem(FuncType fnc, string caption, Keys key,string inf="")
 		{
 			Func = fnc;
 			Caption = caption;
+			Info = inf;
 			m_Keys = new Keys[] { key };
 		}
-		public FuncItem(FuncType fnc, string caption, Keys key0, Keys key1)
+		public FuncItem(FuncType fnc, string caption, Keys key0, Keys key1, string inf = "")
 		{
 			Func = fnc;
 			Caption = caption;
+			Info = inf;
 			m_Keys = new Keys[] { key0,key1 };
 		}
 		public bool IsKey(Keys k)
@@ -79,11 +81,34 @@ namespace AE_RemapTria
 		}
 		public T_Funcs()
 		{
-
+			m_FuncItems = new FuncItem[0]; ;
 		}
 		private void Init()
 		{
 			m_FuncItems = new FuncItem[0]; ;
+		}
+		public int IndexOfFunc(string cap)
+		{
+			int ret = -1;
+			if(m_FuncItems.Length > 0)
+			{
+				for(int i= 0; i < m_FuncItems.Length; i++)
+				{
+					if (string.Compare(m_FuncItems[i].Caption, cap, true) == 0)
+					{
+						ret=i;
+						break;
+					}
+				}
+			}
+			ret = -1;
+		}
+		public FuncItem? FindFunc(string cap)
+		{
+			FuncItem? ret = null;
+			int idx = IndexOfFunc(cap);
+			if (idx >= 0) ret = m_FuncItems[idx];
+			return ret;
 		}
 		public void SetFuncs(FuncItem[] fs)
 		{
@@ -97,7 +122,8 @@ namespace AE_RemapTria
 			foreach(FuncItem item in m_FuncItems)
 			{
 				JsonObject jo2 = new JsonObject();
-				jo2.Add("funcName", item.Caption);
+				jo2.Add("Caption", item.Caption);
+				jo2.Add("Info", item.Info);
 				JsonArray ja2 = new JsonArray();
 				if(item.Keys.Length>0)
 				{
