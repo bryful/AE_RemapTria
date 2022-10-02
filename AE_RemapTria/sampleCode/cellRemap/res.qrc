@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>jsx/setRemap.jsx</file>
+        <file>jsx/getRemap.jsx</file>
+        <file>jsx/cellRemap.jsx</file>
+        <file>jsx/FsJSON.jsx</file>
+        <file>jsx/XMPSHEET.jsx</file>
+        <file>res/keyHelp.html</file>
+        <file>res/cellRemap_jp.qm</file>
+        <file>jsx/expression.txt</file>
+    </qresource>
+</RCC>

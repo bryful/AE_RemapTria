@@ -53,6 +53,7 @@
 			this.btn10Sec = new AE_RemapTria.T_Button();
 			this.btn0 = new AE_RemapTria.T_Button();
 			this.lbStatus = new AE_RemapTria.T_Label();
+			this.lbDuration = new AE_RemapTria.T_Label();
 			this.SuspendLayout();
 			// 
 			// t_Label1
@@ -290,6 +291,7 @@
 			this.t_DurationBox1.Size = new System.Drawing.Size(121, 24);
 			this.t_DurationBox1.TabIndex = 9;
 			this.t_DurationBox1.Text = "t_DurationBox1";
+			this.t_DurationBox1.DurationChanged += new System.EventHandler(this.t_DurationBox1_DurationChanged);
 			// 
 			// btn1
 			// 
@@ -702,11 +704,32 @@
 			this.lbStatus.Text = "TimeSheet status";
 			this.lbStatus.TopBar = new System.Drawing.Size(100, 0);
 			// 
+			// lbDuration
+			// 
+			this.lbDuration.Alignment = System.Drawing.StringAlignment.Far;
+			this.lbDuration.BackColor = System.Drawing.Color.Transparent;
+			this.lbDuration.BottomBar = new System.Drawing.Size(0, 0);
+			this.lbDuration.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbDuration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.lbDuration.LeftBar = new System.Drawing.Size(0, 0);
+			this.lbDuration.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.lbDuration.Location = new System.Drawing.Point(105, 138);
+			this.lbDuration.MyFontIndex = 5;
+			this.lbDuration.MyFonts = this.t_MyFonts1;
+			this.lbDuration.MyFontSize = 8F;
+			this.lbDuration.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.lbDuration.Name = "lbDuration";
+			this.lbDuration.RightBar = new System.Drawing.Size(2, 18);
+			this.lbDuration.Size = new System.Drawing.Size(147, 24);
+			this.lbDuration.TabIndex = 24;
+			this.lbDuration.TopBar = new System.Drawing.Size(0, 0);
+			// 
 			// T_SheetSettingDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(409, 256);
+			this.Controls.Add(this.lbDuration);
 			this.Controls.Add(this.lbStatus);
 			this.Controls.Add(this.btn0);
 			this.Controls.Add(this.btn10Sec);
@@ -768,5 +791,6 @@
 		private T_Button btn10Sec;
 		private T_Button btn0;
 		private T_Label lbStatus;
+		private T_Label lbDuration;
 	}
 }

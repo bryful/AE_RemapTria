@@ -1,5 +1,4 @@
-﻿using AE_RemapTria;
-using System.Configuration.Internal;
+﻿using System.Configuration.Internal;
 using System.Numerics;
 
 namespace AE_RemapTria
@@ -93,19 +92,9 @@ namespace AE_RemapTria
 		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
 		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
 		// ******************************************************************************
-		private bool[] m_FrameEnabled = new bool[1];
-		public bool EnabledFrame(int f) 
-		{
-			bool ret = true;
-			if((f>=0)&&(f<m_FrameEnabled.Length))
-			{
-				ret = m_FrameEnabled[f];
-			}
-			return ret;
-		}
-		private int[][] m_data = new int[1][];
-		private string[] m_Caption = new string[1];
-
+		private T_CellLayer m_FrameEnabled = new T_CellLayer(1,true);
+		public bool EnableFrame(int f) { return m_FrameEnabled.Enable(f); }
+		private T_CellLayer[] m_cells = new T_CellLayer[1];  
 		private string m_Info = "";
 		public string Info
 		{
@@ -113,77 +102,28 @@ namespace AE_RemapTria
 		}
 
 
-		public int CellCount { get { return m_data.Length; } set { SetCellCount(value); } }
-		public int FrameCount { get { return m_data[0].Length; } set { SetFrameCount(value); } }
-		private int m_FrameCountTrue = 1;
+		public int CellCount { get { return m_cells.Length; } set { SetCellCount(value); } }
+		public int FrameCount { get { return m_cells[0].FrameCount; } set { SetFrameCount(value); } }
 		/// <summary>
 		/// EnabledFrameを考慮したフレーム数
 		/// </summary>
-		public int FrameCountTrue { get { return m_FrameCountTrue; } }
-		public int[] Cell(int c) { return m_data[c]; }
-		public string[] Captions { get { return m_Caption; } }
-		public int[][] BackupCellData()
-		{
-			int[][] ret = new int[CellCount][];
-			for (int i = 0; i< CellCount; i++)
+		public int FrameCountTrue { get { return m_FrameEnabled.FrameCountTrue; } }
+		public T_CellLayer Cell(int c) { return m_cells[c]; }
+		public string[] Captions {
+			get
 			{
-				ret[i] = new int[FrameCount];
-				for (int j = 0; j < FrameCount; j++)
-				{
-					ret[i][j] = m_data[i][j];
-				}
-			}
-			return ret;
-		}
-		public void RestoreCellData(int[][] d)
-		{
-			if (d.Length <= 0) return;
-			if (d[0].Length <= 0) return;
-			bool b = _undePushFlag;
-			_undePushFlag = false;
-			SetCellCount(d.Length);
-			SetFrameCount(d[0].Length);
-			for(int i = 0; i < d.Length; i++)
-			{
-				for (int j = 0; j < d[i].Length; j++)
-				{
-					m_data[i][j] = d[i][j];
-				}
-			}
-
-			_undePushFlag = b;
-		}
-		public string[] BackupCaption()
-		{
-			string[] ret = new string[CellCount];
-			for (int i = 0; i < CellCount; i++)
-			{
-				ret[i] = m_Caption[i];
-			}
-			return ret;
-		}
-		public void RestoreCaption(string[] c)
-		{
-			int cl = c.Length;
-			if (cl <= 0) return;
-			if(CellCount!=cl)
-			{
-				bool b= _undePushFlag;
-				_undePushFlag = false;
-				SetCellCount(cl);
-				_undePushFlag = b;
-			}
-			for(int i=0; i<cl;i++)
-			{
-				m_Caption[i] = c[i];
-			}
+				string[]ret =new string[CellCount];
+				for (int i = 0; i < CellCount; i++)
+					ret[i] = m_cells[i].Caption;
+				return ret; 
+			} 
 		}
 		public string Caption(int c) 
 		{
 			string ret = "";
-			if((c>=0)&&(c<m_Caption.Length))
+			if((c>=0)&&(c<CellCount))
 			{
-				ret = m_Caption[c];
+				ret = m_cells[c].Caption;
 			}
 			return ret;
 		}
@@ -204,6 +144,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		/*
 		public int[] TargetCell 
 		{
 			get { return m_data[m_sel.Target]; }
@@ -221,6 +162,7 @@ namespace AE_RemapTria
 				OnValueChanged(new EventArgs());
 			}
 		}
+		*/
 		// ******************************************************
 		private T_Fps m_FrameRate = T_Fps.FPS24;
 		public T_Fps FrameRate
@@ -289,34 +231,19 @@ namespace AE_RemapTria
 		{
 			if (cc < 10) cc = 10;
 			if (fc < 6) fc = 6;
-			m_Caption = new string[cc];
-			for(int i=0; i<cc;i++)
-			{
-				m_Caption[i] = Char.ConvertFromUtf32('A' + i);
-			}
-			m_FrameEnabled = new bool[fc];
-			for (int i = 0; i < fc; i++)
-			{
-				m_FrameEnabled[i] = true;
-			}
-			m_FrameCountTrue = fc;
-			m_data = new int[cc][];
+			m_FrameEnabled = new T_CellLayer(fc,true);
+			m_cells = new T_CellLayer[cc];
 			for (int i = 0; i < cc; i++)
 			{
-				m_data[i] = new int[fc];
-				for(int j = 0; j < fc; j++)
-				{
-					m_data[i][j] = 0;
-				}
+				m_cells[i] = new T_CellLayer(fc, Char.ConvertFromUtf32('A' + i));
 			}
-
-			CalcFrameEnabled();
+			CalcInfo();
 		}
 		// ******************************************************
 		public void SetFrameCount(int fc)
 		{
 			if (fc <= 6) fc = 6;
-			if (m_data[0].Length != fc)
+			if (m_cells[0].FrameCount != fc)
 			{
 				PushUndo(BackupSratus.All);
 				int cc = CellCount;
@@ -324,24 +251,10 @@ namespace AE_RemapTria
 
 				for (int i = 0; i < cc; i++)
 				{
-					Array.Resize(ref m_data[i], fc);
-					if (fc > oldfc)
-					{
-						for (int j = oldfc; j < fc; j++)
-						{
-							m_data[i][j] = 0;
-						}
-					}
+					m_cells[i].SetFrameCount(fc);
 				}
-				Array.Resize(ref m_FrameEnabled, fc);
-				if (fc > oldfc)
-				{
-					for (int j = oldfc; j < fc; j++)
-					{
-						m_FrameEnabled[j] = true;
-					}
-				}
-				CalcFrameEnabled();
+				m_FrameEnabled.SetFrameCount(fc);
+				CalcInfo();
 				OnCountChanged(new EventArgs());
 			}
 		}
@@ -349,24 +262,18 @@ namespace AE_RemapTria
 		public void SetCellCount(int cc)
 		{
 			if (cc <= 10) cc = 10;
-			if (m_data.Length != cc)
+			if (m_cells.Length != cc)
 			{
 				PushUndo(BackupSratus.All);
 				int fc = FrameCount;
 				int oldcc = CellCount;
-				Array.Resize(ref m_data, cc);
-				Array.Resize(ref m_Caption, cc);
+				Array.Resize(ref m_cells, cc);
 
 				if (cc > oldcc)
 				{
-					char c = m_Caption[oldcc - 1][0];
 					for (int i = oldcc; i < cc; i++)
 					{
-						for (int j = 0; j < fc; j++)
-						{
-							m_data[i][j] = 0;
-						}
-						m_Caption[i] = Char.ConvertFromUtf32(c + i + 1);
+						m_cells[i] = new T_CellLayer(fc, Char.ConvertFromUtf32('A'+i)); ;
 					}
 				}
 				OnCountChanged(new EventArgs());
@@ -388,38 +295,23 @@ namespace AE_RemapTria
 
 		}
 		// ******************************************************
-		public bool[] GetFrameEnabled()
+		public int[] EnableFrames()
 		{
-			bool[] ret = new bool[Selection.Length];
-			for(int i = 0; i < Selection.Length; i++)
-			{
-				int f = Selection.Start + i;
-				if (f < 0) f = 0;
-				else if (f < m_FrameEnabled.Length) f = m_FrameEnabled.Length - 1;
-				ret[i] = m_FrameEnabled[f];
-			}
-			return ret;
+
+			return m_FrameEnabled.Values(Selection); 
 		}
-		public void SetFrameEnabled(bool[]bb)
+		public void SetFrameEnabled(int[]bb)
 		{
-			int l = bb.Length;
-			if (l > Selection.Length) l = Selection.Length;
-			for (int i = 0; i < l; i++)
-			{
-				int f = Selection.Start + i;
-				if ((f >= 0) && (f < m_FrameEnabled.Length))
-				{
-					m_FrameEnabled[f] = bb[i];
-				}
-			}
+			m_FrameEnabled.SetValues(Selection, bb);
 		}
 		// ******************************************************
+		/*
 		private void CalcFrameEnabled()
 		{
 			int ret = 0;
-			for(int i=0; i<m_FrameEnabled.Length;i++)
+			for(int i=0; i<m_FrameEnabled.FrameCount;i++)
 			{
-				if (m_FrameEnabled[i]==true)
+				if (m_FrameEnabled.Enable(i)==true)
 				{
 					ret++;
 				}
@@ -427,11 +319,12 @@ namespace AE_RemapTria
 			m_FrameCountTrue = ret;
 			CalcInfo();
 		}
+		*/
 		private void CalcInfo()
 		{
 			m_Info = string.Format("{0}+{1}:{2}",
-				m_FrameCountTrue / (int)m_FrameRate,
-				m_FrameCountTrue % (int)m_FrameRate,
+				FrameCountTrue / (int)m_FrameRate,
+				FrameCountTrue % (int)m_FrameRate,
 				(int)m_FrameRate
 				);
 		}
@@ -439,27 +332,20 @@ namespace AE_RemapTria
 		public bool InitFrameEnabled()
 		{
 			PushUndo(BackupSratus.FrameEnabled);
-			for (int i = 0; i < m_FrameEnabled.Length; i++)
-			{
-				m_FrameEnabled[i] = true;
-			}
-			m_FrameCountTrue = m_FrameEnabled.Length;
+			m_FrameEnabled.Init();
+			CalcInfo();
 			return true;
 		}
 		// ******************************************************
 		public bool SetFrameEnabled(bool b)
 		{
 			PushUndo(BackupSratus.FrameEnabled);
-			for (int i=0; i<Selection.Length;i++)
-			{
-				int f = Selection.Start + i;
-				if((f>=0) && (f<m_FrameEnabled.Length))
-				{
-					m_FrameEnabled[f] = b;
-				}
-			}
-			CalcFrameEnabled();
-			OnValueChanged(new EventArgs());
+			int v = 0;
+			if (b == true) v = 1;
+			m_FrameEnabled.SetValues(Selection, v);
+			m_FrameEnabled.CalcEnableFrame();
+			CalcInfo();
+			OnCountChanged(new EventArgs());
 			return true;
 		}
 		// ******************************************************
@@ -469,33 +355,25 @@ namespace AE_RemapTria
 			for (int i = 0; i < Selection.Length; i++)
 			{
 				int f = Selection.Start + i;
-				if ((f >= 0) && (f < m_FrameEnabled.Length))
+				if ((f >= 0) && (f < m_FrameEnabled.FrameCount))
 				{
-					m_FrameEnabled[f] = !m_FrameEnabled[f];
+					m_FrameEnabled.SetEnable(f, !m_FrameEnabled.Enable(f));
 				}
 			}
-			CalcFrameEnabled();
-			OnValueChanged(new EventArgs());
+			m_FrameEnabled.CalcEnableFrame();
+			CalcInfo ();
+			OnCountChanged(new EventArgs());
 			return true;
 		}
-		// ******************************************************
-		public int GetCellData(int c, int f)
-		{
-			int ret = -1;
-			if((c>=0)&&(c< CellCount)&& (f >= 0) && (f < FrameCount))
-			{
-				ret = m_data[c][f];
-			}
-			return ret;
-		}
+
 		// ******************************************************
 		public CellSatus GetCellStatus(int c, int f)
 		{
 			CellSatus cs = new CellSatus();
 			cs.Init();
-			if ((c >= 0) && (c < CellCount) && (f >= 0) && (f < FrameCount))
+			if ((c >= 0) && (c < CellCount))
 			{
-				int v = m_data[c][f];
+				int v = m_cells[c].Value(f);
 				cs.Cell = c;
 				cs.Frame = f;
 				cs.Value = v;
@@ -512,7 +390,7 @@ namespace AE_RemapTria
 				}
 				else
 				{
-					if(v == m_data[c][f - 1])
+					if(v == m_cells[c].Value(f-1))
 					{
 						if (v == 0)
 						{
@@ -540,20 +418,11 @@ namespace AE_RemapTria
 			return cs;
 		}
 		// ******************************************************
-		public void SetCellData(int c, int f, int v)
-		{
-			if ((c >= 0) && (c < CellCount) && (f >= 0) && (f < FrameCount))
-			{
-				m_data[c][f] = v;
-				OnValueChanged(new EventArgs());
-			}
-		}
-		// ******************************************************
 		public void SetTarget(int c)
 		{
 			int cc = c;
 			if (cc < 0) cc = 0;
-			else if (cc >= m_data.Length) cc = m_data.Length-1;
+			else if (cc >= m_cells.Length) cc = m_cells.Length-1;
 			if( cc != m_sel.Target)
 			{
 				PushUndo(BackupSratus.SelectionChange);
@@ -566,7 +435,7 @@ namespace AE_RemapTria
 		{
 			int ff = f;
 			if (ff < 0) ff = 0;
-			else if (ff >= m_data[0].Length) ff = m_data.Length-1;
+			else if (ff >= m_cells[0].FrameCount) ff = m_cells[0].FrameCount;
 			if (ff != m_sel.Start)
 			{
 				PushUndo(BackupSratus.SelectionChange);
@@ -578,11 +447,7 @@ namespace AE_RemapTria
 		public void ClearAll()
 		{
 			PushUndo(BackupSratus.All);
-			int cc = m_data.Length;
-			int fc = m_data[0].Length;
-			for (int c = 0; c < cc; c++)
-				for (int f =0; f < fc; f++)
-					m_data[c][f] = 0;
+			for (int c = 0; c < m_cells.Length; c++) m_cells[c].Init();
 			OnValueChanged(new EventArgs());
 
 		}
@@ -591,8 +456,7 @@ namespace AE_RemapTria
 		{
 			if((c>=0) && (c < CellCount))
 			{
-				int fc = m_data[0].Length;
-				for (int f = 0; f < fc; f++) m_data[c][f] = 0;
+				m_cells[c].Init();
 				OnValueChanged(new EventArgs());
 			}
 
@@ -627,19 +491,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		public int[] GetCellNum()
 		{
-
-			int[] ret = new int[m_sel.Length];
-
-			int fc = m_data[0].Length;
-			for(int i=0; i< m_sel.Length;i++)
-			{
-				int idx = m_sel.Start + i;
-				if (idx < 0) idx = 0;
-				else if(idx>=fc) idx = fc-1;
-				ret[i] = m_data[m_sel.Target][idx];
-			}
-			return ret;
-
+			return m_cells[Selection.Target].Values(Selection);
 		}
 		// ******************************************************
 		/// <summary>
@@ -649,20 +501,12 @@ namespace AE_RemapTria
 		{
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
 
-
-			int fc = m_data[0].Length;
 			int sv = m_sel.Start-1;
 			if (sv < 0) sv = 0;
-			int v = m_data[m_sel.Target][sv];
-			if ((sv == 0) && (v == 0)) v = 1;
-			for (int i = 0; i < m_sel.Length; i++)
-			{
-				int idx = m_sel.Start + i;
-				if ((idx >= 0) && (idx < fc))
-				{
-					m_data[m_sel.Target][idx] = v;
-				}
-			}
+			int v = m_cells[m_sel.Target].Value(sv);
+			if ((sv == 0) && (v <= 0)) v = 1;
+
+			m_cells[Selection.Target].SetValues(Selection, v);
 			m_sel.MoveDown();
 			OnValueChanged(new EventArgs());
 
@@ -670,18 +514,13 @@ namespace AE_RemapTria
 		public void SetCellNumInc()
 		{
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
-			int fc = m_data[0].Length;
+			//int fc = m_data[0].Length;
+
 			int sv = m_sel.Start - 1;
 			if (sv < 0) sv = 0;
-			int v = m_data[m_sel.Target][sv]+1;
-			for (int i = 0; i < m_sel.Length; i++)
-			{
-				int idx = m_sel.Start + i;
-				if ((idx >= 0) && (idx < fc))
-				{
-					m_data[m_sel.Target][idx] = v;
-				}
-			}
+			int v = m_cells[m_sel.Target].Value(sv);
+			v += 1;
+			m_cells[Selection.Target].SetValues(Selection, v);
 			m_sel.MoveDown();
 			OnValueChanged(new EventArgs());
 
@@ -690,19 +529,12 @@ namespace AE_RemapTria
 		public void SetCellNumDec()
 		{
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
-			int fc = m_data[0].Length;
 			int sv = m_sel.Start - 1;
 			if (sv < 0) sv = 0;
-			int v = m_data[m_sel.Target][sv] - 1;
+			int v = m_cells[m_sel.Target].Value(sv);
+			v -= 1;
 			if (v < 0) v = 0;
-			for (int i = 0; i < m_sel.Length; i++)
-			{
-				int idx = m_sel.Start + i;
-				if ((idx >= 0) && (idx < fc))
-				{
-					m_data[m_sel.Target][idx] = v;
-				}
-			}
+			m_cells[Selection.Target].SetValues(Selection, v);
 			m_sel.MoveDown();
 			OnValueChanged(new EventArgs());
 
@@ -716,15 +548,7 @@ namespace AE_RemapTria
 		{
 			if (v < 0) v = 0;
 			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
-			int fc = m_data[0].Length;
-			for (int i = 0; i < m_sel.Length; i++)
-			{
-				int idx = m_sel.Start + i;
-				if ((idx >= 0) && (idx < fc))
-				{
-					m_data[m_sel.Target][idx] = v;
-				}
-			}
+			m_cells[Selection.Target].SetValues(Selection, v);
 			if (IsMove)
 			{
 				m_sel.MoveDown();
@@ -773,15 +597,7 @@ namespace AE_RemapTria
 				m_sel.Length = len;
 				len = ints.Length;
 			}
-			int fc = m_data[0].Length;
-			for (int i = 0; i < len; i++)
-			{
-				int idx = m_sel.Start + i;
-				if ((idx >= 0) && (idx < fc))
-				{
-					m_data[m_sel.Target][idx] = ints[i];
-				}
-			}
+			m_cells[Selection.Target].SetValues(Selection, ints);
 			OnValueChanged(new EventArgs());
 
 		}

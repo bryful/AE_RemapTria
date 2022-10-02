@@ -11,6 +11,14 @@ namespace AE_RemapTria
 
 	public class T_DurationBox : T_BaseControl
 	{
+		public event EventHandler? DurationChanged = null;
+		protected virtual void OnDurationChanged(EventArgs e)
+		{
+			if (DurationChanged != null)
+			{
+				DurationChanged(this, e);
+			}
+		}
 		private double m_Duration = 0;
 		public string m_Sec = "";
 		public string m_Frame = "";
@@ -32,6 +40,7 @@ namespace AE_RemapTria
 					if (fm == "0") fm = "";
 					m_Frame = fm;
 					if ((m_Sec != "") && (m_Frame == "")) m_Frame = "0";
+					OnDurationChanged(new EventArgs());
 					this.Invalidate();
 				}
 			}
@@ -52,11 +61,22 @@ namespace AE_RemapTria
 					if (fm == "0") fm = "";
 					if ((m_Sec != "") && (m_Frame == "")) m_Frame = "0";
 					m_Frame = fm;
+					OnDurationChanged(new EventArgs());
 					this.Invalidate();
 				}
 			}
 		}
-
+		public string Info
+		{
+			get
+			{
+				int f = (int)(m_Duration * (int)m_Fps);
+				int sec = f / (int)m_Fps;
+				int koma = f % (int)m_Fps;
+				return string.Format("{0}+{1} ({2}F)",
+					sec,koma,f					);
+			}
+		}
 		public T_DurationBox()
 		{
 			this.Size = new Size(150, 30);
@@ -73,6 +93,7 @@ namespace AE_RemapTria
 			string fm = String.Format("{0}", ff % (int)fps);
 			if (fm == "0") fm = "00";
 			m_Frame = fm;
+			OnDurationChanged(new EventArgs());
 		}
 		// *************************************************************
 		public void InputBS()
@@ -94,8 +115,9 @@ namespace AE_RemapTria
 				if (m_Duration != d)
 				{
 					m_Duration = d;
+					OnDurationChanged(new EventArgs());
 				}
-				this.Invalidate();
+				this.Refresh();
 			}
 		}
 		// *************************************************************
@@ -126,8 +148,9 @@ namespace AE_RemapTria
 			if (m_Duration != d)
 			{
 				m_Duration = d;
+				OnDurationChanged(new EventArgs());
 			}
-			if (b) this.Invalidate();
+			if (b) this.Refresh();
 
 		}
 		// *******************
@@ -136,7 +159,8 @@ namespace AE_RemapTria
 			m_Sec = "";
 			m_Frame = "";
 			m_Duration = 0;
-			this.Invalidate();
+			OnDurationChanged(new EventArgs());
+			this.Refresh();
 		}
 		// *******************
 		public void InputSec()
@@ -148,8 +172,9 @@ namespace AE_RemapTria
 			if (m_Duration != d)
 			{
 				m_Duration = d;
+				OnDurationChanged(new EventArgs());
 			}
-			this.Invalidate();
+			this.Refresh();
 		}
 		// *******************
 		public void InputKey(int v)

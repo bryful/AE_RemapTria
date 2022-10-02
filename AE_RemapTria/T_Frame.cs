@@ -181,7 +181,7 @@ namespace AE_RemapTria
 			int y = f * m_grid.Sizes.CellHeight - m_grid.Sizes.Disp.Y;
 			rct.Y = y;
 
-			bool isNoEnabled = ! m_grid.CellData.EnabledFrame(f);
+			bool isNoEnabled = ! m_grid.CellData.EnableFrame(f);
 			bool isSelected = m_grid.CellData.IsSelectedFrame(f);
 			//フレームの背景
 			if (isSelected == true)

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>CFBundleIconFile</key>
+	<string>cellRemap.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleGetInfoString</key>
+	<string>bry-ful&apos; app</string>
+	<key>CFBundleSignature</key>
+	<string>CRMP</string>
+	<key>CFBundleExecutable</key>
+	<string>cellRemap</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.bryful.cellRemap</string>
+	<key>NOTE</key>
+	<string>bryful</string>
+</dict>
+</plist>

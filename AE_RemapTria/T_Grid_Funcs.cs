@@ -82,6 +82,7 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled ctrl+@", ToggleFrameEnabled);
 			m_Menu.AddSubMenu(1, "HeightMax ctrl+\\", HeightMax);
 		}
+		/*
 		public void T_Menu_MenuExec(object sender, MenuEventArgs e)
 		{
 			if (m_Menu == null) return;
@@ -90,21 +91,31 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
-
+		*/
 		// ************************************************************************************
 		public bool SheetSettings()
 		{
 			if (m_Form == null) return false;
 			T_SheetSettingDialog dlg = new T_SheetSettingDialog();
 			dlg.SetForm(m_Form);
-			dlg.Frame = CellData.FrameCount;
+			int ExFrame = CellData.FrameCount - CellData.FrameCountTrue;
+			dlg.Frame = CellData.FrameCountTrue;
 			dlg.Fps = CellData.FrameRate;
-			dlg.Caption = string.Format("Orig: {0}+{1}({2}F) fps:{3}",
+			string caution = "";
+			if(ExFrame > 0)
+			{
+				caution=String.Format("Warning! 抜きコマ{0}個あり。", ExFrame);
+			}
+			else
+			{
+				caution = string.Format("Orig: {0}+{1}({2}F) fps:{3}",
 				CellData.FrameCount / (int)CellData.FrameRate,
 				CellData.FrameCount % (int)CellData.FrameRate,
 				CellData.FrameCount,
 				(int)CellData.FrameRate
 				);
+			}
+			dlg.Caption = caution;
 			dlg.Location = new Point(
 				m_Form.Left + 20,
 				m_Form.Top + 25 + Sizes.CaptionHeight + Sizes.CaptionHeight2
@@ -112,7 +123,7 @@ namespace AE_RemapTria
 			if (dlg.ShowDialog(m_Form) == DialogResult.OK)
 			{
 				CellData.FrameRate = dlg.Fps;
-				CellData.FrameCount = dlg.Frame;
+				CellData.FrameCount = dlg.Frame+ ExFrame;
 				Sizes.CallOnChangeGridSize();
 			}
 			dlg.Dispose();

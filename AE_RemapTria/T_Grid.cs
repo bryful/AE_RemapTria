@@ -275,7 +275,7 @@ namespace AE_RemapTria
 			Rectangle r = new Rectangle(x, y, Sizes.CellWidth, Sizes.CellHeight);
 			//塗りつぶし
 			bool IsSel = (CellData.IsSelected(l, f));
-			bool IsUnEnabled = !CellData.EnabledFrame(f);
+			bool IsUnEnabled = !CellData.EnableFrame(f);
 			if (IsSel == true)
 			{
 				sb.Color = Colors.Selection;

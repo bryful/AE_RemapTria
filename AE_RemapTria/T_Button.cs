@@ -230,7 +230,7 @@ namespace AE_RemapTria
 				if(m_MouseDown != value)
 				{
 					m_MouseDown = value;
-					this.Invalidate();
+					this.Refresh();
 				}
 			}
 		}

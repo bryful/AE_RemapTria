@@ -14,98 +14,89 @@ namespace AE_RemapTria
 		public string Caption { get; set; }
 		public int Width { get; set; }
 		public int PosLeft { get; set; }
-		private int m_Id = -1;
-		public int Id { get { return m_Id; } }
-		public T_MenuItem(int id,String cap,int w=100)
+		public T_MenuItem(String cap,int w=100)
 		{
-			m_Id = id;
 			Caption = cap;
 			Width = w;
 		}
 	}
-#pragma warning restore CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
-
-	public class MenuEventArgs : EventArgs
+	public class T_SubMenuItem
 	{
-		public int Id;
-		public string Caption;
-		public MenuEventArgs(int id, string caption)
+		private int m_Id = -1;
+		public int Id { get { return m_Id; } }
+		public string Caption { get; set; }
+		private FuncType m_func;
+
+		public T_SubMenuItem(FuncType fnc, String cap,int id)
 		{
-			Id = id;
-			Caption = caption;
+			m_func = fnc;
+			Caption = cap;
+			m_Id = id;
+		}
+		public bool Exec()
+		{
+			return m_func();
 		}
 	}
-
+#pragma warning restore CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
 
 	public class T_Menu :T_BaseControl
 	{
 		public const int MyHeight = 20;
-		public delegate void MenuEventHandler(object sender, MenuEventArgs e);
-
-		//イベントデリゲートの宣言
-		public event MenuEventHandler? MenuExec;
-
-		protected virtual void OnMenuExec(MenuEventArgs e)
-		{
-			if (MenuExec != null)
-			{
-				MenuExec(this, e);
-			}
-		}
 		private T_Grid? m_grid = null;
-		private ContextMenuStrip[] m_Submenu = new ContextMenuStrip[0];
-		private FuncType[] m_SubmenuFunc = new FuncType[0];
-		public FuncType[] Funcs
-		{
-			get { return m_SubmenuFunc; }
-		}
-			//
 		private T_MenuItem[] m_MenuItems = new T_MenuItem[0];
+		private ContextMenuStrip[] m_Submenu = new ContextMenuStrip[0];
+		private T_SubMenuItem[] m_SubMenuItems = new T_SubMenuItem[0];
+		//
 		// ****************************************************************
 		public T_Menu()
 		{
 			this.Size = new Size(100, MyHeight);
 			ChkGrid();
 		}
-
-
-
 		// ****************************************************************
 		public void AddMenu(string cap,int w)
 		{
 			Array.Resize(ref m_MenuItems, m_MenuItems.Length + 1);
 			Array.Resize(ref m_Submenu, m_Submenu.Length + 1);
 			int cnt = m_MenuItems.Length - 1;
-			m_MenuItems[cnt] = new T_MenuItem(cnt,cap, w);
+			m_MenuItems[cnt] = new T_MenuItem(cap, w);
 			m_Submenu[cnt] = new ContextMenuStrip();
-			m_Submenu[cnt].BackColor = Color.Black;
-			m_Submenu[cnt].ForeColor = Color.White;
+			m_Submenu[cnt].BackColor = Color.FromArgb(25,25,50);
+			m_Submenu[cnt].ForeColor = Color.FromArgb(200, 200, 250);
 			this.Size = new Size(MenuWidthAll(), MyHeight);
 		}
 		// ****************************************************************
 		public void AddSubMenu(int idx, string cap, FuncType ft)
 		{
-			Array.Resize(ref m_SubmenuFunc, m_SubmenuFunc.Length + 1);
-
+			Array.Resize(ref m_SubMenuItems, m_SubMenuItems.Length + 1);
+			int cnt = m_SubMenuItems.Length - 1;
+			m_SubMenuItems[cnt ] = new T_SubMenuItem(ft, cap, cnt);
 			ToolStripMenuItem a = new ToolStripMenuItem(cap);
-			m_SubmenuFunc[m_SubmenuFunc.Length-1] = ft;
 			a.Click += A_Click;
-			a.Tag = m_SubmenuFunc.Length - 1;
+			a.Tag = cnt;
 			m_Submenu[idx].Items.Add(a);
+
 		}
 		// ****************************************************************
 		private void A_Click(object? sender, EventArgs e)
 		{
 			ToolStripMenuItem m = (ToolStripMenuItem)sender;
-			OnMenuExec(new MenuEventArgs((int)m.Tag, m.Text));
+			if(m!=null)
+			{
+				int idx = (int)(m.Tag);
+				if((idx>=0)&&(idx< m_SubMenuItems.Length))
+				{
+					m_SubMenuItems[idx].Exec();
+				}
+			}
 		}
-
 		// ****************************************************************
 		public void Clear()
 		{
-			m_SubmenuFunc = new FuncType[0];
-			m_Submenu = new ContextMenuStrip[0];
 			m_MenuItems = new T_MenuItem[0];
+			m_Submenu = new ContextMenuStrip[0];
+			m_SubMenuItems = new T_SubMenuItem[0];
 
 		}
 		// ****************************************************************
@@ -155,8 +146,6 @@ namespace AE_RemapTria
 			MyFontSize = 8;
 			SetLoc();
 			m_grid.LocationChanged += M_grid_LocationChanged;
-			if(this.MenuExec==null)
-				this.MenuExec += m_grid.T_Menu_MenuExec;
 
 		}
 

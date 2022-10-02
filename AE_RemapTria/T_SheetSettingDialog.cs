@@ -113,10 +113,11 @@ namespace AE_RemapTria
 		{
 			this.DialogResult = DialogResult.Cancel;
 		}
-		private int m_mdkey = -1;
+		private int m_mdkey = -5;
+		private int m_mdkeyEX = -1;
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (m_mdkey < 0)
+			if (m_mdkey <= -5)
 			{
 				int v = t_DurationBox1.KeyToNum(e.KeyData);
 				if (v >= 0)
@@ -131,12 +132,16 @@ namespace AE_RemapTria
 					{
 						if (Frame > 12)
 						{
-							DialogResult = DialogResult.OK;
+							btnOK.IsMouseDown = true;
+							m_mdkey = -1;
+							//DialogResult = DialogResult.OK;
 						}
 					}
 					else if (e.KeyData == Keys.Escape)
 					{
-						DialogResult = DialogResult.Cancel;
+						btnCancel.IsMouseDown = true;
+						m_mdkey = -2;
+						//DialogResult = DialogResult.Cancel;
 					}
 
 				}
@@ -145,10 +150,20 @@ namespace AE_RemapTria
 		}
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			if(m_mdkey>=0)
+			if(m_mdkey>=-2)
 			{
-				m_btns[m_mdkey].IsMouseDown = false;
-				m_mdkey = -1;
+				if (m_mdkey >= 0)
+				{
+					m_btns[m_mdkey].IsMouseDown = false;
+				}else if(m_mdkey==-1)
+				{
+					DialogResult = DialogResult.OK;
+
+				}else if(m_mdkey==-2)
+				{
+					DialogResult = DialogResult.Cancel;
+				}
+				m_mdkey = -5;
 			}
 			base.OnKeyUp(e);
 		}
@@ -161,6 +176,11 @@ namespace AE_RemapTria
 			{
 				t_DurationBox1.InputKey(tb.Id);
 			}
+		}
+
+		private void t_DurationBox1_DurationChanged(object sender, EventArgs e)
+		{
+			lbDuration.Text = t_DurationBox1.Info;
 		}
 	}
 }

@@ -1,0 +1,87 @@
+#TimeSheetGrid SheetData
+
+*Comment
+
+*ParamStart
+LayerCount	11
+FrameCount	72
+CmpFps	30
+SrcWidth	1280
+SrcHeight	720
+PageSec	6
+SrcAspect	1
+CmpAspect	1
+EmptyCell	3
+remaping	False
+CREATE_USER	
+UPDATE_USER	
+CREATE_TIME	2013/02/21 13:10:38
+UPDATE_TIME	2013/02/21 13:10:38
+TITLE	
+SUB_TITLE	
+OPUS	
+SCECNE	
+CUT	
+CAMPANY_NAME	
+
+*CellName
+0	A
+1	B
+2	C
+3	D
+4	E
+5	F
+6	G
+7	H
+8	I
+9	J
+10	K
+
+*Memo
+
+*FrameEnabled
+1	0
+
+*CellDataStart
+*Cell	0
+1	1
+4	2
+7	3
+10	4
+13	5
+16	6
+19	7
+22	8
+25	9
+28	10
+31	11
+34	12
+37	0
+*CellEnd	0
+*Cell	1
+1	1
+4	2
+7	3
+10	4
+13	5
+16	6
+19	7
+22	8
+25	9
+28	10
+31	11
+34	12
+37	13
+40	12
+43	11
+46	10
+49	9
+52	8
+55	7
+58	6
+61	5
+64	4
+67	3
+70	2
+*CellEnd	1
+*End
