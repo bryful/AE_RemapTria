@@ -12,6 +12,7 @@ namespace AE_RemapTria
 
 	public partial class T_Form : Form
 	{
+		public bool IsMultExecute=false;
 		private enum MDPos
 		{
 			None,
@@ -80,15 +81,15 @@ namespace AE_RemapTria
 			ChkGrid();
 			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
 		}
-		private void Form1_Load(object sender, EventArgs e)
-		{
-			//this.Text = nameof(MainForm.Parent) + "/aa";
-		}
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
-			PrefFile pf = new PrefFile((Form)this);
-			pf.StoreForm();
-			pf.Save();
+			// 二重起動されたものは保存しない
+			if (IsMultExecute == false)
+			{
+				PrefFile pf = new PrefFile((Form)this);
+				pf.StoreForm();
+				pf.Save();
+			}
 			base.OnFormClosed(e);
 		}
 		// ********************************************************************
@@ -439,8 +440,10 @@ namespace AE_RemapTria
 		// ********************************************************************
 		public void Command(string[] args, PIPECALL IsPipe = PIPECALL.StartupExec)
 		{
+			if ((IsMultExecute == true) && (IsPipe != PIPECALL.StartupExec)) return;
 			bool QuitFlag = false; 
 			bool err = true;
+
 
 			Args args1 = new Args(args);
 			if (args1.OptionCount > 0)

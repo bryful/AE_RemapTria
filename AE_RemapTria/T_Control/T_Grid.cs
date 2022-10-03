@@ -15,6 +15,9 @@ namespace AE_RemapTria
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 	public partial class T_Grid : T_BaseControl
 	{
+		private bool m_IsJapanOS = true;
+		public bool IsJapanOS { get { return m_IsJapanOS; } }
+
 		public T_CellData CellData = new T_CellData();
 		public T_Size Sizes = new T_Size();
 		public T_Colors Colors = new T_Colors();
@@ -54,12 +57,16 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		public T_Grid()
 		{
+			m_IsJapanOS = (System.Globalization.CultureInfo.CurrentUICulture.Name== "ja-JP");
 			InitializeComponent();
 
 			Init();
 			ChkMinMax();
+
 			MyFontSize = 9;
 			Alignment = StringAlignment.Center;
+
+			MakeFuncs();
 
 			CellData.ValueChanged += CellData_ValueChangedEvent;
 			CellData.SelChanged += CellData_SelChangedEvent;
@@ -67,7 +74,6 @@ namespace AE_RemapTria
 			Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			Sizes.ChangeDisp += Sizes_ChangeDisp;
 			Sizes.ChangeDispMax += Sizes_ChangeDisp;
-			MakeFuncs();
 		}
 
 		private void CellData_CountChanged(object? sender, EventArgs e)
@@ -235,8 +241,8 @@ namespace AE_RemapTria
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
 				}
-				Sizes.CallOnChangeDisp();
 				this.Invalidate();
+				Sizes.CallOnChangeDisp();
 			}
 			base.OnMouseDown(e);
 		}
@@ -255,15 +261,19 @@ namespace AE_RemapTria
 					}
 					Point cp = Sizes.PosCell(e.X, e.Y);
 					CellData.Selection.Set2Frame(m_mdFrame, cp.Y);
-					Sizes.CallOnChangeDisp();
 					this.Invalidate();
+					Sizes.CallOnChangeDisp();
 				}
 			}
-				base.OnMouseMove(e);
+			base.OnMouseMove(e);
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			m_mdFrame = -1;
+			if(m_mdFrame>=0)
+			{
+				m_mdFrame = -1;
+				this.Invalidate();
+			}
 			base.OnMouseUp(e);
 		}
 		//-------------------------------------------------

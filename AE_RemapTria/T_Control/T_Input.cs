@@ -16,6 +16,23 @@ namespace AE_RemapTria
 	public partial class T_Input : T_BaseControl
 	{
 		private T_Grid? m_grid = null;
+		private T_Form? m_form = null;
+		public T_Form? Form
+		{
+			get
+			{
+				return m_form;
+			}
+			set
+			{
+				m_form = value;
+				if(m_form != null)
+				{
+					//this.Location = new Point(0, 21);
+				}
+			}
+		}
+
 		private int m_value = -1;
 		public int Value
 		{

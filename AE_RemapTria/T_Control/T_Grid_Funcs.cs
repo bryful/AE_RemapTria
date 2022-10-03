@@ -30,56 +30,59 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
-			lst.Add(new FuncItem(Input0, "Input0", Keys.D0, Keys.NumPad0,"入力エリアに0"));
-			lst.Add(new FuncItem(Input1, "Input1", Keys.D1, Keys.NumPad1, "入力エリアに1"));
-			lst.Add(new FuncItem(Input2, "Input2", Keys.D2, Keys.NumPad2, "入力エリアに2"));
-			lst.Add(new FuncItem(Input3, "Input3", Keys.D3, Keys.NumPad3, "入力エリアに3"));
-			lst.Add(new FuncItem(Input4, "Input4", Keys.D4, Keys.NumPad4, "入力エリアに4"));
-			lst.Add(new FuncItem(Input5, "Input5", Keys.D5, Keys.NumPad5, "入力エリアに5"));
-			lst.Add(new FuncItem(Input6, "Input6", Keys.D6, Keys.NumPad6, "入力エリアに6"));
-			lst.Add(new FuncItem(Input7, "Input7", Keys.D7, Keys.NumPad7, "入力エリアに7"));
-			lst.Add(new FuncItem(Input8, "Input8", Keys.D8, Keys.NumPad8, "入力エリアに8"));
-			lst.Add(new FuncItem(Input9, "Input9", Keys.D9, Keys.NumPad9, "入力エリアに9"));
-			lst.Add(new FuncItem(InputClear, "InputClear", Keys.Delete, "入力エリアを消去or選択範囲を空セルに"));
-			lst.Add(new FuncItem(InputBS, "InputBS", Keys.Back, "入力エリアをBS or 前のセルを削除"));
-			lst.Add(new FuncItem(InputEnter, "InputEnter", Keys.Enter, Keys.Return, "入力エリアの数値を入力 or　前の番号を打ち込む"));
-			lst.Add(new FuncItem(InputEmpty, "Inputempty", Keys.Decimal, Keys.OemPeriod,"空セルを打ち込む"));
-			lst.Add(new FuncItem(InputInc, "InputInc", Keys.Add,"前の数値に1を足して入力"));
-			lst.Add(new FuncItem(InputDec, "InputDec", Keys.Subtract, "前の数値に1を引いて入力"));
-			lst.Add(new FuncItem(SelMoveUp, "SelMoveUp", Keys.Up,""));
-			lst.Add(new FuncItem(SelMoveDown, "SelMoveDown", Keys.Down));
-			lst.Add(new FuncItem(SelMoveLeft, "SelMoveLeft", Keys.Left));
-			lst.Add(new FuncItem(SelMoveRight, "SelMoveRight", Keys.Right));
-			lst.Add(new FuncItem(SelAdd, "SelAdd", Keys.Shift | Keys.Down, Keys.Multiply));
-			lst.Add(new FuncItem(SelDec, "SelDec", Keys.Shift | Keys.Up, Keys.Divide));
-			lst.Add(new FuncItem(PageUp, "PageUp", Keys.PageUp));
-			lst.Add(new FuncItem(PageDown, "PageUp", Keys.PageDown));
-			lst.Add(new FuncItem(DispUp, "DispUp", Keys.Up | Keys.Control));
-			lst.Add(new FuncItem(DispDown, "DispDown", Keys.Down | Keys.Control));
-			lst.Add(new FuncItem(DispLeft, "DispLeft", Keys.Left | Keys.Control));
-			lst.Add(new FuncItem(DispRight, "DispRight", Keys.Right | Keys.Control));
-			lst.Add(new FuncItem(Home, "Home", Keys.Home));
-			lst.Add(new FuncItem(End, "End", Keys.End));
+			lst.Add(new FuncItem(Input0, Keys.D0, Keys.NumPad0, "入力エリアに0"));
+			lst.Add(new FuncItem(Input1, Keys.D1, Keys.NumPad1, "入力エリアに1"));
+			lst.Add(new FuncItem(Input2, Keys.D2, Keys.NumPad2, "入力エリアに2"));
+			lst.Add(new FuncItem(Input3, Keys.D3, Keys.NumPad3, "入力エリアに3"));
+			lst.Add(new FuncItem(Input4, Keys.D4, Keys.NumPad4, "入力エリアに4"));
+			lst.Add(new FuncItem(Input5, Keys.D5, Keys.NumPad5, "入力エリアに5"));
+			lst.Add(new FuncItem(Input6, Keys.D6, Keys.NumPad6, "入力エリアに6"));
+			lst.Add(new FuncItem(Input7, Keys.D7, Keys.NumPad7, "入力エリアに7"));
+			lst.Add(new FuncItem(Input8, Keys.D8, Keys.NumPad8, "入力エリアに8"));
+			lst.Add(new FuncItem(Input9, Keys.D9, Keys.NumPad9, "入力エリアに9"));
+			lst.Add(new FuncItem(InputClear, Keys.Delete, "クリア"));
+			lst.Add(new FuncItem(InputBS, Keys.Back, "BS"));
+			lst.Add(new FuncItem(InputEnter, Keys.Enter, Keys.Return, "入力"));
+			lst.Add(new FuncItem(InputEmpty, Keys.Decimal, Keys.OemPeriod, "空セル"));
+			lst.Add(new FuncItem(InputInc, Keys.Add, "前の数値に1を足して入力"));
+			lst.Add(new FuncItem(InputDec, Keys.Subtract, "前の数値に1を引いて入力"));
+			lst.Add(new FuncItem(SelMoveUp, Keys.Up, "選択範囲を上に"));
+			lst.Add(new FuncItem(SelMoveDown, Keys.Down, "選択範囲を下に"));
+			lst.Add(new FuncItem(SelMoveLeft, Keys.Left, "選択範囲を左に"));
+			lst.Add(new FuncItem(SelMoveRight, Keys.Right, "選択範囲を右に"));
+			lst.Add(new FuncItem(SelAdd, Keys.Shift | Keys.Down, Keys.Multiply, "SelAdd"));
+			lst.Add(new FuncItem(SelDec, Keys.Shift | Keys.Up, Keys.Divide, "SelDec"));
+			lst.Add(new FuncItem(PageUp, Keys.PageUp));
+			lst.Add(new FuncItem(PageDown, Keys.PageDown));
+			lst.Add(new FuncItem(DispUp, Keys.Up | Keys.Control));
+			lst.Add(new FuncItem(DispDown, Keys.Down | Keys.Control));
+			lst.Add(new FuncItem(DispLeft, Keys.Left | Keys.Control));
+			lst.Add(new FuncItem(DispRight, Keys.Right | Keys.Control));
+			lst.Add(new FuncItem(Home, Keys.Home, "先頭へ"));
+			lst.Add(new FuncItem(End, Keys.End, "最後へ"));
 
-			lst.Add(new FuncItem(Open, "Open", Keys.Control | Keys.O));
-			lst.Add(new FuncItem(ToggleFrameEnabled, "ToggleFrameEnabled", Keys.Control | Keys.Oemtilde));
-			lst.Add(new FuncItem(HeightMax, "HeightMax", Keys.Control | Keys.Oem5));
-			lst.Add(new FuncItem(SheetSettings, "SheetSettings", Keys.Control | Keys.K));
-			lst.Add(new FuncItem(SetSelection1, "SetSelection1",  Keys.F1));
-			lst.Add(new FuncItem(SetSelection2, "SetSelection2", Keys.F2));
-			lst.Add(new FuncItem(SetSelection3, "SetSelection3", Keys.F3));
-			lst.Add(new FuncItem(SetSelection4, "SetSelection4", Keys.F4));
-			lst.Add(new FuncItem(SetSelection5, "SetSelection5", Keys.F5));
-			lst.Add(new FuncItem(SetSelection6, "SetSelection6", Keys.F6));
-			lst.Add(new FuncItem(SetSelection7, "SetSelection7", Keys.F7));
-			lst.Add(new FuncItem(SetSelection8, "SetSelection8", Keys.F8));
-			lst.Add(new FuncItem(SetSelection9, "SetSelection9", Keys.F9));
-			lst.Add(new FuncItem(SetSelection10, "SetSelection10", Keys.F10));
-			lst.Add(new FuncItem(SetSelection11, "SetSelection11", Keys.F11));
-			lst.Add(new FuncItem(SetSelection12, "SetSelection12", Keys.F12));
-			lst.Add(new FuncItem(Undo, "Undo", Keys.Z | Keys.Control));
+			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "開く"));
+			lst.Add(new FuncItem(ToggleFrameEnabled, Keys.Control | Keys.Oemtilde));
+			lst.Add(new FuncItem(FrameEnabledOFF, Keys.Control | Keys.Oem5));
+			lst.Add(new FuncItem(FrameEnabledON, Keys.Control | Keys.Oem7));
+			lst.Add(new FuncItem(HeightMax, Keys.Control | Keys.Oem5, "上下に広げる"));
+			lst.Add(new FuncItem(SheetSettings, Keys.Control | Keys.K, "シート設定"));
+			lst.Add(new FuncItem(SetSelection1, Keys.F1));
+			lst.Add(new FuncItem(SetSelection2, Keys.F2));
+			lst.Add(new FuncItem(SetSelection3, Keys.F3));
+			lst.Add(new FuncItem(SetSelection4, Keys.F4));
+			lst.Add(new FuncItem(SetSelection5, Keys.F5));
+			lst.Add(new FuncItem(SetSelection6, Keys.F6));
+			lst.Add(new FuncItem(SetSelection7, Keys.F7));
+			lst.Add(new FuncItem(SetSelection8, Keys.F8));
+			lst.Add(new FuncItem(SetSelection9, Keys.F9));
+			lst.Add(new FuncItem(SetSelection10, Keys.F10));
+			lst.Add(new FuncItem(SetSelection11, Keys.F11));
+			lst.Add(new FuncItem(SetSelection12, Keys.F12));
+			lst.Add(new FuncItem(Undo, Keys.Z | Keys.Control));
+			lst.Add(new FuncItem(Quit, Keys.Q ,"終了"));
 
-			Funcs.SetFuncs(lst.ToArray());
+			Funcs.SetFuncItems(lst.ToArray());
 		}
 		// ************************************************************************************
 		public void MakeMenu()
@@ -87,12 +90,12 @@ namespace AE_RemapTria
 			if (m_Menu == null) return;
 			m_Menu.AddMenu("AE_RemapTria", 93);
 			m_Menu.AddMenu("Edit", 40);
-			m_Menu.AddSubMenu(0, "Seet Setting ctrl+k", SheetSettings);
-			m_Menu.AddSubMenu(0, "Open ctrl+O", Open);
-			m_Menu.AddSubMenu(0, "Quit ctrl+Q", Quit);
-			m_Menu.AddSubMenu(1, "Undo ctrl+Z", Undo);
-			m_Menu.AddSubMenu(1, "ToggleFrameEnabled ctrl+@", ToggleFrameEnabled);
-			m_Menu.AddSubMenu(1, "HeightMax ctrl+\\", HeightMax);
+			m_Menu.AddSubMenu(0, "SheetSettings");
+			m_Menu.AddSubMenu(0, "Open");
+			m_Menu.AddSubMenu(0, "Quit");
+			m_Menu.AddSubMenu(1, "Undo");
+			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
+			m_Menu.AddSubMenu(1, "HeightMax");
 		}
 		/*
 		public void T_Menu_MenuExec(object sender, MenuEventArgs e)
@@ -163,6 +166,18 @@ namespace AE_RemapTria
 		public bool ToggleFrameEnabled()
 		{
 			return CellData.ToggleFrameEnabled();
+		}
+		// ************************************************************************************
+		public bool FrameEnabledON()
+		{
+			CellData.SetFrameEnabled(true);
+			return	true;
+		}
+		// ************************************************************************************
+		public bool FrameEnabledOFF()
+		{
+			CellData.SetFrameEnabled(false);
+			return true;
 		}
 		// ************************************************************************************
 		public bool Inputnum(int v)

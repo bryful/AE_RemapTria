@@ -24,18 +24,36 @@ namespace AE_RemapTria
 	{
 		private int m_Id = -1;
 		public int Id { get { return m_Id; } }
-		public string Caption { get; set; }
-		private FuncType m_func;
+		public string Caption {
+			get 
+			{
+				if (m_funcItem != null)
+				{
+					return m_funcItem.EngName;
+				}
+				else
+				{
+					return "";
+				}
 
-		public T_SubMenuItem(FuncType fnc, String cap,int id)
+			}
+		}
+		private FuncItem m_funcItem;
+		public T_SubMenuItem(FuncItem fnc, int id)
 		{
-			m_func = fnc;
-			Caption = cap;
+			m_funcItem = fnc;
 			m_Id = id;
 		}
 		public bool Exec()
 		{
-			return m_func();
+			if (m_funcItem.Func != null)
+			{
+				return m_funcItem.Func();
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 #pragma warning restore CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
@@ -44,6 +62,7 @@ namespace AE_RemapTria
 	{
 		public const int MyHeight = 20;
 		private T_Grid? m_grid = null;
+		private T_Funcs? m_Funcs = null;
 		private T_MenuItem[] m_MenuItems = new T_MenuItem[0];
 		private ContextMenuStrip[] m_Submenu = new ContextMenuStrip[0];
 		private T_SubMenuItem[] m_SubMenuItems = new T_SubMenuItem[0];
@@ -67,12 +86,27 @@ namespace AE_RemapTria
 			this.Size = new Size(MenuWidthAll(), MyHeight);
 		}
 		// ****************************************************************
-		public void AddSubMenu(int idx, string cap, FuncType ft)
+		public void AddSubMenu(int idx, FuncItem fi)
 		{
 			Array.Resize(ref m_SubMenuItems, m_SubMenuItems.Length + 1);
 			int cnt = m_SubMenuItems.Length - 1;
-			m_SubMenuItems[cnt ] = new T_SubMenuItem(ft, cap, cnt);
-			ToolStripMenuItem a = new ToolStripMenuItem(cap);
+			m_SubMenuItems[cnt] = new T_SubMenuItem(fi, cnt);
+			ToolStripMenuItem a = new ToolStripMenuItem(fi.Caption);
+			a.Click += A_Click;
+			a.Tag = cnt;
+			m_Submenu[idx].Items.Add(a);
+
+		}
+		// ****************************************************************
+		public void AddSubMenu(int idx, string EngN)
+		{
+			if (m_Funcs == null) return;
+			FuncItem? ft = m_Funcs.FindFunc(EngN);
+			if(ft== null) return;
+			Array.Resize(ref m_SubMenuItems, m_SubMenuItems.Length + 1);
+			int cnt = m_SubMenuItems.Length - 1;
+			m_SubMenuItems[cnt] = new T_SubMenuItem(ft, cnt);
+			ToolStripMenuItem a = new ToolStripMenuItem(ft.Caption);
 			a.Click += A_Click;
 			a.Tag = cnt;
 			m_Submenu[idx].Items.Add(a);
@@ -141,6 +175,8 @@ namespace AE_RemapTria
 			Clear();
 			m_grid.SetT_Menu(this);
 			m_grid.MakeMenu();
+			m_Funcs = m_grid.Funcs;
+
 			Alignment = StringAlignment.Center;
 			LineAlignment = StringAlignment.Center;
 			MyFontSize = 8;

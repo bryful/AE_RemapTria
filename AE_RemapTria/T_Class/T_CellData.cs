@@ -295,6 +295,7 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ******************************************************
+		/*
 		public bool SetFrameEnabled(bool b)
 		{
 			PushUndo(BackupSratus.FrameEnabled);
@@ -305,7 +306,7 @@ namespace AE_RemapTria
 			CalcInfo();
 			OnCountChanged(new EventArgs());
 			return true;
-		}
+		}*/
 		// ******************************************************
 		public bool ToggleFrameEnabled()
 		{
@@ -323,7 +324,22 @@ namespace AE_RemapTria
 			OnCountChanged(new EventArgs());
 			return true;
 		}
-
+		// ******************************************************
+		public void SetFrameEnabled(bool b)
+		{
+			PushUndo(BackupSratus.FrameEnabled);
+			for (int i = 0; i < Selection.Length; i++)
+			{
+				int f = Selection.Start + i;
+				if ((f >= 0) && (f < m_FrameEnabled.FrameCount))
+				{
+					m_FrameEnabled.SetEnable(f,b);
+				}
+			}
+			m_FrameEnabled.CalcEnableFrame();
+			CalcInfo();
+			OnCountChanged(new EventArgs());
+		}
 		// ******************************************************
 		public CellSatus GetCellStatus(int c, int f)
 		{

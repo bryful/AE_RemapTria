@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\AE_RemapTria\CallExe.cs" Link="CallExe.cs" />
+    <Compile Include="..\AE_RemapTria\T_Class\CallExe.cs" Link="CallExe.cs" />
   </ItemGroup>
 
   <ItemGroup>
