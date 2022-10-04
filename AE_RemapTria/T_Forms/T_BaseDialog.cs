@@ -148,7 +148,7 @@ namespace AE_RemapTria
 			if (m_Form != null)
 			{
 				m_grid = fm.Grid;
-				SetMyFont(fm.Grid.MyFonts);
+				this.MyFonts =m_grid.MyFonts;
 			}
 		}
 		protected override void OnDoubleClick(EventArgs e)

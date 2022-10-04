@@ -28,7 +28,7 @@ namespace AE_RemapTria
 			{
 				m_MyFontIndex = value;
 				if (m_MyFontIndex < 0) m_MyFontIndex = 0;
-				if (this.MyFonts != null)
+				if (m_MyFonts != null)
 				{
 					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
 				}
@@ -52,7 +52,7 @@ namespace AE_RemapTria
 		}
 		public void SetFontSizeStyle(float sz, FontStyle fs)
 		{
-			if (this.MyFonts != null)
+			if (m_MyFonts != null)
 			{
 				this.Font = m_MyFonts.MyFont(m_MyFontIndex, sz, fs);
 			}

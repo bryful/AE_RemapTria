@@ -24,6 +24,7 @@ namespace AE_RemapTria
 
 		public T_Frame()
 		{
+			this.Size = new Size(T_Size.FrameWidthDef, T_Size.CellHeightDef * 24);
 			Init();
 			Alignment = StringAlignment.Far;
 			MyFontSize = 9;
@@ -44,6 +45,7 @@ namespace AE_RemapTria
 			set
 			{
 				m_grid = value;
+				
 				ChkGrid();
 			}
 		}
@@ -52,8 +54,7 @@ namespace AE_RemapTria
 		{
 			if (m_grid != null)
 			{
-
-				ChkMinMax();
+				m_grid.SetT_Frame(this);
 				SetLocSize();
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 				m_grid.Sizes.ChangeDispMax += Sizes_ChangeDispMax;
@@ -64,15 +65,12 @@ namespace AE_RemapTria
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
 				m_grid.CellData.CountChanged += CellData_CountChanged;
 
-				m_grid.LocationChanged += M_grid_LocationChanged;
-				m_grid.SizeChanged+= M_grid_LocationChanged;
 			}
 		}
 
 		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
-			ChkMinMax();
-			SetLocSize();
+			ChkDot();
 			this.Invalidate();
 		}
 
@@ -81,10 +79,6 @@ namespace AE_RemapTria
 			this.Invalidate();
 		}
 
-		private void M_grid_LocationChanged(object? sender, EventArgs e)
-		{
-			SetLocSize();
-		}
 
 		//--------------------------------------------
 		private void ChangedEvent(object? sender, EventArgs e)
@@ -94,16 +88,18 @@ namespace AE_RemapTria
 
 		private void Sizes_ChangeDispMax(object? sender, EventArgs e)
 		{
+			ChkDot();
 			this.Invalidate();
 		}
 
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
+			ChkDot();
 
 			this.Invalidate();
 		}
 		// ********************************************************************
-		private void SetLocSize()
+		public void SetLocSize()
 		{
 			if (m_grid == null) return;
 			int x = m_grid.Left - (m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth);
@@ -112,15 +108,7 @@ namespace AE_RemapTria
 			if(this.Location != p) this.Location = p;
 			if(this.Height != m_grid.Height) this.Height = m_grid.Height;
 		}
-		//-------------------------------------------------
-		private void ChkMinMax()
-		{
-			if (m_grid != null) {
-				this.MinimumSize = new Size(m_grid.Sizes.FrameWidth, m_grid.Sizes.CellHeight * 6);
-				this.MaximumSize = new Size(m_grid.Sizes.FrameWidth, m_grid.Sizes.CellHeight * m_grid.CellData.FrameCount);
-				ChkDot();
-			}
-		}
+
 		private void ChkDot()
 		{
 			if (m_grid != null)
@@ -143,22 +131,7 @@ namespace AE_RemapTria
 				Dot3 = new Rectangle(l, t, w, h);
 			}
 		}
-		//-------------------------------------------------
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize(e);
-			if (m_grid != null)
-			{
-				m_grid.SizeSetting();
-				SetLocSize();
-				this.Invalidate();
-			}
-		}
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			SetLocSize();
-			base.OnLocationChanged(e);
-		}
+
 		private Point m_MD = new Point(0, 0);
 		protected override void OnMouseDown(MouseEventArgs e)
 		{

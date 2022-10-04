@@ -23,6 +23,7 @@ namespace AE_RemapTria
 		// ***********************************************
 		public T_Caption()
 		{
+			this.Size = new Size(T_Size.CellWidthDef*10, T_Size.CaptionHeightDef+ T_Size.CaptionHeightDef);
 			Init();
 
 			Alignment = StringAlignment.Center;
@@ -51,37 +52,42 @@ namespace AE_RemapTria
 
 			if (m_grid != null)
 			{
-				ChkMinMax();
-				SetLocSize();
-
+				m_grid.SetT_Caption(this);
+				SetLoc();
 				m_grid.CellData.SelChanged += ChangedEvent;
-				m_grid.CellData.ValueChanged += ChangedEvent;
 				m_grid.CellData.CountChanged += CellData_CountChanged;
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 				m_grid.Sizes.ChangeDisp += ChangedEvent;
 				m_grid.Colors.ColorChangedEvent += ChangedEvent;
-				m_grid.LocationChanged += M_grid_LocationChanged;
-				m_grid.SizeChanged+= M_grid_LocationChanged;
 
 			}
 		}
+		public void SetLoc()
+		{
+			if (m_grid == null) return;
+			Size z = new Size(
+				m_grid.Width,
+				m_grid.Sizes.CaptionHeight+ m_grid.Sizes.CaptionHeight2
+				);
+			if (this.Size != z) this.Size = z;
 
+			Point p = new Point(
+				m_grid.Left,
+				m_grid.Top -(this.Height+m_grid.Sizes.InterHeight)
+				);
+			if (this.Location != p) this.Location = p;
+		}
 		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
-			ChkMinMax();
-			SetLocSize();
+			//ChkMinMax();
+			//SetLocSize();
 			this.Invalidate();
 		}
 
-		private void M_grid_LocationChanged(object? sender, EventArgs e)
-		{
-			SetLocSize();
-		}
 
 		// ***********************************************
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
-			ChkMinMax();
 			this.Invalidate();
 		}
 
@@ -91,42 +97,7 @@ namespace AE_RemapTria
 
 			this.Invalidate();
 		}
-		// ********************************************************************
-		private void SetLocSize()
-		{
-			if (m_grid == null) return;
-			int y = m_grid.Top 
-				- (m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2  + m_grid.Sizes.InterHeight);
-
-			Point p = new Point(m_grid.Left, y);
-			if (this.Location != p) this.Location = p;
-			if(this.Width != m_grid.Width) this.Width = m_grid.Width;
-		}       
-		// ***********************************************
-		private void ChkMinMax()
-		{
-			if (m_grid == null) return;
-			int lc = m_grid.CellData.CellCount;
-			int h = m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2;
-			this.MinimumSize = new Size(m_grid.Sizes.CellWidth * 6, h);
-			this.MaximumSize = new Size(m_grid.Sizes.CellWidth * lc, h);
-		}
-		//-------------------------------------------------
-		protected override void OnResize(EventArgs e)
-		{
-			if (m_grid != null)
-			{
-				SetLocSize();
-				m_grid.SizeSetting();
-			}
-			base.OnResize(e);
-			this.Invalidate();
-		}
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			SetLocSize();
-			base.OnLocationChanged(e);
-		}           
+   
 		//-------------------------------------------------
 		private void DrawCaption(Graphics g, SolidBrush sb, Pen p, int l)
 		{

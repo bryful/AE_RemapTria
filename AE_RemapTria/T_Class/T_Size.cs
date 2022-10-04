@@ -18,10 +18,9 @@ namespace AE_RemapTria
 		private int m_CaptionHeight2;
 		private int m_FrameWidth;
 		private int m_FrameWidth2;
-
-
 		private int m_InterWidth;
 		private int m_InterHeight;
+		private int m_MenuHeight;
 
 		private Point m_Disp;
 		private Point m_DispMax;
@@ -30,6 +29,37 @@ namespace AE_RemapTria
 		private Size m_DispSize;
 		private int m_CellCount;
 		private int m_FrameCount;
+
+		public const int CellWidthDef = 30;
+		public const int CellHeightDef = 16;
+		public const int FrameWidthDef = 90;
+		public const int FrameWidth2Def = 20;
+		public const int CaptionHeightDef = 16;
+		public const int CaptionHeight2Def = 16;
+		public const int InterWidthDef = 4;
+		public const int InterHeightDef = 4;
+		public const int MenuHeightDef = 20;
+		public const int CellCountMin = 6;
+		public const int FrameCountMin = 12;
+		public const int HScrolHeight = 20;
+		public const int VScrolWidth = 20;
+		// ***********************************************************
+		public static Point InputLocDef = new Point(0, MenuHeightDef + InterHeightDef);
+		public static Size InputSizeDef = new Size(FrameWidthDef, CaptionHeightDef + CaptionHeight2Def);
+		public static Point MenuLocDef = new Point(0, 0);
+		public static Size MenuSizeDef = new Size(200, MenuHeightDef);
+		public static Point GridLocDef = new Point(
+			FrameWidthDef+ InterWidthDef, 
+			CaptionHeightDef + CaptionHeight2Def+InterHeightDef);
+		// ***********************************************************
+		public Size InputSize()
+		{
+			return new Size(m_FrameWidth,m_CaptionHeight + m_CaptionHeight2);
+		}
+		public Point InputLoc()
+		{
+			return new Point(0, m_MenuHeight + m_InterHeight);
+		}
 		// ***********************************************************
 		public T_Size()
 		{
@@ -37,12 +67,15 @@ namespace AE_RemapTria
 			ChangeDispMax = null;
 			ChangeDisp = null;
 
-			m_CellWidth = 30;
-			m_CellHeight = 16;
-			m_FrameWidth = 90;
-			m_FrameWidth2 = 20;
-			m_CaptionHeight = 16;
-			m_CaptionHeight2 = 16;
+			m_CellWidth = CellWidthDef;
+			m_CellHeight = CellHeightDef;
+			m_FrameWidth = FrameWidthDef;
+			m_FrameWidth2 = FrameWidth2Def;
+			m_CaptionHeight = CaptionHeightDef;
+			m_CaptionHeight2 = CaptionHeight2Def;
+			m_InterWidth = InterWidthDef;
+			m_InterHeight = InterHeightDef;
+			m_MenuHeight = MenuHeightDef;
 
 			m_Disp = new Point(0, 0);
 			m_DispMax = new Point(0, 0);
@@ -52,8 +85,6 @@ namespace AE_RemapTria
 			m_FrameCount = 0;
 			m_CellCount = 0;
 
-			m_InterWidth = 4;
-			m_InterHeight = 4;
 		}
 		//---------------------------------------
 		protected virtual void OnChangeGridSize(EventArgs e)
@@ -138,6 +169,12 @@ namespace AE_RemapTria
 		{
 			get { return m_InterHeight; }
 			set { m_InterHeight = value; OnChangeGridSize(new EventArgs()); }
+		}
+		//---------------------------------------
+		public int MenuHeight
+		{
+			get { return m_MenuHeight; }
+			set { m_MenuHeight = value; OnChangeGridSize(new EventArgs()); }
 		}
 		//---------------------------------------
 		public void SizeSetting(Size sz, T_CellData cd)

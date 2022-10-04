@@ -71,8 +71,8 @@ namespace AE_RemapTria
 			m_ValueTop = TA.Height + TB.Height;
 			m_AreaTop = TA.Height + TB.Height + ARW.Height / 2;
 
-			this.MinimumSize = new Size(22, m_MinHeight);
-			this.MaximumSize = new Size(22, 65536);
+			this.MinimumSize = new Size(20, m_MinHeight);
+			this.MaximumSize = new Size(20, 65536);
 
 			this.SetStyle(
 				ControlStyles.DoubleBuffer |
@@ -88,7 +88,7 @@ namespace AE_RemapTria
 		protected override void InitLayout()
 		{
 			base.InitLayout();
-			CHkGrid();
+			ChkSize();
 		}
 		//---------------------------------------
 		protected virtual void OnChangeValueEvent(EventArgs e)
@@ -138,20 +138,21 @@ namespace AE_RemapTria
 			set
 			{
 				m_grid = value;
-				CHkGrid();
+				ChkSize();
+				if (m_grid != null)
+				{
+					m_grid.Sizes.ChangeDisp += Sizes_ChangeDisp;
+					//m_grid.Sizes.ChangeDispMax += Sizes_ChangeDispMax;
+				}
 			}
 		}
-		private void CHkGrid()
+
+		private void Sizes_ChangeDispMax(object? sender, EventArgs e)
 		{
 			if (m_grid != null)
 			{
-				ChkSize();
-				SetLocSize();
-				m_grid.SizeChanged += M_grid_SizeChanged;
-				m_grid.LocationChanged += M_grid_SizeChanged;
-				m_grid.Sizes.ChangeDisp += Sizes_ChangeDisp;
+				Maximum = m_grid.Sizes.DispMax.Y;
 			}
-
 		}
 
 		private void Sizes_ChangeDisp(object? sender, EventArgs e)
@@ -162,25 +163,6 @@ namespace AE_RemapTria
 			}
 		}
 
-		// ********************************************************************
-		private void M_grid_SizeChanged(object? sender, EventArgs e)
-		{
-			SetLocSize();
-		}
-		// ********************************************************************
-		private void SetLocSize()
-		{
-			if (m_grid == null) return;
-			this.Location = new Point(
-				m_grid.Left + m_grid.Width + m_grid.Sizes.InterWidth,
-				m_grid.Top);
-			this.Height = m_grid.Height;
-		}
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			SetLocSize();
-			base.OnLocationChanged(e);
-		}       
 		//----------------------------------------------------------------
 		protected override void OnPaint(PaintEventArgs pe)
 		{

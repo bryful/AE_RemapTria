@@ -21,6 +21,8 @@ namespace AE_RemapTria
 		}
 
 		private T_Grid? m_grid = null;
+		private T_Input? m_input = null;
+
 		private string m_FileName = "";
 		public static bool _execution = true;
 		NavBar m_navBar = new NavBar();
@@ -118,16 +120,15 @@ namespace AE_RemapTria
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
 				int headerY = 25;
-				int x0 = 15;
-				int x1 = this.Width - 15;
+				int x1 = this.Width - 25;
 				int xmid = this.Width/2;
-				int y1 = this.Height - 15;
+				int y1 = this.Height - 25;
 				m_mdPos = MDPos.None;
-				if ((e.Y < headerY)||(e.X<x0))
+				if ((e.Y < headerY))
 				{
 					m_mdPos = MDPos.Header;
 				}
-				else if ((e.X > x1) || (e.Y > y1))
+				else if ((e.X >= x1) || (e.Y >= y1))
 				{
 					m_mdPos = MDPos.BottomRight;
 				}
@@ -259,6 +260,7 @@ namespace AE_RemapTria
 		
 
 		// ********************************************************************
+
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -275,8 +277,6 @@ namespace AE_RemapTria
 				SetMinMax();
 				SetLocSize();
 				m_grid.SetForm(this);
-				m_grid.SizeChanged += M_grid_SizeChanged;
-				m_grid.LocationChanged += M_grid_SizeChanged;
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			}
 
@@ -285,28 +285,52 @@ namespace AE_RemapTria
 		{
 			SetMinMax();
 		}
-
-		private void M_grid_SizeChanged(object? sender, EventArgs e)
-		{
-			SetLocSize();
-		}
-
 		// ********************************************************************
 		private void SetLocSize()
 		{
-			if (m_grid == null) return;
-			int leftW = m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth;
-			int topW = 25 + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2;
-			Point p = new Point(leftW, topW);
-			if (m_grid.Location != p) m_grid.Location = p;
-			int ww = leftW + m_grid.Sizes.InterWidth + 22 + 5;
-			int hh = topW + m_grid.Sizes.InterHeight + 22 + 5;
-			Size sz = new Size(
-				this.ClientSize.Width - ww,
-				this.ClientSize.Height - hh
-				);
-			if (m_grid.Size != sz) m_grid.Size = sz;
+			if (m_grid != null)
+			{
+				int leftW = m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth;
+				int topW = m_grid.Sizes.MenuHeight+ m_grid.Sizes.InterHeight 
+					+ m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 + m_grid.Sizes.InterHeight;
+				Point p = new Point(leftW, topW);
+				if (m_grid.Location != p) m_grid.Location = p;
 
+				int ww = leftW + m_grid.Sizes.InterWidth + T_Size.VScrolWidth + m_grid.Sizes.InterWidth;
+				int hh = topW + m_grid.Sizes.InterHeight + T_Size.HScrolHeight + m_grid.Sizes.InterHeight;
+				Size sz = new Size(
+					this.ClientSize.Width - ww,
+					this.ClientSize.Height - hh
+					);
+				if (m_grid.Size != sz) m_grid.Size = sz;
+			}
+
+
+		}
+		// ********************************************************************
+		public T_Input Input
+		{
+			get { return m_input; }
+			set
+			{
+				m_input = value;
+				ChkInput();
+			}
+		}
+		// ********************************************************************
+		public void ChkInput()
+		{
+			if(m_input == null) return;
+			if(m_grid!=null)
+			{
+				m_input.Location = m_grid.Sizes.InputLoc();
+				m_input.Size = m_grid.Sizes.InputSize();
+			}
+			else
+			{
+				m_input.Location = T_Size.InputLocDef;
+				m_input.Size = T_Size.InputSizeDef;
+			}
 		}
 		// ********************************************************************
 		protected override void OnResize(EventArgs e)
@@ -330,13 +354,13 @@ namespace AE_RemapTria
 
 
 			this.MinimumSize = new Size(
-				x +ts.FrameWidth+ ts.InterWidth+ts.CellWidth*6+ ts.InterWidth + 22 +10,
+				x +ts.FrameWidth+ ts.InterWidth+ts.CellWidth*6+ ts.InterWidth + T_Size.VScrolWidth,
 				y + 25 + ts.CaptionHeight2 
-					+ ts.CaptionHeight +ts.InterHeight + ts.CellHeight*6+ ts.InterHeight+22 + 10
+					+ ts.CaptionHeight +ts.InterHeight + ts.CellHeight*6+ ts.InterHeight+ T_Size.HScrolHeight
 				);
 			this.MaximumSize = new Size(
-				x + ts.FrameWidth + ts.InterWidth + ts.CellWidth * cc + 22 + 10,
-				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + 22 + 10
+				x + ts.FrameWidth + ts.InterWidth + ts.CellWidth * cc + T_Size.VScrolWidth,
+				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + T_Size.HScrolHeight
 				);
 		}
 		// ********************************************************************

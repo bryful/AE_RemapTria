@@ -76,8 +76,8 @@ namespace AE_RemapTria
 			m_ValueLeft = LA.Width + LB.Width;
 			m_AreaLeft = LA.Width + LB.Width + ARW.Width / 2;
 
-			this.MinimumSize = new Size(m_MinWidth, 22);
-			this.MaximumSize = new Size(65536, 22);
+			this.MinimumSize = new Size(m_MinWidth, 20);
+			this.MaximumSize = new Size(65536, 20);
 
 			this.SetStyle(
 		   ControlStyles.DoubleBuffer |
@@ -117,11 +117,6 @@ namespace AE_RemapTria
 			this.Invalidate();
 
 		}
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			SetLocSize();
-			base.OnLocationChanged(e);
-		}       
 		//----------------------------------------------------------------
 		private void ChkSize()
 		{
@@ -155,25 +150,10 @@ namespace AE_RemapTria
 			if (m_grid != null)
 			{
 				ChkSize();
-				SetLocSize();
-				m_grid.SizeChanged += M_grid_SizeChanged;
-				m_grid.LocationChanged += M_grid_SizeChanged;
 			}
 
 		}
-		private void M_grid_SizeChanged(object? sender, EventArgs e)
-		{
-			SetLocSize();
-		}       
-		// ********************************************************************
-		private void SetLocSize()
-		{
-			if (m_grid == null) return;
-			this.Location = new Point(
-				m_grid.Left,
-				m_grid.Top+ m_grid.Height+m_grid.Sizes.InterHeight);
-			this.Width = m_grid.Width;
-		}       //----------------------------------------------------------------
+		//----------------------------------------------------------------
 		protected override void OnPaint(PaintEventArgs pe)
 		{
 			//base.OnPaint(pe);

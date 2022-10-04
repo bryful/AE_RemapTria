@@ -44,6 +44,16 @@ namespace AE_RemapTria
 		{
 			m_Input = ti;
 		}
+		private T_Caption? m_Caption = null;
+		public void SetT_Caption(T_Caption ti)
+		{
+			m_Caption = ti;
+		}
+		private T_Frame? m_Frame = null;
+		public void SetT_Frame(T_Frame ti)
+		{
+			m_Frame = ti;
+		}
 		private T_Menu? m_Menu = null;
 		public void SetT_Menu(T_Menu tm)
 		{
@@ -78,7 +88,6 @@ namespace AE_RemapTria
 
 		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
-			SizeSetting();
 			ChkMinMax();
 			ChkHScrl();
 			ChkVScrl();
@@ -87,7 +96,6 @@ namespace AE_RemapTria
 		protected override void InitLayout()
 		{
 			base.InitLayout();
-			SizeSetting();
 			ChkMinMax();
 			ChkHScrl();
 			ChkVScrl();
@@ -103,7 +111,6 @@ namespace AE_RemapTria
 
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
-			ChkMinMax();
 			this.Invalidate();
 		}
 
@@ -121,8 +128,12 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		private void ChkMinMax()
 		{
-			this.MinimumSize = new Size(Sizes.CellWidth * 6, Sizes.CellHeight * 6);
-			this.MaximumSize = new Size(Sizes.CellWidth * CellData.CellCount, Sizes.CellHeight * CellData.FrameCount);
+			this.MinimumSize = new Size(
+				Sizes.CellWidth * 6, 
+				Sizes.CellHeight * 6);
+			this.MaximumSize = new Size(
+				Sizes.CellWidth * CellData.CellCount, 
+				Sizes.CellHeight * CellData.FrameCount);
 			Sizes.SizeSetting(this.Size, CellData);
 
 		}
@@ -145,6 +156,12 @@ namespace AE_RemapTria
 		{
 			if (m_HScrol != null)
 			{
+				Point p = new Point(
+					this.Left,
+					this.Top + this.Height + Sizes.InterHeight);
+				if (m_HScrol.Location != p) m_HScrol.Location = p;
+				if (m_HScrol.Width != this.Width) m_HScrol.Width = this.Width; 
+				
 				m_HScrol.ValueChangedEvent += M_VScrol_ValueChangedEvent;
 				m_HScrol.Maximum = Sizes.DispMax.X;
 				m_HScrol.Value = Sizes.Disp.X;
@@ -167,6 +184,11 @@ namespace AE_RemapTria
 		{
 			if (m_VScrol != null)
 			{
+				Point p = new Point(
+					this.Left + this.Width + Sizes.InterWidth,
+					this.Top);
+				if (m_VScrol.Location != p) m_VScrol.Location = p;
+				if (m_VScrol.Height != this.Height) m_VScrol.Height = this.Height; 
 				m_VScrol.ValueChangedEvent += M_VScrol_ValueChangedEvent;
 				m_VScrol.Maximum = Sizes.DispMax.Y;
 				m_VScrol.Value = Sizes.Disp.Y;
@@ -192,14 +214,28 @@ namespace AE_RemapTria
 			SizeSetting();
 			if (m_HScrol != null)
 			{
+				Point p = new Point(
+					this.Left,
+					this.Top + this.Height + Sizes.InterHeight);
+				if (m_HScrol.Location != p) m_HScrol.Location = p;
+				if(m_HScrol.Width != this.Width) m_HScrol.Width = this.Width;
+
 				m_HScrol.Maximum = Sizes.DispMax.X;
 				m_HScrol.Value = Sizes.Disp.X;
 			}
 			if (m_VScrol != null)
 			{
+				Point p = new Point(
+					this.Left+this.Width+ Sizes.InterWidth,
+					this.Top);
+				if (m_VScrol.Location != p) m_VScrol.Location = p;
+				if (m_VScrol.Height != this.Height) m_VScrol.Height = this.Height;
+
 				m_VScrol.Maximum = Sizes.DispMax.Y;
 				m_VScrol.Value = Sizes.Disp.Y;
 			}
+			if (m_Caption != null) m_Caption.SetLoc();
+			if (m_Frame != null) m_Frame.SetLocSize();
 			base.OnResize(e);
 			this.Invalidate();
 		}

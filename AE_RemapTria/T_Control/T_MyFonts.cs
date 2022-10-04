@@ -15,9 +15,9 @@ using System.Windows.Forms;
 namespace AE_RemapTria
 {
 	/// <summary>
-	/// リソースにあるフォントを管理するコンポーネント
+	/// リソースにあるフォントを管理するクラス
 	/// </summary>
-	public partial class T_MyFonts : Component
+	public partial class T_MyFonts :Component
 	{
 		[System.Runtime.InteropServices.DllImport("gdi32.dll")]
 		public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
@@ -39,16 +39,15 @@ namespace AE_RemapTria
 		// *****************************************************
 		public T_MyFonts()
 		{
+			InitializeComponent(); 
 			MyFontsInit(true);
-			InitializeComponent();
 		}
-		// *****************************************************
 		public T_MyFonts(IContainer container)
 		{
 			container.Add(this);
 
 			InitializeComponent();
-		}
+		}       
 		// *****************************************************
 		/// <summary>
 		///　リソースフォントを読み込む

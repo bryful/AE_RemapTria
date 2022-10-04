@@ -16,22 +16,6 @@ namespace AE_RemapTria
 	public partial class T_Input : T_BaseControl
 	{
 		private T_Grid? m_grid = null;
-		private T_Form? m_form = null;
-		public T_Form? Form
-		{
-			get
-			{
-				return m_form;
-			}
-			set
-			{
-				m_form = value;
-				if(m_form != null)
-				{
-					//this.Location = new Point(0, 21);
-				}
-			}
-		}
 
 		private int m_value = -1;
 		public int Value
@@ -54,6 +38,7 @@ namespace AE_RemapTria
 			Alignment = StringAlignment.Far;
 			MyFontSize = 9;
 
+			this.Size = T_Size.InputSizeDef;
 			SizeFix();
 			ChkGrid();
 		}
@@ -84,45 +69,47 @@ namespace AE_RemapTria
 				m_grid.SetT_Input(this);
 				m_grid.Sizes.ChangeGridSize += M_Size_ChangeGridSize;
 				m_grid.Colors.ColorChangedEvent += M_Colors_ColorChangedEvent;
-				m_grid.LocationChanged += M_grid_LocationChanged; ;
-				m_grid.SizeChanged += M_grid_LocationChanged;
 
 			}
 
 		}
 
-		private void M_grid_LocationChanged(object? sender, EventArgs e)
-		{
-			SetLoc();
-		}
-
 		//------------------------------------------
-		private void SetLoc()
-		{
-			if (m_grid == null) return;
-			Point p = new Point(
-				m_grid.Left - (m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth),
-				m_grid.Top - (m_grid.Sizes.InterHeight + m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2)
-				);
-			if (this.Location != p) this.Location = p;
-		}
-		//------------------------------------------
-		protected override void OnLocationChanged(EventArgs e)
-		{
-			SetLoc();
-			base.OnLocationChanged(e);
-		}
-		//------------------------------------------
-		public void SizeFix()
+		public void SetLoc()
 		{
 			if (m_grid != null)
 			{
-				this.Size = new Size(m_grid.Sizes.FrameWidth, m_grid.Sizes.CaptionHeight+ m_grid.Sizes.CaptionHeight2);
-				this.MinimumSize = this.Size;
-				this.MaximumSize = this.Size;
+				Point p = new Point(
+				0,
+				m_grid.Sizes.MenuHeight + m_grid.Sizes.InterHeight
+				);
+				if (this.Location != p) this.Location = p;
+			}
+		}
+
+		//------------------------------------------
+		public void SizeFix()
+		{
+			Size z;
+			if (m_grid != null)
+			{
+				z = new Size(
+					m_grid.Sizes.FrameWidth, 
+					m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2);
+			}
+			else
+			{
+				z = new Size(
+					T_Size.FrameWidthDef,
+					T_Size.CaptionHeightDef + T_Size.CaptionHeight2Def
+					);
+			}
+			if (this.Size != z)
+			{
+				this.Size = z;
 				this.Invalidate();
 			}
-		}       
+		}
 
 		private void M_Size_ChangeGridSize(object? sender, EventArgs e)
 		{

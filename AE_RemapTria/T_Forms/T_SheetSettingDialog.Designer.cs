@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.t_Label1 = new AE_RemapTria.T_Label();
+			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.btnCancel = new AE_RemapTria.T_Button();
 			this.t_Label3 = new AE_RemapTria.T_Label();
 			this.t_Label2 = new AE_RemapTria.T_Label();
@@ -86,7 +86,7 @@
 			this.btnCancel.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnCancel.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btnCancel.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnCancel.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btnCancel.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnCancel.Id = 0;
 			this.btnCancel.IsCheckMode = false;
@@ -96,8 +96,8 @@
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btnCancel.Location = new System.Drawing.Point(38, 208);
 			this.btnCancel.MyFontIndex = 5;
-			this.btnCancel.MyFonts = null;
-			this.btnCancel.MyFontSize = 9F;
+			this.btnCancel.MyFonts = this.t_MyFonts1;
+			this.btnCancel.MyFontSize = 12F;
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.RightBar = 0;
@@ -158,7 +158,7 @@
 			this.btnOK.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnOK.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btnOK.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnOK.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btnOK.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnOK.Id = 0;
 			this.btnOK.IsCheckMode = false;
@@ -167,9 +167,9 @@
 			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btnOK.Location = new System.Drawing.Point(213, 208);
-			this.btnOK.MyFontIndex = 0;
-			this.btnOK.MyFonts = null;
-			this.btnOK.MyFontSize = 9F;
+			this.btnOK.MyFontIndex = 5;
+			this.btnOK.MyFonts = this.t_MyFonts1;
+			this.btnOK.MyFontSize = 12F;
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.RightBar = 12;
@@ -189,7 +189,7 @@
 			this.btn30fps.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn30fps.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
 			this.btn30fps.Enabled = false;
-			this.btn30fps.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn30fps.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn30fps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn30fps.Id = 30;
 			this.btn30fps.IsCheckMode = true;
@@ -198,8 +198,8 @@
 			this.btn30fps.LeftBar = 0;
 			this.btn30fps.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn30fps.Location = new System.Drawing.Point(304, 51);
-			this.btn30fps.MyFontIndex = 0;
-			this.btn30fps.MyFonts = null;
+			this.btn30fps.MyFontIndex = 5;
+			this.btn30fps.MyFonts = this.t_MyFonts1;
 			this.btn30fps.MyFontSize = 9F;
 			this.btn30fps.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn30fps.Name = "btn30fps";
@@ -221,7 +221,7 @@
 			this.btn24fps.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn24fps.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
 			this.btn24fps.Enabled = false;
-			this.btn24fps.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn24fps.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn24fps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn24fps.Id = 24;
 			this.btn24fps.IsCheckMode = true;
@@ -230,8 +230,8 @@
 			this.btn24fps.LeftBar = 8;
 			this.btn24fps.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn24fps.Location = new System.Drawing.Point(220, 51);
-			this.btn24fps.MyFontIndex = 0;
-			this.btn24fps.MyFonts = null;
+			this.btn24fps.MyFontIndex = 5;
+			this.btn24fps.MyFonts = this.t_MyFonts1;
 			this.btn24fps.MyFontSize = 9F;
 			this.btn24fps.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn24fps.Name = "btn24fps";
@@ -252,7 +252,7 @@
 			this.btnLockFps.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnLockFps.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btnLockFps.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btnLockFps.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btnLockFps.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnLockFps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnLockFps.Id = 0;
 			this.btnLockFps.IsCheckMode = true;
@@ -261,9 +261,9 @@
 			this.btnLockFps.LeftBar = 0;
 			this.btnLockFps.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btnLockFps.Location = new System.Drawing.Point(156, 51);
-			this.btnLockFps.MyFontIndex = 0;
-			this.btnLockFps.MyFonts = null;
-			this.btnLockFps.MyFontSize = 9F;
+			this.btnLockFps.MyFontIndex = 5;
+			this.btnLockFps.MyFonts = this.t_MyFonts1;
+			this.btnLockFps.MyFontSize = 6F;
 			this.btnLockFps.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnLockFps.Name = "btnLockFps";
 			this.btnLockFps.RightBar = 0;
@@ -302,7 +302,7 @@
 			this.btn1.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn1.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn1.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn1.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn1.Id = 1;
 			this.btn1.IsCheckMode = false;
@@ -312,7 +312,7 @@
 			this.btn1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn1.Location = new System.Drawing.Point(261, 144);
 			this.btn1.MyFontIndex = 5;
-			this.btn1.MyFonts = null;
+			this.btn1.MyFonts = this.t_MyFonts1;
 			this.btn1.MyFontSize = 9F;
 			this.btn1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn1.Name = "btn1";
@@ -332,7 +332,7 @@
 			this.btn2.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn2.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn2.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn2.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn2.Id = 2;
 			this.btn2.IsCheckMode = false;
@@ -342,7 +342,7 @@
 			this.btn2.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn2.Location = new System.Drawing.Point(291, 144);
 			this.btn2.MyFontIndex = 5;
-			this.btn2.MyFonts = null;
+			this.btn2.MyFonts = this.t_MyFonts1;
 			this.btn2.MyFontSize = 9F;
 			this.btn2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn2.Name = "btn2";
@@ -362,7 +362,7 @@
 			this.btn3.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn3.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn3.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn3.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn3.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn3.Id = 3;
 			this.btn3.IsCheckMode = false;
@@ -372,7 +372,7 @@
 			this.btn3.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn3.Location = new System.Drawing.Point(323, 144);
 			this.btn3.MyFontIndex = 5;
-			this.btn3.MyFonts = null;
+			this.btn3.MyFonts = this.t_MyFonts1;
 			this.btn3.MyFontSize = 9F;
 			this.btn3.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn3.Name = "btn3";
@@ -392,7 +392,7 @@
 			this.btn6.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn6.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn6.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn6.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn6.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn6.Id = 6;
 			this.btn6.IsCheckMode = false;
@@ -402,7 +402,7 @@
 			this.btn6.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn6.Location = new System.Drawing.Point(323, 114);
 			this.btn6.MyFontIndex = 5;
-			this.btn6.MyFonts = null;
+			this.btn6.MyFonts = this.t_MyFonts1;
 			this.btn6.MyFontSize = 9F;
 			this.btn6.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn6.Name = "btn6";
@@ -422,7 +422,7 @@
 			this.btn5.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn5.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn5.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn5.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn5.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn5.Id = 5;
 			this.btn5.IsCheckMode = false;
@@ -432,7 +432,7 @@
 			this.btn5.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn5.Location = new System.Drawing.Point(291, 114);
 			this.btn5.MyFontIndex = 5;
-			this.btn5.MyFonts = null;
+			this.btn5.MyFonts = this.t_MyFonts1;
 			this.btn5.MyFontSize = 9F;
 			this.btn5.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn5.Name = "btn5";
@@ -452,7 +452,7 @@
 			this.btn4.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn4.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn4.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn4.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn4.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn4.Id = 4;
 			this.btn4.IsCheckMode = false;
@@ -462,7 +462,7 @@
 			this.btn4.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn4.Location = new System.Drawing.Point(261, 114);
 			this.btn4.MyFontIndex = 5;
-			this.btn4.MyFonts = null;
+			this.btn4.MyFonts = this.t_MyFonts1;
 			this.btn4.MyFontSize = 9F;
 			this.btn4.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn4.Name = "btn4";
@@ -482,7 +482,7 @@
 			this.btn9.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn9.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn9.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn9.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn9.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn9.Id = 9;
 			this.btn9.IsCheckMode = false;
@@ -492,7 +492,7 @@
 			this.btn9.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn9.Location = new System.Drawing.Point(323, 85);
 			this.btn9.MyFontIndex = 5;
-			this.btn9.MyFonts = null;
+			this.btn9.MyFonts = this.t_MyFonts1;
 			this.btn9.MyFontSize = 9F;
 			this.btn9.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn9.Name = "btn9";
@@ -512,7 +512,7 @@
 			this.btn8.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn8.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn8.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn8.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn8.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn8.Id = 8;
 			this.btn8.IsCheckMode = false;
@@ -522,7 +522,7 @@
 			this.btn8.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn8.Location = new System.Drawing.Point(291, 85);
 			this.btn8.MyFontIndex = 5;
-			this.btn8.MyFonts = null;
+			this.btn8.MyFonts = this.t_MyFonts1;
 			this.btn8.MyFontSize = 9F;
 			this.btn8.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn8.Name = "btn8";
@@ -542,7 +542,7 @@
 			this.btn7.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn7.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn7.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn7.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn7.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn7.Id = 7;
 			this.btn7.IsCheckMode = false;
@@ -552,7 +552,7 @@
 			this.btn7.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn7.Location = new System.Drawing.Point(261, 85);
 			this.btn7.MyFontIndex = 5;
-			this.btn7.MyFonts = null;
+			this.btn7.MyFonts = this.t_MyFonts1;
 			this.btn7.MyFontSize = 9F;
 			this.btn7.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn7.Name = "btn7";
@@ -572,7 +572,7 @@
 			this.btn11BS.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn11BS.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn11BS.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn11BS.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn11BS.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn11BS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn11BS.Id = 11;
 			this.btn11BS.IsCheckMode = false;
@@ -582,7 +582,7 @@
 			this.btn11BS.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn11BS.Location = new System.Drawing.Point(351, 85);
 			this.btn11BS.MyFontIndex = 5;
-			this.btn11BS.MyFonts = null;
+			this.btn11BS.MyFonts = this.t_MyFonts1;
 			this.btn11BS.MyFontSize = 9F;
 			this.btn11BS.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn11BS.Name = "btn11BS";
@@ -602,7 +602,7 @@
 			this.btn12CL.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn12CL.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn12CL.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn12CL.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn12CL.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn12CL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn12CL.Id = 12;
 			this.btn12CL.IsCheckMode = false;
@@ -612,7 +612,7 @@
 			this.btn12CL.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn12CL.Location = new System.Drawing.Point(351, 114);
 			this.btn12CL.MyFontIndex = 5;
-			this.btn12CL.MyFonts = null;
+			this.btn12CL.MyFonts = this.t_MyFonts1;
 			this.btn12CL.MyFontSize = 9F;
 			this.btn12CL.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn12CL.Name = "btn12CL";
@@ -632,7 +632,7 @@
 			this.btn10Sec.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn10Sec.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn10Sec.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn10Sec.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn10Sec.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn10Sec.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn10Sec.Id = 10;
 			this.btn10Sec.IsCheckMode = false;
@@ -642,7 +642,7 @@
 			this.btn10Sec.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn10Sec.Location = new System.Drawing.Point(351, 144);
 			this.btn10Sec.MyFontIndex = 5;
-			this.btn10Sec.MyFonts = null;
+			this.btn10Sec.MyFonts = this.t_MyFonts1;
 			this.btn10Sec.MyFontSize = 12F;
 			this.btn10Sec.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn10Sec.Name = "btn10Sec";
@@ -662,7 +662,7 @@
 			this.btn0.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btn0.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btn0.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
-			this.btn0.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btn0.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btn0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btn0.Id = 0;
 			this.btn0.IsCheckMode = false;
@@ -672,7 +672,7 @@
 			this.btn0.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btn0.Location = new System.Drawing.Point(261, 171);
 			this.btn0.MyFontIndex = 5;
-			this.btn0.MyFonts = null;
+			this.btn0.MyFonts = this.t_MyFonts1;
 			this.btn0.MyFontSize = 9F;
 			this.btn0.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btn0.Name = "btn0";
@@ -688,13 +688,13 @@
 			this.lbStatus.Alignment = System.Drawing.StringAlignment.Near;
 			this.lbStatus.BackColor = System.Drawing.Color.Transparent;
 			this.lbStatus.BottomBar = new System.Drawing.Size(600, 0);
-			this.lbStatus.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbStatus.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbStatus.LeftBar = new System.Drawing.Size(10, 10);
 			this.lbStatus.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbStatus.Location = new System.Drawing.Point(38, 176);
 			this.lbStatus.MyFontIndex = 5;
-			this.lbStatus.MyFonts = null;
+			this.lbStatus.MyFonts = this.t_MyFonts1;
 			this.lbStatus.MyFontSize = 10F;
 			this.lbStatus.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbStatus.Name = "lbStatus";
@@ -757,7 +757,6 @@
 			this.Edge = new System.Drawing.Rectangle(5, 5, 12, 6);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KeyPreview = true;
-			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_SheetSettingDialog";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
