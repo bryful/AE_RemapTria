@@ -28,7 +28,7 @@ namespace AE_RemapTria
 
 		private Size m_DispSize;
 		private int m_CellCount;
-		private int m_FrameCount;
+		private int m_FrameCountTrue;
 
 		public const int CellWidthDef = 30;
 		public const int CellHeightDef = 16;
@@ -82,7 +82,7 @@ namespace AE_RemapTria
 			m_DispCell = new Rectangle(0, 0, 0, 0);
 
 			m_DispSize = new Size(0, 0);
-			m_FrameCount = 0;
+			m_FrameCountTrue = 0;
 			m_CellCount = 0;
 
 		}
@@ -180,11 +180,11 @@ namespace AE_RemapTria
 		public void SizeSetting(Size sz, T_CellData cd)
 		{
 			m_DispSize = sz;
-			m_FrameCount = cd.FrameCount;
+			m_FrameCountTrue = cd.FrameCountTrue;
 			m_CellCount = cd.CellCount;
 
 			int ax = m_CellWidth * m_CellCount - m_DispSize.Width;
-			int ay = m_CellHeight * m_FrameCount - m_DispSize.Height;
+			int ay = m_CellHeight * m_FrameCountTrue - m_DispSize.Height;
 			if (ax < 0) ax = 0;
 			if (ay < 0) ay = 0;
 
@@ -224,7 +224,7 @@ namespace AE_RemapTria
 			if (m_DispCell.Width > m_CellCount) m_DispCell.Width = m_CellCount;
 
 			m_DispCell.Height = m_DispSize.Height / m_CellHeight + 1;
-			if (m_DispCell.Height > m_FrameCount) m_DispCell.Height = m_FrameCount;
+			if (m_DispCell.Height > m_FrameCountTrue) m_DispCell.Height = m_FrameCountTrue;
 		}
 		//---------------------------------------
 		public int DispX

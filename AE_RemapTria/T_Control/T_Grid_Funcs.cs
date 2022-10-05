@@ -113,8 +113,8 @@ namespace AE_RemapTria
 			if (m_Form == null) return false;
 			T_SheetSettingDialog dlg = new T_SheetSettingDialog();
 			dlg.SetForm(m_Form);
-			int ExFrame = CellData.FrameCount - CellData.FrameCountTrue;
-			dlg.Frame = CellData.FrameCountTrue;
+			int ExFrame = CellData.UnEnabledFrameCount;
+			dlg.Frame = CellData.FrameCount;
 			dlg.Fps = CellData.FrameRate;
 			string caution = "";
 			if(ExFrame > 0)
@@ -133,12 +133,12 @@ namespace AE_RemapTria
 			dlg.Caption = caution;
 			dlg.Location = new Point(
 				m_Form.Left + 20,
-				m_Form.Top + 25 + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			if (dlg.ShowDialog(m_Form) == DialogResult.OK)
 			{
 				CellData.FrameRate = dlg.Fps;
-				CellData.FrameCount = dlg.Frame+ ExFrame;
+				CellData.FrameCount = dlg.Frame;
 				Sizes.CallOnChangeGridSize();
 			}
 			dlg.Dispose();

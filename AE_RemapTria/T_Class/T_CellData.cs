@@ -46,11 +46,12 @@ namespace AE_RemapTria
 		/// <summary>
 		/// フレーム数（物理的な）
 		/// </summary>
-		public int FrameCount { get { return m_cells[0].FrameCount; } set { SetFrameCount(value); } }
+		public int FrameCount { get { return m_FrameEnabled.FrameCount; } set { SetFrameCount(value); } }
 		/// <summary>
 		/// EnabledFrameを考慮したフレーム数
 		/// </summary>
 		public int FrameCountTrue { get { return m_FrameEnabled.FrameCountTrue; } }
+		public int UnEnabledFrameCount { get { return m_FrameEnabled.UnEnabledFrameCount; } }
 		public T_CellLayer CellLayer(int c) { return m_cells[c]; }
 		/// <summary>
 		/// セル名の配列
@@ -95,31 +96,19 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		/*
-		public int[] TargetCell 
-		{
-			get { return m_data[m_sel.Target]; }
-			set 
-			{
-				int cnt = value.Length;
-				if (cnt > m_data[0].Length) cnt = m_data[0].Length;
-				PushUndo(BackupSratus.NumberInput);
-				for(int i=0;i<cnt;i++)
-				{
-					m_data[m_sel.Target][i] = value[i];
-				}
-				m_sel.Start = 0;
-				m_sel.Length= cnt;
-				OnValueChanged(new EventArgs());
-			}
-		}
-		*/
 		// ******************************************************
 		private T_Fps m_FrameRate = T_Fps.FPS24;
 		public T_Fps FrameRate
 		{
 			get { return m_FrameRate; }
-			set { m_FrameRate = value; OnValueChanged(new EventArgs()); }
+			set 
+			{ 
+				if(m_FrameRate != value)
+				{
+					m_FrameRate = value;
+					OnValueChanged(new EventArgs());
+				};  
+			}
 		}
 		// ******************************************************
 		private T_PageSec m_PageSec = T_PageSec.sec6;
@@ -205,7 +194,6 @@ namespace AE_RemapTria
 			{
 				PushUndo(BackupSratus.All);
 				int cc = CellCount;
-				int oldfc = FrameCount;
 
 				for (int i = 0; i < cc; i++)
 				{
@@ -263,26 +251,11 @@ namespace AE_RemapTria
 			m_FrameEnabled.SetValues(Selection, bb);
 		}
 		// ******************************************************
-		/*
-		private void CalcFrameEnabled()
-		{
-			int ret = 0;
-			for(int i=0; i<m_FrameEnabled.FrameCount;i++)
-			{
-				if (m_FrameEnabled.Enable(i)==true)
-				{
-					ret++;
-				}
-			}
-			m_FrameCountTrue = ret;
-			CalcInfo();
-		}
-		*/
 		private void CalcInfo()
 		{
 			m_Info = string.Format("{0}+{1}:{2}",
-				FrameCountTrue / (int)m_FrameRate,
-				FrameCountTrue % (int)m_FrameRate,
+				FrameCount / (int)m_FrameRate,
+				FrameCount % (int)m_FrameRate,
 				(int)m_FrameRate
 				);
 		}
@@ -314,7 +287,7 @@ namespace AE_RemapTria
 			for (int i = 0; i < Selection.Length; i++)
 			{
 				int f = Selection.Start + i;
-				if ((f >= 0) && (f < m_FrameEnabled.FrameCount))
+				if ((f >= 0) && (f < m_FrameEnabled.FrameCountTrue))
 				{
 					m_FrameEnabled.SetEnable(f, !m_FrameEnabled.Enable(f));
 				}
@@ -331,7 +304,7 @@ namespace AE_RemapTria
 			for (int i = 0; i < Selection.Length; i++)
 			{
 				int f = Selection.Start + i;
-				if ((f >= 0) && (f < m_FrameEnabled.FrameCount))
+				if ((f >= 0) && (f < m_FrameEnabled.FrameCountTrue))
 				{
 					m_FrameEnabled.SetEnable(f,b);
 				}
@@ -409,7 +382,7 @@ namespace AE_RemapTria
 		{
 			int ff = f;
 			if (ff < 0) ff = 0;
-			else if (ff >= m_cells[0].FrameCount) ff = m_cells[0].FrameCount;
+			else if (ff >= m_cells[0].FrameCountTrue) ff = m_cells[0].FrameCountTrue;
 			if (ff != m_sel.Start)
 			{
 				PushUndo(BackupSratus.SelectionChange);
@@ -435,33 +408,7 @@ namespace AE_RemapTria
 			}
 
 		}
-		/*
-		// ******************************************************
-		public int[] CopyData()
-		{
-			int st = m_sel.StartTrue;
-			int ed = m_sel.LastIndex;
-			int[] ret = new int[m_sel.LengthTrue];
-			for (int i=0; i< ret.Length;i++)
-			{
-				ret[i] = m_data[m_sel.Target][st + i];
-			}
-			return ret;
-		}
-		// ******************************************************
-		public void PasteData(int[] d)
-		{
-			int st = m_sel.StartTrue;
-			int ed = m_sel.LastIndex;
-			int len = ed - st + 1;
-			if (len > d.Length) len = d.Length;
-			for (int i = 0; i < d.Length; i++)
-			{
-				m_data[m_sel.Target][st + i] = d[i];
-			}
-			OnValueChanged(new EventArgs());
-		}
-		*/
+
 		// ******************************************************
 		public int[] GetCellNum()
 		{

@@ -47,5 +47,10 @@ namespace AE_RemapTria
 			string s = t_Grid1.Funcs.ToJson();
 			MessageBox.Show(s);
 		}
+
+		private void t_LabelInfo1_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

@@ -12,6 +12,9 @@ namespace AE_RemapTria
 
 	public partial class T_Form : Form
 	{
+		/// <summary>
+		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
+		/// </summary>
 		public bool IsMultExecute=false;
 		private enum MDPos
 		{

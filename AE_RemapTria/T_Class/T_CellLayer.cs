@@ -10,9 +10,17 @@ namespace AE_RemapTria
 	{
 		private bool m_IsEnabled=false;
 		public string Caption = "";
-		public int FrameCount { get { return m_cells.Length; } }
-		private int m_FrameCountTrue = 0;
-		public int FrameCountTrue { get { return m_FrameCountTrue; } }
+		/// <summary>
+		/// 実際のフレーム数
+		/// </summary>
+		public int FrameCountTrue { get { return m_cells.Length; } }
+		private int m_FrameCount = 0;
+		/// <summary>
+		/// 抜きコマを考慮したフレーム数
+		/// </summary>
+		public int FrameCount { get { return m_FrameCount; } }
+		private int m_UnEnabledFrameCount = 0;
+		public int UnEnabledFrameCount { get { return m_UnEnabledFrameCount; } }
 
 		private int[] m_cells = new int[0];
 		public int Value(int idx)
@@ -127,19 +135,27 @@ namespace AE_RemapTria
 			CalcEnableFrame();
 		}
 		// *********************************************************************
-		public bool SetFrameCount(int v)
+		public bool SetFrameCount(int f)
+		{
+			bool ret = false;
+			int nf = f + m_UnEnabledFrameCount;
+			ret = SetFrameCountTrue(nf);
+			return ret;
+		}
+		// *********************************************************************
+		public bool SetFrameCountTrue(int f)
 		{
 			bool ret = false;
 			int fc = m_cells.Length;
-			if (fc !=v)
+			if (fc != f)
 			{
 				int vl = 0;
-				if(m_IsEnabled == true) vl = 1;
+				if (m_IsEnabled == true) vl = 1;
 
-				Array.Resize(ref m_cells, v);
-				if(v>fc)
+				Array.Resize(ref m_cells, f);
+				if (f > fc)
 				{
-					for(int i=fc; i<v;i++)
+					for (int i = fc; i < f; i++)
 						m_cells[i] = vl;
 				}
 				ret = true;
@@ -151,7 +167,7 @@ namespace AE_RemapTria
 		// *********************************************************************
 		public void CalcEnableFrame()
 		{
-			int fc = FrameCount;
+			int fc = m_cells.Length;
 			if (m_IsEnabled)
 			{
 				int cnt = 0;
@@ -159,28 +175,41 @@ namespace AE_RemapTria
 				{
 					if (m_cells[i] > 0) cnt++;
 				}
-				m_FrameCountTrue = cnt;
+				m_FrameCount = cnt;
+				m_UnEnabledFrameCount = fc - cnt;
+
 			}
 			else
 			{
-				m_FrameCountTrue = fc;
+				m_FrameCount = fc;
+				m_UnEnabledFrameCount = 0;
 			}
 		}
 		// *********************************************************************
+		/// <summary>
+		/// [frame,value]を要素とした配列をにする。
+		/// 全部
+		/// </summary>
+		/// <returns></returns>
 		public int[][] ToArray()
 		{
 			return ToArraySub(m_cells);
 		}
 		// *********************************************************************
+		/// <summary>
+		/// 除外フレームを考慮して[frame,value]を要素とした配列をにする
+		/// </summary>
+		/// <param name="ec">除外フレーム</param>
+		/// <returns></returns>
 		public int[][] ToArray(T_CellLayer ec)
 		{
-			if(ec.FrameCount == ec.FrameCountTrue)
+			if(ec.FrameCountTrue == ec.FrameCount)
 			{
 				return ToArray();
 			}
-			int[] buf = new int[ec.FrameCountTrue];
+			int[] buf = new int[ec.FrameCount];
 			int cnt = 0;
-			for( int i=0;i<ec.FrameCount;i++)
+			for( int i=0;i<ec.FrameCountTrue;i++)
 			{
 				if(ec.Enable(i))
 				{

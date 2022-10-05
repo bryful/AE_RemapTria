@@ -133,7 +133,7 @@ namespace AE_RemapTria
 				Sizes.CellHeight * 6);
 			this.MaximumSize = new Size(
 				Sizes.CellWidth * CellData.CellCount, 
-				Sizes.CellHeight * CellData.FrameCount);
+				Sizes.CellHeight * CellData.FrameCountTrue);
 			Sizes.SizeSetting(this.Size, CellData);
 
 		}

@@ -22,10 +22,15 @@ namespace AE_RemapTria
 				foreach(string arg in args)
 				{
 					string arg1 = arg.ToLower();
-					if((arg1=="-m")||(arg1=="/m"))
+					if ((arg1[0]=='/')|| (arg1[0] == '-'))
 					{
-						IsMultExecute = true;
-						break;
+						string arg2 = arg1.Substring(1);
+						if ((arg2 == "m") || (arg2 == "mult"))
+						{
+							IsMultExecute = true;
+							break;
+						}
+
 					}
 				}
 

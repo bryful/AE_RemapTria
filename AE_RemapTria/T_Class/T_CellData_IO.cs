@@ -20,7 +20,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		public void SetCellData(int c, int f, int v)
 		{
-			if ((c >= 0) && (c < CellCount) && (f >= 0) && (f < FrameCount))
+			if ((c >= 0) && (c < CellCount) && (f >= 0) && (f < FrameCountTrue))
 			{
 				m_cells[c].SetValue(f, v);
 				OnValueChanged(new EventArgs());
@@ -42,7 +42,20 @@ namespace AE_RemapTria
 				int[][][] ret = new int[CellCount][][];
 				for (int i = 0; i < CellCount; i++)
 				{
-					ret[i] = m_cells[i].ToArray();
+					ret[i] = m_cells[i].ToArray(m_FrameEnabled);
+				}
+				return ret;
+			}
+		}
+		public int[][][] CellAll
+		{
+			get
+			{
+				int[][][] ret = new int[CellCount+1][][];
+				ret[0] = m_FrameEnabled.ToArray();
+				for (int i = 0; i < CellCount; i++)
+				{
+					ret[i+1] = m_cells[i].ToArray();
 				}
 				return ret;
 			}
