@@ -190,16 +190,17 @@ namespace AE_RemapTria
 		public void SetFrameCount(int fc)
 		{
 			if (fc <= 6) fc = 6;
-			if (m_cells[0].FrameCount != fc)
+			if (m_FrameEnabled.FrameCount != fc)
 			{
+				int tfc = fc + m_FrameEnabled.UnEnabledFrameCount;
 				PushUndo(BackupSratus.All);
 				int cc = CellCount;
 
 				for (int i = 0; i < cc; i++)
 				{
-					m_cells[i].SetFrameCount(fc);
+					m_cells[i].SetFrameCountTrue(tfc);
 				}
-				m_FrameEnabled.SetFrameCount(fc);
+				m_FrameEnabled.SetFrameCountTrue(tfc);
 				CalcInfo();
 				OnCountChanged(new EventArgs());
 			}
@@ -267,19 +268,7 @@ namespace AE_RemapTria
 			CalcInfo();
 			return true;
 		}
-		// ******************************************************
-		/*
-		public bool SetFrameEnabled(bool b)
-		{
-			PushUndo(BackupSratus.FrameEnabled);
-			int v = 0;
-			if (b == true) v = 1;
-			m_FrameEnabled.SetValues(Selection, v);
-			m_FrameEnabled.CalcEnableFrame();
-			CalcInfo();
-			OnCountChanged(new EventArgs());
-			return true;
-		}*/
+
 		// ******************************************************
 		public bool ToggleFrameEnabled()
 		{
@@ -556,6 +545,10 @@ namespace AE_RemapTria
 		public bool SelectionAll()
 		{
 			return SelectionAll(m_sel.Target);
+		}
+		public string FrameStr(int f)
+		{
+			string ret = "";
 		}
 	}
 }

@@ -114,14 +114,14 @@ namespace AE_RemapTria
 		{
 			m_IsEnabled = false;
 			Caption = cap.Trim();
-			SetFrameCount(frm);
+			SetFrameCountTrue(frm);
 		}
 		// *********************************************************************
 		public T_CellLayer(int frm, bool isEna)
 		{
 			m_IsEnabled = true;
 			Caption = "Enabled";
-			SetFrameCount(frm);
+			SetFrameCountTrue(frm);
 		}
 		// *********************************************************************
 		public void Init()
@@ -135,10 +135,11 @@ namespace AE_RemapTria
 			CalcEnableFrame();
 		}
 		// *********************************************************************
-		public bool SetFrameCount(int f)
+		public bool SetFrameCountEX(int f)
 		{
 			bool ret = false;
-			int nf = f + m_UnEnabledFrameCount;
+			int nf = f;
+			if(m_IsEnabled == true) nf += m_UnEnabledFrameCount;
 			ret = SetFrameCountTrue(nf);
 			return ret;
 		}
