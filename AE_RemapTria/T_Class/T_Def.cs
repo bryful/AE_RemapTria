@@ -27,7 +27,7 @@ namespace AE_RemapTria
 	{
 		frame = 0,
 		pageFrame,
-		paseSecFrame,
+		pageSecFrame,
 		SecFrame,
 		Count
 	}

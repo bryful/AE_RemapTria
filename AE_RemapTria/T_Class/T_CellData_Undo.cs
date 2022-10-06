@@ -130,10 +130,14 @@ namespace AE_RemapTria
 		{
 			if (_undePushFlag == false) return;
 			m_BackupCells.Add(new BackupCellData(this, bs));
-			if (m_BackupCells.Count > 2000)
+			if (m_BackupCells.Count > 4000)
 			{
 				m_BackupCells.RemoveAt(0);
 			}
+		}
+		public void InitUndo()
+		{
+			m_BackupCells.Clear();
 		}
 		// ******************************************************
 		public void PopUndo()

@@ -170,7 +170,7 @@ namespace AE_RemapTria
 			if(isNoEnabled) sb.Color = m_grid.Colors.GrayMoji;
 			else sb.Color = m_grid.Colors.Moji;
 			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 5, rct.Height);
-			DrawStr(g, (f + m_grid.CellData.StartDispFrame).ToString(), sb, rct2);
+			DrawStr(g, m_grid.CellData.FrameStr(f), sb, rct2);
 
 			// 下の横線を描く
 			//p.Color = m_grid.Colors.LineB;
@@ -279,6 +279,15 @@ namespace AE_RemapTria
 		protected override void OnMouseClick(MouseEventArgs e)
 		{
 			base.OnMouseClick(e);
+		}
+		protected override void OnDoubleClick(EventArgs e)
+		{
+			if(m_grid!=null)
+			{
+				m_grid.CellData.ToggleFrameDisp();
+				this.Invalidate();
+			}
+			base.OnDoubleClick(e);
 		}
 	}
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。

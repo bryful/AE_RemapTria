@@ -137,6 +137,7 @@ namespace AE_RemapTria
 				);
 			if (dlg.ShowDialog(m_Form) == DialogResult.OK)
 			{
+				CellData.PushUndo(BackupSratus.All);
 				CellData.FrameRate = dlg.Fps;
 				CellData.FrameCount = dlg.Frame;
 				Sizes.CallOnChangeGridSize();
@@ -160,6 +161,7 @@ namespace AE_RemapTria
 		public bool Undo()
 		{
 			CellData.PopUndo();
+			SizeSetting();
 			return true;
 		}
 		// ************************************************************************************

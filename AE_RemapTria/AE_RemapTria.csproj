@@ -11,6 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Ctrl\**" />
+    <EmbeddedResource Remove="Ctrl\**" />
+    <None Remove="Ctrl\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
@@ -263,10 +269,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Ctrl\" />
   </ItemGroup>
 
   <ItemGroup>

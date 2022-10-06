@@ -113,6 +113,13 @@ namespace AE_RemapTria
 		// ******************************************************
 		private T_PageSec m_PageSec = T_PageSec.sec6;
 		private T_FrameDisp m_FrameDisp = T_FrameDisp.pageFrame;
+		public T_FrameDisp FrameDisp { get { return m_FrameDisp; } }
+		public void ToggleFrameDisp()
+		{
+			int v = (int)m_FrameDisp + 1;
+			if (v >= (int)T_FrameDisp.Count) v = (int)T_FrameDisp.frame;
+			m_FrameDisp = (T_FrameDisp)v;
+		}
 
 		public string TITLE { get; set; }
 		public string SUB_TITLE { get; set; }
@@ -120,8 +127,9 @@ namespace AE_RemapTria
 		public string SCECNE { get; set; }
 		public string CUT { get; set; }
 		public string CAMPANY_NAME { get; set; }
-
+		private int m_StartKoma = 1;
 		// ******************************************************
+		/*
 		private int m_StartDispFrame = 1;
 		/// <summary>
 		/// 表示フレーム数のスタート番号
@@ -131,6 +139,7 @@ namespace AE_RemapTria
 			get { return m_StartDispFrame; } 
 			set { m_StartDispFrame = value;OnValueChanged(new EventArgs()); }
 		}
+		*/
 
 		// ******************************************************
 		public string SheetName = "";
@@ -546,9 +555,83 @@ namespace AE_RemapTria
 		{
 			return SelectionAll(m_sel.Target);
 		}
-		public string FrameStr(int f)
+		static private string SP2(int v)
+		{
+			if (v < 10)
+			{
+				return " " + v.ToString();
+			}
+			else
+			{
+				return v.ToString();
+			}
+		}
+		static private string SP4(int v)
+		{
+			if (v < 10)
+			{
+				return "   " + v.ToString();
+			}
+			else if (v < 100)
+			{
+				return "  " + v.ToString();
+			}
+			else if (v < 1000)
+			{
+				return " " + v.ToString();
+			}
+			else
+			{
+				return v.ToString();
+			}
+		}
+		public string FrameStr(int idx)
 		{
 			string ret = "";
+			int frmV = 0;
+			int pageV = 0;
+			int secV = 0;
+			int pageFrm = (int)m_PageSec*(int)m_FrameRate;
+			switch (m_FrameDisp)
+			{
+				case T_FrameDisp.frame:
+					frmV = idx + m_StartKoma;
+					ret = frmV.ToString();
+					break;
+				case T_FrameDisp.pageFrame:
+					//s0 = String.Format("{0,3}", frmV);
+					if ((idx % (int)FrameRate) == 0)
+					{
+						pageV = (idx / (int)pageFrm) + 1;
+						ret += pageV.ToString()+"p";
+					}
+					frmV = (idx % pageFrm) + m_StartKoma;
+					ret += SP4(frmV);
+					break;
+				case T_FrameDisp.pageSecFrame:
+					if (idx % (int)FrameRate == 0)
+					{
+						pageV = (idx / (int)pageFrm) + 1;
+						ret += pageV.ToString() + "p";
+						secV = (idx / (int)m_FrameRate);
+						ret += SP2(secV) + "+";
+					}
+					frmV = (idx % (int)FrameRate) + m_StartKoma;
+					ret += SP2(frmV);
+
+					break;
+				case T_FrameDisp.SecFrame:
+					if (idx % (int)FrameRate == 0)
+					{
+						secV = (idx / (int)FrameRate);
+						ret = secV.ToString()+"+";
+					}
+					frmV = (idx % (int)FrameRate) + m_StartKoma;
+					ret += SP2(frmV);
+					break;
+			}
+			return ret;
+
 		}
 	}
 }
