@@ -240,29 +240,30 @@ namespace AE_RemapTria
 			return ret;
 		}
 		// *********************************************************************
-		public void FromArray(int[][] buf, int fc)
+		public void FromArray(int[][] buf)
 		{
-			m_cells = FromArraySub(buf, fc);
+			m_cells = FromArraySub(buf);
 		}
 		// *********************************************************************
-		static private int[] FromArraySub(int[][] buf,int fc)
+		static private int[] FromArraySub(int[][] buf)
 		{
-			int[] ret = new int[fc];
+			int f = m_cells.Length;
+			int[] ret = new int[f];
 			// とりあえず-1
-			for (int i = 0; i < fc; i++) ret[i] = -1;
+			for (int i = 0; i < f; i++) ret[i] = -1;
 			//スタートは念のため０を入れておく
 			ret[0] = 0;
 			for (int i=0; i<buf.Length;i++)
 			{
 				if (buf[i].Length>=2)
 				{
-					if ( (buf[i][0]>=0)&& (buf[i][0] <fc))
+					if ( (buf[i][0]>=0)&& (buf[i][0] <f))
 					{
 						ret[buf[i][0]] = buf[i][1];
 					}
 				}
 			}
-			for (int i = 1; i < fc; i++)
+			for (int i = 1; i < f; i++)
 			{
 				if (ret[i] == -1)
 				{

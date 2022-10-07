@@ -78,6 +78,7 @@ namespace AE_RemapTria
 
 	public class T_Def
 	{
+		public const string ARDJ_Header = "ardjV2";
 	}
 
 }

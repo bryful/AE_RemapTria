@@ -46,8 +46,22 @@ namespace AE_RemapTria
 				}
 				return ret;
 			}
-		}
-		public int[][][] CellAll
+			set
+			{
+				m_FrameEnabled.Init();
+				int c = value.Length;
+				if (c <= 0) return;
+				if (c > CellCount) c = CellCount;
+				int f = value[0].Length;
+				if (f > FrameCountTrue) f = FrameCountTrue;
+				if (f < 6) return;
+				for (int i = 0; i < c; i++)
+				{
+					m_cells[c].FromArray(value[c], f);
+				}
+			}
+		// ******************************************************
+		public int[][][] CellWithEnabled
 		{
 			get
 			{
@@ -60,6 +74,28 @@ namespace AE_RemapTria
 				return ret;
 			}
 		}
+		// ******************************************************
+		/// <summary>
+		/// セル名の配列
+		/// </summary>
+		public string[] Captions
+		{
+			get
+			{
+				string[] ret = new string[CellCount];
+				for (int i = 0; i < CellCount; i++)
+					ret[i] = m_cells[i].Caption;
+				return ret;
+			}
+			set
+			{
+				int c = value.Length;
+				if (c > CellCount) c = CellCount;
+				for (int i = 0; i < c; i++)
+					m_cells[i].Caption = value[i];
+			}
+		}
+
 	}
 
 }

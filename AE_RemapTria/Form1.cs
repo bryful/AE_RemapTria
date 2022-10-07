@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AE_RemapTria.T_Class;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -51,6 +52,14 @@ namespace AE_RemapTria
 		private void t_LabelInfo1_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void button1_Click_2(object sender, EventArgs e)
+		{
+			T_Ardj ardj = new T_Ardj();
+			ardj.FromCellData(t_Grid1.CellData);
+			string s = ardj.ToJson();
+			MessageBox.Show(s);
 		}
 	}
 }

@@ -54,18 +54,6 @@ namespace AE_RemapTria
 		public int UnEnabledFrameCount { get { return m_FrameEnabled.UnEnabledFrameCount; } }
 		public T_CellLayer CellLayer(int c) { return m_cells[c]; }
 		/// <summary>
-		/// セル名の配列
-		/// </summary>
-		public string[] Captions {
-			get
-			{
-				string[]ret =new string[CellCount];
-				for (int i = 0; i < CellCount; i++)
-					ret[i] = m_cells[i].Caption;
-				return ret; 
-			} 
-		}
-		/// <summary>
 		/// セル名をインデックスで獲得
 		/// </summary>
 		/// <param name="c">セルのインデックス</param>
@@ -112,6 +100,10 @@ namespace AE_RemapTria
 		}
 		// ******************************************************
 		private T_PageSec m_PageSec = T_PageSec.sec6;
+		public T_PageSec PageSec { 
+			get { return m_PageSec; }
+			set { m_PageSec = value;}
+		}
 		private T_FrameDisp m_FrameDisp = T_FrameDisp.pageFrame;
 		public T_FrameDisp FrameDisp { get { return m_FrameDisp; } }
 		public void ToggleFrameDisp()
@@ -142,8 +134,11 @@ namespace AE_RemapTria
 		*/
 
 		// ******************************************************
-		public string SheetName = "";
+		public string SheetName = "";	
 		public string FileName = "";
+
+		public string CREATE_USER = "";
+		public string UPDATE_USER = "";
 
 		public DateTime CREATE_TIME = new DateTime(1963, 9, 9);
 		public DateTime UPDATE_TIME = new DateTime(1963, 9, 9);

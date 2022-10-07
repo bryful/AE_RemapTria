@@ -38,6 +38,7 @@
 			this.t_Caption1 = new AE_RemapTria.T_Caption();
 			this.t_Frame1 = new AE_RemapTria.T_Frame();
 			this.t_LabelInfo1 = new AE_RemapTria.T_LabelInfo();
+			this.button1 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// t_Grid1
@@ -182,11 +183,22 @@
 			this.t_LabelInfo1.TopBar = new System.Drawing.Size(0, 0);
 			this.t_LabelInfo1.Click += new System.EventHandler(this.t_LabelInfo1_Click);
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(118, 72);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 77);
+			this.button1.TabIndex = 8;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_2);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(429, 546);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.t_LabelInfo1);
 			this.Controls.Add(this.t_Frame1);
 			this.Controls.Add(this.t_Caption1);
@@ -216,5 +228,6 @@
 		private T_Caption t_Caption1;
 		private T_Frame t_Frame1;
 		private T_LabelInfo t_LabelInfo1;
+		private Button button1;
 	}
 }
