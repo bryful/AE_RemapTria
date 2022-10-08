@@ -114,6 +114,13 @@ namespace AE_RemapTria
 	public class T_Funcs
 	{
 		private  FuncItem[] m_FuncItems = new FuncItem[0];
+		public int Count
+		{
+			get
+			{
+				return m_FuncItems.Length;
+			}
+		}
 		// ********************************************************************
 		public T_Funcs()
 		{
@@ -219,6 +226,7 @@ namespace AE_RemapTria
 			//JsonSerializerOptions options = new() { WriteIndented = true };
 			return jo.ToJsonString();
 		}
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
 		public bool FromJson(string json)
 		{
 			bool ret = false;
@@ -233,7 +241,7 @@ namespace AE_RemapTria
 				string s = "";
 				if(jo.ContainsKey(key)==false) return ret;
 				s = jo[key].GetValue<string>();
-				if(s!= "AE_RemapTria") return ret;
+				if (s!= "AE_RemapTria") return ret;
 
 				key = "funcList";
 				if (jo.ContainsKey(key) == false) return ret;
@@ -295,5 +303,6 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 	}
 }

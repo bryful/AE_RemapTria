@@ -15,7 +15,25 @@ namespace AE_RemapTria
 		/// <summary>
 		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
 		/// </summary>
-		public bool IsMultExecute=false;
+		public bool IsMultExecute
+		{
+			get 
+			{
+				bool ret = false;
+				if (m_grid != null)
+				{
+					ret =  m_grid.IsMultExecute;
+				}
+				return ret;
+			}
+			set
+			{
+				if (m_grid != null)
+				{
+					m_grid.IsMultExecute =value;
+				}
+			}
+		}
 		private enum MDPos
 		{
 			None,
@@ -26,7 +44,25 @@ namespace AE_RemapTria
 		private T_Grid? m_grid = null;
 		private T_Input? m_input = null;
 
-		private string m_FileName = "";
+		public string FileName 
+		{
+			get 
+			{
+				string ret = ""; 
+				if (m_grid != null)
+				{
+					ret = m_grid.FileName;
+				}
+				return ret;
+			}
+			set
+			{
+				if(m_grid!=null)
+				{
+					m_grid.FileName = value;
+				}
+			}
+		}
 		public static bool _execution = true;
 		NavBar m_navBar = new NavBar();
 
@@ -59,11 +95,13 @@ namespace AE_RemapTria
 				true);
 			this.UpdateStyles();
 			this.KeyPreview = true;
+			this.AllowDrop = true;
 		}
 
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
+			bool reloadFlag=false;
 			base.OnLoad(e);
 			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
 			{
@@ -76,6 +114,13 @@ namespace AE_RemapTria
 				if (pf.Load() == true)
 				{
 					pf.RestoreForm();
+					bool ok = false;
+					string pp = pf.GetValueString("FileName", out ok);
+					if(ok)
+					{
+						FileName = pp;
+						reloadFlag = true;
+					}
 				}
 				else
 				{
@@ -85,6 +130,13 @@ namespace AE_RemapTria
 			//
 			ChkGrid();
 			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
+			if(reloadFlag)
+			{
+				if(m_grid!=null)
+				{
+					//
+				}
+			}
 		}
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
@@ -92,6 +144,7 @@ namespace AE_RemapTria
 			if (IsMultExecute == false)
 			{
 				PrefFile pf = new PrefFile((Form)this);
+				if(m_grid!=null)pf.SetValue("FileName", m_grid.FileName);
 				pf.StoreForm();
 				pf.Save();
 			}
@@ -310,6 +363,11 @@ namespace AE_RemapTria
 
 
 		}
+		public void ChkSize()
+		{
+			SetMinMax();
+			SetLocSize();
+		}
 		// ********************************************************************
 		public T_Input Input
 		{
@@ -375,52 +433,9 @@ namespace AE_RemapTria
 			ForegroundWindow();
 		}
 		// ********************************************************************
-		public bool Export(string p)
-		{
-			bool ret = false;
-			ForegroundWindow();
-			try
-			{
-				string s = "";// textBox1.Text;
-				File.WriteAllText(p, s, Encoding.GetEncoding("utf-8"));
-				m_FileName = p;
-				this.Text = Path.GetFileName(p);
-				ret = true;
-			}
-			catch
-			{
-				ret = false;
-			}
 
-			return ret;
-		}
 		// ********************************************************************
-		public bool Import(string p)
-		{
-			bool ret = false;
-			ForegroundWindow();
-			if (File.Exists(p) == true)
-			{
-				try
-				{
-					if (File.Exists(p) == true)
-					{
-						string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
-						//textBox1.Text = str;
-						//textBox1.Select(0, 0);
-						m_FileName = p;
-						this.Text = Path.GetFileName(p);
-						ret = true;
-					}
-				}
-				catch
-				{
-					ret = false;
-				}
-			}
 
-			return ret;
-		}
 		// ********************************************************************
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
@@ -465,13 +480,37 @@ namespace AE_RemapTria
 			return ret;
 		}
 		// ********************************************************************
+		protected override void OnDragEnter(DragEventArgs drgevent)
+		{
+			if (drgevent != null)
+			{
+				if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+				{
+					drgevent.Effect = DragDropEffects.All;
+				}
+				else
+				{
+					drgevent.Effect = DragDropEffects.None;
+				}
+			}
+			//base.OnDragEnter(drgevent);
+		}
+		protected override void OnDragDrop(DragEventArgs drgevent)
+		{
+			if (drgevent != null)
+			{
+				string[] files = (string[])drgevent.Data.GetData(DataFormats.FileDrop, false);
+				//MessageBox.Show("drag");
+			}
+			//base.OnDragDrop(drgevent);
+		}
+		// ********************************************************************
 		public void Command(string[] args, PIPECALL IsPipe = PIPECALL.StartupExec)
 		{
 			if ((IsMultExecute == true) && (IsPipe != PIPECALL.StartupExec)) return;
-			bool QuitFlag = false; 
 			bool err = true;
 
-
+			EXEC_MODE em = EXEC_MODE.NONE;
 			Args args1 = new Args(args);
 			if (args1.OptionCount > 0)
 			{
@@ -479,76 +518,95 @@ namespace AE_RemapTria
 				{
 					if (err == false) break;
 					Param p = args1.Option(i);
-					switch (p.OptionStr.ToLower())
+					string op = p.OptionStr.ToLower();
+					switch (op)
 					{
 						case "tocenter":
 						case "center":
-							ToCenter();
+							this.Invoke((Action)(() => {
+								ToCenter();
+							}));
+							em = EXEC_MODE.NONE;
 							break;
 						case "foregroundWindow":
 						case "foreground":
-							ForegroundWindow();
-							break;
-						case "load":
-						case "ld":
-							int idx = p.Index + 1;
-							if (idx < args1.ParamsCount)
-							{
-								if (args1.Params[idx].IsOption == false)
-								{
-									err = Import(args1.Params[idx].Arg);
-								}
-							}
-							break;
-						case "save":
-						case "sv":
-							int idx2 = p.Index + 1;
-							if (idx2 < args1.ParamsCount)
-							{
-								if (args1.Params[idx2].IsOption == false)
-								{
-									err = Export(args1.Params[idx2].Arg);
-								}
-							}
+							this.Invoke((Action)(() => {
+								ForegroundWindow();
+							}));
+							em = EXEC_MODE.NONE;
 							break;
 						case "exit":
 						case "quit":
 							if ((args1.ParamsCount == 1) && ((IsPipe == PIPECALL.DoubleExec) || (IsPipe == PIPECALL.PipeExec)))
 							{
-								QuitFlag = true;
+								em = EXEC_MODE.QUIT;
 							}
+							break;
+						case "export":
+							if((m_grid!=null)&&(IsPipe== PIPECALL.PipeExec))
+							{
+								em = EXEC_MODE.EXPORT;
+							}
+							break;
+						default:
+							this.Invoke((Action)(() => {
+								if (m_grid != null)
+								{
+									FuncItem? fi = m_grid.Funcs.FindFunc(op);
+									if (fi != null)
+									{
+										if (fi.Func != null) fi.Func();
+									}
+								}
+							}));
 							break;
 					}
 				}
 			}
-			else
+
+			switch(em)
 			{
-				if (args1.ParamsCount > 0)
-				{
-					if (args1.ParamsCount == 1)
+				case EXEC_MODE.EXPORT:
+						if (m_grid != null){
+							//MessageBox.Show(m_grid.ToArdj());
+							CallExe.PipeClient("AE_RemapTriaCall", m_grid.ToArdj()).Wait();
+						}
+					break;
+				case EXEC_MODE.QUIT:
+					this.Invoke((Action)(() => {
+						Application.Exit();
+					}));
+					break;
+				case EXEC_MODE.NONE:
+				default:
+					if (args1.ParamsCount > 0)
 					{
-						err = Import(args1.Params[0].Arg);
+						// パラメータが1個なら読み込み
+						if (args1.ParamsCount == 1)
+						{
+							this.Invoke((Action)(() => {
+								if (m_grid != null)
+								{
+									for (int i = 0; i < args1.ParamsCount; i++)
+									{
+										if (args1.Params[i].IsPath)
+										{
+											string p = args1.Params[i].Arg;
+											if (File.Exists(p))
+											{
+												if (m_grid.Open(p) == true)
+												{
+													break;
+												}
+											}
+
+										}
+									}
+								}
+							}));
+						}
 					}
-					else
-					{
-						/*
-						this.Invoke((Action)(() => {
-							textBox1.Lines = args1.ParamStrings;
-							textBox1.Select(0, 0);
-						}));
-						*/
-					}
-				}
-			}
-			if (IsPipe == PIPECALL.PipeExec)
-			{
-				PipeData pd = new PipeData(args, IsPipe);
-				CallExe.PipeClient("AE_RamepTriaCall", pd.ToJson()).Wait();
-			}
-			if (QuitFlag) Application.Exit();
-			if (IsPipe == PIPECALL.PipeExec)
-			{
-				//this.Text += "Pi";
+					break;
 			}
 		}
 		// *******************************************************************************
@@ -577,8 +635,20 @@ namespace AE_RemapTria
 
 							if (apcl.Count > 0)
 							{
-								PipeData pd = new PipeData(read);
-								((T_Form)apcl[0]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
+								int idx = -1;
+								for(int i = 0; i < apcl.Count; i++)
+								{
+									if (apcl[i] is T_Form)
+									{
+										idx = i;
+										break;
+									}
+								}
+								if(idx>=0)
+								{
+									PipeData pd = new PipeData(read);
+									((T_Form)apcl[idx]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
+								}
 							}
 
 							if (!_execution)

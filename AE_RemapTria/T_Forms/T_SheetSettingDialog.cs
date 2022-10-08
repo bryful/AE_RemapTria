@@ -114,7 +114,7 @@ namespace AE_RemapTria
 			this.DialogResult = DialogResult.Cancel;
 		}
 		private int m_mdkey = -5;
-		private int m_mdkeyEX = -1;
+		//private int m_mdkeyEX = -1;
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (m_mdkey <= -5)

@@ -1,7 +1,17 @@
-﻿using System.Configuration.Internal;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Configuration.Internal;
 using System.Numerics;
-
-
 namespace AE_RemapTria
 {
 	public partial class T_CellData
@@ -48,18 +58,30 @@ namespace AE_RemapTria
 			}
 			set
 			{
-				m_FrameEnabled.Init();
-				int c = value.Length;
-				if (c <= 0) return;
-				if (c > CellCount) c = CellCount;
-				int f = value[0].Length;
-				if (f > FrameCountTrue) f = FrameCountTrue;
-				if (f < 6) return;
+				SetCell(value);
+			}
+		}
+		public void SetCell(int[][][] v)
+		{
+			if (v == null) return;
+			m_FrameEnabled.Init();
+			int c = v.Length;
+			if (c <= 0) return;
+			if (c > CellCount) c = CellCount;
+
+			try
+			{
 				for (int i = 0; i < c; i++)
 				{
-					m_cells[c].FromArray(value[c], f);
+					int[][] vv = v[i];
+					m_cells[i].FromArray(vv);
 				}
 			}
+			catch( Exception ex)
+			{
+				MessageBox.Show(ex.ToString());
+			}
+		}
 		// ******************************************************
 		public int[][][] CellWithEnabled
 		{
@@ -73,12 +95,23 @@ namespace AE_RemapTria
 				}
 				return ret;
 			}
+			set
+			{
+				int c = value.Length-1;
+				if(c <= 0) return;
+				if(c> CellCount) c = CellCount;
+				m_FrameEnabled.FromArray(value[0]);
+				for (int i = 0; i < c; i++)
+				{
+					m_cells[i].FromArray(value[i+1]);
+				}
+			}
 		}
 		// ******************************************************
 		/// <summary>
 		/// セル名の配列
 		/// </summary>
-		public string[] Captions
+		public string[] Caption
 		{
 			get
 			{
@@ -95,7 +128,102 @@ namespace AE_RemapTria
 					m_cells[i].Caption = value[i];
 			}
 		}
-
+		public bool SaveToArdj(string p)
+		{
+			T_Ardj t_Ardj = new T_Ardj(this);
+			return t_Ardj.Save(p);
+		}
+		public string ToArdj()
+		{
+			T_Ardj t_Ardj = new T_Ardj(this);
+			return t_Ardj.ToArdj();
+		}
+		public bool LoadFromArdj(string p)
+		{
+			T_Ardj t_Ardj = new T_Ardj(this);
+			return t_Ardj.Load(p);
+		}
+		public bool Save(string p)
+		{
+			bool ret = false;
+			if(p!="")
+			{
+				ret= SaveToArdj(p);
+			}
+			return ret;
+		}
+		public bool Load(string p)
+		{
+			bool ret = false;
+			if (p != "")
+			{
+				ret =  LoadFromArdj(p);
+			}
+			return ret;
+		}
+		public const string ClipHeader = "#AF_Remap.exe clip";
+		public bool Copy()
+		{
+			bool ret = false;
+			int f = FrameCountTrue;
+			string s = "";
+			for (int i= 0;i<Selection.Length;i++)
+			{
+				int idx = i+ Selection.Start;
+				if((idx>=0)&&(idx<f))
+				{
+					s+= m_cells[Selection.Target].Value(f).ToString()+"\r\n";
+				}
+			}
+			if (s.Length > 0)
+			{
+				s = ClipHeader + "\r\n" + s;
+				Clipboard.SetText(s);
+				ret = true;
+			}
+			return ret;
+		}
+		public bool Cut()
+		{
+			bool ret = Copy();
+			if (ret)
+			{
+				SetCellNum(0, false);
+			}
+			return ret;
+		}
+		public bool Paste()
+		{
+			bool ret = false;
+			if (Clipboard.ContainsText() == false) return ret;
+			string s = Clipboard.GetText();
+			if(s.Length > 0)
+			{
+				try
+				{
+					string[] sa = s.Split("\r\n");
+					if (sa.Length <= 1) return ret;
+					if (sa[0].Trim() != ClipHeader) return ret;
+					int[] ints = new int[sa.Length - 1];
+					for (int i = 0; i < sa.Length - 1; i++)
+					{
+						ints[i] = int.Parse(sa[i + 1]);
+					}
+					PushUndo(BackupSratus.NumberInput);
+					Selection.Length = ints.Length;
+					for (int i = 0; i < Selection.Length; i++)
+					{
+						m_cells[Selection.Target].SetValue(Selection.Start + i, ints[i]);
+					}
+					ret = true;
+				}
+				catch
+				{
+					ret = false;
+				}
+			}
+			return ret;
+		}
 	}
 
 }

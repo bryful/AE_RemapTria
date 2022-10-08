@@ -30,15 +30,15 @@
 		{
 			this.SuspendLayout();
 			// 
-			// T_DialogBase
+			// T_BaseDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(339, 166);
+			this.ClientSize = new System.Drawing.Size(373, 175);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "T_DialogBase";
+			this.Name = "T_BaseDialog";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "T_Dialog";
 			this.TransparencyKey = System.Drawing.Color.White;

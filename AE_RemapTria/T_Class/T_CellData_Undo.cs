@@ -20,6 +20,7 @@ namespace AE_RemapTria
 		public int[][] data = new int[0][];
 		public string[] caps = new string[0];
 		public int[] enables = new int[0];
+		public Point Disp = new Point(0, 0);
 		public BackupSratus stat = BackupSratus.None;
 		public BackupCellData(T_CellData cd, BackupSratus bs)
 		{
@@ -47,8 +48,9 @@ namespace AE_RemapTria
 			}
 
 		}
-		public void Restore(T_CellData cd)
+		public BackupSratus Restore(T_CellData cd)
 		{
+			BackupSratus ret = stat;
 			switch (stat)
 			{
 				case BackupSratus.All:
@@ -69,11 +71,12 @@ namespace AE_RemapTria
 					cd.SetFrameEnabled(enables);
 					break;
 			}
+			return ret;
 		}
 	}
 	partial class T_CellData
 	{
-		public bool _undePushFlag = true;
+		public bool _undoPushFlag = true;
 		private List<BackupCellData> m_BackupCells = new List<BackupCellData>();
 		// *************************************
 		public int[][] BackupCellData()
@@ -89,8 +92,8 @@ namespace AE_RemapTria
 		{
 			if (d.Length <= 0) return;
 			if (d[0].Length <= 0) return;
-			bool b = _undePushFlag;
-			_undePushFlag = false;
+			bool b = _undoPushFlag;
+			_undoPushFlag = false;
 			SetCellCount(d.Length);
 			SetFrameCount(d[0].Length);
 			for (int i = 0; i < d.Length; i++)
@@ -98,7 +101,7 @@ namespace AE_RemapTria
 				m_cells[i].SetArrays(d[i]);
 			}
 
-			_undePushFlag = b;
+			_undoPushFlag = b;
 		}
 		public string[] BackupCaption()
 		{
@@ -115,10 +118,10 @@ namespace AE_RemapTria
 			if (cl <= 0) return;
 			if (CellCount != cl)
 			{
-				bool b = _undePushFlag;
-				_undePushFlag = false;
+				bool b = _undoPushFlag;
+				_undoPushFlag = false;
 				SetCellCount(cl);
-				_undePushFlag = b;
+				_undoPushFlag = b;
 			}
 			for (int i = 0; i < cl; i++)
 			{
@@ -128,7 +131,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		public void PushUndo(BackupSratus bs)
 		{
-			if (_undePushFlag == false) return;
+			if (_undoPushFlag == false) return;
 			m_BackupCells.Add(new BackupCellData(this, bs));
 			if (m_BackupCells.Count > 4000)
 			{
@@ -140,19 +143,21 @@ namespace AE_RemapTria
 			m_BackupCells.Clear();
 		}
 		// ******************************************************
-		public void PopUndo()
+		public BackupSratus PopUndo()
 		{
+			BackupSratus ret = BackupSratus.None;
 			int idx = m_BackupCells.Count - 1;
-			if (idx < 0) return;
-			bool b = _undePushFlag;
+			if (idx < 0) return ret;
+			bool b = _undoPushFlag;
 			bool b2 = _eventFlag;
-			_undePushFlag = false;
+			_undoPushFlag = false;
 			_eventFlag = false;
-			m_BackupCells[idx].Restore(this);
+			ret = m_BackupCells[idx].Restore(this);
 			m_BackupCells.RemoveAt(idx);
-			_undePushFlag = b;
+			_undoPushFlag = b;
 			_eventFlag = b2;
 			OnValueChanged(new EventArgs());
+			return ret;
 		}
 		// ******************************************************
 	}

@@ -18,7 +18,18 @@ namespace BRY
 #pragma warning disable CS8600
 #pragma warning disable CS8601 // Null 参照代入の可能性があります。
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-
+	public enum EXEC_MODE
+	{
+		NONE = 0,
+		EXENOW,
+		CALL,
+		EXPORT,
+		EXPORT_LAYER,
+		IMPORT_LAYER,
+		OPEN_DIALOG,
+		SAVE_DIALOG,
+		QUIT
+	}
 	/// <summary>
 	/// どこから送られたか
 	/// </summary>
@@ -152,12 +163,7 @@ namespace BRY
 	public class CallExe
 	{
 		// ************************************************************************
-		public enum StartupOption
-		{
-			None = 0,
-			IsRunning,
-			Call
-		}
+
 		// ************************************************************************
 		private string m_AppID = "AE_RemapTria";
 		private string m_MyID = "AE_RemapTriaCall";
@@ -195,6 +201,10 @@ namespace BRY
 			m_MyID = my;
 			m_Result = 0;
 		}
+		static private async void SleepAsync()
+		{
+			await Task.Delay(750);
+		}       
 		// ************************************************************************
 		/// <summary>
 		/// 実行部
@@ -213,10 +223,11 @@ namespace BRY
 				Process[] ps = Process.GetProcessesByName(AppID);
 				if(ps.Length > 0) proc = ps[0];
 			}
-			StartupOption so = GetOption(args);
-			switch (so)
+
+			EXEC_MODE em = GetOption(args);
+			switch (em)
 			{
-				case StartupOption.IsRunning:
+				case EXEC_MODE.EXENOW:
 					if (isRunnig)
 					{
 						rets = "true";
@@ -225,7 +236,7 @@ namespace BRY
 					break;
 				// アプリを実行する
 				// 実行してるなら全面に
-				case StartupOption.Call:
+				case EXEC_MODE.CALL:
 					if (isRunnig)
 					{
 						if (proc != null) {
@@ -246,8 +257,7 @@ namespace BRY
 						}
 					}
 					break;
-				case StartupOption.None:
-				default:
+				case EXEC_MODE.EXPORT:
 					if (isRunnig)
 					{
 						_execution = true;
@@ -259,7 +269,8 @@ namespace BRY
 						int cnt = 0;
 						while (_execution)
 						{
-							Thread.Sleep(300);
+							//SleepAsync();
+							Thread.Sleep(250);
 							cnt++;
 							if (cnt >= 50) { _execution = false; }
 						}
@@ -268,27 +279,48 @@ namespace BRY
 					}
 					else
 					{
-						string exename = CallExePath(AppID);
-						if (File.Exists(exename) == true)
-						{
-							Process exec2 = new Process();
-							exec2.StartInfo.FileName = exename;
-							exec2.StartInfo.Arguments = ArgsString(args);
-							if (exec2.Start())
-							{
-								ret = 1;
-								rets = "true";
-							}
-
-						}
-						else
-						{
-							rets = "false";
-						}
+						ret = 0;
+						rets = "false";
 					}
 					break;
+				case EXEC_MODE.NONE:
+				case EXEC_MODE.SAVE_DIALOG:
+				case EXEC_MODE.OPEN_DIALOG:
+				default:
+					em = EXEC_MODE.NONE;
+					break;
 			}
+			if (em == EXEC_MODE.NONE)
+			{
+				if (isRunnig)
+				{
+					PipeData pd2 = new PipeData(args, PIPECALL.PipeExec);
+					string s2 = pd2.ToJson();
+					PipeClient(m_AppID, s2).Wait();
+					ret = 1;
+					rets = "true";
+				}
+				else
+				{
+					string exename = CallExePath(AppID);
+					if (File.Exists(exename) == true)
+					{
+						Process exec2 = new Process();
+						exec2.StartInfo.FileName = exename;
+						exec2.StartInfo.Arguments = ArgsString(args);
+						if (exec2.Start())
+						{
+							ret = 1;
+							rets = "true";
+						}
 
+					}
+					else
+					{
+						rets = "false";
+					}
+				}
+			}
 			m_Result = ret;
 			m_ResultString = rets;
 
@@ -321,15 +353,16 @@ namespace BRY
 			}
 			return ret;
 		}
+     
 		// ************************************************************************
 		/// <summary>
 		/// argsを解析　call or isRunning　or その他　
 		/// </summary>
 		/// <param name="args">Mainのargs</param>
 		/// <returns></returns>
-		private StartupOption GetOption(string[] args)
+		private EXEC_MODE GetOption(string[] args)
 		{
-			StartupOption ret = StartupOption.None;
+			EXEC_MODE ret = EXEC_MODE.NONE;
 			if (args.Length > 0)
 			{
 				for (int i = 0; i < args.Length; i++)
@@ -339,15 +372,31 @@ namespace BRY
 						string p = args[i].Substring(1).ToLower();
 						switch (p)
 						{
+							case "isrun":
 							case "isrunning":
 							case "exenow":
 							case "execnow":
-								ret = StartupOption.IsRunning;
+								ret = EXEC_MODE.EXENOW;
 								break;
 							case "call":
 							case "execute":
 							case "start":
-								ret = StartupOption.Call;
+								ret = EXEC_MODE.CALL;
+								break;
+							case "export":
+								ret = EXEC_MODE.EXPORT;
+								break;
+							case "export_layer":
+								ret = EXEC_MODE.EXPORT_LAYER;
+								break;
+							case "import_layer":
+								ret = EXEC_MODE.IMPORT_LAYER;
+								break;
+							case "open":
+								ret = EXEC_MODE.OPEN_DIALOG;
+								break;
+							case "saveas":
+								ret = EXEC_MODE.SAVE_DIALOG;
 								break;
 						}
 

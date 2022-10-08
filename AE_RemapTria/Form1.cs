@@ -1,5 +1,4 @@
-﻿using AE_RemapTria.T_Class;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,26 +39,26 @@ namespace AE_RemapTria
 			string s = jo.ToJsonString();
 			MessageBox.Show(s);
 		}
-
-
-		private void button1_Click_1(object sender, EventArgs e)
+		private void button1_Click_3(object sender, EventArgs e)
 		{
-			//button1.Text= System.Globalization.CultureInfo.CurrentUICulture.Name;
-			string s = t_Grid1.Funcs.ToJson();
-			MessageBox.Show(s);
-		}
+			string Json = Grid.CellData.ToArdj();
 
-		private void t_LabelInfo1_Click(object sender, EventArgs e)
-		{
+			T_CellData cd = new T_CellData();
 
-		}
+			T_Ardj t_Ardj = new T_Ardj(cd);
 
-		private void button1_Click_2(object sender, EventArgs e)
-		{
-			T_Ardj ardj = new T_Ardj();
-			ardj.FromCellData(t_Grid1.CellData);
-			string s = ardj.ToJson();
-			MessageBox.Show(s);
+			Ardj? a = T_Ardj.FromJson(Json);
+			if (a != null)
+			{
+				//a.Check();
+				MessageBox.Show("OK\r\n"+T_Ardj.ToJson(a));
+			}
+			else
+			{
+				MessageBox.Show("err\r\n"+ Json);
+			}
+
+
 		}
 	}
 }

@@ -15,6 +15,7 @@ namespace AE_RemapTria
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 	public partial class T_Grid : T_BaseControl
 	{
+		public bool IsMultExecute = false;
 		private bool m_IsJapanOS = true;
 		public bool IsJapanOS { get { return m_IsJapanOS; } }
 
@@ -64,6 +65,7 @@ namespace AE_RemapTria
 		{
 			m_Form = fm;
 		}
+		public string FileName = "";
 		// ************************************************************************************
 		public T_Grid()
 		{
@@ -84,6 +86,7 @@ namespace AE_RemapTria
 			Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			Sizes.ChangeDisp += Sizes_ChangeDisp;
 			Sizes.ChangeDispMax += Sizes_ChangeDisp;
+			this.AllowDrop = true;
 		}
 
 		private void CellData_CountChanged(object? sender, EventArgs e)
@@ -134,7 +137,7 @@ namespace AE_RemapTria
 			this.MaximumSize = new Size(
 				Sizes.CellWidth * CellData.CellCount, 
 				Sizes.CellHeight * CellData.FrameCountTrue);
-			Sizes.SizeSetting(this.Size, CellData);
+			SizeSetting();
 
 		}
 		// ************************************************************************************
@@ -451,6 +454,36 @@ namespace AE_RemapTria
 			}
 
 
+		}
+		protected override void OnDragEnter(DragEventArgs drgevent)
+		{
+			if (drgevent != null)
+			{
+				if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+				{
+					drgevent.Effect = DragDropEffects.All;
+				}
+				else
+				{
+					drgevent.Effect = DragDropEffects.None;
+				}
+			}
+			//base.OnDragEnter(drgevent);
+		}
+		protected override void OnDragDrop(DragEventArgs drgevent)
+		{
+			if (drgevent != null)
+			{
+				string[] files = (string[])drgevent.Data.GetData(DataFormats.FileDrop, false);
+				foreach(string file in files)
+				{
+					if(Open(file)==true)
+					{
+						break;
+					}
+				}
+			}
+			//base.OnDragDrop(drgevent);
 		}
 	}
 #pragma warning restore CS8603 // Null 参照戻り値である可能性があります。

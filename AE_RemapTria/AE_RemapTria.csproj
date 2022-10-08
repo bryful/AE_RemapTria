@@ -154,24 +154,17 @@
     <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSGrid.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSInput.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumCtrl\TSNav.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog - コピー.resx" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\AboutDialog.resx" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.Designer.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting - コピー.cs">
-      <SubType>Form</SubType>
-    </None>
     <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\ColorSetting.resx" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.Designer.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.resx" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.resx" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg - コピー.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.resx" />
@@ -181,7 +174,6 @@
     <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\NameDialg.resx" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog - コピー.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\OKDialog.resx" />
@@ -191,9 +183,6 @@
     <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.resx" />
-    <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg - コピー.cs">
-      <SubType>Form</SubType>
-    </None>
     <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.cs" />
     <None Include="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\DynamicJson.cs" />

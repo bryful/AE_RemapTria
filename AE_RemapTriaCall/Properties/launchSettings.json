@@ -2,7 +2,7 @@
   "profiles": {
     "SkeltonWinFormCall": {
       "commandName": "Project",
-      "commandLineArgs": "456 sad g45 1565"
+      "commandLineArgs": "-export"
     }
   }
 }

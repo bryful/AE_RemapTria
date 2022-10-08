@@ -754,8 +754,11 @@
 			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_Label2);
 			this.DoubleBuffered = true;
-			this.Edge = new System.Drawing.Rectangle(5, 5, 12, 6);
+			this.Edge = new System.Drawing.Rectangle(8, 15, 12, 6);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.KagiHeight = 40;
+			this.KagiWeight = 2;
+			this.KagiWidth = 60;
 			this.KeyPreview = true;
 			this.Name = "T_SheetSettingDialog";
 			this.ShowIcon = false;

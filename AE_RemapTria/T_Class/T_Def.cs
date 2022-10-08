@@ -7,6 +7,20 @@ using System.Threading.Tasks;
 namespace AE_RemapTria
 {
 	/// <summary>
+	/// 実行モード
+	/// </summary>
+	public enum EXEC_MODE
+	{
+		NONE = 0,
+		EXENOW,
+		CALL,
+		EXPORT,
+		IMPORT_LAYER,
+		OPEN_DIALOG,
+		SAVE_DIALOG,
+		QUIT
+	}
+	/// <summary>
 	/// フレームレート
 	/// </summary>
 	public enum T_Fps

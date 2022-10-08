@@ -61,7 +61,6 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(Home, Keys.Home, "先頭へ"));
 			lst.Add(new FuncItem(End, Keys.End, "最後へ"));
 
-			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "開く"));
 			lst.Add(new FuncItem(ToggleFrameEnabled, Keys.Control | Keys.Oemtilde));
 			lst.Add(new FuncItem(FrameEnabledOFF, Keys.Control | Keys.Oem5));
 			lst.Add(new FuncItem(FrameEnabledON, Keys.Control | Keys.Oem7));
@@ -79,8 +78,15 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SetSelection10, Keys.F10));
 			lst.Add(new FuncItem(SetSelection11, Keys.F11));
 			lst.Add(new FuncItem(SetSelection12, Keys.F12));
-			lst.Add(new FuncItem(Undo, Keys.Z | Keys.Control));
-			lst.Add(new FuncItem(Quit, Keys.Q ,"終了"));
+			lst.Add(new FuncItem(Undo, Keys.Control|Keys.Z));
+			lst.Add(new FuncItem(Quit, Keys.Control | Keys.Q ,"終了"));
+			lst.Add(new FuncItem(Save, Keys.Control | Keys.S, "保存"));
+			lst.Add(new FuncItem(SaveAs, Keys.Shift | Keys.Control | Keys.S, "別名保存"));
+			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "読み込み"));
+			lst.Add(new FuncItem(SheetNameDialog, Keys.Control | Keys.N, "シート名の編集"));
+			lst.Add(new FuncItem(Copy, Keys.Control | Keys.C));
+			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
+			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -91,22 +97,19 @@ namespace AE_RemapTria
 			m_Menu.AddMenu("AE_RemapTria", 93);
 			m_Menu.AddMenu("Edit", 40);
 			m_Menu.AddSubMenu(0, "SheetSettings");
-			m_Menu.AddSubMenu(0, "Open");
+			m_Menu.AddSubMenu(0, "SheetNameDialog");
+			m_Menu.AddSubMenu(0, "Load");
+			m_Menu.AddSubMenu(0, "Save");
+			m_Menu.AddSubMenu(0, "SaveAs");
 			m_Menu.AddSubMenu(0, "Quit");
+
 			m_Menu.AddSubMenu(1, "Undo");
+			m_Menu.AddSubMenu(1, "Copy");
+			m_Menu.AddSubMenu(1, "Cut");
+			m_Menu.AddSubMenu(1, "Paste");
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
 			m_Menu.AddSubMenu(1, "HeightMax");
 		}
-		/*
-		public void T_Menu_MenuExec(object sender, MenuEventArgs e)
-		{
-			if (m_Menu == null) return;
-			if (m_Menu.Funcs[e.Id]() == true)
-			{
-				this.Invalidate();
-			}
-		}
-		*/
 		// ************************************************************************************
 		public bool SheetSettings()
 		{
@@ -145,13 +148,7 @@ namespace AE_RemapTria
 			dlg.Dispose();
 			return true;
 		}
-		// ************************************************************************************
-		public bool Open()
-		{
-			if (m_Form == null) return false;
-			MessageBox.Show("Open");
-			return true;
-		}
+
 		// ************************************************************************************
 		public bool Quit()
 		{
@@ -160,8 +157,22 @@ namespace AE_RemapTria
 		}
 		public bool Undo()
 		{
-			CellData.PopUndo();
-			SizeSetting();
+			BackupSratus bs = CellData.PopUndo();
+			if(bs== BackupSratus.All)
+			{
+				ChkMinMax();
+				ChkHScrl();
+				ChkVScrl();
+				if (m_Form != null)
+				{
+					m_Form.ChkSize();
+				}
+			}
+			else
+			{
+				SizeSetting();
+			}
+
 			return true;
 		}
 		// ************************************************************************************
@@ -425,6 +436,7 @@ namespace AE_RemapTria
 			bool ret = false;
 			if (m_Form != null)
 			{
+				m_Form.ForegroundWindow();
 				ret = m_Form.HeightMax();
 			}
 			return ret;
@@ -438,6 +450,7 @@ namespace AE_RemapTria
 				CellData.PushUndo(BackupSratus.SelectionChange);
 				CellData.Selection.Length = v;
 				b = true;
+				this.Invalidate();
 			}
 			return b;
 		}
@@ -489,5 +502,164 @@ namespace AE_RemapTria
 		{
 			return SetSelectionLength(12);
 		}
+		public bool SaveAs()
+		{
+			if (IsMultExecute) return false;
+			return SaveDialog(FileName);
+		}
+		public bool SaveDialog(string p)
+		{
+			bool ret = false;
+			if (IsMultExecute) return ret;
+			SaveFileDialog dlg = new SaveFileDialog();
+			if (p != "")
+			{
+				dlg.InitialDirectory = Path.GetDirectoryName(p);
+				dlg.FileName = p;
+			}
+			dlg.Filter = "*.ardj|*.ardj|*,*|*.*";
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+				m_Form.ForegroundWindow();
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				if (Save(dlg.FileName))
+				{
+					FileName = dlg.FileName;
+					ret = true;
+				}
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		public bool Save(string p)
+		{
+			if (IsMultExecute) return false;
+			bool ret = CellData.Save(FileName);
+			if (ret)
+			{
+				CellData.SheetName = Path.GetFileNameWithoutExtension(FileName);
+			}
+			return ret;
+		}
+		public bool Save()
+		{
+			if (IsMultExecute) return false;
+			if(FileName!="")
+			{
+				return Save(FileName);
+			}
+			else
+			{
+				return SaveAs();
+			}
+		}
+		public bool Open()
+		{
+			bool ret = false;
+			OpenFileDialog dlg = new OpenFileDialog();
+			if (FileName != "")
+			{
+				dlg.InitialDirectory = Path.GetDirectoryName(FileName);
+				dlg.FileName = Path.GetFileName(FileName);
+			}
+			dlg.Filter = "*.ardj|*.ardj|*,*|*.*";
+			bool b = false;
+			if(m_Form!=null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost =false;
+				m_Form.ForegroundWindow();
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				ret = (Open(dlg.FileName));
+			}
+			if (m_Form != null)
+			{
+				m_Form.TopMost = b;
+			}
+			return ret;
+		}
+		public bool Open(string p)
+		{
+			bool ret = false;
+			if (File.Exists(p) == false) return ret;
+			CellData.PushUndo(BackupSratus.All);
+			ret = CellData.Load(p);
+			if(ret)
+			{
+				FileName = p;
+				CellData.SheetName = Path.GetFileNameWithoutExtension(p);
+				ChkMinMax();
+				ChkHScrl();
+				ChkVScrl();
+				if (m_Form != null)
+				{
+					m_Form.ChkSize();
+				}
+				this.Invalidate();
+			}
+			return ret;
+
+		}
+		public bool SheetNameDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_NameDialog dlg = new T_NameDialog();
+			dlg.SetForm(m_Form);
+			dlg.Caption = "Input: Sheet Name";
+			dlg.ValueText = CellData.SheetName;
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				CellData.SheetName = dlg.ValueText;
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		public string ToArdj()
+		{
+			return CellData.ToArdj();
+		}
+		public bool Copy()
+		{
+			return CellData.Copy();
+		}
+		public bool Cut()
+		{
+			bool ret = CellData.Copy();
+			if (ret)
+			{
+				this.Invalidate();
+			}
+			return ret;
+		}
+		public bool Paste()
+		{
+			bool ret = CellData.Paste();
+			if (ret)
+			{
+				this.Invalidate();
+			}
+			return ret;
+		}
+
 	}
 }

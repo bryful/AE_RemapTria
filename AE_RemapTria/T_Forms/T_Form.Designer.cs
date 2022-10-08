@@ -32,6 +32,7 @@
 			// 
 			// T_Form
 			// 
+			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImage = global::AE_RemapTria.Properties.Resources.Back;
@@ -40,6 +41,7 @@
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "T_Form";
 			this.ResumeLayout(false);

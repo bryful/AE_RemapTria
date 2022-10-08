@@ -245,7 +245,7 @@ namespace AE_RemapTria
 			m_cells = FromArraySub(buf);
 		}
 		// *********************************************************************
-		static private int[] FromArraySub(int[][] buf)
+		private int[] FromArraySub(int[][] buf)
 		{
 			int f = m_cells.Length;
 			int[] ret = new int[f];

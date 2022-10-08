@@ -1,5 +1,15 @@
-﻿using System.Configuration.Internal;
-using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace AE_RemapTria
 {
@@ -58,7 +68,7 @@ namespace AE_RemapTria
 		/// </summary>
 		/// <param name="c">セルのインデックス</param>
 		/// <returns>セルの名前</returns>
-		public string Caption(int c) 
+		public string CaptionFromIndex(int c) 
 		{
 			string ret = "";
 			if((c>=0)&&(c<CellCount))
@@ -113,12 +123,6 @@ namespace AE_RemapTria
 			m_FrameDisp = (T_FrameDisp)v;
 		}
 
-		public string TITLE { get; set; }
-		public string SUB_TITLE { get; set; }
-		public string OPUS { get; set; }
-		public string SCECNE { get; set; }
-		public string CUT { get; set; }
-		public string CAMPANY_NAME { get; set; }
 		private int m_StartKoma = 1;
 		// ******************************************************
 		/*
@@ -134,21 +138,27 @@ namespace AE_RemapTria
 		*/
 
 		// ******************************************************
-		public string SheetName = "";	
-		public string FileName = "";
+		public string SheetName = "";
+		public string TITLE = "";
+		public string SUB_TITLE = "";
+		public string OPUS = "";
+		public string SCECNE = "";
+		public string CUT = "";
+		public string CAMPANY_NAME = "";
 
 		public string CREATE_USER = "";
 		public string UPDATE_USER = "";
 
 		public DateTime CREATE_TIME = new DateTime(1963, 9, 9);
 		public DateTime UPDATE_TIME = new DateTime(1963, 9, 9);
+
 		// ******************************************************
 		public T_CellData()
 		{
-			_undePushFlag = false;
+			_undoPushFlag = false;
 			m_sel.SetCellData(this);
 			InitSize(12, 72);
-			_undePushFlag = true;
+			_undoPushFlag = true;
 		}
 		// ******************************************************
 		protected virtual void OnValueChanged(EventArgs e)
@@ -176,6 +186,11 @@ namespace AE_RemapTria
 			{
 				CountChanged(this, e);
 			}
+		}
+		// ******************************************************
+		public void CallCountCahnged()
+		{
+			OnCountChanged(EventArgs.Empty);
 		}
 		// ******************************************************
 		public void InitSize(int cc,int fc)
@@ -235,13 +250,12 @@ namespace AE_RemapTria
 		{
 			bool b = _eventFlag;
 			_eventFlag = false;
-			bool b2 = _undePushFlag;
-			_undePushFlag = false;
-			PushUndo(BackupSratus.All);
+			bool b2 = _undoPushFlag;
+			_undoPushFlag = false;
 			SetCellCount(c);
 			SetFrameCount(f);
 			_eventFlag = b;
-			_undePushFlag = b2;
+			_undoPushFlag = b2;
 			OnValueChanged(new EventArgs());
 
 		}
@@ -413,7 +427,7 @@ namespace AE_RemapTria
 		/// </summary>
 		public void SetCellNumSame()
 		{
-			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
+			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 
 			int sv = m_sel.Start-1;
 			if (sv < 0) sv = 0;
@@ -427,7 +441,7 @@ namespace AE_RemapTria
 		}
 		public void SetCellNumInc()
 		{
-			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
+			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 			//int fc = m_data[0].Length;
 
 			int sv = m_sel.Start - 1;
@@ -442,7 +456,7 @@ namespace AE_RemapTria
 
 		public void SetCellNumDec()
 		{
-			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
+			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 			int sv = m_sel.Start - 1;
 			if (sv < 0) sv = 0;
 			int v = m_cells[m_sel.Target].Value(sv);
@@ -461,7 +475,7 @@ namespace AE_RemapTria
 		public void SetCellNum(int v,bool IsMove =true)
 		{
 			if (v < 0) v = 0;
-			if (_undePushFlag == true) PushUndo(BackupSratus.NumberInput);
+			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 			m_cells[Selection.Target].SetValues(Selection, v);
 			if (IsMove)
 			{
@@ -504,7 +518,7 @@ namespace AE_RemapTria
 		/// <param name="ints"></param>
 		public void SetCellNum(int [] ints)
 		{
-			if(_undePushFlag==true) PushUndo(BackupSratus.NumberInput);
+			if(_undoPushFlag==true) PushUndo(BackupSratus.NumberInput);
 			int len = m_sel.Length;
 			if (len > ints.Length)
 			{

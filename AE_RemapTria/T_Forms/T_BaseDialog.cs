@@ -23,7 +23,10 @@ namespace AE_RemapTria
 			get { return m_MyFonts; }
 			set
 			{
-				SetMyFont(value);
+				if (value != null)
+				{
+					SetMyFont(value);
+				}
 			}
 		}
 		private int m_MyFontIndex = 5;
@@ -68,6 +71,25 @@ namespace AE_RemapTria
 			}
 		}
 		private StringFormat m_format = new StringFormat();
+		private int m_KagiWidth= 30;
+		private int m_KagiHeight = 10;
+		private int m_KagiWeight = 5;
+		public int KagiWidth
+		{
+			get { return this.m_KagiWidth; }
+			set { this.m_KagiWidth = value; this.Invalidate(); }
+		}
+		public int KagiHeight
+		{
+			get { return this.m_KagiHeight; }
+			set { this.m_KagiHeight = value; this.Invalidate(); }
+		}
+		public int KagiWeight
+		{
+			get { return this.m_KagiWeight; }
+			set { this.m_KagiWeight = value; this.Invalidate(); }
+		}
+
 		// ************************************************************************
 		public StringAlignment Alignment
 		{
@@ -227,6 +249,34 @@ namespace AE_RemapTria
 						r.Top, 
 						r.Width, r.Height);
 					Fill(g, sb, r);
+				}
+
+				if((m_KagiWeight > 0)&&(m_KagiWidth > 0)&&(m_KagiHeight > 0))
+				{
+					Rectangle kf = new Rectangle(0, 0, m_KagiWidth, m_KagiWeight);
+					sb.Color = m_EdgeColor;
+					Fill(g, sb, kf);
+					kf.Location = new Point(this.Width - m_KagiWidth, kf.Top);
+					Fill(g, sb, kf);
+					kf.Location = new Point(this.Width - m_KagiWidth, this.Height- m_KagiWeight);
+					Fill(g, sb, kf);
+					kf.Location = new Point(0, this.Height - m_KagiWeight);
+					Fill(g, sb, kf);
+
+					kf.Width = m_KagiWeight;
+					kf.Height = m_KagiHeight- m_KagiWeight;
+					if (kf.Height > 0)
+					{
+						kf.Location = new Point(0, m_KagiWeight);
+						Fill(g, sb, kf);
+						kf.Location = new Point(this.Width - m_KagiWeight, m_KagiWeight);
+						Fill(g, sb, kf);
+						kf.Location = new Point(this.Width - m_KagiWeight, this.Height - m_KagiHeight);
+						Fill(g, sb, kf);
+						kf.Location = new Point(0, this.Height - m_KagiHeight);
+						Fill(g, sb, kf);
+					}
+
 				}
 			}
 			finally

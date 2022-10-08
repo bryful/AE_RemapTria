@@ -120,7 +120,7 @@ namespace AE_RemapTria
 			p.Color = m_grid.Colors.LineA;
 			DrawVerLine(g, p, x, m_grid.Sizes.CaptionHeight2, m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 - 1);
 			sb.Color = m_grid.Colors.Moji;
-			DrawStr(g, m_grid.CellData.Caption(l), sb, r);
+			DrawStr(g, m_grid.CellData.CaptionFromIndex(l), sb, r);
 		}
 		protected override void OnPaint(PaintEventArgs e)
 		{
