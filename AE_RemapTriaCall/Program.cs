@@ -1,22 +1,23 @@
-﻿using System;
-
+using System;
 using BRY;
 
-namespace AE_RemapTria // Note: actual namespace depends on the project name.
+namespace AE_RemapTria
 {
-	internal class Program
+	internal static class Program
 	{
 		public static string CallExeName = "AE_RemapTria";
 		public static string MyExeName = "AE_RemapTriaCall";
-		// ************************************************************************
+		/// <summary>
+		///  The main entry point for the application.
+		/// </summary>
+		[STAThread]
 		static int Main(string[] args)
 		{
-			CallExe ce = new CallExe(CallExeName,MyExeName);
+			CallExe ce = new CallExe(CallExeName, MyExeName);
 			ce.Run(args);
 
 			Console.WriteLine(ce.ResultString);
 			return ce.Result;
 		}
 	}
-	// ************************************************************************
 }

@@ -158,6 +158,7 @@ namespace BRY
 			if (block != "") ret += block;
 			return ret;
 		}
+
 		public AEJson()
 		{
 

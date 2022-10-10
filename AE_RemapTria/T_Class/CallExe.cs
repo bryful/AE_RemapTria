@@ -1,35 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-using static System.Net.Mime.MediaTypeNames;
 using System.IO.Pipes;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Xml.Linq;
 
+using AE_RemapTria;
 namespace BRY
 {
 #pragma warning disable CS8600
 #pragma warning disable CS8601 // Null 参照代入の可能性があります。
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-	public enum EXEC_MODE
-	{
-		NONE = 0,
-		EXENOW,
-		CALL,
-		EXPORT,
-		EXPORT_LAYER,
-		IMPORT_LAYER,
-		OPEN_DIALOG,
-		SAVE_DIALOG,
-		QUIT
-	}
 	/// <summary>
 	/// どこから送られたか
 	/// </summary>
@@ -224,7 +203,7 @@ namespace BRY
 				if(ps.Length > 0) proc = ps[0];
 			}
 
-			EXEC_MODE em = GetOption(args);
+			EXEC_MODE em = GetOption(ref args);
 			switch (em)
 			{
 				case EXEC_MODE.EXENOW:
@@ -283,9 +262,20 @@ namespace BRY
 						rets = "false";
 					}
 					break;
-				case EXEC_MODE.NONE:
 				case EXEC_MODE.SAVE_DIALOG:
+					string savepath = SaveDialog();
+					args = new string[2];
+					args[0] = "-SaveToFile";
+					args[1] = savepath;
+					em = EXEC_MODE.NONE;
+					break;
 				case EXEC_MODE.OPEN_DIALOG:
+					string openpath = OpenDialog();
+					args = new string[1];
+					args[0] = openpath;
+					em = EXEC_MODE.NONE;
+					break;
+				case EXEC_MODE.NONE:
 				default:
 					em = EXEC_MODE.NONE;
 					break;
@@ -360,7 +350,7 @@ namespace BRY
 		/// </summary>
 		/// <param name="args">Mainのargs</param>
 		/// <returns></returns>
-		private EXEC_MODE GetOption(string[] args)
+		private EXEC_MODE GetOption(ref string[] args)
 		{
 			EXEC_MODE ret = EXEC_MODE.NONE;
 			if (args.Length > 0)
@@ -372,22 +362,21 @@ namespace BRY
 						string p = args[i].Substring(1).ToLower();
 						switch (p)
 						{
+							case "exenow":
 							case "isrun":
 							case "isrunning":
-							case "exenow":
 							case "execnow":
+								args[i] = "exenow";
 								ret = EXEC_MODE.EXENOW;
 								break;
 							case "call":
 							case "execute":
 							case "start":
+								args[i] = "call";
 								ret = EXEC_MODE.CALL;
 								break;
 							case "export":
 								ret = EXEC_MODE.EXPORT;
-								break;
-							case "export_layer":
-								ret = EXEC_MODE.EXPORT_LAYER;
 								break;
 							case "import_layer":
 								ret = EXEC_MODE.IMPORT_LAYER;
@@ -395,7 +384,7 @@ namespace BRY
 							case "open":
 								ret = EXEC_MODE.OPEN_DIALOG;
 								break;
-							case "saveas":
+							case "savetofile":
 								ret = EXEC_MODE.SAVE_DIALOG;
 								break;
 						}
@@ -482,6 +471,41 @@ namespace BRY
 					ssCl = null;
 				}
 			});
+		}
+		// ******************************************************************************
+		static public string OpenDialog(string p="")
+		{
+			string ret = "";
+			OpenFileDialog dlg = new OpenFileDialog();
+			if(p!="")
+			{
+				dlg.InitialDirectory = Path.GetDirectoryName(p);
+				dlg.FileName = Path.GetFileName(p);
+			}
+			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			if (dlg.ShowDialog()== DialogResult.OK)
+			{
+				ret = dlg.FileName;
+			}
+
+			return ret;
+		}
+		static public string SaveDialog(string p = "")
+		{
+			string ret = "";
+			SaveFileDialog dlg = new SaveFileDialog();
+			if (p != "")
+			{
+				dlg.InitialDirectory = Path.GetDirectoryName(p);
+				dlg.FileName = Path.GetFileName(p);
+			}
+			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				ret = dlg.FileName;
+			}
+
+			return ret;
 		}
 	}
 	public class StreamString

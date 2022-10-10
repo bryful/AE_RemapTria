@@ -38,11 +38,16 @@
 			this.t_Caption1 = new AE_RemapTria.T_Caption();
 			this.t_Frame1 = new AE_RemapTria.T_Frame();
 			this.t_LabelInfo1 = new AE_RemapTria.T_LabelInfo();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.button1 = new System.Windows.Forms.Button();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// t_Grid1
 			// 
 			this.t_Grid1.Alignment = System.Drawing.StringAlignment.Center;
+			this.t_Grid1.AllowDrop = true;
 			this.t_Grid1.BackColor = System.Drawing.Color.Transparent;
 			this.t_Grid1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Grid1.FrameCount = 72;
@@ -120,7 +125,7 @@
 			this.t_Menu1.MyFontSize = 8F;
 			this.t_Menu1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Menu1.Name = "t_Menu1";
-			this.t_Menu1.Size = new System.Drawing.Size(153, 20);
+			this.t_Menu1.Size = new System.Drawing.Size(203, 20);
 			this.t_Menu1.TabIndex = 3;
 			this.t_Menu1.Text = "t_Menu1";
 			// 
@@ -181,11 +186,34 @@
 			this.t_LabelInfo1.Text = "3+0:24";
 			this.t_LabelInfo1.TopBar = new System.Drawing.Size(0, 0);
 			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 10);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(57, 6);
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(55, 27);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(95, 88);
+			this.button1.TabIndex = 8;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(429, 546);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.t_LabelInfo1);
 			this.Controls.Add(this.t_Frame1);
 			this.Controls.Add(this.t_Caption1);
@@ -201,6 +229,7 @@
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "AE_Remap Tria - Prebiew";
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -215,5 +244,8 @@
 		private T_Caption t_Caption1;
 		private T_Frame t_Frame1;
 		private T_LabelInfo t_LabelInfo1;
+		private ContextMenuStrip contextMenuStrip1;
+		private ToolStripSeparator toolStripMenuItem1;
+		private Button button1;
 	}
 }

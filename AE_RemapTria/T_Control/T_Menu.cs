@@ -107,11 +107,21 @@ namespace AE_RemapTria
 			int cnt = m_SubMenuItems.Length - 1;
 			m_SubMenuItems[cnt] = new T_SubMenuItem(ft, cnt);
 			ToolStripMenuItem a = new ToolStripMenuItem(ft.Caption);
+			a.ShortcutKeys = ft.Keys[0];
 			a.Click += A_Click;
 			a.Tag = cnt;
 			m_Submenu[idx].Items.Add(a);
 
 		}
+		// ****************************************************************
+		public void AddSubMenuSepa(int idx)
+		{
+			ToolStripSeparator sepa = new ToolStripSeparator();
+			sepa.BackColor = Color.FromArgb(25, 25, 50);
+			sepa.ForeColor = Color.FromArgb(200, 200, 250);
+			m_Submenu[idx].Items.Add(sepa);
+		}
+
 		// ****************************************************************
 		private void A_Click(object? sender, EventArgs e)
 		{

@@ -9,20 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace AE_RemapTria
 {
-	public class KeyBind
-	{
-		public enum FuncId
-		{
-			Input0,
-			Input1,
-			Input2,
-			Input3,
-			Input4,
-			Input5,
-		}
-	}
 	partial class T_Grid
 	{
 		// ************************************************************************************
@@ -78,15 +68,17 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SetSelection10, Keys.F10));
 			lst.Add(new FuncItem(SetSelection11, Keys.F11));
 			lst.Add(new FuncItem(SetSelection12, Keys.F12));
+			lst.Add(new FuncItem(SelectionAll, Keys.Control | Keys.A));
 			lst.Add(new FuncItem(Undo, Keys.Control|Keys.Z));
 			lst.Add(new FuncItem(Quit, Keys.Control | Keys.Q ,"終了"));
 			lst.Add(new FuncItem(Save, Keys.Control | Keys.S, "保存"));
 			lst.Add(new FuncItem(SaveAs, Keys.Shift | Keys.Control | Keys.S, "別名保存"));
 			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "読み込み"));
-			lst.Add(new FuncItem(SheetNameDialog, Keys.Control | Keys.N, "シート名の編集"));
+			lst.Add(new FuncItem(SheetNameDialog, Keys.Control | Keys.E, "シート名の編集"));
 			lst.Add(new FuncItem(Copy, Keys.Control | Keys.C));
 			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
 			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
+			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -96,19 +88,25 @@ namespace AE_RemapTria
 			if (m_Menu == null) return;
 			m_Menu.AddMenu("AE_RemapTria", 93);
 			m_Menu.AddMenu("Edit", 40);
+			m_Menu.AddMenu("Windw", 50);
+
 			m_Menu.AddSubMenu(0, "SheetSettings");
 			m_Menu.AddSubMenu(0, "SheetNameDialog");
-			m_Menu.AddSubMenu(0, "Load");
+			m_Menu.AddSubMenuSepa(0);
+			m_Menu.AddSubMenu(0, "Open");
 			m_Menu.AddSubMenu(0, "Save");
 			m_Menu.AddSubMenu(0, "SaveAs");
 			m_Menu.AddSubMenu(0, "Quit");
 
 			m_Menu.AddSubMenu(1, "Undo");
+			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "Copy");
 			m_Menu.AddSubMenu(1, "Cut");
 			m_Menu.AddSubMenu(1, "Paste");
+			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
-			m_Menu.AddSubMenu(1, "HeightMax");
+
+			m_Menu.AddSubMenu(2, "HeightMax");
 		}
 		// ************************************************************************************
 		public bool SheetSettings()
@@ -155,6 +153,7 @@ namespace AE_RemapTria
 			Application.Exit();
 			return true;
 		}
+		// ************************************************************************************
 		public bool Undo()
 		{
 			BackupSratus bs = CellData.PopUndo();
@@ -173,6 +172,12 @@ namespace AE_RemapTria
 				SizeSetting();
 			}
 
+			return true;
+		}
+		// ************************************************************************************
+		public bool ClearAll()
+		{
+			CellData.ClearAll();
 			return true;
 		}
 		// ************************************************************************************
@@ -441,7 +446,6 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
-		// ************************************************************************************
 		public bool SetSelectionLength(int v)
 		{
 			bool b = false;
@@ -515,9 +519,10 @@ namespace AE_RemapTria
 			if (p != "")
 			{
 				dlg.InitialDirectory = Path.GetDirectoryName(p);
-				dlg.FileName = p;
+				dlg.FileName = Path.GetFileName(p);
 			}
-			dlg.Filter = "*.ardj|*.ardj|*,*|*.*";
+			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			dlg.FilterIndex = 1;
 			bool b = false;
 			if (m_Form != null)
 			{
@@ -567,7 +572,8 @@ namespace AE_RemapTria
 				dlg.InitialDirectory = Path.GetDirectoryName(FileName);
 				dlg.FileName = Path.GetFileName(FileName);
 			}
-			dlg.Filter = "*.ardj|*.ardj|*,*|*.*";
+			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			dlg.FilterIndex = 1;
 			bool b = false;
 			if(m_Form!=null)
 			{
@@ -644,7 +650,7 @@ namespace AE_RemapTria
 		}
 		public bool Cut()
 		{
-			bool ret = CellData.Copy();
+			bool ret = CellData.Cut();
 			if (ret)
 			{
 				this.Invalidate();
@@ -660,6 +666,23 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
-
+		public bool CellLeftShift()
+		{
+			bool ret = CellData.CellLeftShift();
+			if (ret)
+			{
+				this.Invalidate();
+			}
+			return ret;
+		}
+		public bool CellRightShift()
+		{
+			bool ret = CellData.CellRightShift();
+			if (ret)
+			{
+				this.Invalidate();
+			}
+			return ret;
+		}
 	}
 }

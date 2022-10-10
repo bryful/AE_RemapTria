@@ -160,6 +160,7 @@ namespace AE_RemapTria
 			InitSize(12, 72);
 			_undoPushFlag = true;
 		}
+
 		// ******************************************************
 		protected virtual void OnValueChanged(EventArgs e)
 		{
@@ -401,7 +402,9 @@ namespace AE_RemapTria
 		public void ClearAll()
 		{
 			PushUndo(BackupSratus.All);
+			m_FrameEnabled.Init();
 			for (int c = 0; c < m_cells.Length; c++) m_cells[c].Init();
+			CalcInfo();
 			OnValueChanged(new EventArgs());
 
 		}
@@ -411,6 +414,7 @@ namespace AE_RemapTria
 			if((c>=0) && (c < CellCount))
 			{
 				m_cells[c].Init();
+				CalcInfo();
 				OnValueChanged(new EventArgs());
 			}
 
@@ -641,6 +645,47 @@ namespace AE_RemapTria
 			}
 			return ret;
 
+		}
+		// **********************************************************************
+		public bool SwapCell(int c0,int c1)
+		{
+			bool ret = false;
+
+			if((c0 != c1)&&(c0>=0) && (c0<FrameCountTrue)&&(c1 >= 0) && (c1 < FrameCountTrue))
+			{
+				string c = m_cells[c0].Caption;
+				m_cells[c0].Caption = m_cells[c1].Caption;
+				m_cells[c1].Caption = c;
+				for(int i=0; i<FrameCountTrue;i++)
+				{
+					int v0 = m_cells[c0].Value(i);
+					int v1 = m_cells[c1].Value(i);
+					m_cells[c0].SetValue(i,v1);
+					m_cells[c1].SetValue(i,v0);
+				}
+				ret = true;
+			}
+			return ret;
+		}
+		public bool CellLeftShift()
+		{
+			bool ret = false;
+			if((Selection.Target>0)&&(Selection.Target <FrameCountTrue))
+			{
+				ret = SwapCell(Selection.Target-1, Selection.Target);
+				Selection.Target -= 1;
+			}
+			return ret;
+		}
+		public bool CellRightShift()
+		{
+			bool ret = false;
+			if ((Selection.Target >=0) && (Selection.Target < FrameCountTrue-1))
+			{
+				ret = SwapCell(Selection.Target, Selection.Target+1);
+				Selection.Target += 1;
+			}
+			return ret;
 		}
 	}
 }

@@ -23,6 +23,7 @@ namespace AE_RemapTria
 		public int UnEnabledFrameCount { get { return m_UnEnabledFrameCount; } }
 
 		private int[] m_cells = new int[0];
+		
 		public int Value(int idx)
 		{
 			int ret = -1;
@@ -109,6 +110,15 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		public void SetAllValues(int[] v)
+		{
+			int cnt = v.Length;
+			if (cnt > m_cells.Length) cnt = m_cells.Length;
+			for (int i = 0; i <cnt; i++)
+			{
+				m_cells[i] = v[i];
+			}
+		}
 		// *********************************************************************
 		public T_CellLayer(int frm,string cap)
 		{
@@ -123,6 +133,16 @@ namespace AE_RemapTria
 			Caption = "Enabled";
 			SetFrameCountTrue(frm);
 		}
+		// *********************************************************************
+		public void Clear()
+		{
+			m_FrameCount = m_cells.Length;
+			m_UnEnabledFrameCount = 0;
+			int v = 0;
+			if (m_IsEnabled) v = 1;
+			for (int i = 0; i < m_FrameCount; i++) m_cells[i] = v;
+
+		}       
 		// *********************************************************************
 		public void Init()
 		{
@@ -186,6 +206,8 @@ namespace AE_RemapTria
 				m_UnEnabledFrameCount = 0;
 			}
 		}
+
+
 		// *********************************************************************
 		/// <summary>
 		/// [frame,value]を要素とした配列をにする。
@@ -274,5 +296,6 @@ namespace AE_RemapTria
 		}
 		// *********************************************************************
 
+		// *********************************************************************
 	}
 }

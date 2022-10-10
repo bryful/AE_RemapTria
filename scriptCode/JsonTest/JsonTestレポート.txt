@@ -1,0 +1,30 @@
+レポート作成日 : 
+	2022/10/10	15:53:01
+
+プロジェクト名 : JsonTest.aep
+
+収集されたソースファイル先 : 
+	C:\Users\bryfu\Source\Repos\AE_RemapTria\scriptCode\JsonTest
+
+収集されたソースファイル : すべて
+
+収集されたコンポジション :  
+	comp
+	cell
+	
+収集されたファイルの数 :  2
+
+収集されたファイルのサイズ :  482 バイト
+
+収集されたソースファイル : 
+	C:\Users\bryfu\Source\Repos\AE_Scripts_DC\scriptCode\AE\Scripts\ScriptUI Panels\JsonTest.jsx
+	C:\Users\bryfu\Source\Repos\AE_Scripts_DC\scriptCode\AE\Scripts\ScriptUI Panels\JsonTest2.jsx
+	
+レンダリングプラグイン:
+	クラシック3D
+	
+使用されたエフェクトの数 :  1
+
+エフェクト :  タイムコード
+	
+

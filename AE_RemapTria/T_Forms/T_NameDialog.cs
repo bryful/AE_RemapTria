@@ -17,10 +17,15 @@ namespace AE_RemapTria
 			get { return lbCaption.Text; }
 			set { lbCaption.Text = value; }
 		}
+		private string m_Original_ValueText = "";
 		public string ValueText
 		{
 			get { return tbCaption.Text; }
-			set { tbCaption.Text = value; }
+			set 
+			{
+				tbCaption.Text = value;
+				m_Original_ValueText = value;
+			}
 		}
 		public T_NameDialog()
 		{
@@ -29,6 +34,7 @@ namespace AE_RemapTria
 
 		private void btnOK_Click(object sender, EventArgs e)
 		{
+			if ((ValueText == "") || (m_Original_ValueText == ValueText)) return;
 			this.DialogResult = DialogResult.OK;
 		}
 

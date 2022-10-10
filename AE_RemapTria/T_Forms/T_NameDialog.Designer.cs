@@ -63,13 +63,13 @@
 			this.tbCaption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP EL", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.tbCaption.Location = new System.Drawing.Point(50, 72);
+			this.tbCaption.Location = new System.Drawing.Point(64, 72);
 			this.tbCaption.MyFontIndex = 0;
 			this.tbCaption.MyFonts = this.t_MyFonts1;
 			this.tbCaption.MyFontSize = 12F;
 			this.tbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbCaption.Name = "tbCaption";
-			this.tbCaption.Size = new System.Drawing.Size(216, 31);
+			this.tbCaption.Size = new System.Drawing.Size(202, 31);
 			this.tbCaption.TabIndex = 1;
 			this.tbCaption.Text = "AAAA";
 			// 

@@ -93,6 +93,107 @@ namespace AE_RemapTria
 	public class T_Def
 	{
 		public const string ARDJ_Header = "ardjV2";
+		// ********************************************************
+		/// <summary>
+		/// マルチピリオド対応
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
+		public static string GetExt(string p)
+		{
+			string ret = "";
+			int idx = IndexOfMuitPriod(p);
+			if(idx >=0)
+			{
+				ret = p.Substring(idx);
+			}
+			return ret;
+		}
+		// ********************************************************
+		public static string GetNameNoExt(string p)
+		{
+			string ret = "";
+			ret = GetName(p);
+
+			int idx = IndexOfMuitPriod(ret);
+			if (idx >= 0)
+			{
+				ret = ret.Substring(0,idx);
+			}
+			return ret;
+		}
+		// ********************************************************
+		public static string GetDir(string p)
+		{
+			string ret = "";
+			if (p == "") return ret;
+			int idx = p.LastIndexOf('\\');
+			if (idx >= 0)
+			{
+				ret = p.Substring(0,idx);
+			}
+			return ret;
+		}
+		// ********************************************************
+		public static string GetName(string p)
+		{
+			string ret = "";
+			if (p == "") return ret;
+			int idx0 = p.LastIndexOf('\\');
+			if (idx0 >= 0)
+			{
+				ret = p.Substring(idx0 + 1);
+			}
+			return ret;
+		}
+		// ********************************************************
+		private static int IndexOfMuitPriod(string p)
+		{
+			int ret = -1;
+			int idx1 = p.LastIndexOf('.');
+			if (idx1 > 0)
+			{
+				ret = p.LastIndexOf('.', idx1 - 1);
+				if (ret < 0) ret = idx1;
+			}
+			return ret;
+		}
+		// ********************************************************
+		public static string ToWindwsPath(string p)
+		{
+			string ret = p;
+			if (ret == "") return ret;
+			ret = ret.Replace("/", "\\");
+			if(ret.Length>=3)
+			{
+				if ((ret[0]== '\\')&& (ret[2] == '\\'))
+				{
+					if  ( ((ret[1]>='A')&& (ret[1] <= 'Z'))|| ((ret[1] >= 'a') && (ret[1] <= 'z')))
+					{
+						ret = ret.Substring(1,1).ToUpper()+":"+ret.Substring(2);
+					}
+				}
+			}
+			return ret;
+		}
+		// ********************************************************
+		public static string ToJSPath(string p)
+		{
+			string ret = p;
+			if (ret == "") return ret;
+			ret = ret.Replace("\\", "/");
+			if (ret.Length >= 3)
+			{
+				if ((ret[1] == ':') && (ret[2] == '/'))
+				{
+					if (((ret[0] >= 'A') && (ret[0] <= 'Z')) || ((ret[0] >= 'a') && (ret[0] <= 'z')))
+					{
+						ret = "/"+ret.Substring(0, 1).ToLower() + ret.Substring(2);
+					}
+				}
+			}
+			return ret;
+		}
 	}
 
 }

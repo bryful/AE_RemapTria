@@ -20,44 +20,19 @@ namespace AE_RemapTria
 
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		
+		private void button1_Click_1(object sender, EventArgs e)
 		{
-			JsonObject jo = new JsonObject();
-			int[][] data = t_Grid1.CellData.ToArrayFromTarget();
-			JsonArray array = new JsonArray();
-			foreach (int[] a in data)
-			{
-				JsonArray array2 = new JsonArray();
-				if (a.Length >= 2)
-				{
-					array2.Add(a[0]);
-					array2.Add(a[1]);
-					array.Add(array2);
-				}
-			}
-			jo.Add("data", array);
-			string s = jo.ToJsonString();
-			MessageBox.Show(s);
-		}
-		private void button1_Click_3(object sender, EventArgs e)
-		{
-			string Json = Grid.CellData.ToArdj();
+			string s = @"C:\AAA\bbb.ardj.jsx";
 
-			T_CellData cd = new T_CellData();
-
-			T_Ardj t_Ardj = new T_Ardj(cd);
-
-			Ardj? a = T_Ardj.FromJson(Json);
-			if (a != null)
-			{
-				//a.Check();
-				MessageBox.Show("OK\r\n"+T_Ardj.ToJson(a));
-			}
-			else
-			{
-				MessageBox.Show("err\r\n"+ Json);
-			}
-
+			//string p = T_Def.GetDir(s);
+			//string n = T_Def.GetName(s);
+			//string ne = T_Def.GetNameNoExt(s);
+			//string ee = T_Def.GetExt(s);
+			string js = T_Def.ToJSPath(s);
+			string ws = T_Def.ToWindwsPath(js);
+			//string s2 = $"{p}\r\n{n}\r\n{ne}\r\n{ee}";
+			MessageBox.Show(js+"\r\n"+ws);
 
 		}
 	}

@@ -44,6 +44,15 @@ namespace AE_RemapTria
 		{
 			return m_cells[Selection.Target].ToArray();
 		}
+		public void FromArray(int[][] v)
+		{
+			int c = v.Length;
+			if (c > m_cells.Length) c = m_cells.Length;
+			for (int i = 0; i < c; i++)
+			{
+				m_cells[i].SetAllValues(v[i]);
+			}
+		}
 		// ******************************************************
 		public int[][][] Cell
 		{
@@ -152,6 +161,18 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		static public string FileTypeOf(string p)
+		{
+			string n = Path.GetFileNameWithoutExtension(p);
+			string e = Path.GetExtension(p);
+			string e2 = Path.GetExtension(n);
+			if(e2!="")
+			{
+				n = n.Substring(0, n.Length - e.Length);
+				e = e2 + e;
+			}
+			return e;
+		}
 		public bool Load(string p)
 		{
 			bool ret = false;
@@ -172,7 +193,7 @@ namespace AE_RemapTria
 				int idx = i+ Selection.Start;
 				if((idx>=0)&&(idx<f))
 				{
-					s+= m_cells[Selection.Target].Value(f).ToString()+"\r\n";
+					s+= m_cells[Selection.Target].Value(idx).ToString()+"\r\n";
 				}
 			}
 			if (s.Length > 0)
@@ -201,7 +222,7 @@ namespace AE_RemapTria
 			{
 				try
 				{
-					string[] sa = s.Split("\r\n");
+					string[] sa = s.Trim().Split("\r\n");
 					if (sa.Length <= 1) return ret;
 					if (sa[0].Trim() != ClipHeader) return ret;
 					int[] ints = new int[sa.Length - 1];
@@ -209,8 +230,9 @@ namespace AE_RemapTria
 					{
 						ints[i] = int.Parse(sa[i + 1]);
 					}
-					PushUndo(BackupSratus.NumberInput);
+					PushUndo(BackupSratus.SelectionChange);
 					Selection.Length = ints.Length;
+					PushUndo(BackupSratus.NumberInput);
 					for (int i = 0; i < Selection.Length; i++)
 					{
 						m_cells[Selection.Target].SetValue(Selection.Start + i, ints[i]);
@@ -221,6 +243,61 @@ namespace AE_RemapTria
 				{
 					ret = false;
 				}
+			}
+			return ret;
+		}
+		public bool FromCommand(string s)
+		{
+			bool ret = false;
+			string[] sa = s.Split('_');
+			if (sa.Length < 3) return ret;
+			int f = 0;
+			try
+			{
+				f = int.Parse(sa[0]);
+				if (FrameCountTrue != f)
+				{
+					MessageBox.Show("Missmatch Duration!");
+					return ret;
+				}
+			}
+			catch
+			{
+				return ret;
+			}
+			try
+			{
+				int fr = int.Parse(sa[1]);
+				if (fr != (int)FrameRate)
+				{
+					MessageBox.Show("Missmatch FrameRate!");
+					return ret;
+				}
+			}
+			catch
+			{
+				return ret;
+			}
+			try
+			{
+				List<int[]> list = new List<int[]>();
+				for (int i = 2; i < sa.Length; i++)
+				{
+					string[] sa2 = sa[i].Split('-');
+					if (sa2.Length >= 2)
+					{
+						int[] v = new int[2];
+						v[0] = int.Parse(sa2[0]);
+						v[1] = int.Parse(sa2[1]);
+						list.Add(v);
+					}
+				}
+				m_cells[Selection.Target].FromArray(list.ToArray());
+				ret = true;
+			}
+			catch
+			{
+				return ret;
 			}
 			return ret;
 		}
