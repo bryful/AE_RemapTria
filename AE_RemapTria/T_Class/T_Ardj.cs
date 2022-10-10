@@ -171,22 +171,11 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if(m_CellData == null) return ret;
+			if (File.Exists(p) == true) File.Delete(p);
 			Encoding enc = new UTF8Encoding(false);
-
-			//if (File.Exists(p) == true) File.Delete(p);
-			using (StreamWriter sw = new System.IO.StreamWriter(p, false, enc))
-			{
-				try
-				{
-					string json = ToJson(FromCellDataToJrdj(m_CellData));
-					sw.Write(json);
-					ret = File.Exists(p);
-				}
-				catch
-				{
-					ret = false;
-				}
-			}
+			string json = ToJson(FromCellDataToJrdj(m_CellData));
+			File.WriteAllText(p, json);
+			ret = File.Exists(p);
 			return ret;
 		}
 		// *******************************************************************

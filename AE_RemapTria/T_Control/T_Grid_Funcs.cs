@@ -548,9 +548,10 @@ namespace AE_RemapTria
 		public bool Save(string p)
 		{
 			if (IsMultExecute) return false;
-			bool ret = CellData.Save(FileName);
+			bool ret = CellData.Save(p);
 			if (ret)
 			{
+				FileName=p;
 				CellData.SheetName = Path.GetFileNameWithoutExtension(FileName);
 			}
 			return ret;
