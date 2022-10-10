@@ -40,7 +40,6 @@
 			this.t_LabelInfo1 = new AE_RemapTria.T_LabelInfo();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.button1 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -198,22 +197,11 @@
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(57, 6);
 			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(55, 27);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(95, 88);
-			this.button1.TabIndex = 8;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(429, 546);
-			this.Controls.Add(this.button1);
 			this.Controls.Add(this.t_LabelInfo1);
 			this.Controls.Add(this.t_Frame1);
 			this.Controls.Add(this.t_Caption1);
@@ -246,6 +234,5 @@
 		private T_LabelInfo t_LabelInfo1;
 		private ContextMenuStrip contextMenuStrip1;
 		private ToolStripSeparator toolStripMenuItem1;
-		private Button button1;
 	}
 }
