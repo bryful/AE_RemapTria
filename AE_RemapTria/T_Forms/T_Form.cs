@@ -530,7 +530,7 @@ namespace AE_RemapTria
 							break;
 						case "active":
 						case "foreground":
-						case "foregroundWindow":
+						case "foregroundwindow":
 							this.Invoke((Action)(() => {
 								ForegroundWindow();
 							}));
