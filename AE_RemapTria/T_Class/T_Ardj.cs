@@ -161,7 +161,8 @@ namespace AE_RemapTria
 			if(m_CellData == null) return ret;
 			try
 			{
-				File.WriteAllText(p, ToJson(FromCellDataToJrdj(m_CellData)), Encoding.GetEncoding("utf-8"));
+				var utf8_encoding = new System.Text.UTF8Encoding(false);
+				File.WriteAllText(p, ToJson(FromCellDataToJrdj(m_CellData)), utf8_encoding);
 				ret = true;
 			}
 			catch
