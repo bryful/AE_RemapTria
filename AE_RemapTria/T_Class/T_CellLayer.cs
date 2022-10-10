@@ -59,13 +59,29 @@ namespace AE_RemapTria
 				m_cells[idx] = v;
 			}
 		}
-		public int[] Arrays()
+		public int[] RawData(T_CellLayer cl)
+		{
+			int f = cl.FrameCount;
+			int[] ret = new int[f];
+			int cnt = 0;
+			for (int i = 0; i < m_cells.Length; i++)
+			{
+				if(cl.Value(i)==1)
+				{
+					ret[cnt] = m_cells[i];
+					cnt++;
+					if (cnt >= f) break;
+				}
+			}
+			return ret;
+		}
+		public int[] RawData()
 		{
 			int[] ret = new int[m_cells.Length];
 			for(int i = 0; i < ret.Length; i++) ret[i] = m_cells[i];
 			return ret;
 		}
-		public void SetArrays(int[] a)
+		public void SetRawData(int[] a)
 		{
 			int l = a.Length;
 			if (l > m_cells.Length) l = m_cells.Length;

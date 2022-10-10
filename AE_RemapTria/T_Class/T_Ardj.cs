@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -31,14 +32,24 @@ namespace AE_RemapTria
 			cell = new int[0][];
 		}
 	}
+	public class Ardjson
+	{
+		public string? caption { get; set; }
+		public int? cellCount {	get; set; }
+		public int[][]? data { get; set; }
+	}
+
 
 	public class Ardj
 	{
 		public string? header { get; set; }
+		public string? sheetName { get; set; }
 		public int? cellCount { get; set; }
 		public int? frameCount { get; set; }
 		public int? frameRate { get; set; }
-		public string? sheetName { get; set; }
+		public string[]? caption { get; set; }
+		public int? frameCountTrue { get; set; }
+
 		public string? CREATE_USER { get; set; }
 		public string? UPDATE_USER { get; set; }
 		public string? CREATE_TIME { get; set; }
@@ -51,11 +62,12 @@ namespace AE_RemapTria
 		public string? CUT { get; set; }
 		public string? CAMPANY_NAME { get; set; }
 
-		public string[]? caption { get; set; }
+		public int[][][]? cellWithEnabled { get; set; }
+
 		public int[][][]? cell { get; set; }
 
-		public int? frameCountTrue { get; set; }
-		public int[][][]? cellWithEnabled { get; set; }
+		public int[][]? rawData { get; set; }
+
 		public Ardj()
 		{
 			//Init();
@@ -159,15 +171,21 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if(m_CellData == null) return ret;
-			try
+			Encoding enc = new UTF8Encoding(false);
+
+			//if (File.Exists(p) == true) File.Delete(p);
+			using (StreamWriter sw = new System.IO.StreamWriter(p, false, enc))
 			{
-				var utf8_encoding = new System.Text.UTF8Encoding(false);
-				File.WriteAllText(p, ToJson(FromCellDataToJrdj(m_CellData)), utf8_encoding);
-				ret = true;
-			}
-			catch
-			{
-				ret = false;
+				try
+				{
+					string json = ToJson(FromCellDataToJrdj(m_CellData));
+					sw.Write(json);
+					ret = File.Exists(p);
+				}
+				catch
+				{
+					ret = false;
+				}
 			}
 			return ret;
 		}
@@ -296,6 +314,8 @@ namespace AE_RemapTria
 			ardj.frameCountTrue = cd.FrameCountTrue;
 			ardj.frameRate = (int)cd.FrameRate;
 			ardj.sheetName = cd.SheetName;
+
+			ardj.rawData = cd.RawData;
 
 			ardj.caption = cd.Caption;
 			ardj.cell = cd.Cell;

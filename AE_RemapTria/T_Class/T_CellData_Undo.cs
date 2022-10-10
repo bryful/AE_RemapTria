@@ -84,7 +84,7 @@ namespace AE_RemapTria
 			int[][] ret = new int[CellCount][];
 			for (int i = 0; i < CellCount; i++)
 			{
-				ret[i] = m_cells[i].Arrays();
+				ret[i] = m_cells[i].RawData();
 			}
 			return ret;
 		}
@@ -98,7 +98,7 @@ namespace AE_RemapTria
 			SetFrameCount(d[0].Length);
 			for (int i = 0; i < d.Length; i++)
 			{
-				m_cells[i].SetArrays(d[i]);
+				m_cells[i].SetRawData(d[i]);
 			}
 
 			_undoPushFlag = b;

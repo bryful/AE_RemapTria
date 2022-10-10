@@ -70,6 +70,20 @@ namespace AE_RemapTria
 				SetCell(value);
 			}
 		}
+		// ******************************************************
+		public int[][] RawData
+		{
+			get
+			{
+				int[][] ret = new int[CellCount][];
+				for(int i=0; i<CellCount;i++)
+				{
+					ret[i] = m_cells[i].RawData(m_FrameEnabled);
+				}
+				return ret;
+			}
+		}
+		// ******************************************************
 		public void SetCell(int[][][] v)
 		{
 			if (v == null) return;

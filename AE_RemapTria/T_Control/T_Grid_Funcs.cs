@@ -537,6 +537,10 @@ namespace AE_RemapTria
 					FileName = dlg.FileName;
 					ret = true;
 				}
+				else
+				{
+					MessageBox.Show("err");
+				}
 			}
 			if (m_Form != null) m_Form.TopMost = b;
 			return ret;
