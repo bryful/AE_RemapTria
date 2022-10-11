@@ -12,8 +12,14 @@ namespace AE_RemapTria
 {
 	public partial class T_SheetSettingDialog : T_BaseDialog
 	{
+		private bool IsTBForcus = false;
 		private T_Button[] m_btns = new T_Button[13];
 
+		public string SheetName
+		{
+			get { return tbSheetName.Text; }
+			set { tbSheetName.Text = value; }
+		}
 		public string Caption
 		{
 			get { return lbStatus.Text; }
@@ -106,6 +112,7 @@ namespace AE_RemapTria
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			if(Frame<12) return;
+			if (SheetName == "") return;
 			this.DialogResult = DialogResult.OK;
 		}
 
@@ -117,33 +124,51 @@ namespace AE_RemapTria
 		//private int m_mdkeyEX = -1;
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (m_mdkey <= -5)
+			if((e.KeyData == Keys.Tab)|| (e.KeyData == Keys.Left) || (e.KeyData == Keys.Right))
 			{
-				int v = t_DurationBox1.KeyToNum(e.KeyData);
-				if (v >= 0)
+				if (IsTBForcus)
 				{
-					m_mdkey = v;
-					m_btns[v].IsMouseDown = true;
-					t_DurationBox1.InputKey(v);
+					ActiveControl = btnOK;
+					IsTBForcus = false;
 				}
 				else
 				{
-					if (e.KeyData == Keys.Enter)
+					ActiveControl = tbSheetName;
+					IsTBForcus = true;
+				}
+				base.OnKeyDown(e);
+				return;
+			}
+			if ((IsTBForcus == false)||(e.KeyData == Keys.Enter)||(e.KeyData == Keys.Escape))
+			{
+				if (m_mdkey <= -5)
+				{
+					int v = t_DurationBox1.KeyToNum(e.KeyData);
+					if (v >= 0)
 					{
-						if (Frame > 12)
+						m_mdkey = v;
+						m_btns[v].IsMouseDown = true;
+						t_DurationBox1.InputKey(v);
+					}
+					else
+					{
+						if (e.KeyData == Keys.Enter)
 						{
-							btnOK.IsMouseDown = true;
-							m_mdkey = -1;
-							//DialogResult = DialogResult.OK;
+							if (Frame > 12)
+							{
+								btnOK.IsMouseDown = true;
+								m_mdkey = -1;
+								//DialogResult = DialogResult.OK;
+							}
 						}
-					}
-					else if (e.KeyData == Keys.Escape)
-					{
-						btnCancel.IsMouseDown = true;
-						m_mdkey = -2;
-						//DialogResult = DialogResult.Cancel;
-					}
+						else if (e.KeyData == Keys.Escape)
+						{
+							btnCancel.IsMouseDown = true;
+							m_mdkey = -2;
+							//DialogResult = DialogResult.Cancel;
+						}
 
+					}
 				}
 			}
 			base.OnKeyDown(e);
@@ -157,9 +182,14 @@ namespace AE_RemapTria
 					m_btns[m_mdkey].IsMouseDown = false;
 				}else if(m_mdkey==-1)
 				{
-					DialogResult = DialogResult.OK;
+					if ((Frame >= 12) && (SheetName != ""))
+					{
+						DialogResult = DialogResult.OK;
+					}
 
-				}else if(m_mdkey==-2)
+
+				}
+				else if(m_mdkey==-2)
 				{
 					DialogResult = DialogResult.Cancel;
 				}
@@ -181,6 +211,16 @@ namespace AE_RemapTria
 		private void t_DurationBox1_DurationChanged(object sender, EventArgs e)
 		{
 			lbDuration.Text = t_DurationBox1.Info;
+		}
+
+		private void tbSheetName_Enter(object sender, EventArgs e)
+		{
+			IsTBForcus = true;
+		}
+
+		private void tbSheetName_Leave(object sender, EventArgs e)
+		{
+			IsTBForcus = false;
 		}
 	}
 }

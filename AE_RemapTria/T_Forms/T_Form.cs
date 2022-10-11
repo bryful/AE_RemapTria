@@ -119,6 +119,10 @@ namespace AE_RemapTria
 					if(ok)
 					{
 						FileName = pp;
+						if(m_grid!=null)
+						{
+							m_grid.CellData.SheetName = T_Def.GetNameNoExt(FileName);
+						}
 						reloadFlag = true;
 					}
 				}

@@ -117,6 +117,7 @@ namespace AE_RemapTria
 			int ExFrame = CellData.UnEnabledFrameCount;
 			dlg.Frame = CellData.FrameCount;
 			dlg.Fps = CellData.FrameRate;
+			dlg.SheetName = CellData.SheetName;
 			string caution = "";
 			if(ExFrame > 0)
 			{
@@ -141,6 +142,11 @@ namespace AE_RemapTria
 				CellData.PushUndo(BackupSratus.All);
 				CellData.FrameRate = dlg.Fps;
 				CellData.FrameCount = dlg.Frame;
+				CellData.SheetName = dlg.SheetName;
+				if (m_Form != null)
+				{
+					m_Form.FileName = T_Def.ChangeName(m_Form.FileName, dlg.SheetName);
+				}
 				Sizes.CallOnChangeGridSize();
 			}
 			dlg.Dispose();
@@ -521,7 +527,7 @@ namespace AE_RemapTria
 				dlg.InitialDirectory = Path.GetDirectoryName(p);
 				dlg.FileName = Path.GetFileName(p);
 			}
-			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
 			dlg.FilterIndex = 1;
 			bool b = false;
 			if (m_Form != null)
@@ -548,6 +554,7 @@ namespace AE_RemapTria
 		public bool Save(string p)
 		{
 			if (IsMultExecute) return false;
+			CellData.SheetName = Path.GetFileNameWithoutExtension(p);
 			bool ret = CellData.Save(p);
 			if (ret)
 			{
@@ -577,7 +584,7 @@ namespace AE_RemapTria
 				dlg.InitialDirectory = Path.GetDirectoryName(FileName);
 				dlg.FileName = Path.GetFileName(FileName);
 			}
-			dlg.Filter = "*.ardj.jsx|*.ardj.jsx|*.jsx|*.jsx|*.*|*.*";
+			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
 			dlg.FilterIndex = 1;
 			bool b = false;
 			if(m_Form!=null)
@@ -640,6 +647,11 @@ namespace AE_RemapTria
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				CellData.SheetName = dlg.ValueText;
+				if(m_Form!=null)
+				{
+					m_Form.FileName = T_Def.ChangeName(m_Form.FileName, dlg.ValueText);
+				}
+
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
