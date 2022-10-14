@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO.Pipes;
-using System.Text.Json.Nodes;
-
+//using System.Text.Json.Nodes;
+using System.IO;
 using AE_RemapTria;
-
+using System;
 using BRY;
-
+using System.Threading.Tasks;
+using System.Threading;
 namespace BRY
 {
 
@@ -67,7 +68,9 @@ namespace BRY
 		private string CallExePath(string nm)
 		{
 			string ret = "";
-			string fullName = Environment.ProcessPath;
+			//string fullName = Environment.ProcessPath;
+			string fullName = System.Reflection.Assembly.GetExecutingAssembly().Location;// Environment.ProcessPath;
+
 			string n = "";
 			if (fullName != null)
 			{
@@ -137,7 +140,11 @@ namespace BRY
 		public void Run(string[] args)
 		{
 			string rets = "false";
+#if NET6_0
 			Process? proc = null;
+#else
+			Process proc = null;
+#endif
 			bool isRunnig = false;
 			Process[] ps = Process.GetProcessesByName(AppID);
 			if (ps.Length > 0)
@@ -170,11 +177,14 @@ namespace BRY
 					}
 					else
 					{
-
-						Process proc2 = Process.Start(CallExePath(AppID));
-						if (proc2 != null)
+						string p = CallExePath(AppID);
+						if (File.Exists(p))
 						{
-							rets = "true";
+							Process proc2 = Process.Start(p);
+							if (proc2 != null)
+							{
+								rets = "true";
+							}
 						}
 					}
 					break;

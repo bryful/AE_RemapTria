@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace AE_RemapTria
 {
@@ -70,7 +71,7 @@ namespace AE_RemapTria
 	/// <summary>
 	/// セルフレームの表示データ T_Gridで描画しに使用
 	/// </summary>
-	public struct CellSatus
+	public class CellSatus
 	{
 		public int Cell = -1;
 		public int Frame = -1;
