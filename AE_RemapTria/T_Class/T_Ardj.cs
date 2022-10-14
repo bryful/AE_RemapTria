@@ -32,23 +32,17 @@ namespace AE_RemapTria
 			cell = new int[0][];
 		}
 	}
-	public class Ardjson
-	{
-		public string? caption { get; set; }
-		public int? cellCount {	get; set; }
-		public int[][]? data { get; set; }
-	}
 
 
 	public class Ardj
 	{
 		public string? header { get; set; }
 		public string? sheetName { get; set; }
+		public int? frameRate { get; set; }
 		public int? cellCount { get; set; }
 		public int? frameCount { get; set; }
-		public int? frameRate { get; set; }
-		public string[]? caption { get; set; }
 		public int? frameCountTrue { get; set; }
+		public string[]? caption { get; set; }
 
 		public string? CREATE_USER { get; set; }
 		public string? UPDATE_USER { get; set; }
@@ -66,6 +60,8 @@ namespace AE_RemapTria
 
 		public int[][][]? cell { get; set; }
 
+
+		public string[]? rawCaption { get; set; }
 		public int[][]? rawData { get; set; }
 
 		public Ardj()
@@ -304,11 +300,13 @@ namespace AE_RemapTria
 			ardj.frameRate = (int)cd.FrameRate;
 			ardj.sheetName = cd.SheetName;
 
-			ardj.rawData = cd.RawData;
 
 			ardj.caption = cd.Caption;
 			ardj.cell = cd.Cell;
 			ardj.cellWithEnabled = cd.CellWithEnabled;
+
+			ardj.rawData = cd.RawData;
+			ardj.rawCaption = cd.RawCaption;
 			return ardj;
 		}
 		// ****************************************

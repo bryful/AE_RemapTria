@@ -138,7 +138,7 @@ namespace AE_RemapTria
 				ret = (sz == bs.Length);
 				if(ret)
 				{
-					SheetName = Path.GetFileNameWithoutExtension(p);
+					SheetName = T_Def.GetNameNoExt(p);
 					ret = StsDecord(bs);
 					if(ret)
 					{

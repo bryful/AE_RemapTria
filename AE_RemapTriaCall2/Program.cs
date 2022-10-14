@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
@@ -8,7 +8,7 @@ namespace AE_RemapTria
 {
 
 
-	internal static class Program
+		internal static class Program
 	{
 		public static string CallExeName = "AE_RemapTria";
 		public static string MyExeName = "AE_RemapTriaCall";

@@ -574,7 +574,9 @@ namespace AE_RemapTria
 				case EXEC_MODE.EXPORT:
 						if (m_grid != null){
 							//MessageBox.Show(m_grid.ToArdj());
-							CallExe.PipeClient("AE_RemapTriaCall", m_grid.ToArdj()).Wait();
+							Pipe pp = new Pipe();
+						pp._execution = true;
+							pp.PipeClient("AE_RemapTriaCall", m_grid.ToArdj()).Wait();
 						}
 					break;
 				case EXEC_MODE.QUIT:
@@ -617,7 +619,7 @@ namespace AE_RemapTria
 		// *******************************************************************************
 		static public void ArgumentPipeServer(string pipeName)
 		{
-			Task.Run(() =>
+            Task.Run(() =>
 			{ //Taskを使ってクライアント待ち
 				while (_execution)
 				{
@@ -627,7 +629,7 @@ namespace AE_RemapTria
 						// クライアントの接続待ち
 						pipeServer.WaitForConnection();
 
-						StreamString ssSv = new StreamString(pipeServer);
+                        StreamString ssSv = new StreamString(pipeServer);
 
 						while (true)
 						{ //データがなくなるまで                       
@@ -635,8 +637,8 @@ namespace AE_RemapTria
 							if (string.IsNullOrEmpty(read))
 								break;
 
-							//引数が受信できたら、Applicationに登録されているだろうForm1に引数を送る
-							FormCollection apcl = Application.OpenForms;
+                            //引数が受信できたら、Applicationに登録されているだろうForm1に引数を送る
+                            FormCollection apcl = Application.OpenForms;
 
 							if (apcl.Count > 0)
 							{
@@ -649,9 +651,9 @@ namespace AE_RemapTria
 										break;
 									}
 								}
-								if(idx>=0)
+								if(idx >= 0)
 								{
-									PipeData pd = new PipeData(read);
+                                    BRY.PipeData pd = new BRY.PipeData(read);
 									((T_Form)apcl[idx]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
 								}
 							}

@@ -57,12 +57,13 @@ namespace AE_RemapTria
 			}
 			else
 			{ //起動している
-			  //MessageBox.Show("すでに起動しています",
-			  //				ApplicationId,
-			  //				MessageBoxButtons.OK, MessageBoxIcon.Hand);
+              //MessageBox.Show("すでに起動しています",
+              //				ApplicationId,
+              //				MessageBoxButtons.OK, MessageBoxIcon.Hand);
 
-				PipeData pd = new PipeData(args, PIPECALL.DoubleExec);
-				CallExe.PipeClient(ApplicationId, pd.ToJson()).Wait();
+                BRY.PipeData pd = new BRY.PipeData(args, PIPECALL.DoubleExec);
+				Pipe pp = new Pipe();
+				pp.PipeClient(ApplicationId, pd.ToJson()).Wait();
 			}
 		}
 	}

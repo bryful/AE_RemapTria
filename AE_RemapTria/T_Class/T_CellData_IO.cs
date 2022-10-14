@@ -75,10 +75,38 @@ namespace AE_RemapTria
 		{
 			get
 			{
-				int[][] ret = new int[CellCount][];
-				for(int i=0; i<CellCount;i++)
+				bool[] tbl = IsEmpties;
+				int cnt = 0;
+				for (int i=0; i<tbl.Length;i++) if (!tbl[i]) cnt++;
+				int[][] ret = new int[cnt][];
+				int idx = 0;
+				for(int i=0; i<tbl.Length;i++)
 				{
-					ret[i] = m_cells[i].RawData(m_FrameEnabled);
+					if (!tbl[i])
+					{
+						ret[idx] = m_cells[i].RawData(m_FrameEnabled);
+						idx++;
+					}
+				}
+				return ret;
+			}
+		}
+		public string [] RawCaption
+		{
+			get
+			{
+				bool[] tbl = IsEmpties;
+				int cnt = 0;
+				for (int i = 0; i < tbl.Length; i++) if (!tbl[i]) cnt++;
+				string[] ret = new string[cnt];
+				int idx = 0;
+				for (int i = 0; i < tbl.Length; i++)
+				{
+					if (!tbl[i])
+					{
+						ret[idx] = m_cells[i].Caption;
+						idx++;
+					}
 				}
 				return ret;
 			}
@@ -175,18 +203,6 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
-		static public string FileTypeOf(string p)
-		{
-			string n = Path.GetFileNameWithoutExtension(p);
-			string e = Path.GetExtension(p);
-			string e2 = Path.GetExtension(n);
-			if(e2!="")
-			{
-				n = n.Substring(0, n.Length - e.Length);
-				e = e2 + e;
-			}
-			return e;
-		}
 		public bool Load(string p)
 		{
 			bool ret = false;
@@ -260,6 +276,7 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		// *********************************************************************************
 		public bool FromCommand(string s)
 		{
 			bool ret = false;
@@ -314,6 +331,19 @@ namespace AE_RemapTria
 				return ret;
 			}
 			return ret;
+		}
+		// *********************************************************************************
+		public bool[] IsEmpties
+		{
+			get
+			{
+				bool[] ret = new bool[CellCount];
+				for(int i=0; i<CellCount;i++)
+				{
+					ret[i] = m_cells[i].IsEmpty(m_FrameEnabled);
+				}
+				return ret;
+			}
 		}
 	}
 

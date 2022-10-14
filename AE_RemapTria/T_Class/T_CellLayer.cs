@@ -24,6 +24,20 @@ namespace AE_RemapTria
 
 		private int[] m_cells = new int[0];
 		
+		// ***********************************************************
+		public bool IsEmpty(T_CellLayer cl)
+		{
+			bool ret = true;
+			for(int i=0; i<m_cells.Length;i++)
+			{
+				if ((m_cells[i] > 0) && (cl.m_cells[i]==1))
+				{
+					ret = false;
+					break;
+				}
+			}
+			return ret;
+		}
 		public int Value(int idx)
 		{
 			int ret = -1;

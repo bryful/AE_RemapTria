@@ -524,8 +524,8 @@ namespace AE_RemapTria
 			SaveFileDialog dlg = new SaveFileDialog();
 			if (p != "")
 			{
-				dlg.InitialDirectory = Path.GetDirectoryName(p);
-				dlg.FileName = Path.GetFileName(p);
+				dlg.InitialDirectory = T_Def.GetDir(p);
+				dlg.FileName = T_Def.GetNameNoExt(p);
 			}
 			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
 			dlg.FilterIndex = 1;
@@ -554,12 +554,12 @@ namespace AE_RemapTria
 		public bool Save(string p)
 		{
 			if (IsMultExecute) return false;
-			CellData.SheetName = Path.GetFileNameWithoutExtension(p);
+			CellData.SheetName = T_Def.GetNameNoExt(p);
 			bool ret = CellData.Save(p);
 			if (ret)
 			{
 				FileName=p;
-				CellData.SheetName = Path.GetFileNameWithoutExtension(FileName);
+				CellData.SheetName = T_Def.GetNameNoExt(FileName);
 			}
 			return ret;
 		}
@@ -581,8 +581,8 @@ namespace AE_RemapTria
 			OpenFileDialog dlg = new OpenFileDialog();
 			if (FileName != "")
 			{
-				dlg.InitialDirectory = Path.GetDirectoryName(FileName);
-				dlg.FileName = Path.GetFileName(FileName);
+				dlg.InitialDirectory = T_Def.GetDir(FileName);
+				dlg.FileName = T_Def.GetNameNoExt(FileName);
 			}
 			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
 			dlg.FilterIndex = 1;
@@ -612,7 +612,7 @@ namespace AE_RemapTria
 			if(ret)
 			{
 				FileName = p;
-				CellData.SheetName = Path.GetFileNameWithoutExtension(p);
+				CellData.SheetName = T_Def.GetNameNoExt(p);
 				ChkMinMax();
 				ChkHScrl();
 				ChkVScrl();
