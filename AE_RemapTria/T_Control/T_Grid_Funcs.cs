@@ -701,5 +701,46 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public bool Import_layer(string s)
+		{
+			bool ret = false;
+			if ((s == null) || (s.Length == 0)) return ret;
+			string[] sa = s.Split(',');
+			try
+			{
+				if (sa[0] != "$") return ret;
+				int frameCount = Convert.ToInt32(sa[1]);
+				int frameRate = Convert.ToInt32(sa[2]);
+				int cc = Convert.ToInt32(sa[3]);
+				if (sa.Length != cc + 4) return ret;
+
+				int[][] cell = new int[cc][];
+				for (int i = 0; i < cc; i++)
+				{
+					cell[i] = new int[2];
+					string[] sss = sa[i + 4].Split('-');
+					if(sss.Length >= 2)
+					{
+						cell[i][0] = Convert.ToInt32(sss[0]);
+						cell[i][1] = Convert.ToInt32(sss[1]);
+					}
+				}
+				CellData.PushUndo(BackupSratus.All);
+				bool u = CellData._undoPushFlag;
+				CellData._undoPushFlag = false;
+
+				if (CellData.FrameCount!= frameCount) CellData.SetFrameCount(frameCount);
+				CellData.FromArray(cell);
+				CellData._undoPushFlag = u;
+				this.Invalidate();
+
+			}
+			catch
+			{
+				ret = false;
+			}
+
+			return ret;
+		}
 	}
 }

@@ -44,7 +44,15 @@ namespace AE_RemapTria
 		{
 			return m_cells[Selection.Target].ToArray();
 		}
-		public void FromArray(int[][] v)
+		public void FromArray(int c,int[][] ary)
+		{
+			m_cells[c].FromArray(ary);
+		}
+		public void FromArray(int[][] ary)
+		{
+			m_cells[Selection.Target].FromArray(ary);
+		}
+		public void SetAllValues(int[][] v)
 		{
 			int c = v.Length;
 			if (c > m_cells.Length) c = m_cells.Length;

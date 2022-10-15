@@ -125,8 +125,10 @@ namespace AE_RemapTria
 		// ****************************************************************
 		private void A_Click(object? sender, EventArgs e)
 		{
+#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 			ToolStripMenuItem m = (ToolStripMenuItem)sender;
-			if(m!=null)
+#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+			if (m!=null)
 			{
 				int idx = (int)(m.Tag);
 				if((idx>=0)&&(idx< m_SubMenuItems.Length))

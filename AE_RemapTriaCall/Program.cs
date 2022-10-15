@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using BRY;
 
 namespace AE_RemapTria
 {
+
+
 	internal static class Program
 	{
 		public static string CallExeName = "AE_RemapTria";

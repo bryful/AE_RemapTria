@@ -116,24 +116,31 @@ namespace BRY
 		public string[] GetArgs()
 		{
 			string[] ret = new string[0];
-			if (obj == null) return ret;
-			try
+			if (obj != null)
 			{
-				var ja = obj["Args"].AsArray();
-				if (ja.Count > 0)
+				try
 				{
-					ret = new string[ja.Count];
-					int i = 0;
-					foreach (var item in ja)
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
+					var ja = obj["Args"].AsArray();
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+					if (ja.Count > 0)
 					{
-						ret[i] = item.GetValue<string>();
-						i++;
+						ret = new string[ja.Count];
+						int i = 0;
+						foreach (var item in ja)
+						{
+							if (item != null)
+							{
+								ret[i] = item.GetValue<string>();
+							}
+							i++;
+						}
 					}
 				}
-			}
-			catch
-			{
-				ret = new string[0];
+				catch
+				{
+					ret = new string[0];
+				}
 			}
 			return ret;
 		}
@@ -144,7 +151,13 @@ namespace BRY
 			PIPECALL ret = PIPECALL.None;
 			try
 			{
-				int i = obj["PIPECALL"].GetValue<int>();
+				int i=(int)PIPECALL.None;
+				if(obj!=null)
+				{
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
+					i = obj["PIPECALL"].GetValue<int>();
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+				}
 				ret = (PIPECALL)i;
 			}
 			catch

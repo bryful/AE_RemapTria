@@ -254,7 +254,9 @@ namespace AE_RemapTria
 				{
 					foreach(var item in ja)
 					{
+#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 						JsonObject jn = (JsonObject)item;
+#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 						key = "name";
 						if (jn.ContainsKey(key) == false) continue;
 						string nm = jn[key].GetValue<string>();

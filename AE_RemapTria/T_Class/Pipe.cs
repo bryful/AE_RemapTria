@@ -25,10 +25,11 @@ namespace BRY
 						// クライアントの接続待ち
 						pipeServer.WaitForConnection();
 
-						StreamString ssSv = new StreamString(pipeServer);
+						StreamString? ssSv = new StreamString(pipeServer);
 
 						while (true)
 						{ //データがなくなるまで                       
+							if (ssSv == null) break;
 							string read = ssSv.ReadString(); //クライアントの引数を受信 
 							if (string.IsNullOrEmpty(read))
 							{
@@ -54,7 +55,7 @@ namespace BRY
 			{ //Taskを使ってサーバに送信waitで処理が終わるまで待つ
 				using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut, PipeOptions.None, System.Security.Principal.TokenImpersonationLevel.Impersonation))
 				{
-					StreamString ssCl;
+					StreamString? ssCl;
 					string writeData;
 					pipeClient.Connect();
 

@@ -223,26 +223,29 @@ namespace AE_RemapTria
 			bool b = cd._eventFlag;
 			cd._eventFlag = false;
 
-			cd.SetCellFrame((int)aj.cellCount, (int)aj.frameCountTrue);
-			cd.FrameRate = (T_Fps)aj.frameRate;
-			cd.SheetName = aj.sheetName;
-			cd.CREATE_USER = aj.CREATE_USER;
-			cd.UPDATE_USER = aj.UPDATE_USER;
-			cd.CREATE_TIME = DateTime.Parse(aj.CREATE_TIME);
-			cd.UPDATE_TIME = DateTime.Parse(aj.UPDATE_TIME);
-			cd.TITLE = aj.TITLE;
-			cd.SUB_TITLE = aj.SUB_TITLE;
-			cd.OPUS = aj.OPUS;
-			cd.SCECNE = aj.SCECNE;
-			cd.CUT = aj.CUT;
+			if((aj.frameCountTrue!=null)&&(aj.cellCount!=null))
+				cd.SetCellFrame((int)aj.cellCount, (int)aj.frameCountTrue);
+			if(aj.frameRate != null) cd.FrameRate = (T_Fps)aj.frameRate;
+			if (aj.sheetName != null) cd.SheetName = aj.sheetName;
+			if (aj.CREATE_USER != null) cd.CREATE_USER = aj.CREATE_USER;
+			if (aj.UPDATE_USER != null) cd.UPDATE_USER = aj.UPDATE_USER;
+			if (aj.CREATE_TIME != null) cd.CREATE_TIME = DateTime.Parse(aj.CREATE_TIME);
+			if (aj.UPDATE_TIME != null) cd.UPDATE_TIME = DateTime.Parse(aj.UPDATE_TIME);
+			if (aj.TITLE != null) cd.TITLE = aj.TITLE;
+			if (aj.SUB_TITLE != null) cd.SUB_TITLE = aj.SUB_TITLE;
+			if (aj.OPUS != null) cd.OPUS = aj.OPUS;
+			if (aj.SCECNE != null) cd.SCECNE = aj.SCECNE;
+			if (aj.CUT != null) cd.CUT = aj.CUT;
 
-			cd.Caption = aj.caption;
+			if (aj.caption != null) cd.Caption = aj.caption;
 			if (aj.frameCount == aj.frameCountTrue)
 			{
+				if(aj.cell!=null)
 				cd.SetCell( aj.cell);
 			}
 			else
 			{
+				if(aj.cellWithEnabled !=null)
 				cd.CellWithEnabled = aj.cellWithEnabled;
 			}
 			cd._eventFlag = b;

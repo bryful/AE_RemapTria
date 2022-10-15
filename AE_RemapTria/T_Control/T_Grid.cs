@@ -347,59 +347,6 @@ namespace AE_RemapTria
 			}
 			g.FillRectangle(sb, r);
 
-			//
-			p.Color = Colors.LineB;
-			p.Width = 1;
-			int x2 = x + Sizes.CellWidth - 1;
-			int y2 = y + Sizes.CellHeight - 1;
-			//横線
-			DrawHorLine(g, p, x, x2, y);
-			//縦線
-			DrawVerLine(g, p, x, y, y2);
-			if (IsSel == true)
-			{
-				p.Color = Colors.LineA;
-				//DrawVerLine(g, p, x, y, y2);
-				//DrawVerLine(g, p, x2, y, y2);
-			}
-			int Sec = 24;
-			int HSec = 12;
-			int HHSec = 6;
-
-			switch (CellData.FrameRate)
-			{
-				case T_Fps.FPS24:
-					Sec = 24;
-					HSec = 12;
-					HHSec = 6;
-					break;
-				case T_Fps.FPS30:
-					Sec = 30;
-					HSec = 15;
-					HHSec = 5;
-					break;
-
-			}
-			if (f % Sec == 0)
-			{
-				p.Color = Colors.Line;
-				DrawHorLine(g, p, x, x2, y);
-				DrawHorLine(g, p, x, x2, y - 1);
-			}
-			else if (f % HSec == 0)
-			{
-				p.Color = Colors.Line;
-				DrawHorLine(g, p, x, x2, y);
-
-			}
-			else
-			{
-				if (f % HHSec == 0)
-				{
-					p.Color = Colors.LineA;
-					DrawHorLine(g, p, x, x2, y);
-				}
-			}
 			CellSatus cs = CellData.GetCellStatus(l, f);
 			switch (cs.Status)
 			{
@@ -443,6 +390,60 @@ namespace AE_RemapTria
 					}
 
 				}
+				// *************************************
+				p.Width = 1;
+				int Sec = 24;
+				int HSec = 12;
+				int HHSec = 6;
+				switch (CellData.FrameRate)
+				{
+					case T_Fps.FPS24:
+						Sec = 24;
+						HSec = 12;
+						HHSec = 6;
+						break;
+					case T_Fps.FPS30:
+						Sec = 30;
+						HSec = 15;
+						HHSec = 5;
+						break;
+				}
+				for (int j = r.Top; j <= r.Bottom; j++)
+				{
+					int y = j * Sizes.CellHeight - Sizes.DispY;
+					if (j % Sec == 0)
+					{
+						p.Color = Colors.Line;
+						DrawHorLine(g, p, 0, this.Width, y);
+						DrawHorLine(g, p, 0, this.Width, y - 1);
+					}
+					else if (j % HSec == 0)
+					{
+						p.Color = Colors.Line;
+						DrawHorLine(g, p, 0, this.Width, y);
+
+					}
+					else
+					{
+						if (j % HHSec == 0)
+						{
+							p.Color = Colors.LineA;
+							DrawHorLine(g, p, 0, this.Width, y);
+						}
+						else
+						{
+							p.Color = Colors.LineB;
+							DrawHorLine(g, p, 0, this.Width, y);
+						}
+					}
+				}
+				//******************************************
+				for (int i = r.Left; i <= r.Right; i++)
+				{
+					int x = i * Sizes.CellWidth- Sizes.DispX;
+					DrawVerLine(g, p, x, 0, this.Height);
+				}
+				//****************************************
 
 				p.Color = Colors.Line;
 				DrawFrame(g, p);
@@ -459,6 +460,7 @@ namespace AE_RemapTria
 		{
 			if (drgevent != null)
 			{
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
 				if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
 				{
 					drgevent.Effect = DragDropEffects.All;
@@ -467,6 +469,7 @@ namespace AE_RemapTria
 				{
 					drgevent.Effect = DragDropEffects.None;
 				}
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 			}
 			//base.OnDragEnter(drgevent);
 		}

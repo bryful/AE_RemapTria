@@ -17,8 +17,6 @@ namespace AE_RemapTria
 		CALL,
 		EXPORT,
 		IMPORT_LAYER,
-		OPEN_DIALOG,
-		SAVE_DIALOG,
 		QUIT
 	}
 	/// <summary>

@@ -5,16 +5,16 @@ using System.IO.Pipes;
 using System.IO;
 using AE_RemapTria;
 using System;
-using BRY;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Security.Permissions;
+
 namespace BRY
 {
 
 
 	public class CallExe
 	{
-		// ************************************************************************
 
 		// ************************************************************************
 		private string m_AppID = "AE_RemapTria";
@@ -33,10 +33,8 @@ namespace BRY
 		/// 実行後に
 		/// </summary>
 		public string ResultString { get { return m_ResultString; } }
-		// ************************************************************************
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		
 		// ************************************************************************
 		/// <summary>
 		/// コンストラクタ
@@ -65,16 +63,16 @@ namespace BRY
 			}
 			return opts;
 		}
-		private string CallExePath(string nm)
+		static private string CallExePath(string nm)
 		{
 			string ret = "";
-			//string fullName = Environment.ProcessPath;
-			string fullName = System.Reflection.Assembly.GetExecutingAssembly().Location;// Environment.ProcessPath;
-
+#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
+			string fullName = Environment.ProcessPath;
 			string n = "";
 			if (fullName != null)
 			{
 				n = Path.GetDirectoryName(fullName);
+#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 
 			}
 			if ((n != null) && (n != ""))
@@ -87,7 +85,7 @@ namespace BRY
 			}
 			return ret;
 		}
-		private EXEC_MODE GetOption(ref string[] args)
+		static private EXEC_MODE GetOption(ref string[] args)
 		{
 			EXEC_MODE ret = EXEC_MODE.NONE;
 			if (args.Length > 0)
@@ -117,12 +115,6 @@ namespace BRY
 								break;
 							case "import_layer":
 								ret = EXEC_MODE.IMPORT_LAYER;
-								break;
-							case "open":
-								ret = EXEC_MODE.OPEN_DIALOG;
-								break;
-							case "savetofile":
-								ret = EXEC_MODE.SAVE_DIALOG;
 								break;
 						}
 
@@ -171,17 +163,18 @@ namespace BRY
 					{
 						if (proc != null)
 						{
-							SetForegroundWindow(proc.MainWindowHandle);
+							Wa.SetForegroundWindow(proc.MainWindowHandle);
 							rets = "true";
 						}
 					}
 					else
 					{
+						
 						string p = CallExePath(AppID);
+						Console.WriteLine(p);
 						if (File.Exists(p))
 						{
-							Process proc2 = Process.Start(p);
-							if (proc2 != null)
+							if (Wa.ProcessStart(p))
 							{
 								rets = "true";
 							}
@@ -214,18 +207,19 @@ namespace BRY
 						rets = "false";
 					}
 					break;
-				case EXEC_MODE.SAVE_DIALOG:
-					string savepath = SaveDialog();
-					args = new string[2];
-					args[0] = "-SaveToFile";
-					args[1] = savepath;
-					em = EXEC_MODE.NONE;
-					break;
-				case EXEC_MODE.OPEN_DIALOG:
-					string openpath = OpenDialog();
-					args = new string[1];
-					args[0] = openpath;
-					em = EXEC_MODE.NONE;
+				case EXEC_MODE.IMPORT_LAYER:
+					if (isRunnig)
+					{
+						Pipe pp = new Pipe();
+						PipeData pd = new PipeData(args, PIPECALL.PipeExec);
+						string s = pd.ToJson();
+						pp.PipeClient(m_AppID, s).Wait();
+						rets = "true";
+					}
+					else
+					{
+						rets = "false";
+					}
 					break;
 				case EXEC_MODE.NONE:
 				default:
@@ -249,10 +243,7 @@ namespace BRY
 					string exename = CallExePath(AppID);
 					if (File.Exists(exename) == true)
 					{
-						Process exec2 = new Process();
-						exec2.StartInfo.FileName = exename;
-						exec2.StartInfo.Arguments = ArgsString(args);
-						if (exec2.Start())
+						if(Wa.ProcessStart(exename, ArgsString(args)))
 						{
 							rets = "true";
 						}
@@ -271,7 +262,7 @@ namespace BRY
 		static public string OpenDialog(string p = "")
 		{
 			string ret = "";
-			/*
+#if NET6_0
 			OpenFileDialog dlg = new OpenFileDialog();
 			if(p!="")
 			{
@@ -283,13 +274,13 @@ namespace BRY
 			{
 				ret = dlg.FileName;
 			}
-			*/
+#endif
 			return ret;
 		}
 		static public string SaveDialog(string p = "")
 		{
 			string ret = "";
-			/*
+#if NET6_0
 			SaveFileDialog dlg = new SaveFileDialog();
 			if (p != "")
 			{
@@ -301,7 +292,7 @@ namespace BRY
 			{
 				ret = dlg.FileName;
 			}
-			*/
+#endif
 			return ret;
 		}
 	}

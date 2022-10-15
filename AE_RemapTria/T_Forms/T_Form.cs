@@ -73,9 +73,6 @@ namespace AE_RemapTria
 
 		private Bitmap[] kagi = new Bitmap[5];
 		// ********************************************************************
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool SetForegroundWindow(IntPtr hWnd);
 		// ********************************************************************
 		public T_Form()
 		{
@@ -443,7 +440,7 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			this.Text = String.Format("{0}", keyData.ToString());
+			//this.Text = String.Format("{0}", keyData.ToString());
 			if (m_grid != null)
 			{
 				FuncItem fi = m_grid.Funcs.FindKeys(keyData);
@@ -467,7 +464,7 @@ namespace AE_RemapTria
 		// ********************************************************************
 		public void ForegroundWindow()
 		{
-			SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
+			Wa.SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
 		}
 		// ********************************************************************
 		public bool HeightMax()
@@ -553,6 +550,12 @@ namespace AE_RemapTria
 								em = EXEC_MODE.EXPORT;
 							}
 							break;
+						case "import_layer":
+							if ((m_grid != null) && (IsPipe == PIPECALL.PipeExec))
+							{
+								em = EXEC_MODE.IMPORT_LAYER;
+							}
+							break;
 						default:
 							this.Invoke((Action)(() => {
 								if (m_grid != null)
@@ -575,9 +578,18 @@ namespace AE_RemapTria
 						if (m_grid != null){
 							//MessageBox.Show(m_grid.ToArdj());
 							Pipe pp = new Pipe();
-						pp._execution = true;
+							pp._execution = true;
 							pp.PipeClient("AE_RemapTriaCall", m_grid.ToArdj()).Wait();
 						}
+					break;
+				case EXEC_MODE.IMPORT_LAYER:
+					if ((m_grid != null)&&(args.Length > 1))
+					{
+						this.Invoke((Action)(() => {
+							m_grid.Import_layer(args[1]);
+							//MessageBox.Show(args[1]);
+						}));
+					}
 					break;
 				case EXEC_MODE.QUIT:
 					this.Invoke((Action)(() => {

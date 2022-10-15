@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "AE_RemapTriaCall": {
-      "commandName": "Project",
-      "commandLineArgs": "/call"
-    }
-  }
-}
