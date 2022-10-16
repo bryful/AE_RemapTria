@@ -88,7 +88,7 @@ namespace AE_RemapTria
 		public void MakeMenu()
 		{
 			if (m_Menu == null) return;
-			m_Menu.AddMenu("AE_RemapTria", 93);
+			m_Menu.AddMenu("AE_Remapτρία", 93);
 			m_Menu.AddMenu("Edit", 40);
 			m_Menu.AddMenu("Windw", 50);
 

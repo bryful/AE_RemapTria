@@ -216,7 +216,7 @@
 			this.MinimumSize = new System.Drawing.Size(310, 193);
 			this.Name = "Form1";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "AE_Remap Tria - Prebiew";
+			this.Text = "AE_Remap τρία";
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
