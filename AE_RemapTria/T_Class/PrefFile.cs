@@ -14,6 +14,9 @@ namespace BRY
 		private string _m_AppName = "";
 		public string AppName { get { return _m_AppName; } }
 		private Form? m_Form = null;
+		private string m_dir = "";
+		public string Dir { get { return m_dir; } }
+
 		// *********************************
 		// *********************************
 		public PrefFile(Form? fm =null,string aName = "")
@@ -27,9 +30,8 @@ namespace BRY
 			{
 				_m_AppName = aName;
 			}
-			SetFilePath(Path.Combine(
-				GetFileSystemPath(Environment.SpecialFolder.ApplicationData),
-				_m_AppName + ".json"));
+			m_dir = GetFileSystemPath(Environment.SpecialFolder.ApplicationData);
+			SetFilePath(Path.Combine(m_dir,_m_AppName + ".json"));
 		}
 		// ****************************************************
 		private static string GetFileSystemPath(Environment.SpecialFolder folder)

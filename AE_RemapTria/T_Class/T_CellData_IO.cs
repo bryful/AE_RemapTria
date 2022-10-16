@@ -88,7 +88,6 @@ namespace AE_RemapTria
 				bool[] tbl = IsEmpties;
 				int cnt = 0;
 				for (int i=0; i<tbl.Length;i++) if (!tbl[i]) cnt++;
-				int idx = 0;
 				for(int i=0; i<tbl.Length;i++)
 				{
 					if (!tbl[i])
@@ -357,6 +356,78 @@ namespace AE_RemapTria
 				return ret;
 			}
 		}
+		public bool InsertCell(int idx,string cap)
+		{
+			if((idx<0)&&(idx>=CellCount)) return false;
+			cap = cap.Trim();
+			if (cap == "") return false;
+			bool b = true;
+			for(int i=0; i<CellCount; i++)
+			{
+				if (m_cells[i].Caption==cap)
+				{
+					b = false;
+					break;
+				}
+			}
+			if(b==false) return false;
+
+			PushUndo(BackupSratus.All);
+			bool e = _eventFlag;
+			bool u = _undoPushFlag;
+			SetCellCount(CellCount + 1);
+
+			if (idx != CellCount - 1)
+			{
+				for (int i = CellCount - 1; i > idx; i--)
+				{
+					m_cells[i].Copy(m_cells[i - 1]);
+				}
+			}
+			m_cells[idx].Init();
+			m_cells[idx].Caption=cap;
+			_eventFlag = e;
+			_undoPushFlag = u;
+			OnCountChanged(new EventArgs());
+			return true;
+
+		}
+		public bool InsertCell(string cap)
+		{
+			return InsertCell(Selection.Target, cap);
+		}
+		public bool RemoveCell(int c)
+		{
+			if ((c < 0) && (c >= CellCount)) return false;
+
+			PushUndo(BackupSratus.All);
+			bool e = _eventFlag;
+			bool u = _undoPushFlag;
+			_eventFlag =false;
+			_undoPushFlag=false;
+			if (c< CellCount-1)
+			{
+				for(int i=c;i< CellCount-1;i++)
+				{
+					m_cells[i].Copy(m_cells[i + 1]);
+				}
+			}
+			SetCellCount(CellCount-1);
+			if(Selection.Target >=CellCount)
+			{
+				Selection.Target = CellCount - 1;
+			}
+			_eventFlag = e;
+			_undoPushFlag = u;
+			OnCountChanged(new EventArgs());
+			return true;
+		}
+		public bool RemoveCell()
+		{
+			if (CellCount==1) return false;
+			return RemoveCell(Selection.Target);
+		}
+
 	}
 
 }

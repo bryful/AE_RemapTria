@@ -74,13 +74,14 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(Save, Keys.Control | Keys.S, "保存"));
 			lst.Add(new FuncItem(SaveAs, Keys.Shift | Keys.Control | Keys.S, "別名保存"));
 			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "読み込み"));
-			lst.Add(new FuncItem(SheetNameDialog, Keys.Control | Keys.E, "シート名の編集"));
 			lst.Add(new FuncItem(Copy, Keys.Control | Keys.C));
 			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
 			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
 			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
 			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left));
 			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right));
+			lst.Add(new FuncItem(CellInsert, Keys.Alt | Keys.I));
+			lst.Add(new FuncItem(CellRemove, Keys.Alt | Keys.R));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -93,7 +94,6 @@ namespace AE_RemapTria
 			m_Menu.AddMenu("Windw", 50);
 
 			m_Menu.AddSubMenu(0, "SheetSettings");
-			m_Menu.AddSubMenu(0, "SheetNameDialog");
 			m_Menu.AddSubMenuSepa(0);
 			m_Menu.AddSubMenu(0, "Open");
 			m_Menu.AddSubMenu(0, "Save");
@@ -105,6 +105,10 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "Copy");
 			m_Menu.AddSubMenu(1, "Cut");
 			m_Menu.AddSubMenu(1, "Paste");
+			m_Menu.AddSubMenuSepa(1);
+			m_Menu.AddSubMenu(1, "ClearAll");
+			m_Menu.AddSubMenu(1, "CellInsert");
+			m_Menu.AddSubMenu(1, "CellRemove");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
 
@@ -565,6 +569,35 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public bool SaveBackup(string p)
+		{
+			if (IsMultExecute) return false;
+			string s = CellData.SheetName;
+			CellData.SheetName = "";
+			bool ret = CellData.Save(p);
+			CellData.SheetName = s;
+			return ret;
+
+		}
+		public bool OpenBackup(string p)
+		{
+			bool ret = false;
+			if (File.Exists(p) == false) return ret;
+			ret = CellData.Load(p);
+			CellData.SheetName = "";
+			if (ret)
+			{
+				ChkMinMax();
+				ChkHScrl();
+				ChkVScrl();
+				if (m_Form != null)
+				{
+					m_Form.ChkSize();
+				}
+				this.Invalidate();
+			}
+			return ret;
+		}
 		public bool Save()
 		{
 			if (IsMultExecute) return false;
@@ -627,15 +660,19 @@ namespace AE_RemapTria
 			return ret;
 
 		}
-		public bool SheetNameDialog()
+		public bool CellRemove()
+		{
+			return CellData.RemoveCell();
+		}
+		public bool CellInsert()
 		{
 			bool ret = false;
 			if (m_Form == null) return false;
 			m_Form.ForegroundWindow();
 			T_NameDialog dlg = new T_NameDialog();
 			dlg.SetForm(m_Form);
-			dlg.Caption = "Input: Sheet Name";
-			dlg.ValueText = CellData.SheetName;
+			dlg.Caption = "Insert Cell";
+			dlg.ValueText = "";
 			dlg.Location = new Point(
 				m_Form.Left + 20,
 				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
@@ -648,13 +685,7 @@ namespace AE_RemapTria
 			}
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				CellData.SheetName = dlg.ValueText;
-				if(m_Form!=null)
-				{
-					m_Form.FileName = T_Def.ChangeName(m_Form.FileName, dlg.ValueText);
-				}
-
-				ret = true;
+				ret =CellData.InsertCell(dlg.ValueText);
 			}
 			if (m_Form != null) m_Form.TopMost = b;
 			return ret;

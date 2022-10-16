@@ -106,26 +106,23 @@ namespace AE_RemapTria
 			}
 			else
 			{
-				PrefFile pf = new PrefFile((Form)this);
+				PrefFile pf = new PrefFile(this);
 				this.Text = pf.AppName;
 				if (pf.Load() == true)
 				{
 					pf.RestoreForm();
-					bool ok = false;
-					string pp = pf.GetValueString("FileName", out ok);
-					if(ok)
-					{
-						FileName = pp;
-						if(m_grid!=null)
-						{
-							m_grid.CellData.SheetName = T_Def.GetNameNoExt(FileName);
-						}
-						reloadFlag = true;
-					}
 				}
 				else
 				{
 					ToCenter();
+				}
+				if (m_grid != null)
+				{
+					string bp = Path.Combine(pf.Dir, "backup.ardj.json");
+					if (File.Exists(bp))
+					{
+						m_grid.OpenBackup(bp);
+					}
 				}
 			}
 			//
@@ -144,8 +141,11 @@ namespace AE_RemapTria
 			// 二重起動されたものは保存しない
 			if (IsMultExecute == false)
 			{
-				PrefFile pf = new PrefFile((Form)this);
-				if(m_grid!=null)pf.SetValue("FileName", m_grid.FileName);
+				PrefFile pf = new PrefFile(this);
+				if (m_grid != null)
+				{
+					m_grid.SaveBackup(Path.Combine(pf.Dir, "backup.ardj.json"));
+				}
 				pf.StoreForm();
 				pf.Save();
 			}
