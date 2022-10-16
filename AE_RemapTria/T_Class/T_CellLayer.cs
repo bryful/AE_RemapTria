@@ -23,7 +23,58 @@ namespace AE_RemapTria
 		public int UnEnabledFrameCount { get { return m_UnEnabledFrameCount; } }
 
 		private int[] m_cells = new int[0];
-		
+		// *********************************************************************
+		public T_CellLayer(int frm, bool isEna)
+		{
+			m_IsEnabled = true;
+			Caption = "Enabled";
+			SetFrameCountTrue(frm);
+		}
+		// ***********************************************************
+		public void Copy(T_CellLayer cl)
+		{
+			m_IsEnabled = cl.m_IsEnabled;
+			Caption = cl.Caption;
+			m_FrameCount = cl.m_FrameCount;
+			m_UnEnabledFrameCount = cl.m_UnEnabledFrameCount;
+
+			if(m_cells.Length!= cl.m_cells.Length)
+			{
+				Array.Resize(ref m_cells, cl.m_cells.Length);
+			}
+			for(int i=0; i<m_cells.Length;i++)
+			{
+				m_cells[i] = cl.m_cells[i];
+			}
+			CalcEnableFrame();
+		}
+		public bool Swap(ref T_CellLayer cl)
+		{
+			if (m_cells.Length != cl.m_cells.Length)
+			{
+				return false;
+			}
+			bool b = m_IsEnabled;
+			m_IsEnabled = cl.m_IsEnabled;
+			cl.m_IsEnabled = b;
+			string s = Caption;
+			Caption = cl.Caption;
+			cl.Caption = s;
+			int v = m_FrameCount;
+			m_FrameCount = cl.m_FrameCount;
+			cl.m_FrameCount = v;
+			v = m_UnEnabledFrameCount;
+			m_UnEnabledFrameCount = cl.m_UnEnabledFrameCount;
+			cl.m_UnEnabledFrameCount = v;
+
+			for (int i = 0; i < m_cells.Length; i++)
+			{
+				int v2 = m_cells[i];
+				m_cells[i] = cl.m_cells[i];
+				cl.m_cells[i] = v2;
+			}
+			return true;
+ 		}
 		// ***********************************************************
 		public bool IsEmpty(T_CellLayer cl)
 		{
@@ -156,13 +207,7 @@ namespace AE_RemapTria
 			Caption = cap.Trim();
 			SetFrameCountTrue(frm);
 		}
-		// *********************************************************************
-		public T_CellLayer(int frm, bool isEna)
-		{
-			m_IsEnabled = true;
-			Caption = "Enabled";
-			SetFrameCountTrue(frm);
-		}
+
 		// *********************************************************************
 		public void Clear()
 		{
@@ -185,7 +230,7 @@ namespace AE_RemapTria
 			CalcEnableFrame();
 		}
 		// *********************************************************************
-		public bool SetFrameCountEX(int f)
+		public bool SetFrameCount(int f)
 		{
 			bool ret = false;
 			int nf = f;

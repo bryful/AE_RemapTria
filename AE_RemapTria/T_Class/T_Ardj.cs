@@ -14,24 +14,6 @@ using System.Xml.Linq;
 
 namespace AE_RemapTria
 {
-	public class T_Ardj_layer
-	{
-		public string? header { get; set; }
-		public int? frameCount { get; set; }
-		public int? frameRate { get; set; }
-		public int[][]? cell { get; set; }
-		public T_Ardj_layer()
-		{
-			Init();
-		}
-		public void Init()
-		{
-			header = "";
-			frameCount = 12;
-			frameRate = 24;
-			cell = new int[0][];
-		}
-	}
 
 
 	public class Ardj
@@ -62,7 +44,8 @@ namespace AE_RemapTria
 
 
 		public string[]? rawCaption { get; set; }
-		public int[][]? rawData { get; set; }
+
+		public JsonObject? rawData { get; set; }
 
 		public Ardj()
 		{
@@ -91,6 +74,9 @@ namespace AE_RemapTria
 			cell = new int[0][][];
 			frameCountTrue = 72;
 			cellWithEnabled =new int[0][][];
+
+			rawCaption = new string[0];
+			rawData = new JsonObject();
 		}
 		public bool Check()
 		{
@@ -159,7 +145,7 @@ namespace AE_RemapTria
 			}
 			else
 			{
-				return ToJson(FromCellDataToJrdj(m_CellData));
+				return ToJson(FromCellDataToArdj(m_CellData));
 			}
 		}
 		// ****************************************
@@ -169,7 +155,7 @@ namespace AE_RemapTria
 			if(m_CellData == null) return ret;
 			if (File.Exists(p) == true) File.Delete(p);
 			Encoding enc = new UTF8Encoding(false);
-			string json = ToJson(FromCellDataToJrdj(m_CellData));
+			string json = ToJson(FromCellDataToArdj(m_CellData));
 			File.WriteAllText(p, json);
 			ret = File.Exists(p);
 			return ret;
@@ -181,7 +167,7 @@ namespace AE_RemapTria
 			if (m_CellData == null) return ret;
 			try
 			{
-				ret = ToJson(FromCellDataToJrdj(m_CellData));
+				ret = ToJson(FromCellDataToArdj(m_CellData));
 			}
 			catch
 			{
@@ -253,7 +239,7 @@ namespace AE_RemapTria
 			return true;
 		}       
 		// ****************************************
-		static public Ardj FromCellDataToJrdj(T_CellData cd)
+		static public Ardj FromCellDataToArdj(T_CellData cd)
 		{
 			Ardj ardj = new Ardj();
 			ardj.Init();

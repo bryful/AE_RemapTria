@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-#if NET6_0
 using System.Text.Json.Nodes;
-#else
-using Codeplex.Data;
-#endif
 
 
 namespace BRY
@@ -33,7 +29,6 @@ namespace BRY
 		None
 	}
 
-#if NET6_0
 	/// <summary>
 	/// Pipeで送受信する時のJsonデータを扱うクラス
 	/// </summary>
@@ -167,112 +162,5 @@ namespace BRY
 			return ret;
 		}
 	}
-#else
-	public class PipeData
-	{
-		private dynamic obj = new DynamicJson();
-
-		public string[] Args { get { return GetArgs(); } set { SetArgs(value); } }
-		public PIPECALL PIPECALL { get { return GetPIPECALL(); } set { SetPIPECALL(value); } }
-		public PipeData(string[] args, PIPECALL pc)
-		{
-			SetArgs(args);
-			SetPIPECALL(pc);
-		}
-		// --------------------------------
-		public PipeData(string js)
-		{
-			FromJson(js);
-		}
-		// --------------------------------
-		/// <summary>
-		/// Jsonからデータを得る
-		/// </summary>
-		/// <param name="js"></param>
-		public void FromJson(string js)
-		{
-			try
-			{
-				obj = DynamicJson.Parse(js);
-			}
-			catch
-			{
-				obj = new DynamicJson();
-			}
-		}
-		// --------------------------------
-		/// <summary>
-		/// Jsonへ
-		/// </summary>
-		/// <returns></returns>
-		public string ToJson()
-		{
-			if (obj == null)
-			{
-				return "";
-			}
-			else
-			{
-				return obj.ToString();
-
-			}
-		}
-		// --------------------------------
-		public void SetPIPECALL(PIPECALL pc)
-		{
-			int vv = (int)pc;
-			obj["PIPECALL"]= vv;
-		}
-		// --------------------------------
-		public void SetArgs(string[] args)
-		{
-			obj["Args"] = args;
-		}
-		// --------------------------------
-		public string[] GetArgs()
-		{
-			string[] ret = new string[0];
-			string key = "Args";
-			try
-			{
-				if (obj.IsDefined(key) == true)
-				{
-					if (obj[key].IsArray)
-					{
-						ret = (string[])obj[key];
-					}
-				}
-
-			}
-			catch
-			{
-				ret = new string[0];
-			}
-			return ret;
-
-		}
-		// --------------------------------
-		// ****************************************************
-		public PIPECALL GetPIPECALL()
-		{
-			PIPECALL ret = PIPECALL.None;
-			try
-			{
-				string key = "PIPECALL";
-				int i = (int)PIPECALL.None;
-				if (obj.IsDefined(key) == true)
-				{
-					i = (int)obj[key];
-				}
-				ret = (PIPECALL)i;
-			}
-			catch
-			{
-				ret = PIPECALL.None;
-			}
-			return ret;
-		}
-	}
-#endif
 
 }

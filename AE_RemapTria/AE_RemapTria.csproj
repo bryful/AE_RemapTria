@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -41,27 +42,22 @@
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\AutoInputDlg.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting - コピー.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg - コピー.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\NameDialg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\NameDialg.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog - コピー.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\OKDialog.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\PrintSettingDlg.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\TimeSheetSetting.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg - コピー.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Dialog\ValueEditDlg.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\DynamicJson.cs" />
@@ -82,9 +78,6 @@
     <Compile Remove="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\PictureView\Targa.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\Program.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Properties\AssemblyInfo.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Properties\Resources.Designer.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\Properties\Settings.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\TSForm.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\TSForm.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.cs" />
@@ -110,10 +103,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog - コピー.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\AboutDialog.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\ColorSetting.resx" />
-    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg - コピー.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerInsertDlg.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayerRenameDlg.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Dialog\LayoutSetteings.resx" />
@@ -126,7 +117,6 @@
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Key\KeySettings.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\NavBar.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.resx" />
-    <EmbeddedResource Remove="sampleCode\AE_RemapExceed\Properties\Resources.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\TSForm.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.resx" />
@@ -208,10 +198,6 @@
     <None Include="sampleCode\AE_RemapExceed\PictureView\PictureViewForm.resx" />
     <None Include="sampleCode\AE_RemapExceed\PictureView\Targa.cs" />
     <None Include="sampleCode\AE_RemapExceed\Program.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Properties\AssemblyInfo.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Properties\Resources.Designer.cs" />
-    <None Include="sampleCode\AE_RemapExceed\Properties\Resources.resx" />
-    <None Include="sampleCode\AE_RemapExceed\Properties\Settings.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\TSForm.cs" />
     <None Include="sampleCode\AE_RemapExceed\TSForm.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\TSForm.resx" />

@@ -1,0 +1,29 @@
+レポート作成日 : 
+	2022/10/16	20:57:06
+
+プロジェクト名 : JsonTest.aep
+
+収集されたソースファイル先 : 
+	C:\Users\bryfu\Source\Repos\AE_RemapTria\_Download\AE_RemapTria Beta2\JsonTest
+
+収集されたソースファイル : すべて
+
+収集されたコンポジション :  
+	comp
+	cell
+	
+収集されたファイルの数 :  1
+
+収集されたファイルのサイズ :  1 KB
+
+収集されたソースファイル : 
+	C:\Users\bryfu\Documents\TestFile.ardj.json
+	
+レンダリングプラグイン:
+	クラシック3D
+	
+使用されたエフェクトの数 :  1
+
+エフェクト :  タイムコード
+	
+

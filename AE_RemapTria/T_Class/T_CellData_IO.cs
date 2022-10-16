@@ -79,21 +79,25 @@ namespace AE_RemapTria
 			}
 		}
 		// ******************************************************
-		public int[][] RawData
+		public JsonObject RawData
 		{
 			get
 			{
+				JsonObject ret = new JsonObject();
+
 				bool[] tbl = IsEmpties;
 				int cnt = 0;
 				for (int i=0; i<tbl.Length;i++) if (!tbl[i]) cnt++;
-				int[][] ret = new int[cnt][];
 				int idx = 0;
 				for(int i=0; i<tbl.Length;i++)
 				{
 					if (!tbl[i])
 					{
-						ret[idx] = m_cells[i].RawData(m_FrameEnabled);
-						idx++;
+						int[] raw = m_cells[i].RawData(m_FrameEnabled);
+						JsonArray arr = new JsonArray();
+						for(int j=0; j<raw.Length;j++) arr.Add(raw[j]);
+						string key = m_cells[i].Caption;
+						ret[key] = arr;
 					}
 				}
 				return ret;

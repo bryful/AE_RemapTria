@@ -651,26 +651,16 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 
-			if((c0 != c1)&&(c0>=0) && (c0<FrameCountTrue)&&(c1 >= 0) && (c1 < FrameCountTrue))
+			if((c0 != c1)&&(c0>=0) && (c0<CellCount)&&(c1 >= 0) && (c1 < CellCount))
 			{
-				string c = m_cells[c0].Caption;
-				m_cells[c0].Caption = m_cells[c1].Caption;
-				m_cells[c1].Caption = c;
-				for(int i=0; i<FrameCountTrue;i++)
-				{
-					int v0 = m_cells[c0].Value(i);
-					int v1 = m_cells[c1].Value(i);
-					m_cells[c0].SetValue(i,v1);
-					m_cells[c1].SetValue(i,v0);
-				}
-				ret = true;
+				ret =m_cells[c0].Swap(ref m_cells[c1]);
 			}
 			return ret;
 		}
 		public bool CellLeftShift()
 		{
 			bool ret = false;
-			if((Selection.Target>0)&&(Selection.Target <FrameCountTrue))
+			if((Selection.Target>0)&&(Selection.Target < CellCount))
 			{
 				ret = SwapCell(Selection.Target-1, Selection.Target);
 				Selection.Target -= 1;
@@ -680,7 +670,7 @@ namespace AE_RemapTria
 		public bool CellRightShift()
 		{
 			bool ret = false;
-			if ((Selection.Target >=0) && (Selection.Target < FrameCountTrue-1))
+			if ((Selection.Target >=0) && (Selection.Target < CellCount - 1))
 			{
 				ret = SwapCell(Selection.Target, Selection.Target+1);
 				Selection.Target += 1;

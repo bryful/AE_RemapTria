@@ -79,6 +79,8 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
 			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
 			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
+			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left));
+			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -688,6 +690,7 @@ namespace AE_RemapTria
 			bool ret = CellData.CellLeftShift();
 			if (ret)
 			{
+				ChkSelectionH();
 				this.Invalidate();
 			}
 			return ret;
@@ -697,6 +700,7 @@ namespace AE_RemapTria
 			bool ret = CellData.CellRightShift();
 			if (ret)
 			{
+				ChkSelectionH();
 				this.Invalidate();
 			}
 			return ret;

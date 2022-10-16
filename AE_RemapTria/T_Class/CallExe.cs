@@ -132,11 +132,7 @@ namespace BRY
 		public void Run(string[] args)
 		{
 			string rets = "false";
-#if NET6_0
 			Process? proc = null;
-#else
-			Process proc = null;
-#endif
 			bool isRunnig = false;
 			Process[] ps = Process.GetProcessesByName(AppID);
 			if (ps.Length > 0)
@@ -262,7 +258,6 @@ namespace BRY
 		static public string OpenDialog(string p = "")
 		{
 			string ret = "";
-#if NET6_0
 			OpenFileDialog dlg = new OpenFileDialog();
 			if(p!="")
 			{
@@ -274,13 +269,11 @@ namespace BRY
 			{
 				ret = dlg.FileName;
 			}
-#endif
 			return ret;
 		}
 		static public string SaveDialog(string p = "")
 		{
 			string ret = "";
-#if NET6_0
 			SaveFileDialog dlg = new SaveFileDialog();
 			if (p != "")
 			{
@@ -292,7 +285,6 @@ namespace BRY
 			{
 				ret = dlg.FileName;
 			}
-#endif
 			return ret;
 		}
 	}
