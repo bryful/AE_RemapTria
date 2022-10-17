@@ -17,6 +17,7 @@ namespace AE_RemapTria
 			InitializeComponent();
 			SetEventHandler(t_Zebra1);
 
+
 		}
 
 		private void btnCANCEL_Click(object sender, EventArgs e)

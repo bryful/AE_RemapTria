@@ -433,6 +433,46 @@ namespace AE_RemapTria.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Zebra_darkblue {
+            get {
+                object obj = ResourceManager.GetObject("Zebra_darkblue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Zebra_darkgray {
+            get {
+                object obj = ResourceManager.GetObject("Zebra_darkgray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Zebra_darkred {
+            get {
+                object obj = ResourceManager.GetObject("Zebra_darkred", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Zebra_darkyellow {
+            get {
+                object obj = ResourceManager.GetObject("Zebra_darkyellow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Zebra_green {
             get {
                 object obj = ResourceManager.GetObject("Zebra_green", resourceCulture);

@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.ctTittle = new AE_RemapTria.T_CaptionTextBox();
 			this.ctSubTitle = new AE_RemapTria.T_CaptionTextBox();
@@ -43,18 +42,8 @@
 			this.ctUT = new AE_RemapTria.T_CaptionTextBox();
 			this.btnCANCEL = new AE_RemapTria.T_Button();
 			this.btnOK = new AE_RemapTria.T_Button();
+			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.SuspendLayout();
-			// 
-			// t_Zebra1
-			// 
-			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra1.Location = new System.Drawing.Point(40, 12);
-			this.t_Zebra1.Name = "t_Zebra1";
-			this.t_Zebra1.Size = new System.Drawing.Size(685, 26);
-			this.t_Zebra1.TabIndex = 0;
-			this.t_Zebra1.TabStop = false;
-			this.t_Zebra1.Text = "t_Zebra1";
-			this.t_Zebra1.ZebraIndex = 2;
 			// 
 			// ctTittle
 			// 
@@ -308,11 +297,22 @@
 			this.btnOK.TopBar = 0;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
+			// t_Zebra2
+			// 
+			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Location = new System.Drawing.Point(37, 18);
+			this.t_Zebra1.Name = "t_Zebra2";
+			this.t_Zebra1.Size = new System.Drawing.Size(688, 20);
+			this.t_Zebra1.TabIndex = 13;
+			this.t_Zebra1.Text = "t_Zebra2";
+			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKYELLOW;
+			// 
 			// T_SheetInfoDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(762, 250);
+			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCANCEL);
 			this.Controls.Add(this.ctUT);
@@ -325,7 +325,6 @@
 			this.Controls.Add(this.ctOpus);
 			this.Controls.Add(this.ctSubTitle);
 			this.Controls.Add(this.ctTittle);
-			this.Controls.Add(this.t_Zebra1);
 			this.Edge = new System.Drawing.Rectangle(10, 10, 10, 10);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 30;
@@ -341,7 +340,6 @@
 
 		#endregion
 
-		private T_Zebra t_Zebra1;
 		private T_MyFonts t_MyFonts1;
 		private T_CaptionTextBox ctTittle;
 		private T_CaptionTextBox ctSubTitle;
@@ -355,5 +353,6 @@
 		private T_CaptionTextBox ctUT;
 		private T_Button btnCANCEL;
 		private T_Button btnOK;
+		private T_Zebra t_Zebra1;
 	}
 }

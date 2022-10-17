@@ -31,6 +31,9 @@ namespace AE_RemapTria
 		{
 			InitializeComponent();
 			SetEventHandler(lbCaption);
+			SetEventHandler(t_Zebra1);
+			SetEventHandler(t_Zebra2);
+
 		}
 
 		private void btnOK_Click(object sender, EventArgs e)

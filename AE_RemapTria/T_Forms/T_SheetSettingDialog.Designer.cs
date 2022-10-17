@@ -773,6 +773,7 @@
 			this.t_Zebra1.Size = new System.Drawing.Size(38, 252);
 			this.t_Zebra1.TabIndex = 27;
 			this.t_Zebra1.Text = "t_Zebra1";
+			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKYELLOW;
 			// 
 			// T_SheetSettingDialog
 			// 

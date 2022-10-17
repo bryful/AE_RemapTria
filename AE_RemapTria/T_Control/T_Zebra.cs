@@ -11,30 +11,47 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace AE_RemapTria
 {
+	public enum ZEBRA_TYPE
+	{
+		RED=0,
+		GREEN,
+		BLUE,
+		YELLOW,
+		SKYBULE,
+		DARKBLUE,
+		DRAKGRAY,
+		DRAKRED,
+		DARKYELLOW
+	}
+
 	public partial class T_Zebra : Control
 	{
-		private int m_ZebraIndex = 3;
-		public int ZebraIndex
+		private ZEBRA_TYPE m_ZebraIndex = ZEBRA_TYPE.YELLOW;
+		public ZEBRA_TYPE ZebraIndex
 		{
 			get { return m_ZebraIndex; }
 			set
 			{
-				int v = value;
+				int v = (int)value;
 				if (v < 0) v = 0;
-				else if (v >= zebra.Length) v = zebra.Length - 1;
-				m_ZebraIndex = v;
+				else if (v > (int)ZEBRA_TYPE.DARKYELLOW) v = (int)ZEBRA_TYPE.DARKYELLOW;
+				m_ZebraIndex = (ZEBRA_TYPE)v;
 				this.Invalidate();
 
 			}
 		}
-		private Bitmap [] zebra = new Bitmap[5];
+		private Bitmap [] zebra = new Bitmap[(int)ZEBRA_TYPE.DARKYELLOW+1];
 		public T_Zebra()
 		{
-			zebra[0] = Properties.Resources.Zebra_red;
-			zebra[1] = Properties.Resources.Zebra_green;
-			zebra[2] = Properties.Resources.Zebra_blue;
-			zebra[3] = Properties.Resources.Zebra_yellow;
-			zebra[4] = Properties.Resources.Zebra_skyblue;
+			zebra[(int)ZEBRA_TYPE.RED] = Properties.Resources.Zebra_red;
+			zebra[(int)ZEBRA_TYPE.GREEN] = Properties.Resources.Zebra_green;
+			zebra[(int)ZEBRA_TYPE.BLUE] = Properties.Resources.Zebra_blue;
+			zebra[(int)ZEBRA_TYPE.YELLOW] = Properties.Resources.Zebra_yellow;
+			zebra[(int)ZEBRA_TYPE.SKYBULE] = Properties.Resources.Zebra_skyblue;
+			zebra[(int)ZEBRA_TYPE.DARKBLUE] = Properties.Resources.Zebra_darkblue;
+			zebra[(int)ZEBRA_TYPE.DRAKGRAY] = Properties.Resources.Zebra_darkgray;
+			zebra[(int)ZEBRA_TYPE.DRAKRED] = Properties.Resources.Zebra_darkred;
+			zebra[(int)ZEBRA_TYPE.DARKYELLOW] = Properties.Resources.Zebra_darkyellow;
 
 			InitializeComponent();
 			this.Size = new Size(100, 50);
@@ -52,7 +69,7 @@ namespace AE_RemapTria
 		{
 			Graphics g = pe.Graphics;
 			SolidBrush sb = new SolidBrush(this.BackColor);
-			TextureBrush tBrush = new TextureBrush(zebra[m_ZebraIndex]);
+			TextureBrush tBrush = new TextureBrush(zebra[(int)m_ZebraIndex]);
 			try
 			{
 				g.FillRectangle(sb,this.ClientRectangle);
