@@ -142,6 +142,9 @@ namespace AE_RemapTria
 			if (idx0 >= 0)
 			{
 				ret = p.Substring(idx0 + 1);
+			}else
+			{
+				ret = p;
 			}
 			return ret;
 		}

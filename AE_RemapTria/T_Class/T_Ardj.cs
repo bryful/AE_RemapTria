@@ -11,6 +11,8 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AE_RemapTria
 {
@@ -24,6 +26,8 @@ namespace AE_RemapTria
 		public int? cellCount { get; set; }
 		public int? frameCount { get; set; }
 		public int? frameCountTrue { get; set; }
+		public int? offsetFrame { get; set; }
+
 		public string[]? caption { get; set; }
 
 		public string? CREATE_USER { get; set; }
@@ -57,7 +61,10 @@ namespace AE_RemapTria
 			header = "";
 			cellCount = 12;
 			frameCount = 72;
+			frameCountTrue = 72;
 			frameRate = 24;
+			offsetFrame = 0;
+
 			sheetName = "";
 			CREATE_USER = "";
 			UPDATE_USER = "";
@@ -70,9 +77,9 @@ namespace AE_RemapTria
 			SCECNE = "";
 			CUT = "";
 			CAMPANY_NAME = "";
+
 			caption = new string[0];
 			cell = new int[0][][];
-			frameCountTrue = 72;
 			cellWithEnabled =new int[0][][];
 
 			rawCaption = new string[0];
@@ -90,6 +97,10 @@ namespace AE_RemapTria
 			if ((frameCountTrue == null) || (frameCountTrue < 6))
 			{
 				frameCountTrue = frameCount;
+			}
+			if(offsetFrame==null)
+			{
+				offsetFrame = 0;
 			}
 			if((cell==null)||(cell.Length<cellCount)) return ret;
 			if ((cellWithEnabled == null) || (cellWithEnabled.Length < cellCount+1))
@@ -222,6 +233,9 @@ namespace AE_RemapTria
 			if (aj.OPUS != null) cd.OPUS = aj.OPUS;
 			if (aj.SCECNE != null) cd.SCECNE = aj.SCECNE;
 			if (aj.CUT != null) cd.CUT = aj.CUT;
+			if (aj.CAMPANY_NAME != null) cd.CAMPANY_NAME = aj.CAMPANY_NAME;
+
+			if (aj.offsetFrame != null) cd.OffSetFrame = (int)aj.offsetFrame;
 
 			if (aj.caption != null) cd.Caption = aj.caption;
 			if (aj.frameCount == aj.frameCountTrue)
@@ -289,6 +303,7 @@ namespace AE_RemapTria
 			ardj.frameRate = (int)cd.FrameRate;
 			ardj.sheetName = cd.SheetName;
 
+			ardj.offsetFrame = cd.OffSetFrame;
 
 			ardj.caption = cd.Caption;
 			ardj.cell = cd.Cell;
@@ -315,6 +330,8 @@ namespace AE_RemapTria
 			if (ardj.SCECNE != null) cd.SCECNE = ardj.SCECNE;
 			if (ardj.CUT != null) cd.CUT = ardj.CUT;
 			if (ardj.CAMPANY_NAME != null) cd.CAMPANY_NAME = ardj.CAMPANY_NAME;
+
+			if (ardj.offsetFrame != null) cd.OffSetFrame = (int)ardj.offsetFrame;
 
 			int? fc = ardj.frameCount;
 			if (fc == null) return ret;
@@ -382,7 +399,185 @@ namespace AE_RemapTria
 			}
 			try
 			{
-				ret = JsonSerializer.Deserialize<Ardj>(json, GetOption());
+				//ret = JsonSerializer.Deserialize<Ardj>(json, GetOption());
+				var doc = JsonNode.Parse(json);
+				if (doc == null) return null;
+				JsonObject jo = (JsonObject)doc;
+				if (jo == null)
+				{
+					ret = null;
+					return ret;
+				}
+				ret = new Ardj();
+				string key = "header";
+				if (jo.ContainsKey(key))
+				{
+					ret.header = jo[key].GetValue<string>();
+				}
+				key = "cellCount";
+				if (jo.ContainsKey(key))
+				{
+					ret.cellCount = jo[key].GetValue<int>();
+				}
+				key = "frameCount";
+				if (jo.ContainsKey(key))
+				{
+					ret.frameCount = jo[key].GetValue<int>();
+				}
+				key = "frameCountTrue";
+				ret.frameCountTrue = 0;
+				if (jo.ContainsKey(key))
+				{
+					ret.frameCountTrue = jo[key].GetValue<int>();
+				}
+				if (ret.frameCountTrue < 6) ret.frameCountTrue = ret.frameCount;
+				key = "frameRate";
+				if (jo.ContainsKey(key))
+				{
+					ret.frameRate = jo[key].GetValue<int>();
+				}
+				key = "offsetFrame";
+				if (jo.ContainsKey(key))
+				{
+					ret.offsetFrame = jo[key].GetValue<int>();
+				}
+				key = "sheetName";
+				if (jo.ContainsKey(key))
+				{
+					ret.sheetName = jo[key].GetValue<string>();
+				}
+				key = "CREATE_USER";
+				if (jo.ContainsKey(key))
+				{
+					ret.CREATE_USER = jo[key].GetValue<string>();
+				}
+				key = "UPDATE_USER";
+				if (jo.ContainsKey(key))
+				{
+					ret.UPDATE_USER = jo[key].GetValue<string>();
+				}
+				key = "CREATE_TIME";
+				if (jo.ContainsKey(key))
+				{
+					ret.CREATE_TIME = jo[key].GetValue<string>();
+				}
+				key = "UPDATE_TIME";
+				if (jo.ContainsKey(key))
+				{
+					ret.UPDATE_TIME = jo[key].GetValue<string>();
+				}
+				key = "TITLE";
+				if (jo.ContainsKey(key))
+				{
+					ret.TITLE = jo[key].GetValue<string>();
+				}
+				key = "SUB_TITLE";
+				if (jo.ContainsKey(key))
+				{
+					ret.SUB_TITLE = jo[key].GetValue<string>();
+				}
+				key = "OPUS";
+				if (jo.ContainsKey(key))
+				{
+					ret.OPUS = jo[key].GetValue<string>();
+				}
+				key = "SCECNE";
+				if (jo.ContainsKey(key))
+				{
+					ret.SCECNE = jo[key].GetValue<string>();
+				}
+				key = "CUT";
+				if (jo.ContainsKey(key))
+				{
+					ret.CUT = jo[key].GetValue<string>();
+				}
+				key = "CAMPANY_NAME";
+				if (jo.ContainsKey(key))
+				{
+					ret.CAMPANY_NAME = jo[key].GetValue<string>();
+				}
+				key = "caption";
+				if (jo.ContainsKey(key))
+				{
+					var ja = jo[key].AsArray();
+					if(ja.Count>0)
+					{
+						ret.caption = new string[ja.Count];
+						int i = 0;
+						foreach (var s in ja)
+						{
+							ret.caption[i] = s.GetValue<string>();
+							i++;
+
+						}
+					}
+				}
+				key = "cell";
+				if (jo.ContainsKey(key))
+				{
+					var ja = jo[key].AsArray();
+					if (ja.Count > 0)
+					{
+						ret.cell = new int[ja.Count][][];
+						int i = 0;
+						foreach (var s in ja)
+						{
+							var ja2 = s.AsArray();
+							if(ja2.Count >0)
+							{
+								int[][] vv = new int[ja2.Count][];
+								int j = 0;
+								foreach (var s2 in ja2)
+								{
+									var ja3 = s2.AsArray();
+									if(ja3.Count>=2)
+									{
+										int[] vvv = new int[2];
+										vvv[0] = ja3[0].GetValue<int>();
+										vvv[1] = ja3[1].GetValue<int>();
+										vv[j] = vvv;
+									}
+									j++;
+								}
+								ret.cell[i] = vv;
+							}
+							i++;
+						}
+					}
+				}
+				key = "cellWithEnabled";
+				if (jo.ContainsKey(key))
+				{
+					var ja = jo[key].AsArray();
+					if (ja.Count > 0)
+					{
+						ret.cellWithEnabled = new int[ja.Count][][];
+						int i = 0;
+						foreach (var s in ja)
+						{
+							var ja2 = s.AsArray();
+							if (ja2.Count > 0)
+							{
+								int[][] vv = new int[ja2.Count][];
+								int j = 0;
+								foreach (var s2 in ja2)
+								{
+									var ja3 = s2.AsArray();
+									if (ja3.Count >= 2)
+									{
+										int[] vvv = new int[2];
+										vvv[0] = ja3[0].GetValue<int>();
+										vvv[1] = ja3[1].GetValue<int>();
+										vv[j] = vvv;
+									}
+									j++;
+								}
+								ret.cellWithEnabled[i] = vv;
+							}
+							i++;
+						}
+					}
+				}
 			}
 			catch
 			{

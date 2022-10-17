@@ -77,6 +77,21 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public string CaptionTarget()
+		{
+			return CaptionFromIndex(Selection.Target);
+		}
+		public void SetCaptionTarget(string s)
+		{
+			s = s.Trim();
+			if (s == "") return;
+			int c = Selection.Target;
+			if ((c >= 0) && (c < CellCount))
+			{
+				m_cells[c].Caption = s;
+			}
+
+		}
 		public int TargetIndex
 		{
 			get { return m_sel.Target; }
@@ -123,19 +138,37 @@ namespace AE_RemapTria
 			m_FrameDisp = (T_FrameDisp)v;
 		}
 
-		private int m_StartKoma = 1;
 		// ******************************************************
-		/*
-		private int m_StartDispFrame = 1;
+		private int m_StartKoma = 1;
 		/// <summary>
 		/// 表示フレーム数のスタート番号
 		/// </summary>
-		public int StartDispFrame 
+		public int StartKoma 
 		{ 
-			get { return m_StartDispFrame; } 
-			set { m_StartDispFrame = value;OnValueChanged(new EventArgs()); }
+			get { return m_StartKoma; } 
+			set {
+				if (value >= 1)
+				{
+					m_StartKoma = 1;
+				}
+				else
+				{
+					m_StartKoma = 0;
+				}
+				OnValueChanged(new EventArgs());
+			}
 		}
-		*/
+		private int m_OffSetFrame = 0;
+		public int OffSetFrame
+		{
+			get { return m_OffSetFrame; }
+			set
+			{
+				m_OffSetFrame=value;
+				OnValueChanged(new EventArgs());
+			}
+		}
+
 
 		// ******************************************************
 		public string SheetName = "";
@@ -568,34 +601,42 @@ namespace AE_RemapTria
 		{
 			return SelectionAll(m_sel.Target);
 		}
+		static private string NV(int v)
+		{
+			string s = v.ToString();
+			if (s == "") s = "0";
+			return s;
+		}
 		static private string SP2(int v)
 		{
+			string s = NV(v);
 			if (v < 10)
 			{
-				return " " + v.ToString();
+				return " " + s;
 			}
 			else
 			{
-				return v.ToString();
+				return s;
 			}
 		}
 		static private string SP4(int v)
 		{
+			string s = NV(v);
 			if (v < 10)
 			{
-				return "   " + v.ToString();
+				return "   " + s;
 			}
 			else if (v < 100)
 			{
-				return "  " + v.ToString();
+				return "  " + s;
 			}
 			else if (v < 1000)
 			{
-				return " " + v.ToString();
+				return " " + s;
 			}
 			else
 			{
-				return v.ToString();
+				return s;
 			}
 		}
 		public string FrameStr(int idx)
@@ -605,41 +646,54 @@ namespace AE_RemapTria
 			int pageV = 0;
 			int secV = 0;
 			int pageFrm = (int)m_PageSec*(int)m_FrameRate;
+			idx -= m_OffSetFrame;
 			switch (m_FrameDisp)
 			{
 				case T_FrameDisp.frame:
-					frmV = idx + m_StartKoma;
-					ret = frmV.ToString();
+					if (idx >= 0)
+					{
+						frmV = idx + m_StartKoma;
+					}
+					else
+					{
+						frmV = idx;
+					}
+					ret = NV(frmV);
 					break;
 				case T_FrameDisp.pageFrame:
 					//s0 = String.Format("{0,3}", frmV);
 					if ((idx % (int)FrameRate) == 0)
 					{
 						pageV = (idx / (int)pageFrm) + 1;
-						ret += pageV.ToString()+"p";
+						ret += NV(pageV)+"p";
 					}
-					frmV = (idx % pageFrm) + m_StartKoma;
+					frmV = (idx % pageFrm);
+					if (frmV < 0) frmV = pageFrm + frmV;
+					frmV += m_StartKoma;
 					ret += SP4(frmV);
 					break;
 				case T_FrameDisp.pageSecFrame:
 					if (idx % (int)FrameRate == 0)
 					{
 						pageV = (idx / (int)pageFrm) + 1;
-						ret += pageV.ToString() + "p";
+						ret += NV(pageV) + "p";
 						secV = (idx / (int)m_FrameRate);
 						ret += SP2(secV) + "+";
 					}
-					frmV = (idx % (int)FrameRate) + m_StartKoma;
+					frmV = (idx % (int)FrameRate);
+					if (frmV < 0) frmV = (int)FrameRate + frmV;
+					frmV += m_StartKoma;
 					ret += SP2(frmV);
-
 					break;
 				case T_FrameDisp.SecFrame:
 					if (idx % (int)FrameRate == 0)
 					{
 						secV = (idx / (int)FrameRate);
-						ret = secV.ToString()+"+";
+						ret = NV(secV)+"+";
 					}
-					frmV = (idx % (int)FrameRate) + m_StartKoma;
+					frmV = (idx % (int)FrameRate);
+					if(frmV < 0) frmV = (int)FrameRate + frmV;
+					frmV += m_StartKoma;
 					ret += SP2(frmV);
 					break;
 			}

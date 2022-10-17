@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>IconCall.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,10 @@
     <Compile Include="..\AE_RemapTria\T_Class\StreamString.cs" Link="StreamString.cs" />
     <Compile Include="..\AE_RemapTria\T_Class\T_Def.cs" Link="T_Def.cs" />
     <Compile Include="..\AE_RemapTria\T_Class\Wa.cs" Link="Wa.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="IconCall.ico" />
   </ItemGroup>
 
 </Project>

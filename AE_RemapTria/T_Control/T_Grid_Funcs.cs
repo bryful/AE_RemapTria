@@ -80,8 +80,13 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
 			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left));
 			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right));
-			lst.Add(new FuncItem(CellInsert, Keys.Alt | Keys.I));
-			lst.Add(new FuncItem(CellRemove, Keys.Alt | Keys.R));
+			lst.Add(new FuncItem(CellInsert, Keys.Alt | Keys.I,"セル挿入"));
+			lst.Add(new FuncItem(CellRemove, Keys.Alt | Keys.R,"セル削除"));
+			lst.Add(new FuncItem(FrameInsert, Keys.Alt |Keys.Shift| Keys.I,"フレーム挿入"));
+			lst.Add(new FuncItem(FrameRemove, Keys.Alt | Keys.Shift | Keys.R, "フレーム削除"));
+			lst.Add(new FuncItem(SeetInfoDialog, Keys.Control | Keys.K, "シート情報"));
+			lst.Add(new FuncItem(CaptionDialog, Keys.Control | Keys.E, "キャプション編集"));
+			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -94,6 +99,8 @@ namespace AE_RemapTria
 			m_Menu.AddMenu("Windw", 50);
 
 			m_Menu.AddSubMenu(0, "SheetSettings");
+			m_Menu.AddSubMenu(0, "SeetInfoDialog");
+			m_Menu.AddSubMenu(0, "OffsetFrameDialog");
 			m_Menu.AddSubMenuSepa(0);
 			m_Menu.AddSubMenu(0, "Open");
 			m_Menu.AddSubMenu(0, "Save");
@@ -107,8 +114,12 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "Paste");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ClearAll");
+			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "CellInsert");
 			m_Menu.AddSubMenu(1, "CellRemove");
+			m_Menu.AddSubMenu(1, "FrameInsert");
+			m_Menu.AddSubMenu(1, "FrameRemove");
+			m_Menu.AddSubMenu(1, "CaptionDialog");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
 
@@ -573,9 +584,15 @@ namespace AE_RemapTria
 		{
 			if (IsMultExecute) return false;
 			string s = CellData.SheetName;
+			DateTime c = CellData.CREATE_TIME;
+			DateTime u = CellData.UPDATE_TIME;
 			CellData.SheetName = "";
+			CellData.CREATE_TIME = new DateTime(1963, 9, 9);
+			CellData.UPDATE_TIME = new DateTime(1963, 9, 9);
 			bool ret = CellData.Save(p);
 			CellData.SheetName = s;
+			CellData.CREATE_TIME = c;
+			CellData.UPDATE_TIME = u;
 			return ret;
 
 		}
@@ -585,6 +602,11 @@ namespace AE_RemapTria
 			if (File.Exists(p) == false) return ret;
 			ret = CellData.Load(p);
 			CellData.SheetName = "";
+			CellData.CREATE_TIME = new DateTime(1963, 9, 9);
+			CellData.UPDATE_TIME = new DateTime(1963, 9, 9);
+			CellData.CREATE_USER = "";
+			CellData.UPDATE_USER = "";
+
 			if (ret)
 			{
 				ChkMinMax();
@@ -601,7 +623,10 @@ namespace AE_RemapTria
 		public bool Save()
 		{
 			if (IsMultExecute) return false;
-			if(FileName!="")
+
+			string d = T_Def.GetDir(FileName);
+
+			if(d!="")
 			{
 				return Save(FileName);
 			}
@@ -690,6 +715,14 @@ namespace AE_RemapTria
 			if (m_Form != null) m_Form.TopMost = b;
 			return ret;
 		}
+		public bool FrameInsert()
+		{
+			return CellData.InsertFrame();
+		}
+		public bool FrameRemove()
+		{
+			return CellData.RemoveFrame();
+		}
 		public string ToArdj()
 		{
 			return CellData.ToArdj();
@@ -775,6 +808,87 @@ namespace AE_RemapTria
 				ret = false;
 			}
 
+			return ret;
+		}
+		public bool SeetInfoDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_SheetInfoDialog dlg = new T_SheetInfoDialog();
+			dlg.SetForm(m_Form);
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			dlg.SetCelLData(CellData);
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				dlg.GetCellData(ref CellData);
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		public bool CaptionDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_NameDialog dlg = new T_NameDialog();
+			dlg.SetForm(m_Form);
+			dlg.Caption = "Cell Caption: "+ CellData.CaptionTarget();
+			dlg.ValueText = CellData.CaptionTarget();
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				CellData.SetCaptionTarget(dlg.ValueText);
+				if (m_Form != null) m_Form.Invalidate();
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		public bool OffsetFrameDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_OffsetFrameDialog dlg = new T_OffsetFrameDialog();
+			dlg.SetForm(m_Form);
+			dlg.Value = CellData.OffSetFrame;
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				CellData.OffSetFrame = dlg.Value;
+				if (m_Form != null) m_Form.Invalidate();
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
 			return ret;
 		}
 	}

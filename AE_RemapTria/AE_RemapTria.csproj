@@ -9,6 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -121,6 +122,10 @@
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CapIntEdit.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.resx" />
     <EmbeddedResource Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

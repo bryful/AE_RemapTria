@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.t_Grid1 = new AE_RemapTria.T_Grid();
 			this.t_hScrol1 = new AE_RemapTria.T_HScrol();
 			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
@@ -211,6 +212,7 @@
 			this.Controls.Add(this.t_Input1);
 			this.Controls.Add(this.t_Grid1);
 			this.Grid = this.t_Grid1;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Input = this.t_Input1;
 			this.MaximumSize = new System.Drawing.Size(486, 1241);
 			this.MinimumSize = new System.Drawing.Size(310, 193);

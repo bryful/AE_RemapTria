@@ -32,7 +32,7 @@
 			this.t_Label1 = new AE_RemapTria.T_Label();
 			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.btnCancel = new AE_RemapTria.T_Button();
-			this.t_Label3 = new AE_RemapTria.T_Label();
+			this.lbMain = new AE_RemapTria.T_Label();
 			this.t_Label2 = new AE_RemapTria.T_Label();
 			this.btnOK = new AE_RemapTria.T_Button();
 			this.btn30fps = new AE_RemapTria.T_Button();
@@ -56,6 +56,7 @@
 			this.lbDuration = new AE_RemapTria.T_Label();
 			this.lbName = new AE_RemapTria.T_Label();
 			this.tbSheetName = new AE_RemapTria.T_TextBox();
+			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.SuspendLayout();
 			// 
 			// t_Label1
@@ -67,7 +68,7 @@
 			this.t_Label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.t_Label1.LeftBar = new System.Drawing.Size(10, 10);
 			this.t_Label1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label1.Location = new System.Drawing.Point(38, 91);
+			this.t_Label1.Location = new System.Drawing.Point(90, 94);
 			this.t_Label1.MyFontIndex = 5;
 			this.t_Label1.MyFonts = this.t_MyFonts1;
 			this.t_Label1.MyFontSize = 10F;
@@ -96,7 +97,7 @@
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LeftBar = 12;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(37, 237);
+			this.btnCancel.Location = new System.Drawing.Point(89, 240);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFonts = this.t_MyFonts1;
 			this.btnCancel.MyFontSize = 12F;
@@ -109,26 +110,26 @@
 			this.btnCancel.TopBar = 2;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
-			// t_Label3
+			// lbMain
 			// 
-			this.t_Label3.Alignment = System.Drawing.StringAlignment.Near;
-			this.t_Label3.BackColor = System.Drawing.Color.Transparent;
-			this.t_Label3.BottomBar = new System.Drawing.Size(360, 1);
-			this.t_Label3.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_Label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.t_Label3.LeftBar = new System.Drawing.Size(14, 14);
-			this.t_Label3.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label3.Location = new System.Drawing.Point(18, 21);
-			this.t_Label3.MyFontIndex = 5;
-			this.t_Label3.MyFonts = this.t_MyFonts1;
-			this.t_Label3.MyFontSize = 14F;
-			this.t_Label3.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_Label3.Name = "t_Label3";
-			this.t_Label3.RightBar = new System.Drawing.Size(0, 0);
-			this.t_Label3.Size = new System.Drawing.Size(373, 24);
-			this.t_Label3.TabIndex = 3;
-			this.t_Label3.Text = "Sheet Settings";
-			this.t_Label3.TopBar = new System.Drawing.Size(100, 0);
+			this.lbMain.Alignment = System.Drawing.StringAlignment.Near;
+			this.lbMain.BackColor = System.Drawing.Color.Transparent;
+			this.lbMain.BottomBar = new System.Drawing.Size(360, 1);
+			this.lbMain.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbMain.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.lbMain.LeftBar = new System.Drawing.Size(14, 14);
+			this.lbMain.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.lbMain.Location = new System.Drawing.Point(70, 24);
+			this.lbMain.MyFontIndex = 5;
+			this.lbMain.MyFonts = this.t_MyFonts1;
+			this.lbMain.MyFontSize = 14F;
+			this.lbMain.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.lbMain.Name = "lbMain";
+			this.lbMain.RightBar = new System.Drawing.Size(0, 0);
+			this.lbMain.Size = new System.Drawing.Size(373, 24);
+			this.lbMain.TabIndex = 3;
+			this.lbMain.Text = "Sheet Settings";
+			this.lbMain.TopBar = new System.Drawing.Size(100, 0);
 			// 
 			// t_Label2
 			// 
@@ -139,7 +140,7 @@
 			this.t_Label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.t_Label2.LeftBar = new System.Drawing.Size(10, 10);
 			this.t_Label2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label2.Location = new System.Drawing.Point(38, 135);
+			this.t_Label2.Location = new System.Drawing.Point(90, 138);
 			this.t_Label2.MyFontIndex = 5;
 			this.t_Label2.MyFonts = this.t_MyFonts1;
 			this.t_Label2.MyFontSize = 10F;
@@ -168,7 +169,7 @@
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(213, 237);
+			this.btnOK.Location = new System.Drawing.Point(265, 240);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFonts = this.t_MyFonts1;
 			this.btnOK.MyFontSize = 12F;
@@ -199,7 +200,7 @@
 			this.btn30fps.IsMouseDown = false;
 			this.btn30fps.LeftBar = 0;
 			this.btn30fps.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn30fps.Location = new System.Drawing.Point(303, 91);
+			this.btn30fps.Location = new System.Drawing.Point(355, 94);
 			this.btn30fps.MyFontIndex = 5;
 			this.btn30fps.MyFonts = this.t_MyFonts1;
 			this.btn30fps.MyFontSize = 9F;
@@ -231,7 +232,7 @@
 			this.btn24fps.IsMouseDown = false;
 			this.btn24fps.LeftBar = 8;
 			this.btn24fps.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn24fps.Location = new System.Drawing.Point(213, 91);
+			this.btn24fps.Location = new System.Drawing.Point(265, 94);
 			this.btn24fps.MyFontIndex = 5;
 			this.btn24fps.MyFonts = this.t_MyFonts1;
 			this.btn24fps.MyFontSize = 9F;
@@ -262,7 +263,7 @@
 			this.btnLockFps.IsMouseDown = false;
 			this.btnLockFps.LeftBar = 0;
 			this.btnLockFps.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnLockFps.Location = new System.Drawing.Point(156, 91);
+			this.btnLockFps.Location = new System.Drawing.Point(208, 94);
 			this.btnLockFps.MyFontIndex = 5;
 			this.btnLockFps.MyFonts = this.t_MyFonts1;
 			this.btnLockFps.MyFontSize = 6F;
@@ -284,7 +285,7 @@
 			this.t_DurationBox1.Fps = AE_RemapTria.T_Fps.FPS24;
 			this.t_DurationBox1.Frame = 26;
 			this.t_DurationBox1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_DurationBox1.Location = new System.Drawing.Point(134, 127);
+			this.t_DurationBox1.Location = new System.Drawing.Point(186, 130);
 			this.t_DurationBox1.MyFontIndex = 5;
 			this.t_DurationBox1.MyFonts = this.t_MyFonts1;
 			this.t_DurationBox1.MyFontSize = 20F;
@@ -312,7 +313,7 @@
 			this.btn1.IsMouseDown = false;
 			this.btn1.LeftBar = 0;
 			this.btn1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn1.Location = new System.Drawing.Point(261, 180);
+			this.btn1.Location = new System.Drawing.Point(313, 183);
 			this.btn1.MyFontIndex = 5;
 			this.btn1.MyFonts = this.t_MyFonts1;
 			this.btn1.MyFontSize = 9F;
@@ -342,7 +343,7 @@
 			this.btn2.IsMouseDown = false;
 			this.btn2.LeftBar = 0;
 			this.btn2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn2.Location = new System.Drawing.Point(291, 180);
+			this.btn2.Location = new System.Drawing.Point(343, 183);
 			this.btn2.MyFontIndex = 5;
 			this.btn2.MyFonts = this.t_MyFonts1;
 			this.btn2.MyFontSize = 9F;
@@ -372,7 +373,7 @@
 			this.btn3.IsMouseDown = false;
 			this.btn3.LeftBar = 0;
 			this.btn3.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn3.Location = new System.Drawing.Point(323, 180);
+			this.btn3.Location = new System.Drawing.Point(375, 183);
 			this.btn3.MyFontIndex = 5;
 			this.btn3.MyFonts = this.t_MyFonts1;
 			this.btn3.MyFontSize = 9F;
@@ -402,7 +403,7 @@
 			this.btn6.IsMouseDown = false;
 			this.btn6.LeftBar = 0;
 			this.btn6.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn6.Location = new System.Drawing.Point(323, 150);
+			this.btn6.Location = new System.Drawing.Point(375, 153);
 			this.btn6.MyFontIndex = 5;
 			this.btn6.MyFonts = this.t_MyFonts1;
 			this.btn6.MyFontSize = 9F;
@@ -432,7 +433,7 @@
 			this.btn5.IsMouseDown = false;
 			this.btn5.LeftBar = 0;
 			this.btn5.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn5.Location = new System.Drawing.Point(291, 150);
+			this.btn5.Location = new System.Drawing.Point(343, 153);
 			this.btn5.MyFontIndex = 5;
 			this.btn5.MyFonts = this.t_MyFonts1;
 			this.btn5.MyFontSize = 9F;
@@ -462,7 +463,7 @@
 			this.btn4.IsMouseDown = false;
 			this.btn4.LeftBar = 0;
 			this.btn4.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn4.Location = new System.Drawing.Point(261, 150);
+			this.btn4.Location = new System.Drawing.Point(313, 153);
 			this.btn4.MyFontIndex = 5;
 			this.btn4.MyFonts = this.t_MyFonts1;
 			this.btn4.MyFontSize = 9F;
@@ -492,7 +493,7 @@
 			this.btn9.IsMouseDown = false;
 			this.btn9.LeftBar = 0;
 			this.btn9.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn9.Location = new System.Drawing.Point(323, 121);
+			this.btn9.Location = new System.Drawing.Point(375, 124);
 			this.btn9.MyFontIndex = 5;
 			this.btn9.MyFonts = this.t_MyFonts1;
 			this.btn9.MyFontSize = 9F;
@@ -522,7 +523,7 @@
 			this.btn8.IsMouseDown = false;
 			this.btn8.LeftBar = 0;
 			this.btn8.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn8.Location = new System.Drawing.Point(291, 121);
+			this.btn8.Location = new System.Drawing.Point(343, 124);
 			this.btn8.MyFontIndex = 5;
 			this.btn8.MyFonts = this.t_MyFonts1;
 			this.btn8.MyFontSize = 9F;
@@ -552,7 +553,7 @@
 			this.btn7.IsMouseDown = false;
 			this.btn7.LeftBar = 0;
 			this.btn7.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn7.Location = new System.Drawing.Point(261, 121);
+			this.btn7.Location = new System.Drawing.Point(313, 124);
 			this.btn7.MyFontIndex = 5;
 			this.btn7.MyFonts = this.t_MyFonts1;
 			this.btn7.MyFontSize = 9F;
@@ -582,7 +583,7 @@
 			this.btn11BS.IsMouseDown = false;
 			this.btn11BS.LeftBar = 0;
 			this.btn11BS.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn11BS.Location = new System.Drawing.Point(351, 121);
+			this.btn11BS.Location = new System.Drawing.Point(403, 124);
 			this.btn11BS.MyFontIndex = 5;
 			this.btn11BS.MyFonts = this.t_MyFonts1;
 			this.btn11BS.MyFontSize = 9F;
@@ -612,7 +613,7 @@
 			this.btn12CL.IsMouseDown = false;
 			this.btn12CL.LeftBar = 0;
 			this.btn12CL.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn12CL.Location = new System.Drawing.Point(351, 150);
+			this.btn12CL.Location = new System.Drawing.Point(403, 153);
 			this.btn12CL.MyFontIndex = 5;
 			this.btn12CL.MyFonts = this.t_MyFonts1;
 			this.btn12CL.MyFontSize = 9F;
@@ -642,7 +643,7 @@
 			this.btn10Sec.IsMouseDown = false;
 			this.btn10Sec.LeftBar = 0;
 			this.btn10Sec.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn10Sec.Location = new System.Drawing.Point(351, 180);
+			this.btn10Sec.Location = new System.Drawing.Point(403, 183);
 			this.btn10Sec.MyFontIndex = 5;
 			this.btn10Sec.MyFonts = this.t_MyFonts1;
 			this.btn10Sec.MyFontSize = 12F;
@@ -672,7 +673,7 @@
 			this.btn0.IsMouseDown = false;
 			this.btn0.LeftBar = 0;
 			this.btn0.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btn0.Location = new System.Drawing.Point(261, 207);
+			this.btn0.Location = new System.Drawing.Point(313, 210);
 			this.btn0.MyFontIndex = 5;
 			this.btn0.MyFonts = this.t_MyFonts1;
 			this.btn0.MyFontSize = 9F;
@@ -694,7 +695,7 @@
 			this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbStatus.LeftBar = new System.Drawing.Size(10, 10);
 			this.lbStatus.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbStatus.Location = new System.Drawing.Point(38, 190);
+			this.lbStatus.Location = new System.Drawing.Point(90, 193);
 			this.lbStatus.MyFontIndex = 5;
 			this.lbStatus.MyFonts = this.t_MyFonts1;
 			this.lbStatus.MyFontSize = 10F;
@@ -715,7 +716,7 @@
 			this.lbDuration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbDuration.LeftBar = new System.Drawing.Size(0, 0);
 			this.lbDuration.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbDuration.Location = new System.Drawing.Point(105, 159);
+			this.lbDuration.Location = new System.Drawing.Point(157, 162);
 			this.lbDuration.MyFontIndex = 5;
 			this.lbDuration.MyFonts = this.t_MyFonts1;
 			this.lbDuration.MyFontSize = 8F;
@@ -735,7 +736,7 @@
 			this.lbName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbName.LeftBar = new System.Drawing.Size(10, 10);
 			this.lbName.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbName.Location = new System.Drawing.Point(38, 56);
+			this.lbName.Location = new System.Drawing.Point(90, 59);
 			this.lbName.MyFontIndex = 5;
 			this.lbName.MyFonts = this.t_MyFonts1;
 			this.lbName.MyFontSize = 10F;
@@ -753,7 +754,7 @@
 			this.tbSheetName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbSheetName.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbSheetName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.tbSheetName.Location = new System.Drawing.Point(162, 52);
+			this.tbSheetName.Location = new System.Drawing.Point(214, 55);
 			this.tbSheetName.MyFontIndex = 5;
 			this.tbSheetName.MyFonts = this.t_MyFonts1;
 			this.tbSheetName.MyFontSize = 12F;
@@ -764,11 +765,21 @@
 			this.tbSheetName.Enter += new System.EventHandler(this.tbSheetName_Enter);
 			this.tbSheetName.Leave += new System.EventHandler(this.tbSheetName_Leave);
 			// 
+			// t_Zebra1
+			// 
+			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Location = new System.Drawing.Point(26, 24);
+			this.t_Zebra1.Name = "t_Zebra1";
+			this.t_Zebra1.Size = new System.Drawing.Size(38, 252);
+			this.t_Zebra1.TabIndex = 27;
+			this.t_Zebra1.Text = "t_Zebra1";
+			// 
 			// T_SheetSettingDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(418, 301);
+			this.ClientSize = new System.Drawing.Size(485, 301);
+			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.tbSheetName);
 			this.Controls.Add(this.lbName);
 			this.Controls.Add(this.lbDuration);
@@ -791,7 +802,7 @@
 			this.Controls.Add(this.btn24fps);
 			this.Controls.Add(this.btn30fps);
 			this.Controls.Add(this.btnOK);
-			this.Controls.Add(this.t_Label3);
+			this.Controls.Add(this.lbMain);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_Label2);
@@ -815,7 +826,7 @@
 		private T_MyFonts t_MyFonts1;
 		private T_Label t_Label1;
 		private T_Button btnCancel;
-		private T_Label t_Label3;
+		private T_Label lbMain;
 		private T_Label t_Label2;
 		private T_Button btnOK;
 		private T_Button btn30fps;
@@ -839,5 +850,6 @@
 		private T_Label lbDuration;
 		private T_Label lbName;
 		private T_TextBox tbSheetName;
+		private T_Zebra t_Zebra1;
 	}
 }

@@ -30,6 +30,7 @@ namespace AE_RemapTria
 		public T_NameDialog()
 		{
 			InitializeComponent();
+			SetEventHandler(lbCaption);
 		}
 
 		private void btnOK_Click(object sender, EventArgs e)
@@ -41,6 +42,45 @@ namespace AE_RemapTria
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			this.DialogResult = DialogResult.Cancel;
+		}
+		private int m_md = 0;
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (m_md == 0)
+			{
+				if (e.KeyCode == Keys.Enter)
+				{
+					if ((ValueText != "") && (m_Original_ValueText != ValueText))
+					{
+						m_md = 1;
+						btnOK.IsMouseDown = true;
+					}
+				}
+				else if (e.KeyCode == Keys.Escape)
+				{
+					m_md = 2;
+					btnCancel.IsMouseDown = true;
+				}
+			}
+			base.OnKeyDown(e);
+		}
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			if (m_md != 0)
+			{
+				if (m_md == 1)
+				{
+					btnOK.IsMouseDown = false;
+					this.DialogResult = DialogResult.OK;
+				}
+				else if (m_md == 2)
+				{
+					btnCancel.IsMouseDown = false;
+					this.DialogResult = DialogResult.Cancel;
+				}
+				m_md = 0;
+			}
+			base.OnKeyUp(e);
 		}
 	}
 }

@@ -34,6 +34,7 @@
 			this.tbCaption = new AE_RemapTria.T_TextBox();
 			this.btnOK = new AE_RemapTria.T_Button();
 			this.btnCancel = new AE_RemapTria.T_Button();
+			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.SuspendLayout();
 			// 
 			// lbCaption
@@ -45,7 +46,7 @@
 			this.lbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbCaption.LeftBar = new System.Drawing.Size(15, 15);
 			this.lbCaption.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbCaption.Location = new System.Drawing.Point(48, 23);
+			this.lbCaption.Location = new System.Drawing.Point(37, 35);
 			this.lbCaption.MyFontIndex = 0;
 			this.lbCaption.MyFonts = this.t_MyFonts1;
 			this.lbCaption.MyFontSize = 9F;
@@ -63,7 +64,7 @@
 			this.tbCaption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP EL", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.tbCaption.Location = new System.Drawing.Point(64, 72);
+			this.tbCaption.Location = new System.Drawing.Point(53, 67);
 			this.tbCaption.MyFontIndex = 0;
 			this.tbCaption.MyFonts = this.t_MyFonts1;
 			this.tbCaption.MyFontSize = 12F;
@@ -90,7 +91,7 @@
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(166, 130);
+			this.btnOK.Location = new System.Drawing.Point(164, 118);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFonts = this.t_MyFonts1;
 			this.btnOK.MyFontSize = 9F;
@@ -120,7 +121,7 @@
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LeftBar = 8;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(50, 130);
+			this.btnCancel.Location = new System.Drawing.Point(48, 118);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFonts = this.t_MyFonts1;
 			this.btnCancel.MyFontSize = 9F;
@@ -133,11 +134,22 @@
 			this.btnCancel.TopBar = 0;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
+			// t_Zebra1
+			// 
+			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Location = new System.Drawing.Point(37, 16);
+			this.t_Zebra1.Name = "t_Zebra1";
+			this.t_Zebra1.Size = new System.Drawing.Size(227, 13);
+			this.t_Zebra1.TabIndex = 4;
+			this.t_Zebra1.Text = "t_Zebra1";
+			this.t_Zebra1.ZebraIndex = 4;
+			// 
 			// T_NameDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(310, 180);
+			this.ClientSize = new System.Drawing.Size(298, 160);
+			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.tbCaption);
@@ -147,6 +159,7 @@
 			this.KagiHeight = 30;
 			this.KagiWeight = 2;
 			this.KagiWidth = 40;
+			this.KeyPreview = true;
 			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_NameDialog";
 			this.Text = "T_NameDialog";
@@ -162,5 +175,6 @@
 		private T_TextBox tbCaption;
 		private T_Button btnOK;
 		private T_Button btnCancel;
+		private T_Zebra t_Zebra1;
 	}
 }

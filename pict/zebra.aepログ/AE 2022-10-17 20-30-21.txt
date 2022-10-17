@@ -1,0 +1,17 @@
+プロジェクトﾞzebra.aepﾞのAdobe After Effects v18.4.6 Windows 64レンダリングログ
+
+レンダリングは2022/10/17、 20:30:21に開始しました。
+
+  2022/10/17 20:30:21 : コンポジションﾞZebra_blueﾞの開始
+
+  出力先 : C:\Users\did-furuhashi\source\repos\AE_RemapTria\pict\Zebra_blue_[####].png    2022/10/17 20:30:21 : コンポジションﾞZebra_blueﾞの終了
+
+
+  2022/10/17 20:30:21 : コンポジションﾞZebra_redﾞの開始
+
+  出力先 : C:\Users\did-furuhashi\source\repos\AE_RemapTria\pict\Zebra_red_[####].png    2022/10/17 20:30:21 : コンポジションﾞZebra_redﾞの終了
+
+
+  合計経過時間 : 0 秒
+ログは2022/10/17、20:30:21に閉じられました。
+

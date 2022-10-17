@@ -370,7 +370,57 @@ namespace AE_RemapTria
 			return ret;
 		}
 		// *********************************************************************
+		public bool InsertFrame(int start,int length)
+		{
+			if(start<0)
+			{
+				length = length+start;
+				start = 0;
+			}else if(start+length>m_cells.Length)
+			{
+				length = (start + length) - m_cells.Length;
+			}
 
+			if ((start < 0) || (start >= m_cells.Length) || (length <= 0)) return false;
+			SetFrameCountTrue(m_cells.Length + length);
+
+			for(int i=m_cells.Length-1; i>=start+length; i--)
+			{
+				m_cells[i] = m_cells[i-length];
+			}
+			int v = 0;
+			if (m_IsEnabled) v = 1;
+			for(int i=0; i<length; i++)
+			{
+				m_cells[start + i] = v;
+			}
+			CalcEnableFrame();
+			return true;
+		}
+		public bool RemoveFrame(int start, int length)
+		{
+			if (start < 0)
+			{
+				length = length + start;
+				start = 0;
+			}
+			else if (start + length > m_cells.Length)
+			{
+				length = (start + length) - m_cells.Length;
+			}
+			if ((start < 0) || (start >= m_cells.Length) || (length <= 0)) return false;
+
+			if (start + length < m_cells.Length)
+			{
+				for (int i = start; i < m_cells.Length - length; i++)
+				{
+					m_cells[i] = m_cells[i + length];
+				}
+			}
+			SetFrameCountTrue(m_cells.Length - length);
+			CalcEnableFrame();
+			return true;
+		}
 		// *********************************************************************
 	}
 }

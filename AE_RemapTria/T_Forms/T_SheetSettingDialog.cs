@@ -78,6 +78,8 @@ namespace AE_RemapTria
 			m_btns[10] = btn10Sec;
 			m_btns[11] = btn11BS;
 			m_btns[12] = btn12CL;
+			SetEventHandler(lbMain);
+			SetEventHandler(t_Zebra1);
 		}
 
 
@@ -108,11 +110,18 @@ namespace AE_RemapTria
 			Fps = fps;
 
 		}
-
+		private void ShowErrDialog(string s)
+		{
+			MessageBox.Show(s, "Error");
+		}
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			if(Frame<12) return;
-			if (SheetName == "") return;
+			if (SheetName == "")
+			{
+				ShowErrDialog("シート名が記入されていません");
+				return;
+			}
 			this.DialogResult = DialogResult.OK;
 		}
 
@@ -185,6 +194,10 @@ namespace AE_RemapTria
 					if ((Frame >= 12) && (SheetName != ""))
 					{
 						DialogResult = DialogResult.OK;
+					}else if (SheetName=="")
+					{
+						ShowErrDialog("シート名が記入されていません");
+
 					}
 
 

@@ -169,7 +169,7 @@ namespace AE_RemapTria
 			//フレーム番号を描く
 			if(isNoEnabled) sb.Color = m_grid.Colors.GrayMoji;
 			else sb.Color = m_grid.Colors.Moji;
-			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 5, rct.Height);
+			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 1, rct.Height);
 			DrawStr(g, m_grid.CellData.FrameStr(f), sb, rct2);
 
 			// 下の横線を描く

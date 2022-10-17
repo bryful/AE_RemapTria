@@ -376,5 +376,56 @@ namespace AE_RemapTria
 		{
 			g.DrawImage(img, new Rectangle(0, 0, this.Width, this.Height));
 		}
+		// ************************************************************************
+		/// <summary>
+		/// 子コントロールにMouseイベントハンドラを設定(再帰)
+		/// </summary>
+		public void SetEventHandler(Control objControl)
+		{
+			// イベントの設定
+			// (親フォームにはすでにデザイナでマウスのイベントハンドラが割り当ててあるので除外)
+			//if (objControl != this)
+			//{
+			objControl.MouseDown += (sender, e) => this.OnMouseDown(e);
+			objControl.MouseMove += (sender, e) => this.OnMouseMove(e);
+			objControl.MouseUp += (sender, e) => this.OnMouseUp(e);
+			//}
+			/*
+			// さらに子コントロールを検出する
+			if (objControl.Controls.Count > 0)
+			{
+				foreach (Control objChildControl in objControl.Controls)
+				{
+					SetEventHandler(objChildControl);
+				}
+			}
+			*/
+		}
+
+		private void Form1_MouseDown(object sender, MouseEventArgs e)
+		{
+			// senderは常にFormだが、eの座標は各コントロールを基準とした座標が入る為、
+			// スクリーン座標からクライアント座標を計算すること
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
+
+		private void Form1_MouseMove(object sender, MouseEventArgs e)
+		{
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
+
+		private void Form1_MouseUp(object sender, MouseEventArgs e)
+		{
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
 	}
 }

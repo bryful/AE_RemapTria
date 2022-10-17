@@ -12,6 +12,8 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Configuration.Internal;
 using System.Numerics;
+using System.Dynamic;
+
 namespace AE_RemapTria
 {
 	public partial class T_CellData
@@ -427,7 +429,70 @@ namespace AE_RemapTria
 			if (CellCount==1) return false;
 			return RemoveCell(Selection.Target);
 		}
-
+		public bool InsertFrame(int start,int length)
+		{
+			if (start < 0)
+			{
+				length = length + start;
+				start = 0;
+			}
+			else if (start + length > FrameCountTrue)
+			{
+				length = (start + length) - FrameCountTrue;
+			}
+			if ((start < 0) || (start >= FrameCountTrue) || (length <= 0)) return false;
+			PushUndo(BackupSratus.All);
+			bool e = _eventFlag;
+			bool u = _undoPushFlag;
+			_eventFlag = false;
+			_undoPushFlag = false;
+			m_FrameEnabled.InsertFrame(start, length);
+			for (int i=0; i<CellCount; i++)
+			{
+				m_cells[i].InsertFrame(start, length);
+			}
+			_eventFlag = e;
+			_undoPushFlag = u;
+			CalcInfo();
+			OnCountChanged(new EventArgs());
+			return true;
+		}
+		public bool InsertFrame()
+		{
+			return InsertFrame(Selection.Start, Selection.Length);
+		}
+		public bool RemoveFrame(int start, int length)
+		{
+			if (start < 0)
+			{
+				length = length + start;
+				start = 0;
+			}
+			else if (start + length > FrameCountTrue)
+			{
+				length = (start + length) - FrameCountTrue;
+			}
+			if ((start < 0) || (start >= FrameCountTrue) || (length <= 0)) return false;
+			PushUndo(BackupSratus.All);
+			bool e = _eventFlag;
+			bool u = _undoPushFlag;
+			_eventFlag = false;
+			_undoPushFlag = false;
+			m_FrameEnabled.RemoveFrame(start, length);
+			for (int i = 0; i < CellCount; i++)
+			{
+				m_cells[i].RemoveFrame(start, length);
+			}
+			_eventFlag = e;
+			_undoPushFlag = u;
+			CalcInfo();
+			OnCountChanged(new EventArgs());
+			return true;
+		}
+		public bool RemoveFrame()
+		{
+			return RemoveFrame(Selection.Start, Selection.Length);
+		}
 	}
 
 }
