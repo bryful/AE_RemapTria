@@ -28,6 +28,8 @@ namespace AE_RemapTria
 			InitializeComponent();
 			SetEventHandler(lbMain);
 			SetEventHandler(lbOffset);
+			SetEventHandler(t_Zebra1);
+
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
