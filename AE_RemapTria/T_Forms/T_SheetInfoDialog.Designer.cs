@@ -43,6 +43,8 @@
 			this.btnCANCEL = new AE_RemapTria.T_Button();
 			this.btnOK = new AE_RemapTria.T_Button();
 			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
+			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
+			this.t_ColorPlate2 = new AE_RemapTria.T_ColorPlate();
 			this.SuspendLayout();
 			// 
 			// ctTittle
@@ -297,15 +299,56 @@
 			this.btnOK.TopBar = 0;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
-			// t_Zebra2
+			// t_Zebra1
 			// 
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
 			this.t_Zebra1.Location = new System.Drawing.Point(37, 18);
-			this.t_Zebra1.Name = "t_Zebra2";
+			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(688, 20);
 			this.t_Zebra1.TabIndex = 13;
 			this.t_Zebra1.Text = "t_Zebra2";
 			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKYELLOW;
+			// 
+			// t_ColorPlate1
+			// 
+			this.t_ColorPlate1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_ColorPlate1.BackColor = System.Drawing.Color.Transparent;
+			this.t_ColorPlate1.ColorPlate = AE_RemapTria.ColorPlate.FillDot;
+			this.t_ColorPlate1.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_ColorPlate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(155)))));
+			this.t_ColorPlate1.KagiHWeight = 10;
+			this.t_ColorPlate1.KagiVWeight = 10;
+			this.t_ColorPlate1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_ColorPlate1.Location = new System.Drawing.Point(410, 200);
+			this.t_ColorPlate1.MyFontIndex = 5;
+			this.t_ColorPlate1.MyFonts = null;
+			this.t_ColorPlate1.MyFontSize = 9F;
+			this.t_ColorPlate1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_ColorPlate1.Name = "t_ColorPlate1";
+			this.t_ColorPlate1.Opacity = 32;
+			this.t_ColorPlate1.Size = new System.Drawing.Size(53, 36);
+			this.t_ColorPlate1.TabIndex = 14;
+			this.t_ColorPlate1.Text = "t_ColorPlate1";
+			// 
+			// t_ColorPlate2
+			// 
+			this.t_ColorPlate2.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
+			this.t_ColorPlate2.ColorPlate = AE_RemapTria.ColorPlate.KagiBR;
+			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_ColorPlate2.KagiHWeight = 2;
+			this.t_ColorPlate2.KagiVWeight = 2;
+			this.t_ColorPlate2.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_ColorPlate2.Location = new System.Drawing.Point(375, 44);
+			this.t_ColorPlate2.MyFontIndex = 5;
+			this.t_ColorPlate2.MyFonts = null;
+			this.t_ColorPlate2.MyFontSize = 9F;
+			this.t_ColorPlate2.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_ColorPlate2.Name = "t_ColorPlate2";
+			this.t_ColorPlate2.Opacity = 64;
+			this.t_ColorPlate2.Size = new System.Drawing.Size(361, 139);
+			this.t_ColorPlate2.TabIndex = 15;
+			this.t_ColorPlate2.Text = "t_ColorPlate2";
 			// 
 			// T_SheetInfoDialog
 			// 
@@ -325,6 +368,8 @@
 			this.Controls.Add(this.ctOpus);
 			this.Controls.Add(this.ctSubTitle);
 			this.Controls.Add(this.ctTittle);
+			this.Controls.Add(this.t_ColorPlate1);
+			this.Controls.Add(this.t_ColorPlate2);
 			this.Edge = new System.Drawing.Rectangle(10, 10, 10, 10);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 30;
@@ -354,5 +399,7 @@
 		private T_Button btnCANCEL;
 		private T_Button btnOK;
 		private T_Zebra t_Zebra1;
+		private T_ColorPlate t_ColorPlate1;
+		private T_ColorPlate t_ColorPlate2;
 	}
 }

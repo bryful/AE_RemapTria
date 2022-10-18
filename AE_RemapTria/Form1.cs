@@ -17,7 +17,7 @@ namespace AE_RemapTria
 		public Form1()
 		{
 			InitializeComponent();
-
+			SetEventHandler(t_Menu1);
 		}
 
 		

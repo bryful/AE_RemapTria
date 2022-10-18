@@ -422,5 +422,41 @@ namespace AE_RemapTria
 			return true;
 		}
 		// *********************************************************************
+		public void AutoInput(T_Selection sel,int st,int lt,int koma)
+		{
+			int[] ary = new int[sel.Length];
+
+			int cnt = sel.Length;
+			int idx = 0;
+			int v = st;
+			int ad = 1;
+			if (lt < st) ad = -1;
+			while(idx<cnt)
+			{
+				for(int i = 0; i < koma; i++)
+				{
+					if (v <= 0)
+					{
+						ary[idx] = 0;
+					}
+					else
+					{
+						ary[idx] = v;
+					}
+					idx++;
+					if (idx >= cnt) break;
+				}
+				v+=ad;
+				if (ad > 0)
+				{
+					if (v > lt) v = st;
+				}
+				else
+				{
+					if (v < lt) v = st;
+				}
+			}
+			SetValues(sel,ary);
+		}
 	}
 }

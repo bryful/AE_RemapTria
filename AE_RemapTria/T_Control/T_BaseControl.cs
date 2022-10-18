@@ -194,7 +194,7 @@ namespace AE_RemapTria
 		{
 			try
 			{
-				g.SmoothingMode = SmoothingMode.AntiAlias;
+				//g.SmoothingMode = SmoothingMode.AntiAlias;
 				g.DrawString(s, this.Font, sb, rct, m_format);
 			}
 			catch

@@ -191,11 +191,13 @@ namespace AE_RemapTria
 			if (m_IsFront == true)
 			{
 				formActive();
+				cbIsFront.Checked = true;
 			}
 			else
 			{
 				if (m_form == null) return;
 				m_form.TopMost = false;
+				cbIsFront.Checked = false;
 			}
 
 		}
@@ -213,7 +215,7 @@ namespace AE_RemapTria
 		// *****************************************************************
 		private void checkBox1_Click(object sender, EventArgs e)
 		{
-			SetIsFront(checkBox1.Checked);
+			SetIsFront(cbIsFront.Checked);
 		}
 
 		private void button1_Click(object sender, EventArgs e)

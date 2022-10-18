@@ -106,6 +106,7 @@ namespace AE_RemapTria
 			}
 			else
 			{
+				bool ok = false;
 				PrefFile pf = new PrefFile(this);
 				this.Text = pf.AppName;
 				if (pf.Load() == true)
@@ -124,17 +125,19 @@ namespace AE_RemapTria
 						m_grid.OpenBackup(bp);
 					}
 				}
+				if(m_navBar!=null)
+				{
+					bool b = pf.GetValueBool("IsFront", out ok);
+					if(ok)
+					{
+						m_navBar.IsFront = b;
+					}
+				}
 			}
 			//
 			ChkGrid();
 			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
-			if(reloadFlag)
-			{
-				if(m_grid!=null)
-				{
-					//
-				}
-			}
+
 		}
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
@@ -145,6 +148,10 @@ namespace AE_RemapTria
 				if (m_grid != null)
 				{
 					m_grid.SaveBackup(Path.Combine(pf.Dir, "backup.ardj.json"));
+				}
+				if(m_navBar!=null)
+				{
+					pf.SetValue("IsFront", m_navBar.IsFront);
 				}
 				pf.StoreForm();
 				pf.Save();
@@ -273,6 +280,7 @@ namespace AE_RemapTria
 		{
 			base.OnPaint(e);
 			Graphics g = e.Graphics;
+			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			Pen p = new Pen(Color.White);
 			SolidBrush sb = new SolidBrush(Color.Black);
 			try
@@ -421,8 +429,8 @@ namespace AE_RemapTria
 					+ ts.CaptionHeight +ts.InterHeight + ts.CellHeight*6+ ts.InterHeight+ T_Size.HScrolHeight
 				);
 			this.MaximumSize = new Size(
-				x + ts.FrameWidth + ts.InterWidth + ts.CellWidth * cc + T_Size.VScrolWidth,
-				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + T_Size.HScrolHeight
+				x + ts.FrameWidth + ts.InterWidth*3 + ts.CellWidth * cc + T_Size.VScrolWidth,
+				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + T_Size.HScrolHeight+T_Size.InterHeightDef
 				);
 		}
 		// ********************************************************************
@@ -678,9 +686,60 @@ namespace AE_RemapTria
 				}
 			});
 		}
+		// ************************************************************************
+		/// <summary>
+		/// 子コントロールにMouseイベントハンドラを設定(再帰)
+		/// </summary>
+		public void SetEventHandler(Control objControl)
+		{
+			// イベントの設定
+			// (親フォームにはすでにデザイナでマウスのイベントハンドラが割り当ててあるので除外)
+			//if (objControl != this)
+			//{
+			objControl.MouseDown += (sender, e) => this.OnMouseDown(e);
+			objControl.MouseMove += (sender, e) => this.OnMouseMove(e);
+			objControl.MouseUp += (sender, e) => this.OnMouseUp(e);
+			//}
+			/*
+			// さらに子コントロールを検出する
+			if (objControl.Controls.Count > 0)
+			{
+				foreach (Control objChildControl in objControl.Controls)
+				{
+					SetEventHandler(objChildControl);
+				}
+			}
+			*/
+		}
 
+		private void Form1_MouseDown(object sender, MouseEventArgs e)
+		{
+			// senderは常にFormだが、eの座標は各コントロールを基準とした座標が入る為、
+			// スクリーン座標からクライアント座標を計算すること
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
+
+		private void Form1_MouseMove(object sender, MouseEventArgs e)
+		{
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
+
+		private void Form1_MouseUp(object sender, MouseEventArgs e)
+		{
+			Point pntScreen = Control.MousePosition;
+			Point pntForm = this.PointToClient(pntScreen);
+
+			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
+		}
 	}
+
+}
 #pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
 
-}

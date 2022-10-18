@@ -87,6 +87,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SeetInfoDialog, Keys.Control | Keys.K, "シート情報"));
 			lst.Add(new FuncItem(CaptionDialog, Keys.Control | Keys.E, "キャプション編集"));
 			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
+			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -114,6 +115,7 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "Paste");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ClearAll");
+			m_Menu.AddSubMenu(1, "AutoInputDialog");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "CellInsert");
 			m_Menu.AddSubMenu(1, "CellRemove");
@@ -886,6 +888,43 @@ namespace AE_RemapTria
 			{
 				CellData.OffSetFrame = dlg.Value;
 				if (m_Form != null) m_Form.Invalidate();
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		private int m_AutoinputStert = 1;
+		private int m_AutoinputLast = 10;
+		private int m_AutoinputKoam = 3;
+
+		public bool AutoInputDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_AutoInputDialog dlg = new T_AutoInputDialog();
+			dlg.SetForm(m_Form);
+			dlg.Start = m_AutoinputStert;
+			dlg.Last = m_AutoinputLast;
+			dlg.Koma = m_AutoinputKoam;
+
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				m_AutoinputStert = dlg.Start;
+				m_AutoinputLast = dlg.Last;
+				m_AutoinputKoam = dlg.Koma;
+				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
+				this.Invalidate();
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;

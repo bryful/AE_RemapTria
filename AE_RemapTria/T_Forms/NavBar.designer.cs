@@ -30,7 +30,7 @@ namespace AE_RemapTria
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.cbIsFront = new System.Windows.Forms.CheckBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -43,18 +43,18 @@ namespace AE_RemapTria
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// checkBox1
+			// cbIsFront
 			// 
-			this.checkBox1.BackColor = System.Drawing.Color.Transparent;
-			this.checkBox1.Checked = true;
-			this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox1.Location = new System.Drawing.Point(5, 0);
-			this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(19, 25);
-			this.checkBox1.TabIndex = 0;
-			this.checkBox1.UseVisualStyleBackColor = false;
-			this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+			this.cbIsFront.BackColor = System.Drawing.Color.Transparent;
+			this.cbIsFront.Checked = true;
+			this.cbIsFront.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cbIsFront.Location = new System.Drawing.Point(5, 0);
+			this.cbIsFront.Margin = new System.Windows.Forms.Padding(4);
+			this.cbIsFront.Name = "cbIsFront";
+			this.cbIsFront.Size = new System.Drawing.Size(19, 25);
+			this.cbIsFront.TabIndex = 0;
+			this.cbIsFront.UseVisualStyleBackColor = false;
+			this.cbIsFront.Click += new System.EventHandler(this.checkBox1_Click);
 			// 
 			// button1
 			// 
@@ -151,7 +151,7 @@ namespace AE_RemapTria
 			this.ControlBox = false;
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.checkBox1);
+			this.Controls.Add(this.cbIsFront);
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(4);
@@ -173,7 +173,7 @@ namespace AE_RemapTria
 
 		#endregion
 
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox cbIsFront;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

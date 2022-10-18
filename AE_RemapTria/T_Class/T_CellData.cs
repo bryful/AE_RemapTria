@@ -731,5 +731,12 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public bool AutoInput(int st,int lt,int koma)
+		{
+			if ((st==lt)||(koma<=0)) return false;
+			PushUndo(BackupSratus.NumberInput);
+			m_cells[Selection.Target].AutoInput(Selection, st,lt, koma);
+			return true;
+		}
 	}
 }
