@@ -174,7 +174,7 @@
 			this.t_Zebra1.Size = new System.Drawing.Size(39, 95);
 			this.t_Zebra1.TabIndex = 5;
 			this.t_Zebra1.Text = "t_Zebra1";
-			this.t_Zebra1.ZebraIndex = 0;
+			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.RED;
 			// 
 			// T_OffsetFrameDialog
 			// 
@@ -193,6 +193,42 @@
 			this.KagiWeight = 2;
 			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_OffsetFrameDialog";
+			this.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(200)))));
+			this.SideCenterLength = 12;
+			this.SideCenterWeight = 0;
+			this.SideCount = new int[] {
+        0,
+        0,
+        0};
+			this.SideInter = new int[] {
+        10,
+        20,
+        120};
+			this.SideLength = new int[] {
+        5,
+        12,
+        8};
+			this.SideWeight = new int[] {
+        1,
+        2,
+        4};
+			this.TBCenterLength = 8;
+			this.TBCount = new int[] {
+        2,
+        2,
+        0};
+			this.TBInter = new int[] {
+        35,
+        70,
+        120};
+			this.TBLength = new int[] {
+        3,
+        6,
+        8};
+			this.TBWeight = new int[] {
+        1,
+        2,
+        4};
 			this.Text = "T_OffsetFrameDialog";
 			((System.ComponentModel.ISupportInitialize)(this.nbOffset)).EndInit();
 			this.ResumeLayout(false);

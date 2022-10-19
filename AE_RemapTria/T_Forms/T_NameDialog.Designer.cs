@@ -174,6 +174,41 @@
 			this.KeyPreview = true;
 			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_NameDialog";
+			this.SideCenterLength = 12;
+			this.SideCenterWeight = 2;
+			this.SideCount = new int[] {
+        2,
+        1,
+        0};
+			this.SideInter = new int[] {
+        20,
+        40,
+        120};
+			this.SideLength = new int[] {
+        4,
+        8,
+        0};
+			this.SideWeight = new int[] {
+        1,
+        2,
+        0};
+			this.TBCenterWeight = 0;
+			this.TBCount = new int[] {
+        0,
+        0,
+        0};
+			this.TBInter = new int[] {
+        10,
+        20,
+        120};
+			this.TBLength = new int[] {
+        5,
+        12,
+        8};
+			this.TBWeight = new int[] {
+        0,
+        0,
+        0};
 			this.Text = "T_NameDialog";
 			this.ResumeLayout(false);
 			this.PerformLayout();

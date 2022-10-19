@@ -268,6 +268,7 @@
 			this.t_ColorPlate1.Alignment = System.Drawing.StringAlignment.Far;
 			this.t_ColorPlate1.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate1.ColorPlate = AE_RemapTria.ColorPlate.KagiBR;
+			this.t_ColorPlate1.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_ColorPlate1.KagiHWeight = 2;
 			this.t_ColorPlate1.KagiVWeight = 2;
@@ -289,6 +290,7 @@
 			this.t_ColorPlate2.Alignment = System.Drawing.StringAlignment.Far;
 			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.ColorPlate = AE_RemapTria.ColorPlate.KagiTL;
+			this.t_ColorPlate2.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_ColorPlate2.KagiHWeight = 2;
 			this.t_ColorPlate2.KagiVWeight = 2;
@@ -330,6 +332,39 @@
 			this.MyFonts = this.t_MyFonts1;
 			this.MyFontSize = 12F;
 			this.Name = "T_AutoInputDialog";
+			this.SideCount = new int[] {
+        4,
+        4,
+        0};
+			this.SideInter = new int[] {
+        10,
+        20,
+        120};
+			this.SideLength = new int[] {
+        4,
+        8,
+        0};
+			this.SideWeight = new int[] {
+        1,
+        2,
+        4};
+			this.TBCenterWeight = 0;
+			this.TBCount = new int[] {
+        4,
+        4,
+        1};
+			this.TBInter = new int[] {
+        10,
+        20,
+        120};
+			this.TBLength = new int[] {
+        5,
+        12,
+        8};
+			this.TBWeight = new int[] {
+        0,
+        0,
+        0};
 			this.Text = "T_AutoInputcs";
 			this.Load += new System.EventHandler(this.T_AutoInputcs_Load);
 			((System.ComponentModel.ISupportInitialize)(this.nbStart)).EndInit();

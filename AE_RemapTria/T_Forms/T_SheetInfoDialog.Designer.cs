@@ -335,6 +335,7 @@
 			this.t_ColorPlate2.Alignment = System.Drawing.StringAlignment.Far;
 			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.ColorPlate = AE_RemapTria.ColorPlate.KagiBR;
+			this.t_ColorPlate2.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_ColorPlate2.KagiHWeight = 2;
 			this.t_ColorPlate2.KagiVWeight = 2;
@@ -378,6 +379,42 @@
 			this.KeyPreview = true;
 			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_SheetInfoDialog";
+			this.SideCenterLength = 12;
+			this.SideCenterWeight = 2;
+			this.SideCount = new int[] {
+        3,
+        3,
+        1};
+			this.SideInter = new int[] {
+        12,
+        24,
+        120};
+			this.SideLength = new int[] {
+        4,
+        8,
+        0};
+			this.SideWeight = new int[] {
+        1,
+        2,
+        4};
+			this.TBCenterLength = 4;
+			this.TBCenterWeight = 2;
+			this.TBCount = new int[] {
+        3,
+        3,
+        1};
+			this.TBInter = new int[] {
+        40,
+        80,
+        320};
+			this.TBLength = new int[] {
+        3,
+        6,
+        3};
+			this.TBWeight = new int[] {
+        1,
+        2,
+        4};
 			this.Text = "T_SheetInfoDialog";
 			this.ResumeLayout(false);
 

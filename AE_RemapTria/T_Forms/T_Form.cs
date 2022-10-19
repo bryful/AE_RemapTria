@@ -12,6 +12,7 @@ namespace AE_RemapTria
 
 	public partial class T_Form : Form
 	{
+		private Bitmap m_Back = Properties.Resources.BackGrad;
 		/// <summary>
 		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
 		/// </summary>
@@ -278,13 +279,15 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);
+			//base.OnPaint(e);
 			Graphics g = e.Graphics;
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			Pen p = new Pen(Color.White);
 			SolidBrush sb = new SolidBrush(Color.Black);
 			try
 			{
+				g.DrawImage(Properties.Resources.Back, new Rectangle(0, 0, this.Width, this.Height));
+
 				int w0 = 5;
 				int w1 = this.Width - 20 - w0;
 				int h0 = 25;

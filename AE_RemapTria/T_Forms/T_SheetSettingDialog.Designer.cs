@@ -815,8 +815,44 @@
 			this.KagiWidth = 60;
 			this.KeyPreview = true;
 			this.Name = "T_SheetSettingDialog";
+			this.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(200)))));
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
+			this.SideCenterLength = 12;
+			this.SideCount = new int[] {
+        2,
+        2,
+        0};
+			this.SideInter = new int[] {
+        20,
+        40,
+        100};
+			this.SideLength = new int[] {
+        4,
+        8,
+        8};
+			this.SideWeight = new int[] {
+        1,
+        2,
+        4};
+			this.TBCenterLength = 12;
+			this.TBCenterWeight = 0;
+			this.TBCount = new int[] {
+        3,
+        3,
+        1};
+			this.TBInter = new int[] {
+        20,
+        40,
+        160};
+			this.TBLength = new int[] {
+        4,
+        8,
+        8};
+			this.TBWeight = new int[] {
+        0,
+        0,
+        0};
 			this.Text = "T_SheetSettingDialog";
 			this.ResumeLayout(false);
 			this.PerformLayout();

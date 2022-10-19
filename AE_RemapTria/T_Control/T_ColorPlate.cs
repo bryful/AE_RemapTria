@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BRY;
 namespace AE_RemapTria
 {
-	public enum ColorPlate
+    public enum ColorPlate
 	{
+		KagiTL = Kagi_Style.TL,
+		KagiTR = Kagi_Style.TR,
+		KagiBL = Kagi_Style.BL,
+		KagiBR = Kagi_Style.BR,
 		Fill,
-		KagiTL,
-		KagiTR,
-		KagiBL,
-		KagiBR,
 		FillDot,
 	}
 	public partial class T_ColorPlate : T_BaseControl
@@ -63,6 +63,11 @@ namespace AE_RemapTria
 				int w = this.Width;
 				int h = this.Height;
 				Rectangle r = new Rectangle(0, 0, w, h);
+				DrawKagiPrm kp = new DrawKagiPrm();
+				kp.HLength = this.Width;
+				kp.HWeight = m_KagiHWeight;
+				kp.VLength = this.Height;
+				kp.VWeight = m_KagiVWeight;
 				g.FillRectangle(sb,r);
 				if( m_Opacity>0)
 				{
@@ -74,68 +79,25 @@ namespace AE_RemapTria
 							g.FillRectangle(sb, r);
 							break;
 						case ColorPlate.KagiTL:
-							w = this.Width;
-							h = m_KagiVWeight;
-							if ((h > 0)&&(w > 0))
-							{
-								r = new Rectangle(0, 0, w, h);
-								g.FillRectangle(sb, r);
-							}
-							w = m_KagiHWeight;
-							h = this.Height - m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(0, m_KagiVWeight, w, h);
-								g.FillRectangle(sb, r);
-							}
+							kp.Loc = new Point(0, 0);
+							kp.Style = Kagi_Style.TL;
+							T_G.DrawKagi(g, sb, kp);
+
 							break;
 						case ColorPlate.KagiTR:
-							w = this.Width;
-							h = m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(0, 0, w, h);
-								g.FillRectangle(sb, r);
-							}
-							w = m_KagiHWeight;
-							h = this.Height - m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(this.Width- m_KagiHWeight, this.m_KagiVWeight, w, h);
-								g.FillRectangle(sb, r);
-							}
+							kp.Loc = new Point(this.Width, 0);
+							kp.Style = Kagi_Style.TR;
+							T_G.DrawKagi(g, sb, kp);
 							break;
 						case ColorPlate.KagiBL:
-							w = this.Width;
-							h = m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(0, this.Height-m_KagiHWeight, w, h);
-								g.FillRectangle(sb, r);
-							}
-							w = m_KagiHWeight;
-							h = this.Height - m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(0, 0, w, h);
-								g.FillRectangle(sb, r);
-							}
+							kp.Loc = new Point(0, this.Height);
+							kp.Style = Kagi_Style.BL;
+							T_G.DrawKagi(g, sb, kp);
 							break;
 						case ColorPlate.KagiBR:
-							w = this.Width;
-							h = m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(0, this.Height-m_KagiVWeight, w, h);
-								g.FillRectangle(sb, r);
-							}
-							w = m_KagiHWeight;
-							h = this.Height - m_KagiVWeight;
-							if ((h > 0) && (w > 0))
-							{
-								r = new Rectangle(this.Width - m_KagiHWeight, 0, w, h);
-								g.FillRectangle(sb, r);
-							}
+							kp.Loc = new Point(this.Width, this.Height);
+							kp.Style = Kagi_Style.BR;
+							T_G.DrawKagi(g, sb, kp); 
 							break;
 						case ColorPlate.FillDot:
 							sb.Color = this.ForeColor;

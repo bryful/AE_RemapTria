@@ -10,11 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AE_RemapTria;
+
 using BRY;
+
 namespace AE_RemapTria
 {
 	public partial class T_BaseDialog : Form
 	{
+
 		private T_Form? m_Form = null;
 		private T_Grid? m_grid = null;
 		private T_MyFonts? m_MyFonts = null;
@@ -131,6 +135,109 @@ namespace AE_RemapTria
 			}
 		}
 		// ************************************************************************
+		private Color m_ScaleColor = Color.FromArgb(255, 100, 100, 200);
+		public Color ScaleColor
+		{
+			get { return m_ScaleColor; }
+			set { m_ScaleColor = value; this.Invalidate(); }
+		}
+		private DrawSCalePrm m_side = new DrawSCalePrm();
+		private DrawSCalePrm m_TB = new DrawSCalePrm();
+		public int SideCenterLength
+		{
+			get { return m_side.CenterLength; }
+			set { m_side.CenterLength = value; this.Invalidate(); }
+		}
+		public int SideCenterWeight
+		{
+			get { return m_side.CenterWeight; }
+			set { m_side.CenterWeight = value; this.Invalidate(); }
+		}
+
+		public int[] SideInter
+		{
+			get { return m_side.Inter; }
+			set
+			{
+				m_side.Inter = value;
+				this.Invalidate();
+			}
+		}
+		public int[] SideWeight
+		{
+			get { return m_side.Weight; }
+			set
+			{
+				m_side.Weight = value;
+				this.Invalidate();
+			}
+		}
+		public int[] SideLength
+		{
+			get { return m_side.Length; }
+			set
+			{
+				m_side.Length = value;
+				this.Invalidate();
+			}
+		}
+		public int[] SideCount
+		{
+			get { return m_side.Count; }
+			set
+			{
+				m_side.Count = value;
+				this.Invalidate();
+			}
+		}
+		public int TBCenterLength
+		{
+			get { return m_TB.CenterLength; }
+			set { m_TB.CenterLength = value; this.Invalidate(); }
+		}
+		public int TBCenterWeight
+		{
+			get { return m_TB.CenterWeight; }
+			set { m_TB.CenterWeight = value; this.Invalidate(); }
+		}
+
+		public int[] TBInter
+		{
+			get { return m_TB.Inter; }
+			set
+			{
+				m_TB.Inter = value;
+				this.Invalidate();
+			}
+		}
+		public int[] TBWeight
+		{
+			get { return m_TB.Weight; }
+			set
+			{
+				m_TB.Weight = value;
+				this.Invalidate();
+			}
+		}
+		public int[] TBLength
+		{
+			get { return m_TB.Length; }
+			set
+			{
+				m_TB.Length = value;
+				this.Invalidate();
+			}
+		}
+		public int[] TBCount
+		{
+			get { return m_TB.Count; }
+			set
+			{
+				m_TB.Count = value;
+				this.Invalidate();
+			}
+		}
+		// ************************************************************************
 		public void Init()
 		{
 
@@ -210,7 +317,7 @@ namespace AE_RemapTria
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			SolidBrush sb = new SolidBrush(this.BackColor);
-			Pen p = new Pen(Color.FromArgb(255, 50, 50, 100));
+			Pen p = new Pen(m_ScaleColor);
 			//if(m_grid == null) return;
 			try
 			{
@@ -218,6 +325,7 @@ namespace AE_RemapTria
 				sb.Color = Color.Black;
 				Fill(g, sb,r);
 				DrawBackImage(g,Properties.Resources.Back);
+				p.Color = this.ForeColor;
 				DrawFrame(g, p);
 
 
@@ -241,42 +349,39 @@ namespace AE_RemapTria
 						y1);
 					Fill(g, sb, r);
 
-					int h = 3;
-					r = new Rectangle(m_Edge.Left, (Height - h) / 2, m_Edge.Width, h);
-					Fill(g, sb, r);
-					r = new Rectangle(
-						Width-(r.Width+m_Edge.Left), 
-						r.Top, 
-						r.Width, r.Height);
-					Fill(g, sb, r);
+					p.Color = m_ScaleColor;
+					m_side.Style = Scale_Style.Left;
+					m_side.Loc = new Point(8, this.Height / 2);
+					T_G.DrawScale(g, p, m_side);
+					m_side.Style = Scale_Style.Right;
+					m_side.Loc = new Point(this.Width-8, this.Height / 2);
+					T_G.DrawScale(g, p, m_side);
+
+					m_TB.Style = Scale_Style.Top;
+					m_TB.Loc = new Point(this.Width/2, 5);
+					T_G.DrawScale(g, p, m_TB);
+					m_TB.Style = Scale_Style.Bottom;
+					m_TB.Loc = new Point(this.Width/2, this.Height-5);
+					T_G.DrawScale(g, p, m_TB);
+
 				}
 
-				if((m_KagiWeight > 0)&&(m_KagiWidth > 0)&&(m_KagiHeight > 0))
+				sb.Color = m_ScaleColor;
+				DrawKagiPrm kp = new DrawKagiPrm();
+				kp.HLength = m_KagiWidth;
+				kp.HWeight = m_KagiWeight;
+				kp.VLength = m_KagiHeight;
+				kp.VWeight = m_KagiWeight;
+				if ((m_KagiWeight > 0)&&(m_KagiWidth > 0)&&(m_KagiHeight > 0))
 				{
-					Rectangle kf = new Rectangle(0, 0, m_KagiWidth, m_KagiWeight);
-					sb.Color = m_EdgeColor;
-					Fill(g, sb, kf);
-					kf.Location = new Point(this.Width - m_KagiWidth, kf.Top);
-					Fill(g, sb, kf);
-					kf.Location = new Point(this.Width - m_KagiWidth, this.Height- m_KagiWeight);
-					Fill(g, sb, kf);
-					kf.Location = new Point(0, this.Height - m_KagiWeight);
-					Fill(g, sb, kf);
-
-					kf.Width = m_KagiWeight;
-					kf.Height = m_KagiHeight- m_KagiWeight;
-					if (kf.Height > 0)
-					{
-						kf.Location = new Point(0, m_KagiWeight);
-						Fill(g, sb, kf);
-						kf.Location = new Point(this.Width - m_KagiWeight, m_KagiWeight);
-						Fill(g, sb, kf);
-						kf.Location = new Point(this.Width - m_KagiWeight, this.Height - m_KagiHeight);
-						Fill(g, sb, kf);
-						kf.Location = new Point(0, this.Height - m_KagiHeight);
-						Fill(g, sb, kf);
-					}
-
+					kp.Loc = new Point(0, 0);
+					T_G.DrawKagi(g, sb, kp, Kagi_Style.TL);
+					kp.Loc = new Point(this.Width, 0);
+					T_G.DrawKagi(g, sb, kp, Kagi_Style.TR);
+					kp.Loc = new Point(0, this.Height);
+					T_G.DrawKagi(g, sb, kp, Kagi_Style.BL);
+					kp.Loc = new Point(this.Width, this.Height);
+					T_G.DrawKagi(g, sb, kp, Kagi_Style.BR);
 				}
 			}
 			finally
