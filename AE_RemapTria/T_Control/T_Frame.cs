@@ -95,7 +95,6 @@ namespace AE_RemapTria
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
 			ChkDot();
-
 			this.Invalidate();
 		}
 		// ********************************************************************

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -88,6 +89,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(CaptionDialog, Keys.Control | Keys.E, "キャプション編集"));
 			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
 			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
+			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -125,6 +127,8 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
 
+			m_Menu.AddSubMenu(2, "AboutDialog");
+			m_Menu.AddSubMenuSepa(2);
 			m_Menu.AddSubMenu(2, "HeightMax");
 		}
 		// ************************************************************************************
@@ -925,6 +929,33 @@ namespace AE_RemapTria
 				m_AutoinputKoam = dlg.Koma;
 				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
 				this.Invalidate();
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			return ret;
+		}
+		public bool AboutDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_AboutDialog dlg = new T_AboutDialog();
+			var dt = File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location);
+			dt = dt + new TimeSpan(9, 0, 0);
+			dlg.Info = "Build:" + dt.ToString();
+			dlg.SetForm(m_Form);
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;

@@ -109,6 +109,7 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		private void Sizes_ChangeDisp(object? sender, EventArgs e)
 		{
+			if (m_Frame != null) m_Frame.Invalidate();
 			this.Invalidate();
 		}
 
@@ -204,10 +205,12 @@ namespace AE_RemapTria
 		{
 			if (m_VScrol != null) {
 				Sizes.DispY = m_VScrol.Value;
+				this.Invalidate();
 			}
 			if (m_HScrol != null)
 			{
 				Sizes.DispX = m_HScrol.Value;
+				this.Invalidate();
 			}
 		}
 

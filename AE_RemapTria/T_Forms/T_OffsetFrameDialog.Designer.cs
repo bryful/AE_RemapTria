@@ -36,6 +36,7 @@
 			this.btnCancel = new AE_RemapTria.T_Button();
 			this.lbMain = new AE_RemapTria.T_Label();
 			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
+			this.t_Arrow1 = new AE_RemapTria.T_Arrow();
 			((System.ComponentModel.ISupportInitialize)(this.nbOffset)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -176,11 +177,30 @@
 			this.t_Zebra1.Text = "t_Zebra1";
 			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.RED;
 			// 
+			// t_Arrow1
+			// 
+			this.t_Arrow1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Arrow1.ArrowDir = BRY.ArrowDir.Right;
+			this.t_Arrow1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Arrow1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.t_Arrow1.IsCut = false;
+			this.t_Arrow1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Arrow1.Location = new System.Drawing.Point(362, 47);
+			this.t_Arrow1.MyFontIndex = 5;
+			this.t_Arrow1.MyFonts = null;
+			this.t_Arrow1.MyFontSize = 9F;
+			this.t_Arrow1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Arrow1.Name = "t_Arrow1";
+			this.t_Arrow1.Size = new System.Drawing.Size(15, 20);
+			this.t_Arrow1.TabIndex = 6;
+			this.t_Arrow1.Text = "t_Arrow1";
+			// 
 			// T_OffsetFrameDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(389, 135);
+			this.Controls.Add(this.t_Arrow1);
 			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.lbMain);
 			this.Controls.Add(this.btnCancel);
@@ -244,5 +264,6 @@
 		private T_Button btnCancel;
 		private T_Label lbMain;
 		private T_Zebra t_Zebra1;
+		private T_Arrow t_Arrow1;
 	}
 }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -22,14 +23,6 @@ namespace BRY
         BL,
         BR
     }
-    public enum Scale_Style
-    {
-        None = 0,
-        Top = 1,
-		Left = 2,
-		Bottom = 4,
-		Right = 8
-	}
 	// ********************************************************
 	public class DrawKagiPrm
     {
@@ -54,6 +47,14 @@ namespace BRY
 
     }
 	// ********************************************************
+	public enum Scale_Style
+	{
+		None = 0,
+		Top = 1,
+		Left = 2,
+		Bottom = 4,
+		Right = 8
+	}
 	public class DrawScaleSubPrm
     {
 		public int Length = 6;
@@ -129,6 +130,29 @@ namespace BRY
 		}
 	}
 
+	public enum ArrowDir
+	{
+		Top,
+		Right,
+		Bottom,
+		Left,
+	}
+	public class DrawArrowPrm
+	{
+		public Point Loc = new Point(0, 0);
+		public int Width = 100;
+		public int Height = 100;
+		public ArrowDir Dir = ArrowDir.Top;
+        public bool IsCut = false;
+		public DrawArrowPrm()
+		{ }
+		public DrawArrowPrm(int w, int h)
+		{
+			Width = w;
+			Height = h;
+		}
+
+	}
 
 
 	// ********************************************************
@@ -263,6 +287,7 @@ namespace BRY
             DrawScale(g, p, sp);
 
 		}
+		// ********************************************************
 		static public void DrawScale(Graphics g,Pen p, DrawSCalePrm sp)
         {
             float pw = p.Width;
@@ -426,7 +451,90 @@ namespace BRY
             g.CompositingMode = cm;
 
 		}
-       
+		// ********************************************************
+  
+		static public void DrawArrow(Graphics g,SolidBrush sb,DrawArrowPrm ap)
+        {
+			Point[] pnts = new Point[0];
+			if (ap.IsCut == false)
+            {
+                pnts = new Point[4];
+
+				switch (ap.Dir)
+                {
+                    case ArrowDir.Top:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X + ap.Width / 2, ap.Loc.Y - ap.Height);
+						pnts[2] = new Point(ap.Loc.X - ap.Width / 2, ap.Loc.Y - ap.Height);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y);
+						break;
+                    case ArrowDir.Right:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y + ap.Width / 2);
+						pnts[2] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y - ap.Width / 2);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y);
+						break;
+                    case ArrowDir.Bottom:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X + ap.Width / 2, ap.Loc.Y + ap.Height);
+						pnts[2] = new Point(ap.Loc.X - ap.Width / 2, ap.Loc.Y + ap.Height);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y);
+                        break;
+                    case ArrowDir.Left:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y + ap.Width / 2);
+						pnts[2] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y - ap.Width / 2);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y);
+
+                        break;
+                }
+            }
+            else
+            {
+				pnts = new Point[7];
+				switch (ap.Dir)
+				{
+					case ArrowDir.Bottom:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+                        pnts[1] = new Point(ap.Loc.X + ap.Width / 2, ap.Loc.Y + ap.Height);
+						pnts[2] = new Point(ap.Loc.X + ap.Width / 4, ap.Loc.Y + ap.Height);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y + ap.Height/2);
+						pnts[4] = new Point(ap.Loc.X - ap.Width / 4, ap.Loc.Y + ap.Height);
+						pnts[5] = new Point(ap.Loc.X - ap.Width / 2, ap.Loc.Y + ap.Height);
+						pnts[6] = pnts[0];
+						break;
+					case ArrowDir.Right:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+                        pnts[1] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y - ap.Width / 2);
+						pnts[2] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y - ap.Width / 4);
+						pnts[3] = new Point(ap.Loc.X + ap.Height/2, ap.Loc.Y);
+						pnts[4] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y + ap.Width / 4);
+						pnts[5] = new Point(ap.Loc.X + ap.Height, ap.Loc.Y + ap.Width / 2);
+                        pnts[6] = pnts[0];
+						break;
+					case ArrowDir.Top:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X + ap.Width / 2, ap.Loc.Y - ap.Height);
+						pnts[2] = new Point(ap.Loc.X + ap.Width / 4, ap.Loc.Y - ap.Height);
+						pnts[3] = new Point(ap.Loc.X, ap.Loc.Y - ap.Height / 2);
+						pnts[4] = new Point(ap.Loc.X - ap.Width / 4, ap.Loc.Y - ap.Height);
+						pnts[5] = new Point(ap.Loc.X - ap.Width / 2, ap.Loc.Y - ap.Height);
+						pnts[6] = pnts[0];
+						break;
+					case ArrowDir.Left:
+						pnts[0] = new Point(ap.Loc.X, ap.Loc.Y);
+						pnts[1] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y - ap.Width / 2);
+						pnts[2] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y - ap.Width / 4);
+						pnts[3] = new Point(ap.Loc.X - ap.Height / 2, ap.Loc.Y);
+						pnts[4] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y + ap.Width / 4);
+						pnts[5] = new Point(ap.Loc.X - ap.Height, ap.Loc.Y + ap.Width / 2);
+						pnts[6] = pnts[0];
+						break;
+				}
+			}
+			g.FillPolygon(sb,pnts);
+
+		}
 
 	}
 }
