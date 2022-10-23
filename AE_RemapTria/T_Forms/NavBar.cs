@@ -93,6 +93,7 @@ namespace AE_RemapTria
 			{
 				this.Visible = false;
 			}
+			this.TopMost = true;
 		}
 
 		// *****************************************************************
@@ -199,7 +200,7 @@ namespace AE_RemapTria
 				m_form.TopMost = false;
 				cbIsFront.Checked = false;
 			}
-
+			this.TopMost = true;
 		}
 		// *****************************************************************
 		private void formActive()

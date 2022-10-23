@@ -750,18 +750,19 @@
 			// 
 			// tbSheetName
 			// 
-			this.tbSheetName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(11)))), ((int)(((byte)(50)))));
+			this.tbSheetName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(20)))), ((int)(((byte)(50)))));
 			this.tbSheetName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSheetName.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.tbSheetName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
+			this.tbSheetName.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.tbSheetName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.tbSheetName.Location = new System.Drawing.Point(214, 55);
 			this.tbSheetName.MyFontIndex = 5;
 			this.tbSheetName.MyFonts = this.t_MyFonts1;
-			this.tbSheetName.MyFontSize = 12F;
+			this.tbSheetName.MyFontSize = 9.75F;
 			this.tbSheetName.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbSheetName.Name = "tbSheetName";
-			this.tbSheetName.Size = new System.Drawing.Size(221, 31);
+			this.tbSheetName.Size = new System.Drawing.Size(221, 26);
 			this.tbSheetName.TabIndex = 26;
+			this.tbSheetName.Text = "dfsdf";
 			this.tbSheetName.Enter += new System.EventHandler(this.tbSheetName_Enter);
 			this.tbSheetName.Leave += new System.EventHandler(this.tbSheetName_Leave);
 			// 
@@ -854,6 +855,7 @@
         0,
         0};
 			this.Text = "T_SheetSettingDialog";
+			this.TransparencyKey = System.Drawing.Color.RosyBrown;
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

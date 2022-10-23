@@ -57,10 +57,47 @@ namespace AE_RemapTria
 		/// <summary>
 		/// ショートカットキー
 		/// </summary>
-		public Keys[] Keys
+		public Keys[] KeyArray
 		{
 			get { return m_Keys; }
-			set { m_Keys = value; }
+			set
+			{
+				m_Keys = value;
+				int l = m_Keys.Length;
+				if (l<2)
+				{
+					Array.Resize(ref m_Keys,2);
+					if (l == 1) m_Keys[1] = Keys.None;
+					if (l == 0) m_Keys[0] = Keys.None;
+				}
+			}
+		}
+		public Keys KeysFirst
+		{
+			get { return m_Keys[0]; }
+			set { m_Keys[0] = value; }
+		}
+		public Keys KeysSecond
+		{
+			get { return m_Keys[1]; }
+			set { m_Keys[1] = value; }
+		}
+		public Keys GetKey(int idx)
+		{
+			if ((idx >= 0) && (idx < m_Keys.Length)) {
+				return m_Keys[idx];
+			}
+			else
+			{
+				return Keys.None;
+			}
+		}
+		public void SetKey(int idx,Keys k)
+		{
+			if ((idx >= 0) && (idx < m_Keys.Length))
+			{
+				m_Keys[idx] = k;
+			}
 		}
 		public FuncItem(FuncType fnc, Keys[] keys)
 		{
@@ -75,7 +112,7 @@ namespace AE_RemapTria
 			Func = fnc;
 			m_EngName = fnc.Method.Name;
 			JapName = JapN;
-			m_Keys = new Keys[] { key };
+			m_Keys = new Keys[] { key,Keys.None };
 		}
 		public FuncItem(FuncType fnc, Keys key0, Keys key1, string japN = "")
 		{
@@ -83,6 +120,24 @@ namespace AE_RemapTria
 			m_EngName = fnc.Method.Name;
 			JapName = japN;
 			m_Keys = new Keys[] { key0,key1 };
+		}
+		public FuncItem(FuncItem item)
+		{
+			Copy(item);
+		}
+		public void Copy(FuncItem item)
+		{
+			Func = item.Func;
+			m_EngName = item.EngName;
+			JapName = item.JapName;
+			m_Keys = new Keys[item.KeyArray.Length];
+			if(item.KeyArray.Length > 0)
+			{
+				for (int i=0; i< item.KeyArray.Length;i++)
+				{
+					m_Keys[i] = item.m_Keys[i];
+				}
+			}
 		}
 		/// <summary>
 		/// 同じショートカットキーがあるか
@@ -114,6 +169,27 @@ namespace AE_RemapTria
 	public class T_Funcs
 	{
 		private  FuncItem[] m_FuncItems = new FuncItem[0];
+		public FuncItem[] FuncItems
+		{
+			get { return m_FuncItems; }
+			set { m_FuncItems = value; }
+		}
+		public FuncItem? Items(int idx)
+		{
+			FuncItem? ret = null;
+			if((idx>=0)&&(idx< m_FuncItems.Length))
+			{
+				ret = m_FuncItems[idx];
+			}
+			return ret;
+		}
+		public void SetItems(int idx,FuncItem f)
+		{
+			if ((idx >= 0) && (idx < m_FuncItems.Length))
+			{
+				m_FuncItems[idx]=f;
+			}
+		}
 		public int Count
 		{
 			get
@@ -122,9 +198,41 @@ namespace AE_RemapTria
 			}
 		}
 		// ********************************************************************
+		public string[] Names
+		{
+			get
+			{
+				string[] ret = new string[m_FuncItems.Length];
+				if(m_FuncItems.Length>0)
+				{
+					for(int i=0; i< m_FuncItems.Length;i++)
+					{
+						if ((m_FuncItems[i] != null) && (m_FuncItems[i].Func != null)){
+							ret[i] = m_FuncItems[i].Func.Method.Name;
+						}
+					}
+				}
+				return ret;
+			}
+		}
+		// ********************************************************************
 		public T_Funcs()
 		{
 			m_FuncItems = new FuncItem[0]; ;
+		}
+		// ********************************************************************
+		public void CopyFrom(T_Funcs f)
+		{
+			m_FuncItems = new FuncItem[ f.m_FuncItems.Length];
+			if(f.m_FuncItems.Length>0)
+			{
+				for(int i=0; i<f.m_FuncItems.Length;i++)
+				{
+
+					m_FuncItems[i] = new FuncItem(f.m_FuncItems[i]);
+				}
+			}
+
 		}
 		// ********************************************************************
 		/// <summary>
@@ -212,9 +320,9 @@ namespace AE_RemapTria
 				jo2.Add("name", item.EngName);
 				jo2.Add("jap", item.JapName);
 				JsonArray ja2 = new JsonArray();
-				if(item.Keys.Length>0)
+				if(item.KeyArray.Length>0)
 				{
-					foreach(Keys k in item.Keys)
+					foreach(Keys k in item.KeyArray)
 					{
 						ja2.Add(k);
 					}
@@ -292,7 +400,7 @@ namespace AE_RemapTria
 							if(idx>=0)
 							{
 								m_FuncItems[idx].JapName = jnames[i];
-								m_FuncItems[idx].Keys = ks[i];
+								m_FuncItems[idx].KeyArray = ks[i];
 							}
 						}
 					}

@@ -90,6 +90,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
 			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
 			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
+			lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -128,6 +129,7 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "ToggleFrameEnabled");
 
 			m_Menu.AddSubMenu(2, "AboutDialog");
+			m_Menu.AddSubMenu(2, "KeyBindDialog");
 			m_Menu.AddSubMenuSepa(2);
 			m_Menu.AddSubMenu(2, "HeightMax");
 		}
@@ -572,6 +574,7 @@ namespace AE_RemapTria
 				}
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 		public bool Save(string p)
@@ -667,6 +670,7 @@ namespace AE_RemapTria
 			{
 				m_Form.TopMost = b;
 			}
+			dlg.Dispose();
 			return ret;
 		}
 		public bool Open(string p)
@@ -719,6 +723,7 @@ namespace AE_RemapTria
 				ret =CellData.InsertCell(dlg.ValueText);
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 		public bool FrameInsert()
@@ -868,6 +873,7 @@ namespace AE_RemapTria
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 		public bool OffsetFrameDialog()
@@ -895,6 +901,7 @@ namespace AE_RemapTria
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 		private int m_AutoinputStert = 1;
@@ -932,6 +939,7 @@ namespace AE_RemapTria
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 		public bool AboutDialog()
@@ -959,6 +967,33 @@ namespace AE_RemapTria
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
+			return ret;
+		}
+		public bool KeyBindDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_KeyBindDialog dlg = new T_KeyBindDialog();
+			dlg.SetFuncs(Funcs);
+			dlg.SetForm(m_Form);
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
 			return ret;
 		}
 	}

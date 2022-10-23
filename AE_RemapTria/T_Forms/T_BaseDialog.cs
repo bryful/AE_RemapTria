@@ -247,8 +247,8 @@ namespace AE_RemapTria
 				ControlStyles.AllPaintingInWmPaint |
 				ControlStyles.SupportsTransparentBackColor,
 				true);
-			this.BackColor = Color.Transparent;
-			this.TransparencyKey = Color.Transparent;
+			//this.BackColor = Color.Transparent;
+			//this.TransparencyKey = Color.Transparent;
 			this.UpdateStyles();
 			Alignment = StringAlignment.Far;
 			LineAlignment = StringAlignment.Center;

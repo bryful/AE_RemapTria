@@ -10,6 +10,10 @@ namespace BRY
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
+	/// <summary>
+	/// After EffectsとJsonでデータのやりとりするためのクラス
+	/// toSource()形式のJsonも扱える
+	/// </summary>
 	public class AEJson
 	{
 		private JsonObject? m_data = new JsonObject();
@@ -51,6 +55,11 @@ namespace BRY
 			}
 			return ret;
 		}
+		/// <summary>
+		/// JsonをtoSource()形式のフォーマットに変換
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		static public string ToAEJson(string s)
 		{
 			string ret = "";
@@ -102,6 +111,11 @@ namespace BRY
 			if (block != "") ret += block;
 			return ret;
 		}
+		/// <summary>
+		/// toSource形式のデータを通常Jsonに変換
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		static public string FromAEJson(string s)
 		{
 			string ret = "";
@@ -159,6 +173,9 @@ namespace BRY
 			return ret;
 		}
 
+		/// <summary>
+		/// 特に何もしていない
+		/// </summary>
 		public AEJson()
 		{
 

@@ -81,19 +81,50 @@ namespace AE_RemapTria
 		{
 
 			this.SetStyle(
-				ControlStyles.DoubleBuffer |
-				//ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint |
+				ControlStyles.DoubleBuffer|
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
 				ControlStyles.SupportsTransparentBackColor,
 				true);
 			this.UpdateStyles();
 
 		}
-		/*
+		protected override void OnPaintBackground(PaintEventArgs pevent)
+		{
+			Graphics g = pevent.Graphics;
+			//base.OnPaintBackground(pevent);
+			SolidBrush b = new SolidBrush(this.BackColor);
+			try
+			{
+				Rectangle r = this.ClientRectangle;
+				g.FillRectangle(b, r);
+			}
+			finally
+			{
+				b.Dispose();
+			}
+
+		}
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			base.OnPaint(pe);
+			//base.OnPaint(pe);
+			Graphics g = pe.Graphics;
+			SolidBrush b = new SolidBrush(this.BackColor);
+			try
+			{
+				Rectangle r = this.ClientRectangle;
+				b.Color = this.ForeColor;
+				g.DrawString(this.Text, this.Font, b,r);
+
+			}
+			finally
+			{
+				b.Dispose();
+			}
+
+			//文字列を描画する
 		}
-		*/
+		
+		
 	}
 }

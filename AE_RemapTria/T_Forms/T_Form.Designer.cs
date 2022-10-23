@@ -35,7 +35,7 @@
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackgroundImage = global::AE_RemapTria.Properties.Resources.Back;
+			this.BackColor = System.Drawing.Color.DimGray;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(400, 400);
 			this.DoubleBuffered = true;

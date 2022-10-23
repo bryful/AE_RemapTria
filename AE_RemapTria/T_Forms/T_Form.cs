@@ -104,6 +104,8 @@ namespace AE_RemapTria
 			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
 			{
 				ToCenter();
+				m_navBar.IsFront = true;
+				m_navBar.TopMost = true;
 			}
 			else
 			{
