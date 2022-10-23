@@ -158,6 +158,32 @@ namespace BRY
 	// ********************************************************
 	public class T_G
     {
+        static public string KeyInfo(Keys k)
+        {
+            string ret = "";
+
+            Keys up = (Keys)((uint)k & 0xFFFF0000);
+			Keys lo = (Keys)((uint)k & 0x0000FFFF);
+
+            if( (up & Keys.Shift)== Keys.Shift)
+			{
+                ret += "Shift";
+            }
+			if ((up & Keys.Control) == Keys.Control)
+            {
+                if (ret != "") ret += "+";
+				ret += "Control";
+			}
+			if ((up & Keys.Alt) == Keys.Alt)
+			{
+				if (ret != "") ret += "+";
+				ret += "Alt";
+			}
+			if (ret != "") ret += "+";
+            ret += lo.ToString();
+
+            return ret;
+		}
 		// ********************************************************
 		static public void DrawKagi(
             Graphics g,

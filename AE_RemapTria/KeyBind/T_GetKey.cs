@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BRY;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -108,8 +109,15 @@ namespace AE_RemapTria
 				StringFormat sf = new StringFormat();
 				sf.Alignment = StringAlignment.Center;
 				sf.LineAlignment = StringAlignment.Center;
-				string str = m_key.ToString();
-				if (m_errStr != "") str = m_errStr;
+				string str =  "";
+				if (m_errStr != "")
+				{
+					str = m_errStr;
+				}
+				else
+				{
+					str = T_G.KeyInfo(m_key);
+				}
 				g.DrawString(str, this.Font, sb, r, sf);
 				g.DrawRectangle(p, r);
 

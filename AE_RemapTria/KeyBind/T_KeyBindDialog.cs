@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BRY;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -77,7 +78,7 @@ namespace AE_RemapTria
 
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				btn.Text = dlg.Key.ToString();
+				btn.Text = T_G.KeyInfo(dlg.Key);
 				Funcs.FuncItems[sidx].SetKey(btnID, dlg.Key);
 			}
 			else
@@ -96,7 +97,7 @@ namespace AE_RemapTria
 				tbJap.Text = f.JapName;
 				if (f.KeyArray.Length >= 1)
 				{
-					btnGetKey1.Text = f.KeyArray[0].ToString();
+					btnGetKey1.Text = T_G.KeyInfo(f.KeyArray[0]);
 				}
 				else
 				{
@@ -104,7 +105,7 @@ namespace AE_RemapTria
 				}
 				if (f.KeyArray.Length >= 2)
 				{
-					btnGetKey2.Text = f.KeyArray[1].ToString();
+					btnGetKey2.Text = T_G.KeyInfo(f.KeyArray[1]);
 				}
 				else
 				{
