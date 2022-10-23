@@ -42,7 +42,6 @@
 			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.t_Zebra2 = new AE_RemapTria.T_Zebra();
 			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
-			this.t_FuncList1 = new AE_RemapTria.T_FuncList();
 			this.SuspendLayout();
 			// 
 			// t_ListBox1
@@ -69,7 +68,7 @@
         "",
         ""};
 			this.t_ListBox1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
-			this.t_ListBox1.Size = new System.Drawing.Size(88, 344);
+			this.t_ListBox1.Size = new System.Drawing.Size(160, 344);
 			this.t_ListBox1.TabIndex = 0;
 			this.t_ListBox1.SelectedIndexChanged += new System.EventHandler(this.t_ListBox1_SelectedIndexChanged);
 			// 
@@ -315,36 +314,11 @@
 			this.t_ColorPlate1.TabIndex = 15;
 			this.t_ColorPlate1.Text = "t_ColorPlate1";
 			// 
-			// t_FuncList1
-			// 
-			this.t_FuncList1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(30)))));
-			this.t_FuncList1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.t_FuncList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_FuncList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.t_FuncList1.FormattingEnabled = true;
-			this.t_FuncList1.ItemHeight = 19;
-			this.t_FuncList1.Items.AddRange(new object[] {
-            "",
-            ""});
-			this.t_FuncList1.Location = new System.Drawing.Point(160, 41);
-			this.t_FuncList1.MyFontIndex = 5;
-			this.t_FuncList1.MyFonts = this.t_MyFonts1;
-			this.t_FuncList1.MyFontSize = 12F;
-			this.t_FuncList1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_FuncList1.Name = "t_FuncList1";
-			this.t_FuncList1.Names = new string[] {
-        "",
-        ""};
-			this.t_FuncList1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
-			this.t_FuncList1.Size = new System.Drawing.Size(66, 346);
-			this.t_FuncList1.TabIndex = 16;
-			// 
 			// T_KeyBindDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(433, 406);
-			this.Controls.Add(this.t_FuncList1);
 			this.Controls.Add(this.t_ColorPlate1);
 			this.Controls.Add(this.t_Zebra2);
 			this.Controls.Add(this.t_Zebra1);
@@ -421,7 +395,6 @@
 		private T_Zebra t_Zebra1;
 		private T_Zebra t_Zebra2;
 		private T_ColorPlate t_ColorPlate1;
-		private T_FuncList t_FuncList1;
 		private TextBox textBox1;
 	}
 }

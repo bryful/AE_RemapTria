@@ -36,7 +36,7 @@ namespace AE_RemapTria
 		{
 			Funcs.CopyFrom(fs);
 			t_ListBox1.Names = fs.Names;
-			t_FuncList1.SetFuncs(fs);
+			//t_FuncList1.SetFuncs(fs);
 		}
 		private void btnOK_Click(object sender, EventArgs e)
 		{
