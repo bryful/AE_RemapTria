@@ -127,6 +127,12 @@ namespace AE_RemapTria
 					{
 						m_grid.OpenBackup(bp);
 					}
+					string kp = Path.Combine(pf.Dir, T_Grid.KeyBaindName);
+					if(m_grid.Funcs.Load(kp))
+					{
+						m_grid.UpdateMenu();
+						m_grid.KeyBaindFile = kp;
+					}
 				}
 				if(m_navBar!=null)
 				{
@@ -151,8 +157,11 @@ namespace AE_RemapTria
 				if (m_grid != null)
 				{
 					m_grid.SaveBackup(Path.Combine(pf.Dir, "backup.ardj.json"));
+					string kp = Path.Combine(pf.Dir, T_Grid.KeyBaindName);
+					m_grid.Funcs.Save(kp);
+
 				}
-				if(m_navBar!=null)
+				if (m_navBar!=null)
 				{
 					pf.SetValue("IsFront", m_navBar.IsFront);
 				}

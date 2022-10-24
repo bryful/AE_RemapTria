@@ -95,9 +95,16 @@ namespace AE_RemapTria
 			Funcs.SetFuncItems(lst.ToArray());
 		}
 		// ************************************************************************************
+		public void UpdateMenu()
+		{
+			if (m_Menu == null) return;
+			m_Menu.UpdateMenu();
+		}
+		// ************************************************************************************
 		public void MakeMenu()
 		{
 			if (m_Menu == null) return;
+			m_Menu.ClearMenu();
 			m_Menu.AddMenu("AE_Remapτρία", 93);
 			m_Menu.AddMenu("Edit", 40);
 			m_Menu.AddMenu("Windw", 50);
@@ -990,6 +997,8 @@ namespace AE_RemapTria
 			}
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
+				Funcs.CopyFrom(dlg.Funcs);
+				MakeMenu();
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;

@@ -66,6 +66,9 @@ namespace AE_RemapTria
 			m_Form = fm;
 		}
 		public string FileName = "";
+		public string KeyBaindFile = "";
+		public const  string KeyBaindName = "AE_Remap_key.json";
+
 		// ************************************************************************************
 		public T_Grid()
 		{

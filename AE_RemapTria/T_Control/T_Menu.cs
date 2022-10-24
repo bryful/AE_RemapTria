@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,7 +25,7 @@ namespace AE_RemapTria
 	{
 		private int m_Id = -1;
 		public int Id { get { return m_Id; } }
-		public string Caption {
+		public string EngName {
 			get 
 			{
 				if (m_funcItem != null)
@@ -37,6 +38,25 @@ namespace AE_RemapTria
 				}
 
 			}
+		}
+		public string Caption
+		{
+			get
+			{
+				if (m_funcItem != null)
+				{
+					return m_funcItem.Caption;
+				}
+				else
+				{
+					return "";
+				}
+
+			}
+		}
+		public Keys Key
+		{
+			get { return m_funcItem.KeysFirst; }
 		}
 		private FuncItem m_funcItem;
 		public T_SubMenuItem(FuncItem fnc, int id)
@@ -114,11 +134,58 @@ namespace AE_RemapTria
 
 		}
 		// ****************************************************************
+		public void ClearMenu()
+		{
+			if (m_SubMenuItems.Length > 0)
+			{
+
+				for (int i = 0; i < m_Submenu.Length; i++)
+				{
+
+					if (m_Submenu[i].Items.Count > 0)
+					{
+						for (int j = 0; j < m_Submenu[i].Items.Count; j++)
+						{
+							m_Submenu[i].Items[j].Dispose();
+						}
+					}
+					m_Submenu[i].Items.Clear();
+				}
+			}
+			m_MenuItems = new T_MenuItem[0];
+			m_SubMenuItems = new T_SubMenuItem[0];
+			m_Submenu = new ContextMenuStrip[0];
+		}
+		// ****************************************************************
+		public void UpdateMenu()
+		{
+			if(m_SubMenuItems.Length>0)
+			{
+				for(int i = 0; i < m_Submenu.Length; i++)
+				{
+					if (m_Submenu[i].Items.Count>0)
+					{
+						for (int j = 0; j < m_Submenu[i].Items.Count; j++)
+						{
+							int idx = (int)m_Submenu[i].Items[j].Tag;
+							if (idx >= 0) {
+
+								m_Submenu[i].Items[j].Text = m_SubMenuItems[idx].Caption;
+								((ToolStripMenuItem)m_Submenu[i].Items[j]).ShortcutKeys = m_SubMenuItems[idx].Key;
+							}
+						}
+
+					}
+				}
+			}
+		}
+		// ****************************************************************
 		public void AddSubMenuSepa(int idx)
 		{
 			ToolStripSeparator sepa = new ToolStripSeparator();
 			sepa.BackColor = Color.FromArgb(25, 25, 50);
 			sepa.ForeColor = Color.FromArgb(200, 200, 250);
+			sepa.Tag = -1;
 			m_Submenu[idx].Items.Add(sepa);
 		}
 

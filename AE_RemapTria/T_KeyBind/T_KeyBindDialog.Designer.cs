@@ -87,6 +87,7 @@
 			this.tbJap.Size = new System.Drawing.Size(158, 27);
 			this.tbJap.TabIndex = 5;
 			this.tbJap.Text = "456";
+			this.tbJap.TextChanged += new System.EventHandler(this.tbJap_TextChanged);
 			// 
 			// btnOK
 			// 
@@ -97,7 +98,6 @@
 			this.btnOK.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnOK.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.btnOK.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnOK.Enabled = false;
 			this.btnOK.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnOK.Id = 0;

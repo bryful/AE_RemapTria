@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 namespace BRY
 {
@@ -519,7 +521,12 @@ namespace BRY
 		// ****************************************************
 		public string ToJson(bool isAE=false)
 		{
-			string js= m_data.ToJsonString();
+			var options = new JsonSerializerOptions
+			{
+				Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+				//WriteIndented = true
+			};
+			string js= m_data.ToJsonString(options);
 			if (isAE)
 			{
 				js= ToAEJson(js);
@@ -575,7 +582,7 @@ namespace BRY
 			try
 			{
 				string js = ToJson(isAE);
-				File.WriteAllText(p, js, Encoding.GetEncoding("utf-8"));
+				File.WriteAllText(p, js);
 				ret = true;
 				_filePath = p;
 			}

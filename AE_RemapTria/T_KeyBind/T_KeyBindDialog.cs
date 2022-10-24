@@ -113,5 +113,14 @@ namespace AE_RemapTria
 				}
 			}
 		}
+
+		private void tbJap_TextChanged(object sender, EventArgs e)
+		{
+			int idx = t_ListBox1.SelectedIndex;
+			if (( idx>= 0)&&(Funcs.Count>0))
+			{
+				Funcs.SetJapName(idx, tbJap.Text);
+			}
+		}
 	}
 }

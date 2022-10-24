@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Unicode;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AE_RemapTria
 {
@@ -62,14 +65,12 @@ namespace AE_RemapTria
 			get { return m_Keys; }
 			set
 			{
-				m_Keys = value;
-				int l = m_Keys.Length;
-				if (l<2)
-				{
-					Array.Resize(ref m_Keys,2);
-					if (l == 1) m_Keys[1] = Keys.None;
-					if (l == 0) m_Keys[0] = Keys.None;
-				}
+				m_Keys = new Keys[2];
+				m_Keys[1] = Keys.None;
+				m_Keys[0] = Keys.None;
+				if (value.Length >= 1) m_Keys[0] = value[0];
+				if (value.Length >= 2) m_Keys[1] = value[1];
+				
 			}
 		}
 		public Keys KeysFirst
@@ -106,6 +107,11 @@ namespace AE_RemapTria
 			m_EngName = fnc.Method.Name;
 			JapName = "";
 			m_Keys = keys;
+			if(m_Keys.Length==1)
+			{
+				Array.Resize(ref m_Keys, 2);
+				m_Keys[1] = Keys.None;
+			}
 		}
 		public FuncItem(FuncType fnc, Keys key, string JapN="")
 		{
@@ -188,6 +194,13 @@ namespace AE_RemapTria
 			if ((idx >= 0) && (idx < m_FuncItems.Length))
 			{
 				m_FuncItems[idx]=f;
+			}
+		}
+		public void SetJapName(int idx,string js)
+		{
+			if ((idx >= 0) && (idx < m_FuncItems.Length))
+			{
+				m_FuncItems[idx].JapName =js;
 			}
 		}
 		public int Count
@@ -324,15 +337,19 @@ namespace AE_RemapTria
 				{
 					foreach(Keys k in item.KeyArray)
 					{
-						ja2.Add(k);
+						ja2.Add((int)k);
 					}
 				}
 				jo2.Add("keys", ja2);
 				ja.Add(jo2);
 			}
 			jo.Add("funcList", ja);
-			//JsonSerializerOptions options = new() { WriteIndented = true };
-			return jo.ToJsonString();
+			var options = new JsonSerializerOptions
+			{
+				Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+				WriteIndented = true
+			};
+			return jo.ToJsonString(options);
 		}
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
 		public bool FromJson(string json)
@@ -378,14 +395,15 @@ namespace AE_RemapTria
 						Keys[] kk = new Keys[0];
 						if(jn.ContainsKey(key))
 						{
-							int[] a = jn[key].GetValue<int[]>();
-							if(a.Length>0)
+							JsonArray ja2 = jn[key].AsArray();
+							if(ja2.Count>0)
 							{
-								kk = new Keys[a.Length];
-								for(int i=0; i<a.Length; i++)
-								{
-									kk[i] = (Keys)a[i];
-								}
+								kk = new Keys[2];
+								kk[0] = Keys.None;
+								kk[1] = Keys.None;
+								if (ja2.Count >= 1) kk[0] = (Keys)ja2[0].GetValue<int>();
+								if (ja2.Count >= 2) 
+									kk[1] = (Keys)ja2[1].GetValue<int>();
 							}
 						}
 						names.Add(nm);
@@ -405,6 +423,45 @@ namespace AE_RemapTria
 						}
 					}
 					ret = true;
+				}
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// **********************
+		public bool Save(string p)
+		{
+			bool ret = false;
+			try
+			{
+				if(File.Exists(p)) File.Delete(p);
+				Encoding enc = new UTF8Encoding(false);
+				File.WriteAllText(p, ToJson(),enc);
+				ret = File.Exists(p);
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		public bool Load(string p)
+		{
+			bool ret = false;
+
+			try
+			{
+				if (File.Exists(p) == true)
+				{
+					Encoding enc = new UTF8Encoding(false);
+					string str = File.ReadAllText(p,enc);
+					if (str != "")
+					{
+						ret = FromJson(str);
+					}
 				}
 			}
 			catch
