@@ -123,7 +123,7 @@ namespace AE_RemapTria
 			return ret;
 		}
 		// ***************************************************************************
-		public bool Open(string p)
+		public bool Load(string p)
 		{
 			bool ret = false;
 			if (File.Exists(p) == false) return ret;

@@ -343,6 +343,66 @@ namespace AE_RemapTria.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap HVS_Arrow_Bottom {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Arrow_Bottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HVS_Arrow_Bottom_down {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Arrow_Bottom_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HVS_Arrow_Top {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Arrow_Top", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HVS_Arrow_Top_down {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Arrow_Top_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HVS_Cursol {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Cursol", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HVS_Cursol_down {
+            get {
+                object obj = ResourceManager.GetObject("HVS_Cursol_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Kagi00 {
             get {
                 object obj = ResourceManager.GetObject("Kagi00", resourceCulture);

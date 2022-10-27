@@ -18,7 +18,6 @@ namespace AE_RemapTria
 {
 	public partial class T_BaseDialog : Form
 	{
-
 		private T_Form? m_Form = null;
 		private T_Grid? m_grid = null;
 		private T_MyFonts? m_MyFonts = null;
@@ -238,6 +237,13 @@ namespace AE_RemapTria
 			}
 		}
 		// ************************************************************************
+		private bool m_CanReSize = false;
+		public bool CanReSize
+		{
+			get { return m_CanReSize; }
+			set { m_CanReSize = value; }
+		}
+		// ************************************************************************
 		public void Init()
 		{
 
@@ -287,11 +293,22 @@ namespace AE_RemapTria
 		}
 		private Point m_MD = new Point(0, 0);
 		private Point m_MDF = new Point(0, 0);
-
+		private int m_MD_Mode = 0;
+		private Size m_MD_Size = new Size(0, 0);
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
+				if((e.X>this.Width-25)&& (e.Y > this.Height - 25)&&(m_CanReSize==true))
+				{
+					m_MD_Mode = 2;
+					m_MD_Size = new Size(this.Width, this.Height);
+					this.Invalidate();
+				}
+				else
+				{
+					m_MD_Mode = 1;
+				}
 				m_MD = e.Location;
 			}
 			base.OnMouseDown(e);
@@ -302,7 +319,13 @@ namespace AE_RemapTria
 			{
 				int ax = e.X - m_MD.X;
 				int ay = e.Y - m_MD.Y;
-				this.Location = new Point(ax+this.Left, ay+this.Top);
+				if (m_MD_Mode == 1)
+				{
+					this.Location = new Point(ax + this.Left, ay + this.Top);
+				}else if(m_MD_Mode==2)
+				{
+					this.Size = new Size(ax + m_MD_Size.Width, ay + m_MD_Size.Height);
+				}
 				/*if(m_Form != null)
 				{
 					m_Form.Location = new Point(ax + m_Form.Left, ay + m_Form.Top);
@@ -310,6 +333,25 @@ namespace AE_RemapTria
 			}
 			base.OnMouseMove(e);
 		}
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			if(m_MD_Mode!=0)
+			{
+				m_MD_Mode = 0;
+				this.Invalidate();
+			}
+			base.OnMouseUp(e);
+		}
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			if (m_MD_Mode != 0)
+			{
+				m_MD_Mode = 0;
+				this.Invalidate();
+			}
+			base.OnMouseLeave(e);
+		}
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			//base.OnPaint(e);
@@ -325,6 +367,13 @@ namespace AE_RemapTria
 				sb.Color = Color.Black;
 				Fill(g, sb,r);
 				DrawBackImage(g,Properties.Resources.Back);
+				if(m_MD_Mode==2)
+				{
+					sb.Color= Color.FromArgb(64, m_EdgeColor.R, m_EdgeColor.G, m_EdgeColor.B);
+					r = new Rectangle(this.Width-25, this.Height-25, 25, 25);
+					g.FillRectangle(sb,r);	
+				}
+
 				p.Color = this.ForeColor;
 				DrawFrame(g, p);
 

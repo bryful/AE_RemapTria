@@ -91,6 +91,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
 			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
 			lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
+			lst.Add(new FuncItem(OpenSaveDialog, Keys.Control | Keys.T, "FileDialogのテスト"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -999,6 +1000,32 @@ namespace AE_RemapTria
 			{
 				Funcs.CopyFrom(dlg.Funcs);
 				MakeMenu();
+				ret = true;
+			}
+			if (m_Form != null) m_Form.TopMost = b;
+			dlg.Dispose();
+			return ret;
+		}
+		public bool OpenSaveDialog()
+		{
+			bool ret = false;
+			if (m_Form == null) return false;
+			m_Form.ForegroundWindow();
+			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
+			//dlg.SetFuncs(Funcs);
+			dlg.SetForm(m_Form);
+			dlg.Location = new Point(
+				m_Form.Left + 20,
+				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			if (m_Form != null)
+			{
+				b = m_Form.TopMost;
+				m_Form.TopMost = false;
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;

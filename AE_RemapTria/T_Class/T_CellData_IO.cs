@@ -207,6 +207,16 @@ namespace AE_RemapTria
 			T_Ardj t_Ardj = new T_Ardj(this);
 			return t_Ardj.Load(p);
 		}
+		public bool LoadFromArd(string p)
+		{
+			T_ARD t_Ard = new T_ARD(this);
+			return t_Ard.Load(p);
+		}
+		public bool LoadFromSTS(string p)
+		{
+			T_STS t_sts = new T_STS(this);
+			return t_sts.Load(p);
+		}
 		public bool Save(string p)
 		{
 			bool ret = false;
@@ -219,9 +229,21 @@ namespace AE_RemapTria
 		public bool Load(string p)
 		{
 			bool ret = false;
-			if (p != "")
+			if (File.Exists(p))
 			{
-				ret =  LoadFromArdj(p);
+				switch (T_F.ChkFileType(p))
+				{
+					case FileType.Ardj:
+						ret = LoadFromArdj(p);
+						break;
+					case FileType.Ard:
+						ret = LoadFromArd(p);
+						break;
+					case FileType.STS:
+						ret = LoadFromSTS(p);
+						break;
+				}
+
 			}
 			return ret;
 		}

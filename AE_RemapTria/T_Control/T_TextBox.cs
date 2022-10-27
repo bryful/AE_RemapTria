@@ -82,10 +82,10 @@ namespace AE_RemapTria
 
 			this.SetStyle(
 				ControlStyles.DoubleBuffer|
-				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint|
-				ControlStyles.SupportsTransparentBackColor,
-				true);
+				//ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint,
+				//ControlStyles.SupportsTransparentBackColor,
+								true);
 			this.UpdateStyles();
 
 		}

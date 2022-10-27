@@ -202,6 +202,24 @@
   <data name="CellArrowNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CellArrowNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="HVS_Arrow_Bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Arrow_Bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HVS_Arrow_Bottom_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Arrow_Bottom_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HVS_Arrow_Top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Arrow_Top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HVS_Arrow_Top_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Arrow_Top_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HVS_Cursol" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Cursol.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HVS_Cursol_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HVS_Cursol_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Kagi00" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Kagi00.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
