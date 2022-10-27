@@ -81,32 +81,33 @@ namespace AE_RemapTria
 				m_SelectedIndex = idx;
 				if((m_FList!=null)&&(m_SelectedIndex>=0))
 				{
-					m_FList.Folder = CurrentDir.FullName;
+					m_FList.FullName = FullName;
 					this.Invalidate();
 				}
 			}
 		}
-		public DirectoryInfo? CurrentDir
+		public string FullName
 		{
 			get 
 			{
 				if ((m_SelectedIndex >= 0) && (m_SelectedIndex < m_drives.Length))
 				{
-					return m_drives[m_SelectedIndex].CurrentDir;
+					return m_drives[m_SelectedIndex].FullName;
 				}
 				else
 				{
-					return null;
+					return "";
 				}
 			}
 			set
 			{
 
 				int idx = -1;
-				
-				if ((value!=null)&&(value.Exists ==true))
+				if ((value == null)|| (value == "")) return;
+				DirectoryInfo di = new DirectoryInfo(value);
+				if (di.Exists ==true)
 				{
-					char s = value.Name.Substring(0, 1).ToUpper()[0];
+					char s = di.FullName.Substring(0, 1).ToUpper()[0];
 					for (int i = 0; i < m_drives.Length; i++)
 					{
 						if (m_drives[i].DriveLetter == s)
@@ -115,14 +116,14 @@ namespace AE_RemapTria
 							break;
 						}
 					}
-					if(value.FullName != m_drives[idx].FullName)
+					if(di.FullName != m_drives[idx].FullName)
 					{
 						m_drives[idx].SetDir(value);
 						SetSelectedIndex(idx);
 					}
 
 				}
-				this.Invalidate();
+				//this.Invalidate();
 			}
 		}
 		public T_DriveList()
@@ -130,6 +131,10 @@ namespace AE_RemapTria
 			//this.Size = new Size(200, 40);
 			this.ForeColor = Color.FromArgb(200, 200, 250);
 			InitializeComponent();
+			GetDrives();
+		}
+		public void ReLoad()
+		{
 			GetDrives();
 		}
 		private void GetDrives()
@@ -146,6 +151,8 @@ namespace AE_RemapTria
 				idx++;
 			}
 			m_drives = list.ToArray();
+			if ((m_SelectedIndex<0)&&(m_drives.Length > 0)) m_SelectedIndex = 0;
+			this.Invalidate();
 		}
 		// *****************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -162,8 +169,7 @@ namespace AE_RemapTria
 			}
 			if ((idx >= 0) && (idx < m_drives.Length))
 			{
-				SelectedIndex = idx;
-				//this.Invalidate();
+				SetSelectedIndex(idx);
 			}
 
 		}

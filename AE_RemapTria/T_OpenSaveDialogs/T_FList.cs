@@ -17,33 +17,45 @@ namespace AE_RemapTria
 		Dir,
 		File
 	}
-
+	public class DirChangedArg : EventArgs
+	{
+		public string Dir;
+		public DirChangedArg(string v)
+		{
+			Dir = v;
+		}
+	}
 	public partial class T_FList : T_BaseControl
 	{
-		private FListType m_FListType = FListType.Dir; 
-		public FListType FListType
+		public delegate void DirChangedHandler(object sender, DirChangedArg e);
+		public event DirChangedHandler DireChanged;
+		protected virtual void OnDirChanged(DirChangedArg e)
 		{
-			get { return m_FListType; }
-			set
+			if (DireChanged != null)
 			{
-				if(m_FListType!=value)
-				{
-					m_FListType = value;
-					Listup();
-				}
-
+				DireChanged(this, e);
 			}
 		}
-		private DirectoryInfo m_folder = new DirectoryInfo("C:\\");
-		public string Folder
+		private DirectoryInfo m_dir = new DirectoryInfo("C:\\");
+		public string FullName
 		{
-			get { return m_folder.FullName; }
+			get { return m_dir.FullName; }
 			set
 			{
-				if (Directory.Exists(value))
+				DirectoryInfo dir = new DirectoryInfo(value);
+				if (dir.Exists)
 				{
-					m_folder = new DirectoryInfo(value);
-					Listup();
+					if(m_dir.FullName!=dir.FullName)
+					{
+						m_dir = dir;
+						Listup();
+						OnDirChanged(new DirChangedArg(m_dir.FullName));
+						if(m_VScrBar!=null)
+						{
+							m_VScrBar.MaxValue = m_DispMaxY;
+							m_VScrBar.Value = m_DispY;
+						}
+					}
 				}
 			}
 		}
@@ -77,6 +89,8 @@ namespace AE_RemapTria
 					if(m_VScrBar!=null)
 					{
 						m_VScrBar.Value = m_DispY;
+						m_VScrBar.MaxValue = m_DispMaxY;
+
 					}
 					this.Invalidate();
 
@@ -117,7 +131,20 @@ namespace AE_RemapTria
 				}
 			}
 		}
-
+		private string[] m_TragetExt = new string[] { ".ardj.json", ".ardj", ".ardj", ".sts"};
+		public string[] TragetExt
+		{
+			get { return m_TragetExt; }
+			set 
+			{
+				if(m_TragetExt != value)
+				{
+					m_TragetExt = value;
+					Listup();
+					this.Invalidate();
+				}
+			}
+		}
 		// *****************************************************************
 		public T_FList()
 		{
@@ -129,34 +156,53 @@ namespace AE_RemapTria
 		// *****************************************************************
 		private void Listup()
 		{
-			if (m_folder.Exists == false) return;
+			if (m_dir.Exists == false) return;
 			m_Items = new FInfo[0];
-			List<FInfo> lst = new List<FInfo>();
-			if (m_FListType== FListType.Dir)
-			{
-				DirectoryInfo[] dis = m_folder.GetDirectories();
-				if(dis.Length > 0)
-				{
-					for(int i=0;i< dis.Length;i++)
-					{
-						lst.Add(new FInfo(dis[i], i));
-					}
-				}
-				m_Items = lst.ToArray();
 
-			}
-			else
+
+			List<FInfo> lst = new List<FInfo>();
+
+			int cnt = 0;
+			if(m_dir.Parent!=null)
 			{
-				FileInfo[] fls = m_folder.GetFiles();
-				if (fls.Length > 0)
+				try
 				{
-					for (int i = 0; i < fls.Length; i++)
+					FInfo fi = new FInfo(m_dir.Parent, cnt);
+					fi.Caption = "<Parent>";
+					lst.Add(fi);
+					cnt++;
+				}
+				catch
+				{
+
+				}
+			}
+			DirectoryInfo[] dis = m_dir.GetDirectories();
+			if (dis.Length > 0)
+			{
+				for (int i = 0; i < dis.Length; i++)
+				{
+					FInfo fi = new FInfo(dis[i], cnt);
+					fi.Caption = "<" + fi.Caption + ">";
+					lst.Add(fi);
+					cnt++;
+				}
+			}
+			FileInfo[] fls = m_dir.GetFiles();
+			if (fls.Length > 0)
+			{
+				for (int i = 0; i < fls.Length; i++)
+				{
+					FInfo fi = new FInfo(fls[i], cnt);
+					if(fi.IsExt(m_TragetExt)==true)
 					{
-						lst.Add(new FInfo(fls[i], i));
+						fi.Caption = " " + fi.Caption;
+						lst.Add(fi);
+						cnt++;
 					}
 				}
-				m_Items = lst.ToArray();
 			}
+			m_Items = lst.ToArray();
 			CalcDisp();
 			this.Invalidate();
 		}
@@ -175,6 +221,11 @@ namespace AE_RemapTria
 			int lcnt = ls / m_RowHeight;
 			m_RowTop = tcnt;
 			m_RowBottom = m_Items.Length - lcnt;
+			if (m_VScrBar != null)
+			{
+				m_VScrBar.MaxValue = m_DispMaxY;
+				m_VScrBar.Value = m_DispY;
+			}
 		}
 		// *****************************************************************
 		protected override void OnPaint(PaintEventArgs pe)
@@ -226,7 +277,9 @@ namespace AE_RemapTria
 				if (m_VScrBar != null)
 				{
 					m_VScrBar.ValueChanged += T_VScrolBar_ValueChanged;
+
 					m_VScrBar.MaxValue = m_DispMaxY;
+					m_VScrBar.Value = m_DispY;
 				}
 			}
 		}
@@ -238,13 +291,9 @@ namespace AE_RemapTria
 		}
 		protected override void OnResize(EventArgs e)
 		{
-			CalcDisp();
-			if (m_VScrBar != null)
-			{
-				m_VScrBar.MaxValue = m_DispMaxY;
-			}
-			this.Invalidate();
 			base.OnResize(e);
+			CalcDisp();
+			this.Invalidate();
 		}
 		protected override void OnMouseDown(MouseEventArgs e)
 		{

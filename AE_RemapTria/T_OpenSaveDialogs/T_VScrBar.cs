@@ -43,17 +43,24 @@ namespace AE_RemapTria
 			get { return m_Value; }
 			set
 			{ 
-				int v = value;
-				if(v<0) v = 0;
-				if (v > m_MaxValue) v = m_MaxValue;
-				int vt = v * m_VTrueMax / m_MaxValue;
-				if(m_Value !=v)
+				if(m_MaxValue <= 0)
 				{
-					m_Value = v;
-					m_VTrue = vt;
-					CalcY();
-					OnValueChanged(new ValueChangedArg(m_Value));
-					this.Invalidate();
+					m_Value = 0;
+				}
+				else
+				{
+					int v = value;
+					if (v < 0) v = 0;
+					if (v > m_MaxValue) v = m_MaxValue;
+					int vt = v * m_VTrueMax / m_MaxValue;
+					if (m_Value != v)
+					{
+						m_Value = v;
+						m_VTrue = vt;
+						CalcY();
+						OnValueChanged(new ValueChangedArg(m_Value));
+						this.Invalidate();
+					}
 				}
 			}
 		}
@@ -64,7 +71,13 @@ namespace AE_RemapTria
 			set
 			{
 				m_MaxValue = value;
-				if (m_MaxValue < 1) m_MaxValue = 1;
+				if (m_MaxValue < 0)
+				{
+					m_MaxValue = 0;
+					m_Value = 0;
+					m_VTrue = 0;
+				}
+
 				CalcY();
 				this.Invalidate();
 			}
@@ -100,7 +113,7 @@ namespace AE_RemapTria
 			{
 				m_md = 2;
 				this.Invalidate();
-			}else if((y>=m_ValueRect.Top)&&(y<m_ValueRect.Bottom))
+			}else if((m_MaxValue>0)&&(m_ValueRect.Height>0)&&(y>=m_ValueRect.Top)&&(y<m_ValueRect.Bottom))
 			{
 				m_md = 3;
 				m_mdp = e.Y;
@@ -116,6 +129,7 @@ namespace AE_RemapTria
 		{
 			if (m_md == 3)
 			{
+
 				int ay = (e.Y - m_mdp) ;
 		
 				m_VTrue = m_mdv + ay;
@@ -137,7 +151,29 @@ namespace AE_RemapTria
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (m_md > 0)
+			if((m_md == 1)|| (m_md == 2))
+			{
+				if(m_md == 1)
+				{
+					m_VTrue -= 60;
+				}
+				else
+				{
+					m_VTrue += 60;
+				}
+				if (m_VTrue < 0) m_VTrue = 0;
+				else if (m_VTrue > m_VTrueMax) m_VTrue = m_VTrueMax;
+				m_ValueRect = new Rectangle(0, m_VTrue + ATop.Height, CC.Width, CC.Height);
+				int v = m_VTrue * m_MaxValue / m_VTrueMax;
+				if (m_Value != v)
+				{
+					m_Value = v;
+					OnValueChanged(new ValueChangedArg(m_Value));
+				}
+				m_md = 0;
+				this.Invalidate();
+			}
+			else if (m_md > 0)
 			{
 				m_md = 0;
 				this.Invalidate();
@@ -150,13 +186,24 @@ namespace AE_RemapTria
 		private Rectangle m_ValueRect = new Rectangle(0, 0, 0, 0);
 		private void CalcY()
 		{
-			m_VTrueMax = this.Height - ATop.Height - ABottom.Height - CC.Height;
-			if (m_VTrue > m_VTrueMax)
+			if (m_MaxValue > 0)
 			{
-				m_VTrue = m_VTrueMax;
-				m_Value = m_MaxValue;
+				m_VTrueMax = this.Height - ATop.Height - ABottom.Height - CC.Height;
+				if (m_VTrueMax < 0) m_VTrueMax = 0;
+				if (m_VTrue > m_VTrueMax)
+				{
+					m_VTrue = m_VTrueMax;
+					m_Value = m_MaxValue;
+				}
+				m_ValueRect = new Rectangle(0, m_VTrue + ATop.Height, CC.Width, CC.Height);
+				this.Invalidate();
 			}
-			m_ValueRect = new Rectangle(0, m_VTrue + ATop.Height, CC.Width, CC.Height);
+			else
+			{
+				m_ValueRect = new Rectangle(0, 0,0,0);
+				m_VTrue = 0;
+				m_VTrueMax = 0;
+			}
 
 		}
 		protected override void OnResize(EventArgs e)
@@ -180,13 +227,16 @@ namespace AE_RemapTria
 				{
 					g.DrawImage(ATop, new Point(0, 0));
 				}
-				if (m_md == 3)
+				if (m_MaxValue > 0)
 				{
-					g.DrawImage(CCD, new Point(0, m_ValueRect.Top));
-				}
-				else
-				{
-					g.DrawImage(CC, new Point(0, m_ValueRect.Top));
+					if (m_md == 3)
+					{
+						g.DrawImage(CCD, new Point(0, m_ValueRect.Top));
+					}
+					else
+					{
+						g.DrawImage(CC, new Point(0, m_ValueRect.Top));
+					}
 				}
 
 

@@ -32,10 +32,7 @@
 			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.t_Label1 = new AE_RemapTria.T_Label();
 			this.t_DriveList1 = new AE_RemapTria.T_DriveList();
-			this.t_fList1 = new AE_RemapTria.T_FList();
 			this.t_vScrBar1 = new AE_RemapTria.T_VScrBar();
-			this.t_vScrBar2 = new AE_RemapTria.T_VScrBar();
-			this.t_fList2 = new AE_RemapTria.T_FList();
 			this.t_Label2 = new AE_RemapTria.T_Label();
 			this.t_FileExtFilter1 = new AE_RemapTria.T_FileExtFilter();
 			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
@@ -45,6 +42,7 @@
 			this.btnCancel = new AE_RemapTria.T_Button();
 			this.t_Scale1 = new AE_RemapTria.T_Scale();
 			this.t_Scale2 = new AE_RemapTria.T_Scale();
+			this.t_fList1 = new AE_RemapTria.T_FList();
 			this.SuspendLayout();
 			// 
 			// t_Label1
@@ -72,10 +70,10 @@
 			// 
 			this.t_DriveList1.Alignment = System.Drawing.StringAlignment.Far;
 			this.t_DriveList1.BackColor = System.Drawing.Color.Transparent;
-			this.t_DriveList1.CurrentDir = null;
 			this.t_DriveList1.FList = this.t_fList1;
 			this.t_DriveList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_DriveList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.t_DriveList1.FullName = "";
 			this.t_DriveList1.IconBaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(50)))), ((int)(((byte)(70)))));
 			this.t_DriveList1.IconFrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
 			this.t_DriveList1.IconHeight = 32;
@@ -93,79 +91,16 @@
 			this.t_DriveList1.TabIndex = 1;
 			this.t_DriveList1.Text = "t_DriveList1";
 			// 
-			// t_fList1
-			// 
-			this.t_fList1.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_fList1.BackColor = System.Drawing.Color.Transparent;
-			this.t_fList1.DispY = 0;
-			this.t_fList1.FListType = AE_RemapTria.FListType.Dir;
-			this.t_fList1.Folder = "C:\\";
-			this.t_fList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_fList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
-			this.t_fList1.FrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(220)))));
-			this.t_fList1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_fList1.Location = new System.Drawing.Point(52, 123);
-			this.t_fList1.MyFontIndex = 5;
-			this.t_fList1.MyFonts = this.t_MyFonts1;
-			this.t_fList1.MyFontSize = 9F;
-			this.t_fList1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_fList1.Name = "t_fList1";
-			this.t_fList1.RowHeight = 20;
-			this.t_fList1.ScrolBarWidth = 20;
-			this.t_fList1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(120)))));
-			this.t_fList1.SelectedIndex = -1;
-			this.t_fList1.Size = new System.Drawing.Size(282, 227);
-			this.t_fList1.TabIndex = 2;
-			this.t_fList1.Text = "t_fList1";
-			this.t_fList1.VScrBar = this.t_vScrBar1;
-			// 
 			// t_vScrBar1
 			// 
 			this.t_vScrBar1.BackColor = System.Drawing.Color.Transparent;
-			this.t_vScrBar1.Location = new System.Drawing.Point(340, 123);
+			this.t_vScrBar1.Location = new System.Drawing.Point(641, 123);
 			this.t_vScrBar1.MaxValue = 453;
 			this.t_vScrBar1.Name = "t_vScrBar1";
 			this.t_vScrBar1.Size = new System.Drawing.Size(20, 227);
 			this.t_vScrBar1.TabIndex = 3;
 			this.t_vScrBar1.Text = "t_vScrBar1";
 			this.t_vScrBar1.Value = 0;
-			// 
-			// t_vScrBar2
-			// 
-			this.t_vScrBar2.BackColor = System.Drawing.Color.Transparent;
-			this.t_vScrBar2.Location = new System.Drawing.Point(685, 123);
-			this.t_vScrBar2.MaxValue = 453;
-			this.t_vScrBar2.Name = "t_vScrBar2";
-			this.t_vScrBar2.Size = new System.Drawing.Size(20, 227);
-			this.t_vScrBar2.TabIndex = 5;
-			this.t_vScrBar2.Text = "t_vScrBar2";
-			this.t_vScrBar2.Value = 0;
-			// 
-			// t_fList2
-			// 
-			this.t_fList2.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_fList2.BackColor = System.Drawing.Color.Transparent;
-			this.t_fList2.DispY = 0;
-			this.t_fList2.FListType = AE_RemapTria.FListType.Dir;
-			this.t_fList2.Folder = "C:\\";
-			this.t_fList2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_fList2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
-			this.t_fList2.FrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(220)))));
-			this.t_fList2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_fList2.Location = new System.Drawing.Point(366, 123);
-			this.t_fList2.MyFontIndex = 5;
-			this.t_fList2.MyFonts = this.t_MyFonts1;
-			this.t_fList2.MyFontSize = 9F;
-			this.t_fList2.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_fList2.Name = "t_fList2";
-			this.t_fList2.RowHeight = 20;
-			this.t_fList2.ScrolBarWidth = 20;
-			this.t_fList2.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(120)))));
-			this.t_fList2.SelectedIndex = -1;
-			this.t_fList2.Size = new System.Drawing.Size(313, 227);
-			this.t_fList2.TabIndex = 4;
-			this.t_fList2.Text = "t_fList2";
-			this.t_fList2.VScrBar = this.t_vScrBar2;
 			// 
 			// t_Label2
 			// 
@@ -384,12 +319,43 @@
         2,
         4};
 			// 
+			// t_fList1
+			// 
+			this.t_fList1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_fList1.BackColor = System.Drawing.Color.Transparent;
+			this.t_fList1.DispY = 0;
+			this.t_fList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_fList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.t_fList1.FrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(220)))));
+			this.t_fList1.FullName = "C:\\";
+			this.t_fList1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_fList1.Location = new System.Drawing.Point(47, 123);
+			this.t_fList1.MyFontIndex = 5;
+			this.t_fList1.MyFonts = this.t_MyFonts1;
+			this.t_fList1.MyFontSize = 9F;
+			this.t_fList1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_fList1.Name = "t_fList1";
+			this.t_fList1.RowHeight = 20;
+			this.t_fList1.ScrolBarWidth = 20;
+			this.t_fList1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(120)))));
+			this.t_fList1.SelectedIndex = -1;
+			this.t_fList1.Size = new System.Drawing.Size(588, 227);
+			this.t_fList1.TabIndex = 15;
+			this.t_fList1.Text = "t_fList1";
+			this.t_fList1.TragetExt = new string[] {
+        ".ardj.json",
+        ".ardj",
+        ".ardj",
+        ".sts"};
+			this.t_fList1.VScrBar = this.t_vScrBar1;
+			// 
 			// T_OpenSaveDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CanReSize = true;
 			this.ClientSize = new System.Drawing.Size(758, 506);
+			this.Controls.Add(this.t_fList1);
 			this.Controls.Add(this.t_Scale2);
 			this.Controls.Add(this.t_Scale1);
 			this.Controls.Add(this.btnCancel);
@@ -399,10 +365,7 @@
 			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.t_FileExtFilter1);
 			this.Controls.Add(this.t_Label2);
-			this.Controls.Add(this.t_vScrBar2);
-			this.Controls.Add(this.t_fList2);
 			this.Controls.Add(this.t_vScrBar1);
-			this.Controls.Add(this.t_fList1);
 			this.Controls.Add(this.t_DriveList1);
 			this.Controls.Add(this.t_Label1);
 			this.DoubleBuffered = true;
@@ -457,10 +420,7 @@
 		private T_MyFonts t_MyFonts1;
 		private T_Label t_Label1;
 		private T_DriveList t_DriveList1;
-		private T_FList t_fList1;
 		private T_VScrBar t_vScrBar1;
-		private T_VScrBar t_vScrBar2;
-		private T_FList t_fList2;
 		private T_Label t_Label2;
 		private T_FileExtFilter t_FileExtFilter1;
 		private T_Zebra t_Zebra1;
@@ -470,5 +430,6 @@
 		private T_Button btnCancel;
 		private T_Scale t_Scale1;
 		private T_Scale t_Scale2;
+		private T_FList t_fList1;
 	}
 }
