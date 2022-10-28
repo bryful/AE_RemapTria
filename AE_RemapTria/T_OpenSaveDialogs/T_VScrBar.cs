@@ -94,6 +94,7 @@ namespace AE_RemapTria
 	ControlStyles.AllPaintingInWmPaint |
 	ControlStyles.SupportsTransparentBackColor,
 	true);
+			this.ForeColor = Color.FromArgb(100, 100, 180);
 			this.BackColor = Color.Transparent;
 			this.UpdateStyles();
 			CalcY();
@@ -219,6 +220,21 @@ namespace AE_RemapTria
 			try
 			{
 				g.FillRectangle(sb, this.ClientRectangle);
+
+				int b = (this.Height - (ATop.Height + ABottom.Height+10))/10;
+				Rectangle r = new Rectangle(0, ATop.Height + 5, 6, 1);
+				sb.Color = this.ForeColor;
+				for(int i=0;i<11;i++)
+				{
+					int l = 8;
+					if (i == 5) l = 12;
+					else if (i % 2 == 1) l = 4;
+					r = new Rectangle(0, b * i + ATop.Height + 5, l, 1);
+					g.FillRectangle(sb, r);
+				}
+
+
+
 				if (m_md == 1)
 				{
 					g.DrawImage(ATopD, new Point(0, 0));

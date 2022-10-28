@@ -22,6 +22,7 @@ namespace AE_RemapTria
 	}
 	public partial class T_DriveList : T_BaseControl
 	{
+		#region Event
 		public delegate void DriveChangedHandler(object sender, DriveChangedArg e);
 		public event DriveChangedHandler DriveChanged;
 		protected virtual void OnDriveChanged(DriveChangedArg e)
@@ -31,8 +32,11 @@ namespace AE_RemapTria
 				DriveChanged(this, e);
 			}
 		}
-
+		#endregion
+		// **********************************************************************
 		private FInfo[] m_drives = new FInfo[0];
+		// **********************************************************************
+		#region Prop
 		private bool m_IsHor = true;
 		public bool IsHor
 		{
@@ -50,6 +54,21 @@ namespace AE_RemapTria
 				SetSelectedIndex(v);
 			}
 		}
+		private void SetSelectedIndex(int idx)
+		{
+			if (m_SelectedIndex != idx)
+			{
+				m_SelectedIndex = idx;
+				if ((m_FList != null) && (m_SelectedIndex >= 0))
+				{
+					m_FList.FullName = FullName;
+					this.Invalidate();
+				}
+			}
+		}
+		#endregion
+
+		#region Layout
 		private int m_IconWidth = 32;
 		private int m_IconHeight = 32;
 		public int IconWidth
@@ -74,18 +93,13 @@ namespace AE_RemapTria
 			get { return m_IconFrameColor; }
 			set { m_IconFrameColor = value; this.Invalidate(); }
 		}
-		private void SetSelectedIndex(int idx)
+		private Color m_IconFrameColorLo = Color.FromArgb(50, 50, 75);
+		public Color IconFrameColorLo
 		{
-			if(m_SelectedIndex!=idx)
-			{
-				m_SelectedIndex = idx;
-				if((m_FList!=null)&&(m_SelectedIndex>=0))
-				{
-					m_FList.FullName = FullName;
-					this.Invalidate();
-				}
-			}
+			get { return m_IconFrameColorLo; }
+			set { m_IconFrameColorLo = value; this.Invalidate(); }
 		}
+		#endregion
 		public string FullName
 		{
 			get 
@@ -126,6 +140,7 @@ namespace AE_RemapTria
 				//this.Invalidate();
 			}
 		}
+		// ***********************************************************************
 		public T_DriveList()
 		{
 			//this.Size = new Size(200, 40);
@@ -133,6 +148,7 @@ namespace AE_RemapTria
 			InitializeComponent();
 			GetDrives();
 		}
+		// ***********************************************************************
 		public void ReLoad()
 		{
 			GetDrives();
@@ -155,6 +171,7 @@ namespace AE_RemapTria
 			this.Invalidate();
 		}
 		// *****************************************************************
+		#region Mouse Event
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			//base.OnMouseDown(e);
@@ -173,10 +190,11 @@ namespace AE_RemapTria
 			}
 
 		}
+		#endregion
 		// *****************************************************************
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			base.OnPaint(pe);
+			//base.OnPaint(pe);
 			Graphics g = pe.Graphics;
 			SolidBrush sb = new SolidBrush(Color.Transparent);
 			Pen p = new Pen(m_IconFrameColor,2);
@@ -187,20 +205,21 @@ namespace AE_RemapTria
 			{
 				Rectangle r1,r2;
 				Fill(g, sb);
-				if (m_drives.Length > 0)
+				int cnt = this.Width / m_IconWidth;
+				for (int i = 0; i < cnt; i++)
 				{
-					for (int i = 0; i < m_drives.Length; i++)
+					if (m_IsHor)
 					{
-						if (m_IsHor)
-						{
-							r1 = new Rectangle(m_IconWidth * i, 0, m_IconWidth, m_IconHeight);
-							r2 = new Rectangle(m_IconWidth * i + 1, 1, m_IconWidth - 3, m_IconHeight - 3);
-						}
-						else
-						{
-							r1 = new Rectangle(0, m_IconHeight*i, m_IconWidth, m_IconHeight);
-							r2 = new Rectangle(1, m_IconHeight * i+1, m_IconWidth - 3, m_IconHeight - 3);
-						}
+						r1 = new Rectangle(m_IconWidth * i, 0, m_IconWidth, m_IconHeight);
+						r2 = new Rectangle(m_IconWidth * i + 1, 1, m_IconWidth - 3, m_IconHeight - 3);
+					}
+					else
+					{
+						r1 = new Rectangle(0, m_IconHeight*i, m_IconWidth, m_IconHeight);
+						r2 = new Rectangle(1, m_IconHeight * i+1, m_IconWidth - 3, m_IconHeight - 3);
+					}
+					if (i < m_drives.Length)
+					{
 						sb.Color = m_IconBaseColor;
 						g.FillRectangle(sb, r1);
 						if (i == m_SelectedIndex)
@@ -217,7 +236,13 @@ namespace AE_RemapTria
 						sb.Color = this.ForeColor;
 						g.DrawString(m_drives[i].Caption, this.Font, sb, r2, sf);
 					}
+					else
+					{
+						p.Color = m_IconFrameColorLo;
+						g.DrawRectangle(p, r2);
+					}
 				}
+				
 			}
 			finally
 			{
@@ -226,6 +251,7 @@ namespace AE_RemapTria
 			}
 			
 		}
+
 		private T_FList? m_FList = null;
 		public T_FList? FList
 		{
@@ -235,10 +261,14 @@ namespace AE_RemapTria
 				m_FList = value;
 				if(m_FList != null)
 				{
-
+					m_FList.DirChanged += M_FList_DirChanged;
 				}
 			}
 		}
 
+		private void M_FList_DirChanged(object sender, DirChangedArg e)
+		{
+			FullName = e.Dir;
+		}
 	}
 }

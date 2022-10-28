@@ -12,31 +12,19 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public enum FListType
-	{
-		Dir,
-		File
-	}
-	public class DirChangedArg : EventArgs
-	{
-		public string Dir;
-		public DirChangedArg(string v)
-		{
-			Dir = v;
-		}
-	}
-	public partial class T_FList : T_BaseControl
+	public partial class T_BList : T_BaseControl
 	{
 		#region Event
 		public delegate void DirChangedHandler(object sender, DirChangedArg e);
-		public event DirChangedHandler DirChanged;
+		public event DirChangedHandler DireChanged;
 		protected virtual void OnDirChanged(DirChangedArg e)
 		{
-			if (DirChanged != null)
+			if (DireChanged != null)
 			{
-				DirChanged(this, e);
+				DireChanged(this, e);
 			}
 		}
+		// ********************
 		public delegate void SelectedIndexChangedHandler(object sender, EventArgs e);
 		public event SelectedIndexChangedHandler SelectedIndexChanged;
 		protected virtual void OnSelectedIndexChanged(EventArgs e)
@@ -47,41 +35,13 @@ namespace AE_RemapTria
 			}
 		}
 		#endregion
-
-		// *************************************************************************
-		private FInfo[] m_Items = new FInfo[0];
-		// *************************************************************************
-		#region IO
-		private DirectoryInfo m_dir = new DirectoryInfo("C:\\");
-		public DirectoryInfo Dir
+		// *********************************************************************
+		private List<FInfo> m_Items = new List<FInfo> ();
+		public int Count
 		{
-			get { return m_dir; }
-			set
-			{
-				if(m_dir.FullName!=value.FullName)
-				{
-					m_dir = value;
-					Listup();
-				}
-			}
+			get { return m_Items.Count; }
 		}
-		public string FullName
-		{
-			get { return m_dir.FullName; }
-			set
-			{
-				DirectoryInfo dir = new DirectoryInfo(value);
-				if (dir.Exists)
-				{
-					if(m_dir.FullName!=dir.FullName)
-					{
-						m_dir = dir;
-						Listup();
-					}
-				}
-			}
-		}
-		#endregion
+		// *********************************************************************
 		#region Layout
 		private int m_RowHeight = 20;
 		public int RowHeight
@@ -120,42 +80,38 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		private int m_ScrolBarWidth = 20;
-		public int ScrolBarWidth
-		{
-			get { return m_ScrolBarWidth; }
-			set { m_ScrolBarWidth = value; this.Invalidate(); }
-		}
 		private Color m_FrameColor = Color.FromArgb(180, 180, 220);
 		public Color FrameColor
 		{
 			get { return m_FrameColor; }
 			set { m_FrameColor = value; this.Invalidate(); }
 		}
-		private Color m_ForcusColor = Color.FromArgb(75, 75, 120);
-		public Color ForcusColor
+		private Color m_SelectedColor = Color.FromArgb(75, 75, 120);
+		public Color SelectedColor
 		{
-			get { return m_ForcusColor; }
-			set { m_ForcusColor = value; this.Invalidate(); }
+			get { return m_SelectedColor; }
+			set { m_SelectedColor = value; this.Invalidate(); }
 		}
-		public int m_ForcusIndex = -1;
-		#endregion
-
-		private string[] m_TragetExt = new string[] { ".ardj.json", ".ardj", ".ardj", ".sts"};
-		public string[] TragetExt
+		public int m_SelectedIndex = -1;
+		public int SelectedIndex
 		{
-			get { return m_TragetExt; }
+			get { return m_SelectedIndex; }
 			set 
 			{
-				if(m_TragetExt != value)
+				int v = value;
+				if (v < 0) v = -1;
+				else if(v >= m_Items.Count) v = m_Items.Count-1;
+
+				if(m_SelectedIndex != v)
 				{
-					m_TragetExt = value;
-					Listup();
-					this.Invalidate();
+					m_SelectedIndex = value;
+					OnSelectedIndexChanged(new EventArgs());
 				}
+				this.Invalidate(); 
 			}
 		}
-		#region Contrl
+		#endregion
+		#region Control
 		private T_VScrBar? m_VScrBar = null;
 		public T_VScrBar? VScrBar
 		{
@@ -172,96 +128,85 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		private T_Label? m_Label = null;
-		public T_Label? Label
-		{
-			get { return m_Label; }
-			set
-			{
-				m_Label = value;
-			}
-		}
-
+		#endregion
 		private void T_VScrolBar_ValueChanged(object sender, ValueChangedArg e)
 		{
 			m_DispY = ((T_VScrBar)sender).Value;
 			this.Invalidate();
 		}
-		#endregion
 		// *****************************************************************
-		public T_FList()
+		public T_BList()
 		{
 			this.ForeColor = Color.FromArgb(200, 200, 250);
 			this.Size = new Size(200, 100);
 			InitializeComponent();
-			Listup();
+
+			AddDir(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),"Desktop");
+			AddDir(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Doc");
+
 		}
 		// *****************************************************************
-		private void Listup()
+		public void SwapItem(int c0, int c1)
 		{
-			if (m_dir.Exists == false) return;
-			m_Items = new FInfo[0];
+			if((c0 == c1)||(c0<0)||(c0>=m_Items.Count) || (c1 < 0) || (c1 >= m_Items.Count))return;
 
-
-			List<FInfo> lst = new List<FInfo>();
-
-			int cnt = 0;
-			if(m_dir.Parent!=null)
+			FInfo fi = m_Items[c0];
+			m_Items[c0] = m_Items[c1];
+			m_Items[c1] = fi;
+		}
+		// *****************************************************************
+		public void  ItemUp()
+		{
+			if((m_SelectedIndex>=1)&&(m_SelectedIndex< m_Items.Count))
 			{
-				try
-				{
-					FInfo fi = new FInfo(m_dir.Parent, cnt);
-					fi.Caption = "<Parent>";
-					lst.Add(fi);
-					cnt++;
-				}
-				catch
-				{
-
-				}
+				SwapItem(m_SelectedIndex, m_SelectedIndex - 1);
+				m_SelectedIndex--;
+				this.Invalidate();
 			}
-			try
+		}
+		public void ItemDown()
+		{
+			if ((m_SelectedIndex >= 0) && (m_SelectedIndex < m_Items.Count-1))
 			{
-				DirectoryInfo[] dis = m_dir.GetDirectories();
-				if (dis.Length > 0)
+				SwapItem(m_SelectedIndex, m_SelectedIndex + 1);
+				m_SelectedIndex++;
+				this.Invalidate();
+			}
+		}
+		// *****************************************************************
+		public int FindItem(string p)
+		{
+			int ret = -1;
+			if(m_Items.Count>0)
+			{
+				for(int i=0; i< m_Items.Count;i++)
 				{
-					for (int i = 0; i < dis.Length; i++)
+					if (m_Items[i].FullName == p)
 					{
-						FInfo fi = new FInfo(dis[i], cnt);
-						fi.Caption = "<" + fi.Caption + ">";
-						lst.Add(fi);
-						cnt++;
-					}
-				}
-				FileInfo[] fls = m_dir.GetFiles();
-				if (fls.Length > 0)
-				{
-					for (int i = 0; i < fls.Length; i++)
-					{
-						FInfo fi = new FInfo(fls[i], cnt);
-						if (fi.IsExt(m_TragetExt) == true)
-						{
-							fi.Caption = " " + fi.Caption;
-							lst.Add(fi);
-							cnt++;
-						}
+						ret = i;
+						break;
 					}
 				}
 			}
-			catch { }
-			m_Items = lst.ToArray();
+			return ret;
+		}
+		// *****************************************************************
+		public bool AddDir(string p,string cap)
+		{
+			int idx = FindItem(p);
+			if (idx >= 0) return false;
+			DirectoryInfo di = new DirectoryInfo(p);
+			FInfo fi = new FInfo(di, m_Items.Count);
+			fi.Caption = cap;
+			m_Items.Add(fi);
 			CalcDisp();
-			OnDirChanged(new DirChangedArg(m_dir.FullName));
 			this.Invalidate();
-			if(m_Label != null)
-			{
-				m_Label.Text = FullName;
-			}
+			return true;
 		}
 		// *****************************************************************
 		private void CalcDisp()
 		{
-			int mz = m_Items.Length * m_RowHeight;
+			int mz = m_Items.Count * m_RowHeight;
 			m_DispMaxY = mz - this.Height;
 			if (m_DispMaxY < 0) m_DispMaxY = 0;
 			if (m_DispY > m_DispMaxY) m_DispY = m_DispMaxY;
@@ -272,7 +217,7 @@ namespace AE_RemapTria
 			int tcnt = m_DispY / m_RowHeight;
 			int lcnt = ls / m_RowHeight;
 			m_RowTop = tcnt;
-			m_RowBottom = m_Items.Length - lcnt;
+			m_RowBottom = m_Items.Count - lcnt;
 
 			if (m_VScrBar != null)
 			{
@@ -291,7 +236,7 @@ namespace AE_RemapTria
 			{
 				Rectangle r;
 				Fill(g, sb);
-				if (m_Items.Length > 0)
+				if (m_Items.Count > 0)
 				{
 					CalcDisp();
 					StringFormat sf = new StringFormat();
@@ -301,9 +246,9 @@ namespace AE_RemapTria
 					for (int i = m_RowTop; i < m_RowBottom; i++)
 					{
 						r = new Rectangle(5, m_RowHeight * i - m_DispY, this.Width - 5, m_RowHeight);
-						if(i==m_ForcusIndex)
+						if(i==m_SelectedIndex)
 						{
-							sb.Color = m_ForcusColor;
+							sb.Color = m_SelectedColor;
 							g.FillRectangle(sb, r);
 						}
 						sb.Color = this.ForeColor;
@@ -328,34 +273,21 @@ namespace AE_RemapTria
 		}
 
 		#region Mouse Event
-		protected override void OnMouseMove(MouseEventArgs e)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			int idx = (e.Y + m_DispY) / m_RowHeight;
-			if((idx>=0)&&(idx<m_Items.Length))
+			if ((idx >= 0) && (idx < m_Items.Count))
 			{
-				if(idx!=m_ForcusIndex)
+				if (idx != m_SelectedIndex)
 				{
-					if (m_Items[idx].IsDir)
-					{
-						m_ForcusIndex = idx;
-					}
-					else
-					{
-						m_ForcusIndex = -1;
-					}
+					m_SelectedIndex = idx;
+					OnSelectedIndexChanged(new EventArgs());
 					this.Invalidate();
 				}
-			}
-			base.OnMouseMove(e);
-		}
-		protected override void OnMouseLeave(EventArgs e)
-		{
-			if(m_ForcusIndex>=0)
+			}else
 			{
-				m_ForcusIndex = -1;
-				this.Invalidate();
+				base.OnMouseDown(e);
 			}
-			base.OnMouseLeave(e);
 		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -368,17 +300,12 @@ namespace AE_RemapTria
 		{
 			int idx = (e.Y + m_DispY) / m_RowHeight;
 
-			if ((idx >= 0) && (idx < m_Items.Length))
+			if ((idx >= 0) && (idx < m_Items.Count))
 			{
+				m_SelectedIndex = idx;
 				this.Invalidate();
 				if (m_Items[idx].IsDir)
 				{
-					if(m_Items[idx].Directory!=null)
-					{
-						m_dir = m_Items[idx].Directory;
-						m_DispY = 0;
-						Listup();
-					}
 				}
 			}
 			base.OnMouseDoubleClick(e);

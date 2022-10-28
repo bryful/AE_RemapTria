@@ -84,6 +84,7 @@ namespace AE_RemapTria
 		public T_BaseControl()
 		{
 			this.Size = new Size(100, 100);
+			this.Location = new Point(0, 0);
 			InitializeComponent();
 			Init();
 		}
@@ -105,7 +106,7 @@ namespace AE_RemapTria
 				ControlStyles.AllPaintingInWmPaint |
 				ControlStyles.SupportsTransparentBackColor,
 				true);
-			this.BackColor = Color.Transparent;
+			this.BackColor = Color.White;
 			this.UpdateStyles();
 			m_Alignment_Bak =
 			Alignment = StringAlignment.Far;

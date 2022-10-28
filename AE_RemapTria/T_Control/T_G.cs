@@ -561,6 +561,16 @@ namespace BRY
 			g.FillPolygon(sb,pnts);
 
 		}
-
+        static public Color EnabledCol(Color col,bool b)
+        {
+            if(b)
+            {
+                return col;
+            }
+            else
+            {
+                return Color.FromArgb(col.A,col.R/2, col.G/2, col.B/2);
+            }
+        }
 	}
 }

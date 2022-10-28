@@ -142,10 +142,17 @@ namespace AE_RemapTria
                 m_Caption = value;
             }
         }
+        public bool IsDir
+        {
+            get { return (m_IsType != FInfoType.File); }
+        }
+		public bool IsFile
+		{
+			get { return (m_IsType == FInfoType.File); }
+		}
 
-
-        // ********************************************************
-        public FInfo(DriveInfo di, int idx = -1)
+		// ********************************************************
+		public FInfo(DriveInfo di, int idx = -1)
         {
             m_IsType = FInfoType.Drive;
             Index = idx;

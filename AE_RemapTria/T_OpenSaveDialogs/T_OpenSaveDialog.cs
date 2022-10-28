@@ -12,6 +12,19 @@ namespace AE_RemapTria
 {
 	public partial class T_OpenSaveDialog : T_BaseDialog
 	{
+		public string DirectoryName
+		{
+			get { return t_fList1.FullName; }
+			set
+			{
+				if(Directory.Exists(value))
+				{
+					t_fList1.FullName = value;
+				}
+			}
+		}
+
+
 		public T_OpenSaveDialog()
 		{
 			CanReSize = true;
@@ -27,5 +40,6 @@ namespace AE_RemapTria
 		{
 			this.DialogResult = DialogResult.Cancel;
 		}
+
 	}
 }

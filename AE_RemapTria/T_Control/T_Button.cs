@@ -9,6 +9,7 @@ namespace AE_RemapTria
 {
     public class T_Button : T_BaseControl
     {
+		#region Event
 		public event EventHandler? CheckedChanged=null;
 		protected virtual void OnCheckedChanged(EventArgs e)
 		{
@@ -17,6 +18,9 @@ namespace AE_RemapTria
 				CheckedChanged(this, e);
 			}
 		}
+		#endregion
+
+		#region Prop
 		private bool m_IsDrawFrame = true;
 		public bool IsDrawFrame
 		{
@@ -59,7 +63,8 @@ namespace AE_RemapTria
 				}
 			}
 		}
-
+		#endregion
+		#region Layout
 		private int m_LeftBar = 4;
 		public int LeftBar
 		{
@@ -102,10 +107,11 @@ namespace AE_RemapTria
 			get { return m_Color_Down; }
 			set { m_Color_Down = value; Invalidate(); }
 		}
+		#endregion
 		// *********************************************************
 		public T_Button()
         {
-            Size = new Size(50, 25);
+            Size = new Size(100, 25);
             MyFontSize = 9;
             Alignment = StringAlignment.Center;
             LineAlignment = StringAlignment.Center;
@@ -199,7 +205,9 @@ namespace AE_RemapTria
                 p.Dispose();
             }
         }
-        private bool m_MouseEnter = false;
+
+		#region Mouse Event
+		private bool m_MouseEnter = false;
 		private bool m_MouseDown = false;
 		// *********************************************************
 		protected override void OnMouseEnter(EventArgs e)
@@ -260,6 +268,8 @@ namespace AE_RemapTria
 			}
 			base.OnMouseUp(e);
         }
+		#endregion
+
 		protected override void OnTextChanged(EventArgs e)
         {
             Invalidate();

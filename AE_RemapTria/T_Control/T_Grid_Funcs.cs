@@ -1024,6 +1024,7 @@ namespace AE_RemapTria
 				b = m_Form.TopMost;
 				m_Form.TopMost = false;
 			}
+			dlg.DirectoryName = @"C:\Windows";
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret = true;

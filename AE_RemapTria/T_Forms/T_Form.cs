@@ -99,7 +99,6 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
-			bool reloadFlag=false;
 			base.OnLoad(e);
 			if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
 			{

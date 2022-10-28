@@ -15,19 +15,19 @@ namespace AE_RemapTria
 			get { return m_LeftBar; }
 			set { m_LeftBar = value; this.Invalidate(); }
 		}
-		private Size m_RightBar = new Size(4, 14);
+		private Size m_RightBar = new Size(0, 0);
 		public Size RightBar
 		{
 			get { return m_RightBar; }
 			set { m_RightBar = value; this.Invalidate(); }
 		}
-		private Size m_TopBar = new Size(100, 2);
+		private Size m_TopBar = new Size(0, 0);
 		public Size TopBar
 		{
 			get { return m_TopBar; }
 			set { m_TopBar = value; this.Invalidate(); }
 		}
-		private Size m_BottomBar = new Size(100, 2);
+		private Size m_BottomBar = new Size(0, 0);
 		public Size BottomBar
 		{
 			get { return m_BottomBar; }
