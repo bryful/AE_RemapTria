@@ -37,13 +37,14 @@ namespace AE_RemapTria
 				DirChanged(this, e);
 			}
 		}
-		public delegate void SelectedIndexChangedHandler(object sender, EventArgs e);
-		public event SelectedIndexChangedHandler SelectedIndexChanged;
-		protected virtual void OnSelectedIndexChanged(EventArgs e)
+		// ************************
+		public delegate void SelectedFileHandler(object sender, EventArgs e);
+		public event SelectedFileHandler SelectedFileChanged;
+		protected virtual void OnSelectedFileChanged(EventArgs e)
 		{
-			if (SelectedIndexChanged != null)
+			if (SelectedFileChanged != null)
 			{
-				SelectedIndexChanged(this, e);
+				SelectedFileChanged(this, e);
 			}
 		}
 		#endregion
@@ -172,13 +173,22 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		private T_Label? m_Label = null;
-		public T_Label? Label
+		private T_Label? m_DirectoryLabel = null;
+		public T_Label? DirectoryLabel
 		{
-			get { return m_Label; }
+			get { return m_DirectoryLabel; }
 			set
 			{
-				m_Label = value;
+				m_DirectoryLabel = value;
+			}
+		}
+		private T_TextBox? m_FileTextBox = null;
+		public T_TextBox? FileTextBox
+		{
+			get { return m_FileTextBox; }
+			set
+			{
+				m_FileTextBox = value;
 			}
 		}
 
@@ -253,9 +263,9 @@ namespace AE_RemapTria
 			CalcDisp();
 			OnDirChanged(new DirChangedArg(m_dir.FullName));
 			this.Invalidate();
-			if(m_Label != null)
+			if(m_DirectoryLabel != null)
 			{
-				m_Label.Text = FullName;
+				m_DirectoryLabel.Text = FullName;
 			}
 		}
 		// *****************************************************************
@@ -335,14 +345,7 @@ namespace AE_RemapTria
 			{
 				if(idx!=m_ForcusIndex)
 				{
-					if (m_Items[idx].IsDir)
-					{
-						m_ForcusIndex = idx;
-					}
-					else
-					{
-						m_ForcusIndex = -1;
-					}
+					m_ForcusIndex = idx;
 					this.Invalidate();
 				}
 			}
@@ -382,6 +385,27 @@ namespace AE_RemapTria
 				}
 			}
 			base.OnMouseDoubleClick(e);
+		}
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			int idx = (e.Y + m_DispY) / m_RowHeight;
+
+			if ((idx >= 0) && (idx < m_Items.Length))
+			{
+				this.Invalidate();
+				if (m_Items[idx].IsFile)
+				{
+					if (m_Items[idx].Directory != null)
+					{
+						OnSelectedFileChanged(new EventArgs());
+						if(m_FileTextBox!=null)
+						{
+							m_FileTextBox.Text = m_Items[idx].Name;
+						}
+					}
+				}
+			}
+			base.OnMouseDown(e);
 		}
 		#endregion
 	}

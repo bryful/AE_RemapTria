@@ -18,8 +18,11 @@ namespace AE_RemapTria
 {
 	public partial class T_BaseDialog : Form
 	{
+		#region Contol
 		private T_Form? m_Form = null;
 		private T_Grid? m_grid = null;
+		#endregion
+		#region Font
 		private T_MyFonts? m_MyFonts = null;
 		public T_MyFonts? MyFonts
 		{
@@ -73,7 +76,32 @@ namespace AE_RemapTria
 				this.Font = new Font(this.Font.FontFamily, sz, fs);
 			}
 		}
+		// ************************************************************************
+		public void SetMyFont(T_MyFonts mf)
+		{
+			m_MyFonts = mf;
+			if (m_MyFonts != null)
+			{
+				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+
+			}
+		}       
+		// ************************************************************************
 		private StringFormat m_format = new StringFormat();
+		public StringAlignment Alignment
+		{
+			get { return m_format.Alignment; }
+			set { m_format.Alignment = value; }
+		}
+		// ************************************************************************
+		public StringAlignment LineAlignment
+		{
+			get { return m_format.LineAlignment; }
+			set { m_format.LineAlignment = value; }
+		}
+		#endregion
+
+		#region Kagi
 		private int m_KagiWidth= 30;
 		private int m_KagiHeight = 10;
 		private int m_KagiWeight = 5;
@@ -92,48 +120,25 @@ namespace AE_RemapTria
 			get { return this.m_KagiWeight; }
 			set { this.m_KagiWeight = value; this.Invalidate(); }
 		}
+		#endregion
 
-		// ************************************************************************
-		public StringAlignment Alignment
-		{
-			get { return m_format.Alignment; }
-			set { m_format.Alignment = value; }
-		}
-		// ************************************************************************
-		public StringAlignment LineAlignment
-		{
-			get { return m_format.LineAlignment; }
-			set { m_format.LineAlignment = value; }
-		}
-		private Color m_EdgeColor = Color.FromArgb(128, 200, 200, 255);
-		public Color EdgeColor
-		{
-			get { return m_EdgeColor; }
-			set { m_EdgeColor=value; this.Invalidate(); }
-		}
 
+		#region Edge
 		private Rectangle m_Edge = new Rectangle(10, 5, 10, 10);
 		public Rectangle Edge
 		{
 			get {return m_Edge; }
 			set { m_Edge = value; this.Invalidate(); }
 		}
-		public T_BaseDialog()
+		private Color m_EdgeColor = Color.FromArgb(128, 200, 200, 255);
+		public Color EdgeColor
 		{
-			InitializeComponent();
-			Init();
+			get { return m_EdgeColor; }
+			set { m_EdgeColor = value; this.Invalidate(); }
 		}
-		// ************************************************************************
-		public void SetMyFont(T_MyFonts mf)
-		{
-			m_MyFonts = mf;
-			if (m_MyFonts != null)
-			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
-	
-			}
-		}
-		// ************************************************************************
+		#endregion
+
+		#region Scale
 		private Color m_ScaleColor = Color.FromArgb(255, 100, 100, 200);
 		public Color ScaleColor
 		{
@@ -236,6 +241,15 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		#endregion
+		// ************************************************************************
+		public T_BaseDialog()
+		{
+			InitializeComponent();
+			Init();
+		}
+
+		// ************************************************************************
 		// ************************************************************************
 		private bool m_CanReSize = false;
 		public bool CanReSize
@@ -286,6 +300,7 @@ namespace AE_RemapTria
 				this.MyFonts =m_grid.MyFonts;
 			}
 		}
+		#region Mouse Event
 		protected override void OnDoubleClick(EventArgs e)
 		{
 			this.DialogResult = DialogResult.Cancel;
@@ -350,6 +365,13 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 			base.OnMouseLeave(e);
+		}
+		#endregion
+
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			this.Refresh();
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -439,6 +461,7 @@ namespace AE_RemapTria
 				p.Dispose();
 			}
 		}
+		#region Graphics
 		// ************************************************************************
 		public void Fill(Graphics g, SolidBrush sb)
 		{
@@ -530,6 +553,7 @@ namespace AE_RemapTria
 		{
 			g.DrawImage(img, new Rectangle(0, 0, this.Width, this.Height));
 		}
+		#endregion
 		// ************************************************************************
 		/// <summary>
 		/// 子コントロールにMouseイベントハンドラを設定(再帰)
@@ -556,30 +580,5 @@ namespace AE_RemapTria
 			*/
 		}
 
-		private void Form1_MouseDown(object sender, MouseEventArgs e)
-		{
-			// senderは常にFormだが、eの座標は各コントロールを基準とした座標が入る為、
-			// スクリーン座標からクライアント座標を計算すること
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
-
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
-
-		private void Form1_MouseMove(object sender, MouseEventArgs e)
-		{
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
-
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
-
-		private void Form1_MouseUp(object sender, MouseEventArgs e)
-		{
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
-
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
 	}
 }

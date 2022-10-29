@@ -14,12 +14,12 @@ namespace AE_RemapTria
 	{
 		public string DirectoryName
 		{
-			get { return t_fList1.FullName; }
+			get { return FList.FullName; }
 			set
 			{
 				if(Directory.Exists(value))
 				{
-					t_fList1.FullName = value;
+					FList.FullName = value;
 				}
 			}
 		}

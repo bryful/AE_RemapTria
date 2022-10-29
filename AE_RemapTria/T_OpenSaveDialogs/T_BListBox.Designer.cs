@@ -34,6 +34,7 @@
 			this.btnDell = new AE_RemapTria.T_Button();
 			this.btnUp = new AE_RemapTria.T_Button();
 			this.btnDown = new AE_RemapTria.T_Button();
+			this.edCaption = new AE_RemapTria.T_TextBox();
 			this.SuspendLayout();
 			// 
 			// BList
@@ -48,7 +49,7 @@
 			this.BList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.BList.FrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(220)))));
 			this.BList.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.BList.Location = new System.Drawing.Point(0, 31);
+			this.BList.Location = new System.Drawing.Point(0, 57);
 			this.BList.MyFontIndex = 5;
 			this.BList.MyFonts = null;
 			this.BList.MyFontSize = 8.999999F;
@@ -57,7 +58,7 @@
 			this.BList.RowHeight = 20;
 			this.BList.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(120)))));
 			this.BList.SelectedIndex = -1;
-			this.BList.Size = new System.Drawing.Size(121, 134);
+			this.BList.Size = new System.Drawing.Size(153, 248);
 			this.BList.TabIndex = 0;
 			this.BList.Text = "t_bList1";
 			this.BList.VScrBar = this.t_vScrBar1;
@@ -69,10 +70,10 @@
 			this.t_vScrBar1.BackColor = System.Drawing.Color.Transparent;
 			this.t_vScrBar1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_vScrBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(180)))));
-			this.t_vScrBar1.Location = new System.Drawing.Point(127, 31);
+			this.t_vScrBar1.Location = new System.Drawing.Point(159, 31);
 			this.t_vScrBar1.MaxValue = 0;
 			this.t_vScrBar1.Name = "t_vScrBar1";
-			this.t_vScrBar1.Size = new System.Drawing.Size(18, 134);
+			this.t_vScrBar1.Size = new System.Drawing.Size(18, 274);
 			this.t_vScrBar1.TabIndex = 1;
 			this.t_vScrBar1.Text = "t_vScrBar1";
 			this.t_vScrBar1.Value = 0;
@@ -103,9 +104,9 @@
 			this.btnAdd.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnAdd.Name = "btnAdd";
 			this.btnAdd.RightBar = 0;
-			this.btnAdd.Size = new System.Drawing.Size(121, 25);
+			this.btnAdd.Size = new System.Drawing.Size(153, 25);
 			this.btnAdd.TabIndex = 2;
-			this.btnAdd.Text = "Add";
+			this.btnAdd.Text = "Add Bookmark";
 			this.btnAdd.TopBar = 0;
 			// 
 			// btnDell
@@ -127,7 +128,7 @@
 			this.btnDell.IsMouseDown = false;
 			this.btnDell.LeftBar = 0;
 			this.btnDell.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnDell.Location = new System.Drawing.Point(0, 171);
+			this.btnDell.Location = new System.Drawing.Point(0, 311);
 			this.btnDell.MyFontIndex = 5;
 			this.btnDell.MyFonts = null;
 			this.btnDell.MyFontSize = 8.999999F;
@@ -157,7 +158,7 @@
 			this.btnUp.IsMouseDown = false;
 			this.btnUp.LeftBar = 0;
 			this.btnUp.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnUp.Location = new System.Drawing.Point(38, 171);
+			this.btnUp.Location = new System.Drawing.Point(70, 311);
 			this.btnUp.MyFontIndex = 5;
 			this.btnUp.MyFonts = null;
 			this.btnUp.MyFontSize = 8.999999F;
@@ -187,7 +188,7 @@
 			this.btnDown.IsMouseDown = false;
 			this.btnDown.LeftBar = 0;
 			this.btnDown.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnDown.Location = new System.Drawing.Point(81, 171);
+			this.btnDown.Location = new System.Drawing.Point(113, 311);
 			this.btnDown.MyFontIndex = 5;
 			this.btnDown.MyFonts = null;
 			this.btnDown.MyFontSize = 8.999999F;
@@ -199,21 +200,40 @@
 			this.btnDown.Text = "Down";
 			this.btnDown.TopBar = 0;
 			// 
+			// edCaption
+			// 
+			this.edCaption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.edCaption.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(11)))), ((int)(((byte)(25)))));
+			this.edCaption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.edCaption.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.edCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
+			this.edCaption.Location = new System.Drawing.Point(0, 31);
+			this.edCaption.MyFontIndex = 5;
+			this.edCaption.MyFonts = null;
+			this.edCaption.MyFontSize = 9F;
+			this.edCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.edCaption.Name = "edCaption";
+			this.edCaption.Size = new System.Drawing.Size(153, 23);
+			this.edCaption.TabIndex = 6;
+			// 
 			// T_BListBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Transparent;
+			this.Controls.Add(this.edCaption);
 			this.Controls.Add(this.btnDown);
 			this.Controls.Add(this.btnUp);
 			this.Controls.Add(this.btnDell);
 			this.Controls.Add(this.btnAdd);
 			this.Controls.Add(this.t_vScrBar1);
 			this.Controls.Add(this.BList);
-			this.MinimumSize = new System.Drawing.Size(145, 200);
+			this.MinimumSize = new System.Drawing.Size(145, 145);
 			this.Name = "T_BListBox";
-			this.Size = new System.Drawing.Size(145, 200);
+			this.Size = new System.Drawing.Size(177, 340);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -225,5 +245,6 @@
 		private T_Button btnDell;
 		private T_Button btnUp;
 		private T_Button btnDown;
+		private T_TextBox edCaption;
 	}
 }
