@@ -43,18 +43,18 @@
 			this.lbCaption.Alignment = System.Drawing.StringAlignment.Near;
 			this.lbCaption.BackColor = System.Drawing.Color.Transparent;
 			this.lbCaption.BottomBar = new System.Drawing.Size(270, 1);
-			this.lbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbCaption.LeftBar = new System.Drawing.Size(15, 15);
 			this.lbCaption.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbCaption.Location = new System.Drawing.Point(73, 22);
+			this.lbCaption.Location = new System.Drawing.Point(52, 11);
 			this.lbCaption.MyFontIndex = 5;
 			this.lbCaption.MyFonts = this.t_MyFonts1;
-			this.lbCaption.MyFontSize = 10F;
+			this.lbCaption.MyFontSize = 9F;
 			this.lbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbCaption.Name = "lbCaption";
 			this.lbCaption.RightBar = new System.Drawing.Size(0, 0);
-			this.lbCaption.Size = new System.Drawing.Size(218, 26);
+			this.lbCaption.Size = new System.Drawing.Size(206, 42);
 			this.lbCaption.TabIndex = 0;
 			this.lbCaption.Text = "シート名を入力してください。";
 			this.lbCaption.TopBar = new System.Drawing.Size(0, 0);
@@ -65,7 +65,7 @@
 			this.tbCaption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.tbCaption.Location = new System.Drawing.Point(87, 54);
+			this.tbCaption.Location = new System.Drawing.Point(56, 57);
 			this.tbCaption.MyFontIndex = 5;
 			this.tbCaption.MyFonts = this.t_MyFonts1;
 			this.tbCaption.MyFontSize = 12F;
@@ -92,7 +92,7 @@
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(189, 115);
+			this.btnOK.Location = new System.Drawing.Point(158, 96);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFonts = this.t_MyFonts1;
 			this.btnOK.MyFontSize = 9F;
@@ -122,14 +122,14 @@
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LeftBar = 8;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(73, 115);
+			this.btnCancel.Location = new System.Drawing.Point(52, 96);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFonts = this.t_MyFonts1;
 			this.btnCancel.MyFontSize = 9F;
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.RightBar = 0;
-			this.btnCancel.Size = new System.Drawing.Size(110, 30);
+			this.btnCancel.Size = new System.Drawing.Size(100, 30);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.TopBar = 0;
@@ -138,9 +138,9 @@
 			// t_Zebra1
 			// 
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra1.Location = new System.Drawing.Point(37, 25);
+			this.t_Zebra1.Location = new System.Drawing.Point(31, 22);
 			this.t_Zebra1.Name = "t_Zebra1";
-			this.t_Zebra1.Size = new System.Drawing.Size(30, 120);
+			this.t_Zebra1.Size = new System.Drawing.Size(16, 103);
 			this.t_Zebra1.TabIndex = 4;
 			this.t_Zebra1.Text = "t_Zebra1";
 			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKBLUE;
@@ -148,9 +148,9 @@
 			// t_Zebra2
 			// 
 			this.t_Zebra2.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra2.Location = new System.Drawing.Point(297, 25);
+			this.t_Zebra2.Location = new System.Drawing.Point(268, 25);
 			this.t_Zebra2.Name = "t_Zebra2";
-			this.t_Zebra2.Size = new System.Drawing.Size(30, 120);
+			this.t_Zebra2.Size = new System.Drawing.Size(16, 103);
 			this.t_Zebra2.TabIndex = 5;
 			this.t_Zebra2.Text = "t_Zebra2";
 			this.t_Zebra2.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKBLUE;
@@ -159,7 +159,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(373, 165);
+			this.ClientSize = new System.Drawing.Size(315, 135);
 			this.Controls.Add(this.t_Zebra2);
 			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.btnCancel);

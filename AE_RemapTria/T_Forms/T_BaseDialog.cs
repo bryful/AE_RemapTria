@@ -284,13 +284,22 @@ namespace AE_RemapTria
 				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
 			}
 			base.InitLayout();
-		}       
+		}
+		// ****************************************************************
+		public void ToCenter()
+		{
+			Rectangle rct = Screen.PrimaryScreen.Bounds;
+			Point p = new Point((rct.Width - this.Width) / 2, (rct.Height - this.Height) / 2);
+			this.Location = p;
+			Wa.SetForegroundWindow(this.Handle);
+		}
 		// *****************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 		}
 		// *****************************************************************
+		
 		public void SetForm(T_Form fm)
 		{
 			m_Form = fm;
@@ -340,6 +349,7 @@ namespace AE_RemapTria
 				}else if(m_MD_Mode==2)
 				{
 					this.Size = new Size(ax + m_MD_Size.Width, ay + m_MD_Size.Height);
+					this.Invalidate();
 				}
 				/*if(m_Form != null)
 				{
@@ -371,7 +381,7 @@ namespace AE_RemapTria
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
-			this.Refresh();
+			this.Invalidate();
 		}
 
 		protected override void OnPaint(PaintEventArgs e)

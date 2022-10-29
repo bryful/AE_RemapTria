@@ -34,7 +34,7 @@ namespace BRY
 			SetFilePath(Path.Combine(m_dir,_m_AppName + ".json"));
 		}
 		// ****************************************************
-		private static string GetFileSystemPath(Environment.SpecialFolder folder)
+		public static string GetFileSystemPath(Environment.SpecialFolder folder)
 		{
 			// パスを取得
 			string path = String.Format(@"{0}\{1}",//\{2}

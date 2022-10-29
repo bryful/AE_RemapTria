@@ -197,6 +197,63 @@ namespace AE_RemapTria
 			m_DispY = ((T_VScrBar)sender).Value;
 			this.Invalidate();
 		}
+
+		private T_Button? m_ToRootBtn = null;
+		public T_Button? ToRootBtn
+		{
+			get { return m_ToRootBtn; }
+			set
+			{
+				m_ToRootBtn = value;
+				if(m_ToRootBtn != null)
+				{
+					m_ToRootBtn.Click += M_ToRootBtn_Click;
+				}
+			}
+		}
+
+		private void M_ToRootBtn_Click(object? sender, EventArgs e)
+		{
+			ToRoot();
+		}
+		private T_Button? m_ToParentBtn = null;
+		public T_Button? ToParentBtn
+		{
+			get { return m_ToParentBtn; }
+			set
+			{
+				m_ToParentBtn = value;
+				if (m_ToParentBtn != null)
+				{
+					m_ToParentBtn.Click += M_ToParentBtn_Click;
+				}
+			}
+		}
+
+		private void M_ToParentBtn_Click(object? sender, EventArgs e)
+		{
+			ToParent();
+		}
+
+		private T_FileExtFilter? m_FileExtFilter = null;
+		public T_FileExtFilter? FileExtFilter
+		{
+			get { return m_FileExtFilter; }
+			set
+			{
+				m_FileExtFilter = value;
+				if (m_FileExtFilter != null)
+				{
+					TragetExt = m_FileExtFilter.Filter;
+					m_FileExtFilter.FilterChanged += M_FileExtFilter_FilterChanged;
+				}
+			}
+		}
+
+		private void M_FileExtFilter_FilterChanged(object sender, FilterChangedArg e)
+		{
+			TragetExt = e.Filter;
+		}
 		#endregion
 		// *****************************************************************
 		public T_FList()
@@ -238,6 +295,7 @@ namespace AE_RemapTria
 					for (int i = 0; i < dis.Length; i++)
 					{
 						FInfo fi = new FInfo(dis[i], cnt);
+						if (fi.Hidden) continue;
 						fi.Caption = "<" + fi.Caption + ">";
 						lst.Add(fi);
 						cnt++;
@@ -249,6 +307,7 @@ namespace AE_RemapTria
 					for (int i = 0; i < fls.Length; i++)
 					{
 						FInfo fi = new FInfo(fls[i], cnt);
+						if (fi.Hidden) continue;
 						if (fi.IsExt(m_TragetExt) == true)
 						{
 							fi.Caption = " " + fi.Caption;
@@ -334,7 +393,6 @@ namespace AE_RemapTria
 		{
 			base.OnResize(e);
 			CalcDisp();
-			this.Invalidate();
 		}
 
 		#region Mouse Event
@@ -408,5 +466,26 @@ namespace AE_RemapTria
 			base.OnMouseDown(e);
 		}
 		#endregion
+
+
+		public void ToRoot()
+		{
+			string p = FullName;
+			string p2 = p.Substring(0, 3);
+			if(p2!=p)
+			{
+				FullName = p2;
+			}
+		}
+		public void ToParent()
+		{
+			string p = FullName;
+			if (p[p.Length - 1] == '/') return;
+			string? p2 = Path.GetDirectoryName(p);
+			if(p2!=null)
+			{
+				FullName = p2;
+			}
+		}
 	}
 }

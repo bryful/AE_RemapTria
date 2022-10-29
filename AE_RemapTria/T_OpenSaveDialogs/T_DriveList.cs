@@ -1,13 +1,20 @@
-﻿using System;
+﻿using BRY;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Management;
+using System.Runtime;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AE_RemapTria
@@ -35,6 +42,159 @@ namespace AE_RemapTria
 		#endregion
 		// **********************************************************************
 		private FInfo[] m_drives = new FInfo[0];
+		public string[] Drivers
+		{
+			get 
+			{
+				string[] ret = new string[m_drives.Length];
+				for (int i = 0; i < m_drives.Length; i++)
+				{
+					ret[i] = m_drives[i].FullName;
+				}
+				return ret;
+			}
+			set
+			{
+				List<FInfo> lst = new List<FInfo>();
+				if(value.Length>0)
+				{
+					int cnt = 0;
+					for (int i = 0; i < value.Length; i++)
+					{
+						DirectoryInfo di = new DirectoryInfo(value[i]);
+						if (di.Exists)
+						{
+							FInfo fi = new FInfo(di, cnt);
+							lst.Add(fi);
+							cnt++;
+						}
+					}
+					m_drives = lst.ToArray();
+					if ((m_SelectedIndex < 0) && (m_drives.Length > 0)) m_SelectedIndex = 0;
+					this.Invalidate();
+				}
+			}
+		}
+		#region File
+		public JsonObject ToJsonObject()
+		{
+			JsonObject jo = new JsonObject();
+			JsonArray array = new JsonArray();
+			foreach (FInfo s in m_drives)
+			{
+				array.Add(s.FullName);
+			}
+			jo.Add("drivers", array);
+			jo.Add("selected", FullName);
+			return jo;
+		}
+		public string ToJson()
+		{
+
+			var options = new JsonSerializerOptions
+			{
+				Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+				WriteIndented = true
+			};
+			return ToJsonObject().ToJsonString(options);
+		}
+		public void FromJsonObject(JsonObject jo)
+		{
+			if (jo == null) return;
+			if (jo.ContainsKey("drivers"))
+			{
+				JsonArray ja = jo["drivers"].AsArray();
+				foreach (var s in ja)
+				{
+					DirectoryInfo di = new DirectoryInfo(s.GetValue<string>());
+					if (di.Exists)
+					{
+						int idx = FindDrive(di);
+						if (idx >= 0)
+						{
+							m_drives[idx].SetDir(di);
+						}
+					}
+				}
+			}
+			if (jo.ContainsKey("selected"))
+			{
+				int idx = 0;
+				string s = jo["selected"].GetValue<string>();
+				DirectoryInfo di = new DirectoryInfo(s);
+				if (di.Exists)
+				{
+					idx = FindDrive(di);
+					if (idx < 0) idx = 0;
+				}
+				SetSelectedIndex(idx);
+			}
+		}
+		public void FromJson(string js)
+		{
+			var doc = JsonNode.Parse(js);
+			if(doc == null) return;
+			FromJsonObject((JsonObject)doc);
+
+		}
+		// ****************************************************
+		public string PrefPath()
+		{
+			string p = PrefFile.GetFileSystemPath(Environment.SpecialFolder.ApplicationData);
+
+			return Path.Combine(p, "AE_remap_drive.json");
+		}
+		// ****************************************************
+		public bool Save(string p)
+		{
+			bool ret = false;
+			try
+			{
+				string js = ToJson();
+				File.WriteAllText(p, js);
+				ret = true;
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// ****************************************************
+		public bool Save()
+		{
+			return Save(PrefPath());
+		}
+		// ****************************************************
+		public bool Load(string p)
+		{
+			bool ret = false;
+
+			try
+			{
+				if (File.Exists(p) == true)
+				{
+					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
+					if (str != "")
+					{
+						FromJson(str);
+						ret = true;
+					}
+				}
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// ****************************************************
+		public bool Load()
+		{
+			return Load(PrefPath());
+		}
+		// ****************************************************
+		#endregion
 		// **********************************************************************
 		#region Prop
 		private bool m_IsHor = true;
@@ -100,6 +260,24 @@ namespace AE_RemapTria
 			set { m_IconFrameColorLo = value; this.Invalidate(); }
 		}
 		#endregion
+
+		public int FindDrive(DirectoryInfo di)
+		{
+			int idx = -1;
+			if (di.Exists == true)
+			{
+				char s = di.FullName.Substring(0, 1).ToUpper()[0];
+				for (int i = 0; i < m_drives.Length; i++)
+				{
+					if (m_drives[i].DriveLetter == s)
+					{
+						idx = i;
+						break;
+					}
+				}
+			}
+			return idx;
+		}
 		public string FullName
 		{
 			get 
@@ -119,23 +297,14 @@ namespace AE_RemapTria
 				int idx = -1;
 				if ((value == null)|| (value == "")) return;
 				DirectoryInfo di = new DirectoryInfo(value);
-				if (di.Exists ==true)
+				idx = FindDrive(di);
+				if (idx >= 0)
 				{
-					char s = di.FullName.Substring(0, 1).ToUpper()[0];
-					for (int i = 0; i < m_drives.Length; i++)
-					{
-						if (m_drives[i].DriveLetter == s)
-						{
-							idx = i;
-							break;
-						}
-					}
-					if(di.FullName != m_drives[idx].FullName)
+					if (di.FullName != m_drives[idx].FullName)
 					{
 						m_drives[idx].SetDir(value);
-						SetSelectedIndex(idx);
 					}
-
+					SetSelectedIndex(idx);
 				}
 				//this.Invalidate();
 			}
@@ -234,7 +403,7 @@ namespace AE_RemapTria
 
 
 						sb.Color = this.ForeColor;
-						g.DrawString(m_drives[i].Caption, this.Font, sb, r2, sf);
+						g.DrawString(m_drives[i].DriveLetter+"", this.Font, sb, r2, sf);
 					}
 					else
 					{
@@ -251,7 +420,7 @@ namespace AE_RemapTria
 			}
 			
 		}
-
+		// *********************************************************************
 		private T_FList? m_FList = null;
 		public T_FList? FList
 		{
@@ -265,10 +434,10 @@ namespace AE_RemapTria
 				}
 			}
 		}
-
 		private void M_FList_DirChanged(object sender, DirChangedArg e)
 		{
 			FullName = e.Dir;
 		}
+		// *********************************************************************
 	}
 }

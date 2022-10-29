@@ -150,9 +150,36 @@ namespace AE_RemapTria
 		{
 			get { return (m_IsType == FInfoType.File); }
 		}
+        public bool Hidden
+        {
+            get
+            {
+                bool ret = false;
+                switch (m_IsType)
+                {
+                    case FInfoType.Drive:
+                        break;
+                    case FInfoType.Dir:
+                        if (m_dir != null)
+                        {
+                            ret = (m_dir.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden;
+                        }
+                        break;
+					case FInfoType.File:
+                        if (m_file != null)
+                        {
+                            ret = (m_file.Attributes & FileAttributes.Hidden) == FileAttributes.Hidden;
+                        }
+						break;
 
-		// ********************************************************
-		public FInfo(DriveInfo di, int idx = -1)
+				}
+                return ret;
+			}
+        }
+
+
+        // ********************************************************
+        public FInfo(DriveInfo di, int idx = -1)
         {
             m_IsType = FInfoType.Drive;
             Index = idx;
@@ -226,7 +253,7 @@ namespace AE_RemapTria
         {
             bool ret = false;
 			if ((exts.Length == 0)||(exts==null)) return true;
-			string ext = Path.GetExtension(Name).ToLower();
+			string ext = T_Def.GetExt(Name).ToLower();
             if(exts.Length>0)
             {
                 for(int i = 0; i < exts.Length; i++)
@@ -241,5 +268,6 @@ namespace AE_RemapTria
             return ret;
 
         }
+
     }
 }

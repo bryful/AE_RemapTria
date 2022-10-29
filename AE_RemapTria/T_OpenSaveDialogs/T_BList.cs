@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BRY;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,7 +7,12 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Security.AccessControl;
+using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -40,6 +46,27 @@ namespace AE_RemapTria
 		public int Count
 		{
 			get { return m_Items.Count; }
+		}
+		public string SelectedCaption
+		{
+			get
+			{
+				string ret = "";
+				int idx = m_SelectedIndex;
+				if((idx>=0)&&(idx< m_Items.Count))
+				{
+					ret = m_Items[idx].Caption;
+				}
+				return ret;
+			}
+			set
+			{
+				int idx = m_SelectedIndex;
+				if ((idx >= 0) && (idx < m_Items.Count))
+				{
+					m_Items[idx].Caption  =value;
+				}
+			}
 		}
 		// *********************************************************************
 		#region Layout
@@ -128,6 +155,16 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		private T_FList? m_Flist = null;
+		public T_FList? Flist
+		{
+			get { return m_Flist; }
+			set
+			{
+				m_Flist = value;
+			}
+		}
+
 		#endregion
 		private void T_VScrolBar_ValueChanged(object sender, ValueChangedArg e)
 		{
@@ -153,6 +190,30 @@ namespace AE_RemapTria
 			FInfo fi = m_Items[c0];
 			m_Items[c0] = m_Items[c1];
 			m_Items[c1] = fi;
+		}
+		// *****************************************************************
+		public void ItemDelete()
+		{
+			if(m_Items.Count == 0)
+			{
+				AddDir(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Desktop");
+				AddDir(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Doc");
+			}
+			else
+			{
+				if ((m_SelectedIndex >= 0) && (m_SelectedIndex < m_Items.Count))
+				{
+					m_Items.RemoveAt(m_SelectedIndex);
+					if((m_SelectedIndex>= m_Items.Count)&&(m_Items.Count>0))
+					{
+						m_SelectedIndex = m_Items.Count - 1;
+					}else if(m_Items.Count == 0)
+					{
+						m_SelectedIndex = -1;
+					}
+				}
+			}
+			this.Invalidate();
 		}
 		// *****************************************************************
 		public void  ItemUp()
@@ -203,6 +264,7 @@ namespace AE_RemapTria
 			this.Invalidate();
 			return true;
 		}
+
 		// *****************************************************************
 		private void CalcDisp()
 		{
@@ -306,9 +368,135 @@ namespace AE_RemapTria
 				this.Invalidate();
 				if (m_Items[idx].IsDir)
 				{
+					if(m_Flist!=null)
+					{
+						m_Flist.FullName = m_Items[idx].FullName;
+					}
 				}
 			}
 			base.OnMouseDoubleClick(e);
+		}
+		#endregion
+
+		#region File
+		public JsonObject ToJsonObject()
+		{
+			JsonObject jo = new JsonObject();
+			JsonArray ja = new JsonArray();
+			if (m_Items.Count > 0)
+			{
+				foreach (FInfo f in m_Items)
+				{
+					JsonObject jo2 = new JsonObject();
+					jo2.Add("directory", f.FullName);
+					jo2.Add("caption", f.Caption);
+					ja.Add(jo2);
+				}
+			}
+			jo.Add("list", ja);
+			return jo;
+		}
+		public string ToJson()
+		{
+			var options = new JsonSerializerOptions
+			{
+				Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+				WriteIndented = true
+			};
+			return ToJsonObject().ToJsonString(options);
+		}
+		public void FromJsonObject(JsonObject jo)
+		{
+			if (jo == null) return;
+			if (jo.ContainsKey("list"))
+			{
+				m_Items.Clear();
+				JsonArray ja = jo["list"].AsArray();
+				foreach (var s in ja)
+				{
+					JsonObject obj = (JsonObject)s;
+					string p = "";
+					string c = "";
+					if (obj.ContainsKey("directory")) p = obj["directory"].GetValue<string>();
+					if (obj.ContainsKey("caption")) c = obj["caption"].GetValue<string>();
+					if ((p != "") && (c != ""))
+					{
+						DirectoryInfo di = new DirectoryInfo(p);
+						if (di.Exists)
+						{
+							if (AddDir(p, c))
+							{
+							}
+						}
+					}
+				}
+			}
+		}
+		// ****************************************************
+		public void FromJson(string js)
+		{
+			var doc = JsonNode.Parse(js);
+			if (doc != null)
+			{
+				FromJsonObject((JsonObject)doc);
+			}
+
+		}
+		// ****************************************************
+		public string PrefPath()
+		{
+			string p = PrefFile.GetFileSystemPath(Environment.SpecialFolder.ApplicationData);
+
+			return Path.Combine(p, "AE_remap_bookmark.json");
+		}       
+		// ****************************************************
+		public bool Save(string p)
+		{
+			bool ret = false;
+			try
+			{
+				string js = ToJson();
+				File.WriteAllText(p, js);
+				ret = true;
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// ****************************************************
+		public bool Save()
+		{
+			return Save(PrefPath());
+		}       
+		// ****************************************************
+		public bool Load(string p)
+		{
+			bool ret = false;
+
+			try
+			{
+				if (File.Exists(p) == true)
+				{
+					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
+					if (str != "")
+					{
+						FromJson(str);
+						ret = true;
+					}
+				}
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// ****************************************************
+		public bool Load()
+		{
+			return Load(PrefPath());
 		}
 		#endregion
 	}

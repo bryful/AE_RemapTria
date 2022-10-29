@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,13 +15,12 @@ namespace AE_RemapTria
 	public partial class T_BListBox : UserControl
 	{
 		// ******************************************************
-		private T_FList? m_Flist = null;
 		public T_FList? Flist
 		{
-			get { return m_Flist; }
+			get { return BList.Flist; }
 			set 
 			{ 
-				m_Flist = value; 
+				BList.Flist = value;
 			}
 		}
 
@@ -118,6 +118,18 @@ namespace AE_RemapTria
 			btnAdd.Click += BtnAdd_Click;
 			btnUp.Click += BtnUp_Click;
 			btnDown.Click += BtnDown_Click;
+			btnEdit.Click += BtnEdit_Click;
+			btnDell.Click += BtnDell_Click;
+		}
+
+		private void BtnDell_Click(object? sender, EventArgs e)
+		{
+			ItemDelete();
+		}
+
+		private void BtnEdit_Click(object? sender, EventArgs e)
+		{
+			EditCaption();
 		}
 
 		private void BtnDown_Click(object? sender, EventArgs e)
@@ -136,12 +148,14 @@ namespace AE_RemapTria
 		{
 			if(BList.SelectedIndex<0)
 			{
+				btnEdit.Enabled = false;
 				btnDell.Enabled = false;
 				btnUp.Enabled = false;
 				btnDown.Enabled = false;
 			}
 			else
 			{
+				btnEdit.Enabled = BList.SelectedIndex >= 0;
 				btnDell.Enabled = BList.SelectedIndex >= 0;
 				btnUp.Enabled = BList.SelectedIndex >= 1;
 				btnDown.Enabled = BList.SelectedIndex < BList.Count-1;
@@ -166,8 +180,61 @@ namespace AE_RemapTria
 		// ***********************************************************************
 		public void AddDir()
 		{
-			if(m_Flist==null) return;
-			AddDir(m_Flist.FullName, Path.GetFileName(m_Flist.FullName));
+			if(Flist==null) return;
+
+			T_NameDialog dlg = new T_NameDialog();
+			dlg.CanSameName = true;
+			dlg.Caption = "Add Directory";
+			dlg.ToCenter();
+			dlg.ValueText = Path.GetFileName(Flist.FullName);
+			if(dlg.ShowDialog() == DialogResult.OK)
+			{
+				if (dlg.ValueText != "")
+				{
+					AddDir(Flist.FullName, dlg.ValueText);
+					BList.Invalidate();
+				}
+			}
+		}
+		// ***********************************************************************
+		public void EditCaption()
+		{
+			if (BList.SelectedIndex < 0) return;
+			T_NameDialog dlg = new T_NameDialog();
+			dlg.CanSameName = false;
+			dlg.Caption = "Edit Caption";
+			dlg.ToCenter();
+			dlg.ValueText = BList.SelectedCaption;
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				if (dlg.ValueText != "")
+				{
+					BList.SelectedCaption = dlg.ValueText;
+					BList.Invalidate();
+				}
+			}
+
+		}
+		public void ItemDelete()
+		{
+			BList.ItemDelete();
+
+		}
+		public bool Import()
+		{
+			return BList.Load();
+		}
+		public bool Export()
+		{
+			return BList.Save();
+		}
+		public JsonObject ToJsonObject()
+		{
+			return BList.ToJsonObject();
+		}
+		public void FromJsonObject(JsonObject jo)
+		{
+			BList.FromJsonObject(jo);
 		}
 		// ***********************************************************************
 

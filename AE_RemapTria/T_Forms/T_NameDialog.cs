@@ -12,6 +12,8 @@ namespace AE_RemapTria
 {
 	public partial class T_NameDialog : T_BaseDialog
 	{
+		public bool CanSameName = false;
+
 		public string Caption
 		{
 			get { return lbCaption.Text; }
@@ -35,10 +37,15 @@ namespace AE_RemapTria
 			SetEventHandler(t_Zebra2);
 
 		}
-
+		private bool ChkSameName()
+		{
+			if (CanSameName == true) return false;
+			else
+				return (m_Original_ValueText == ValueText);
+		}
 		private void btnOK_Click(object sender, EventArgs e)
 		{
-			if ((ValueText == "") || (m_Original_ValueText == ValueText)) return;
+			if ((ValueText == "") || (ChkSameName())) return;
 			this.DialogResult = DialogResult.OK;
 		}
 
@@ -53,7 +60,7 @@ namespace AE_RemapTria
 			{
 				if (e.KeyCode == Keys.Enter)
 				{
-					if ((ValueText != "") && (m_Original_ValueText != ValueText))
+					if ((ValueText != "") && (ChkSameName()==false))
 					{
 						m_md = 1;
 						btnOK.IsMouseDown = true;

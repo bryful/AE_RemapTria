@@ -1014,22 +1014,26 @@ namespace AE_RemapTria
 			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
 			//dlg.SetFuncs(Funcs);
 			dlg.SetForm(m_Form);
+			/*
 			dlg.Location = new Point(
 				m_Form.Left + 20,
 				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
+			*/
 			bool b = false;
 			if (m_Form != null)
 			{
 				b = m_Form.TopMost;
 				m_Form.TopMost = false;
 			}
-			dlg.DirectoryName = @"C:\Windows";
+			dlg.ToCenter();
+			dlg.ImportDrive();
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
+			dlg.ExportDrive();
 			dlg.Dispose();
 			return ret;
 		}
