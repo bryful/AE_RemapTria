@@ -596,6 +596,9 @@ namespace AE_RemapTria
 		public bool Save(string p)
 		{
 			if (IsMultExecute) return false;
+			string d = T_Def.GetDir(p);
+			string n = T_Def.GetNameNoExt(p);
+			p = Path.Combine(d, n+".ardj.josn");
 			CellData.SheetName = T_Def.GetNameNoExt(p);
 			bool ret = CellData.Save(p);
 			if (ret)
