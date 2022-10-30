@@ -273,47 +273,31 @@ namespace AE_RemapTria
 			List<FInfo> lst = new List<FInfo>();
 
 			int cnt = 0;
-			if(m_dir.Parent!=null)
+			try
 			{
-				try
+				IEnumerable<string> dirs= Directory.EnumerateDirectories(m_dir.FullName,"*", SearchOption.TopDirectoryOnly);
+				foreach(string s in dirs)
 				{
-					FInfo fi = new FInfo(m_dir.Parent, cnt);
-					fi.Caption = "<Parent>";
+					if (s[0] == '.') continue;
+					DirectoryInfo di = new DirectoryInfo(s);
+					if(di==null) continue;
+					FInfo fi = new FInfo(di, cnt);
+					if (fi.Hidden) continue;
 					lst.Add(fi);
 					cnt++;
 				}
-				catch
+				IEnumerable<string> files = Directory.EnumerateFiles(m_dir.FullName,"*", SearchOption.TopDirectoryOnly);
+				foreach (string s in files)
 				{
-
-				}
-			}
-			try
-			{
-				DirectoryInfo[] dis = m_dir.GetDirectories();
-				if (dis.Length > 0)
-				{
-					for (int i = 0; i < dis.Length; i++)
+					if (s[0] == '.') continue;
+					FileInfo fif = new FileInfo(s);
+					if (fif == null) continue;
+					FInfo fi = new FInfo(fif, cnt);
+					if (fi.Hidden) continue;
+					if (fi.IsExt(m_TragetExt) == true)
 					{
-						FInfo fi = new FInfo(dis[i], cnt);
-						if (fi.Hidden) continue;
-						fi.Caption = "<" + fi.Caption + ">";
 						lst.Add(fi);
 						cnt++;
-					}
-				}
-				FileInfo[] fls = m_dir.GetFiles();
-				if (fls.Length > 0)
-				{
-					for (int i = 0; i < fls.Length; i++)
-					{
-						FInfo fi = new FInfo(fls[i], cnt);
-						if (fi.Hidden) continue;
-						if (fi.IsExt(m_TragetExt) == true)
-						{
-							fi.Caption = " " + fi.Caption;
-							lst.Add(fi);
-							cnt++;
-						}
 					}
 				}
 			}
@@ -369,6 +353,7 @@ namespace AE_RemapTria
 
 					for (int i = m_RowTop; i < m_RowBottom; i++)
 					{
+						sf.Alignment = StringAlignment.Near;
 						r = new Rectangle(5, m_RowHeight * i - m_DispY, this.Width - 5, m_RowHeight);
 						if(i==m_ForcusIndex)
 						{
@@ -376,7 +361,20 @@ namespace AE_RemapTria
 							g.FillRectangle(sb, r);
 						}
 						sb.Color = this.ForeColor;
-						g.DrawString(m_Items[i].Caption, this.Font, sb, r, sf);
+						r = new Rectangle(5, m_RowHeight * i - m_DispY, this.Width - 25, m_RowHeight);
+						if (m_Items[i].IsDir)
+						{
+							g.DrawString("<DIR> " + m_Items[i].Caption, this.Font, sb, r, sf);
+						}
+						else
+						{
+							string n = T_Def.GetNameNoExt(m_Items[i].Caption);
+							string e = T_Def.GetExt(m_Items[i].Caption);
+							g.DrawString("      " + n, this.Font, sb, r, sf);
+							sf.Alignment = StringAlignment.Far;
+							g.DrawString(e, this.Font, sb, r, sf);
+
+						}
 
 					}
 				}

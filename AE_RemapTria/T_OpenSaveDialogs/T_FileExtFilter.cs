@@ -126,6 +126,7 @@ namespace AE_RemapTria
 					}
 				}
 			}
+			OnFilterChanged(new FilterChangedArg(Filter));
 		}
 
 		// ***************************************************

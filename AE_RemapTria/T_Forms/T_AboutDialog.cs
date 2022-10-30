@@ -25,6 +25,11 @@ namespace AE_RemapTria
 			SetEventHandler(t_ColorPlate1);
 			SetEventHandler(t_ColorPlate2);
 			SetEventHandler(t_Zebra1);
+			SetEventHandler(t_Label1);
+			SetEventHandler(t_Label2);
+			SetEventHandler(t_Label3);
+			SetEventHandler(t_Label4);
+			SetEventHandler(t_Label5);
 		}
 		protected override void OnKeyPress(KeyPressEventArgs e)
 		{

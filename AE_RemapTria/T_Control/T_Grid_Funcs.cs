@@ -17,6 +17,7 @@ namespace AE_RemapTria
 	partial class T_Grid
 	{
 		// ************************************************************************************
+		#region Func
 		private void MakeFuncs()
 		{
 			List<FuncItem> lst = new List<FuncItem>();
@@ -95,6 +96,8 @@ namespace AE_RemapTria
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
+		#endregion
+		#region Menu
 		// ************************************************************************************
 		public void UpdateMenu()
 		{
@@ -141,6 +144,8 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenuSepa(2);
 			m_Menu.AddSubMenu(2, "HeightMax");
 		}
+		#endregion
+
 		// ************************************************************************************
 		public bool SheetSettings()
 		{
@@ -497,6 +502,7 @@ namespace AE_RemapTria
 			}
 			return b;
 		}
+		#region Selection
 		public bool SetSelection1()
 		{
 			return SetSelectionLength(1);
@@ -545,6 +551,9 @@ namespace AE_RemapTria
 		{
 			return SetSelectionLength(12);
 		}
+		#endregion
+		
+		
 		public bool SaveAs()
 		{
 			if (IsMultExecute) return false;
@@ -554,14 +563,12 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if (IsMultExecute) return ret;
-			SaveFileDialog dlg = new SaveFileDialog();
+			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
 			if (p != "")
 			{
-				dlg.InitialDirectory = T_Def.GetDir(p);
-				dlg.FileName = T_Def.GetNameNoExt(p);
+				dlg.FullName = p;
 			}
-			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
-			dlg.FilterIndex = 1;
+			dlg.Caption = "Save to File";
 			bool b = false;
 			if (m_Form != null)
 			{
@@ -569,11 +576,12 @@ namespace AE_RemapTria
 				m_Form.TopMost = false;
 				m_Form.ForegroundWindow();
 			}
+			dlg.ToCenter();
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				if (Save(dlg.FileName))
 				{
-					FileName = dlg.FileName;
+					FileName = dlg.FullName;
 					ret = true;
 				}
 				else
@@ -594,6 +602,12 @@ namespace AE_RemapTria
 			{
 				FileName=p;
 				CellData.SheetName = T_Def.GetNameNoExt(FileName);
+				if (m_Menu != null)
+				{
+					m_Menu.Text = T_Def.GetName(p);
+					m_Menu.Invalidate();
+				}
+
 			}
 			return ret;
 		}
@@ -655,14 +669,12 @@ namespace AE_RemapTria
 		public bool Open()
 		{
 			bool ret = false;
-			OpenFileDialog dlg = new OpenFileDialog();
+			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
 			if (FileName != "")
 			{
-				dlg.InitialDirectory = T_Def.GetDir(FileName);
-				dlg.FileName = T_Def.GetNameNoExt(FileName);
+				dlg.FullName = FileName;
 			}
-			dlg.Filter = "*.ardj.json|*.ardj.json|*.jsx|*.jsx|*.*|*.*";
-			dlg.FilterIndex = 1;
+			dlg.Caption = "Open from file";
 			bool b = false;
 			if(m_Form!=null)
 			{
@@ -670,9 +682,10 @@ namespace AE_RemapTria
 				m_Form.TopMost =false;
 				m_Form.ForegroundWindow();
 			}
+			dlg.ToCenter();
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				ret = (Open(dlg.FileName));
+				ret = (Open(dlg.FullName));
 			}
 			if (m_Form != null)
 			{
@@ -697,6 +710,11 @@ namespace AE_RemapTria
 				if (m_Form != null)
 				{
 					m_Form.ChkSize();
+				}
+				if(m_Menu!=null)
+				{
+					m_Menu.Text = T_Def.GetName(p);
+					m_Menu.Invalidate();
 				}
 				this.Invalidate();
 			}
@@ -1027,13 +1045,13 @@ namespace AE_RemapTria
 				m_Form.TopMost = false;
 			}
 			dlg.ToCenter();
-			dlg.ImportDrive();
+			//dlg.ImportDrive();
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
-			dlg.ExportDrive();
+			//dlg.ExportDrive();
 			dlg.Dispose();
 			return ret;
 		}

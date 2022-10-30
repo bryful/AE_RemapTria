@@ -114,20 +114,21 @@
 			// 
 			// t_Menu1
 			// 
-			this.t_Menu1.Alignment = System.Drawing.StringAlignment.Center;
+			this.t_Menu1.Alignment = System.Drawing.StringAlignment.Near;
+			this.t_Menu1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.t_Menu1.BackColor = System.Drawing.Color.Transparent;
-			this.t_Menu1.Font = new System.Drawing.Font("Yu Gothic UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Menu1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Menu1.Grid = this.t_Grid1;
 			this.t_Menu1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Menu1.Location = new System.Drawing.Point(0, 4);
 			this.t_Menu1.MyFontIndex = 5;
-			this.t_Menu1.MyFonts = null;
+			this.t_Menu1.MyFonts = this.t_MyFonts1;
 			this.t_Menu1.MyFontSize = 8F;
 			this.t_Menu1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Menu1.Name = "t_Menu1";
-			this.t_Menu1.Size = new System.Drawing.Size(203, 20);
+			this.t_Menu1.Size = new System.Drawing.Size(425, 20);
 			this.t_Menu1.TabIndex = 3;
-			this.t_Menu1.Text = "t_Menu1";
 			// 
 			// t_Caption1
 			// 

@@ -41,7 +41,7 @@
 			this.t_Label3 = new AE_RemapTria.T_Label();
 			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
 			this.t_Zebra2 = new AE_RemapTria.T_Zebra();
-			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
+			this.t_Label1 = new AE_RemapTria.T_Label();
 			this.SuspendLayout();
 			// 
 			// t_ListBox1
@@ -74,7 +74,7 @@
 			// 
 			// tbJap
 			// 
-			this.tbJap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(11)))), ((int)(((byte)(25)))));
+			this.tbJap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
 			this.tbJap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbJap.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbJap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
@@ -86,7 +86,6 @@
 			this.tbJap.Name = "tbJap";
 			this.tbJap.Size = new System.Drawing.Size(158, 27);
 			this.tbJap.TabIndex = 5;
-			this.tbJap.Text = "456";
 			this.tbJap.TextChanged += new System.EventHandler(this.tbJap_TextChanged);
 			// 
 			// btnOK
@@ -293,33 +292,33 @@
 			this.t_Zebra2.Text = "t_Zebra2";
 			this.t_Zebra2.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKYELLOW;
 			// 
-			// t_ColorPlate1
+			// t_Label1
 			// 
-			this.t_ColorPlate1.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_ColorPlate1.BackColor = System.Drawing.Color.Transparent;
-			this.t_ColorPlate1.ColorPlate = AE_RemapTria.ColorPlate.Fill;
-			this.t_ColorPlate1.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_ColorPlate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(155)))));
-			this.t_ColorPlate1.KagiHWeight = 10;
-			this.t_ColorPlate1.KagiVWeight = 10;
-			this.t_ColorPlate1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_ColorPlate1.Location = new System.Drawing.Point(33, 12);
-			this.t_ColorPlate1.MyFontIndex = 5;
-			this.t_ColorPlate1.MyFonts = null;
-			this.t_ColorPlate1.MyFontSize = 10F;
-			this.t_ColorPlate1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_ColorPlate1.Name = "t_ColorPlate1";
-			this.t_ColorPlate1.Opacity = 128;
-			this.t_ColorPlate1.Size = new System.Drawing.Size(373, 23);
-			this.t_ColorPlate1.TabIndex = 15;
-			this.t_ColorPlate1.Text = "t_ColorPlate1";
+			this.t_Label1.Alignment = System.Drawing.StringAlignment.Near;
+			this.t_Label1.BackColor = System.Drawing.Color.Black;
+			this.t_Label1.BottomBar = new System.Drawing.Size(0, 0);
+			this.t_Label1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label1.LeftBar = new System.Drawing.Size(14, 14);
+			this.t_Label1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Label1.Location = new System.Drawing.Point(43, 14);
+			this.t_Label1.MyFontIndex = 5;
+			this.t_Label1.MyFonts = this.t_MyFonts1;
+			this.t_Label1.MyFontSize = 10F;
+			this.t_Label1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Label1.Name = "t_Label1";
+			this.t_Label1.RightBar = new System.Drawing.Size(0, 0);
+			this.t_Label1.Size = new System.Drawing.Size(349, 24);
+			this.t_Label1.TabIndex = 15;
+			this.t_Label1.Text = "Keybind  Settings";
+			this.t_Label1.TopBar = new System.Drawing.Size(0, 0);
 			// 
 			// T_KeyBindDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(433, 406);
-			this.Controls.Add(this.t_ColorPlate1);
+			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_Zebra2);
 			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.t_Label3);
@@ -394,7 +393,7 @@
 		private T_Label t_Label3;
 		private T_Zebra t_Zebra1;
 		private T_Zebra t_Zebra2;
-		private T_ColorPlate t_ColorPlate1;
 		private TextBox textBox1;
+		private T_Label t_Label1;
 	}
 }

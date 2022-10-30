@@ -90,7 +90,7 @@ namespace AE_RemapTria
 		// ****************************************************************
 		public T_Menu()
 		{
-			this.Size = new Size(100, MyHeight);
+			this.Size = new Size(1600, MyHeight);
 			ChkGrid();
 		}
 		// ****************************************************************
@@ -103,7 +103,8 @@ namespace AE_RemapTria
 			m_Submenu[cnt] = new ContextMenuStrip();
 			m_Submenu[cnt].BackColor = Color.FromArgb(25,25,50);
 			m_Submenu[cnt].ForeColor = Color.FromArgb(200, 200, 250);
-			this.Size = new Size(MenuWidthAll(), MyHeight);
+			MenuWidthAll();
+			//this.Size = new Size(MenuWidthAll(), MyHeight);
 		}
 		// ****************************************************************
 		public void AddSubMenu(int idx, FuncItem fi)
@@ -233,7 +234,8 @@ namespace AE_RemapTria
 		{
 			base.InitLayout();
 			ChkGrid();
-			this.Size = new Size(MenuWidthAll(), MyHeight);
+			MenuWidthAll();
+			//this.Size = new Size(MenuWidthAll(), MyHeight);
 
 		}
 		// ****************************************************************
@@ -350,7 +352,17 @@ namespace AE_RemapTria
 							Fill(g, sb, r);
 							sb.Color = m_grid.Colors.Moji;
 						}
+						Alignment = StringAlignment.Center;
 						DrawStr(g, m_MenuItems[i].Caption, sb, r);
+					}
+					if(this.Text!="")
+					{
+						int x = m_MenuItems[m_MenuItems.Length - 1].PosLeft + m_MenuItems[m_MenuItems.Length - 1].Width;
+						int w = this.Width - x;
+						r = new Rectangle(x, 0, w, this.Height);
+						sb.Color = m_grid.Colors.Moji;
+						Alignment = StringAlignment.Near;
+						DrawStr(g, "[ " + this.Text+" ]", sb, r);
 					}
 				}
 

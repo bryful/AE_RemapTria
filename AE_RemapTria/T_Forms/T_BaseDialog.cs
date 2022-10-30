@@ -242,6 +242,14 @@ namespace AE_RemapTria
 			}
 		}
 		#endregion
+
+
+		private Color m_FrameColor = Color.FromArgb(255, 80, 80, 100);
+		public Color FrameColor
+		{
+			get { return m_FrameColor; }
+			set { m_FrameColor = value; this.Invalidate(); }
+		}
 		// ************************************************************************
 		public T_BaseDialog()
 		{
@@ -464,6 +472,9 @@ namespace AE_RemapTria
 					kp.Loc = new Point(this.Width, this.Height);
 					T_G.DrawKagi(g, sb, kp, Kagi_Style.BR);
 				}
+
+				p.Color = m_FrameColor;
+				DrawFrame(g, p);
 			}
 			finally
 			{

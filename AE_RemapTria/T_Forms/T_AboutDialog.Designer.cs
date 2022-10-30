@@ -38,6 +38,9 @@
 			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
 			this.t_ColorPlate2 = new AE_RemapTria.T_ColorPlate();
 			this.lbInfo = new AE_RemapTria.T_Label();
+			this.t_Label3 = new AE_RemapTria.T_Label();
+			this.t_Label4 = new AE_RemapTria.T_Label();
+			this.t_Label5 = new AE_RemapTria.T_Label();
 			this.SuspendLayout();
 			// 
 			// t_Arrow1
@@ -125,7 +128,7 @@
 			// t_Zebra1
 			// 
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra1.Location = new System.Drawing.Point(54, 87);
+			this.t_Zebra1.Location = new System.Drawing.Point(54, 108);
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(274, 25);
 			this.t_Zebra1.TabIndex = 5;
@@ -143,7 +146,7 @@
 			this.t_ColorPlate1.KagiHWeight = 2;
 			this.t_ColorPlate1.KagiVWeight = 5;
 			this.t_ColorPlate1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_ColorPlate1.Location = new System.Drawing.Point(54, 118);
+			this.t_ColorPlate1.Location = new System.Drawing.Point(54, 139);
 			this.t_ColorPlate1.MyFontIndex = 5;
 			this.t_ColorPlate1.MyFonts = null;
 			this.t_ColorPlate1.MyFontSize = 9F;
@@ -186,7 +189,7 @@
 			this.lbInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbInfo.LeftBar = new System.Drawing.Size(14, 14);
 			this.lbInfo.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbInfo.Location = new System.Drawing.Point(54, 123);
+			this.lbInfo.Location = new System.Drawing.Point(54, 139);
 			this.lbInfo.MyFontIndex = 5;
 			this.lbInfo.MyFonts = this.t_MyFonts1;
 			this.lbInfo.MyFontSize = 10F;
@@ -197,11 +200,77 @@
 			this.lbInfo.TabIndex = 8;
 			this.lbInfo.TopBar = new System.Drawing.Size(0, 0);
 			// 
+			// t_Label3
+			// 
+			this.t_Label3.Alignment = System.Drawing.StringAlignment.Center;
+			this.t_Label3.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label3.BottomBar = new System.Drawing.Size(0, 0);
+			this.t_Label3.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label3.LeftBar = new System.Drawing.Size(0, 0);
+			this.t_Label3.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Label3.Location = new System.Drawing.Point(89, 88);
+			this.t_Label3.MyFontIndex = 5;
+			this.t_Label3.MyFonts = this.t_MyFonts1;
+			this.t_Label3.MyFontSize = 8F;
+			this.t_Label3.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Label3.Name = "t_Label3";
+			this.t_Label3.RightBar = new System.Drawing.Size(0, 0);
+			this.t_Label3.Size = new System.Drawing.Size(119, 15);
+			this.t_Label3.TabIndex = 9;
+			this.t_Label3.Text = "[ えーいー りまっぷ";
+			this.t_Label3.TopBar = new System.Drawing.Size(0, 0);
+			// 
+			// t_Label4
+			// 
+			this.t_Label4.Alignment = System.Drawing.StringAlignment.Center;
+			this.t_Label4.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label4.BottomBar = new System.Drawing.Size(0, 0);
+			this.t_Label4.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label4.LeftBar = new System.Drawing.Size(0, 0);
+			this.t_Label4.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Label4.Location = new System.Drawing.Point(209, 84);
+			this.t_Label4.MyFontIndex = 5;
+			this.t_Label4.MyFonts = this.t_MyFonts1;
+			this.t_Label4.MyFontSize = 12F;
+			this.t_Label4.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Label4.Name = "t_Label4";
+			this.t_Label4.RightBar = new System.Drawing.Size(0, 0);
+			this.t_Label4.Size = new System.Drawing.Size(59, 21);
+			this.t_Label4.TabIndex = 10;
+			this.t_Label4.Text = "とりあ";
+			this.t_Label4.TopBar = new System.Drawing.Size(0, 0);
+			// 
+			// t_Label5
+			// 
+			this.t_Label5.Alignment = System.Drawing.StringAlignment.Center;
+			this.t_Label5.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label5.BottomBar = new System.Drawing.Size(0, 0);
+			this.t_Label5.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label5.LeftBar = new System.Drawing.Size(0, 0);
+			this.t_Label5.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Label5.Location = new System.Drawing.Point(280, 87);
+			this.t_Label5.MyFontIndex = 5;
+			this.t_Label5.MyFonts = this.t_MyFonts1;
+			this.t_Label5.MyFontSize = 8F;
+			this.t_Label5.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_Label5.Name = "t_Label5";
+			this.t_Label5.RightBar = new System.Drawing.Size(0, 0);
+			this.t_Label5.Size = new System.Drawing.Size(9, 15);
+			this.t_Label5.TabIndex = 11;
+			this.t_Label5.Text = "]";
+			this.t_Label5.TopBar = new System.Drawing.Size(0, 0);
+			// 
 			// T_AboutDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(382, 186);
+			this.ClientSize = new System.Drawing.Size(382, 212);
+			this.Controls.Add(this.t_Label5);
+			this.Controls.Add(this.t_Label4);
+			this.Controls.Add(this.t_Label3);
 			this.Controls.Add(this.lbInfo);
 			this.Controls.Add(this.t_Zebra1);
 			this.Controls.Add(this.t_Label1);
@@ -266,5 +335,8 @@
 		private T_ColorPlate t_ColorPlate1;
 		private T_ColorPlate t_ColorPlate2;
 		private T_Label lbInfo;
+		private T_Label t_Label3;
+		private T_Label t_Label4;
+		private T_Label t_Label5;
 	}
 }

@@ -435,6 +435,7 @@
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 40;
 			this.KagiWeight = 1;
+			this.KeyPreview = true;
 			this.MinimumSize = new System.Drawing.Size(680, 370);
 			this.MyFonts = this.t_MyFonts1;
 			this.Name = "T_OpenSaveDialog";

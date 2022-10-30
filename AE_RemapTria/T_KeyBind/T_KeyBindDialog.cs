@@ -18,9 +18,9 @@ namespace AE_RemapTria
 		public T_KeyBindDialog()
 		{
 			InitializeComponent();
-			SetEventHandler(t_ColorPlate1);
 			SetEventHandler(t_Zebra1);
 			SetEventHandler(t_Zebra2);
+			SetEventHandler(t_Label1);
 		}
 		public bool ChkKey(Keys k)
 		{
