@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -62,7 +63,7 @@ namespace AE_RemapTria
 			this.Controls.Add(m_Label);
 			this.Controls.Add(m_TextBox);
 			InitializeComponent();
-
+			m_Label.BackColor = Color.FromArgb(20,20,50);
 			m_Label.GotFocus += M_Label_GotFocus;
 		}
 
