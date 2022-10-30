@@ -221,7 +221,15 @@ namespace AE_RemapTria
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			Application.Exit();
+			if(m_form != null)
+			{
+				((T_Form)m_form).Quit();
+			}
+			else
+			{
+				Application.Exit();
+			}
+
 		}
 
 		private void MenuPosLeft_Click(object sender, EventArgs e)

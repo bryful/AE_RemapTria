@@ -15,6 +15,9 @@ namespace AE_RemapTria
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 	public partial class T_Grid : T_BaseControl
 	{
+		public bool IsModif = false;
+
+
 		public bool IsMultExecute = false;
 		private bool m_IsJapanOS = true;
 		public bool IsJapanOS { get { return m_IsJapanOS; } }

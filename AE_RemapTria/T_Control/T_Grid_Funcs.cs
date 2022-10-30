@@ -147,6 +147,10 @@ namespace AE_RemapTria
 		#endregion
 
 		// ************************************************************************************
+		/// <summary>
+		/// シート設定ダイアログの表示
+		/// </summary>
+		/// <returns></returns>
 		public bool SheetSettings()
 		{
 			if (m_Form == null) return false;
@@ -192,12 +196,31 @@ namespace AE_RemapTria
 		}
 
 		// ************************************************************************************
+		/// <summary>
+		/// 終了
+		/// </summary>
+		/// <returns></returns>
 		public bool Quit()
 		{
-			Application.Exit();
+			if ((IsModif) && (IsMultExecute == false))
+			{
+				SaveAs();
+			}
+			try
+			{
+				Application.Exit();
+			}
+			catch
+			{
+
+			}
 			return true;
 		}
 		// ************************************************************************************
+		/// <summary>
+		/// Undo
+		/// </summary>
+		/// <returns></returns>
 		public bool Undo()
 		{
 			BackupSratus bs = CellData.PopUndo();
@@ -219,25 +242,33 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ************************************************************************************
+		/// <summary>
+		/// すべて消す
+		/// </summary>
+		/// <returns></returns>
 		public bool ClearAll()
 		{
+			IsModif = false;
 			CellData.ClearAll();
 			return true;
 		}
 		// ************************************************************************************
 		public bool ToggleFrameEnabled()
 		{
+			IsModif = true;
 			return CellData.ToggleFrameEnabled();
 		}
 		// ************************************************************************************
 		public bool FrameEnabledON()
 		{
+			IsModif = true;
 			CellData.SetFrameEnabled(true);
 			return	true;
 		}
 		// ************************************************************************************
 		public bool FrameEnabledOFF()
 		{
+			IsModif = true;
 			CellData.SetFrameEnabled(false);
 			return true;
 		}
@@ -245,7 +276,11 @@ namespace AE_RemapTria
 		public bool Inputnum(int v)
 		{
 			bool ret = false;
-			if (m_Input != null) ret = m_Input.InputAddKey(v);
+			if (m_Input != null)
+			{
+				IsModif = true;
+				ret = m_Input.InputAddKey(v);
+			}
 			return ret;
 		}
 		public bool Input0() { return Inputnum(0); }
@@ -272,6 +307,7 @@ namespace AE_RemapTria
 					CellData.SetCellNumEmpty(false);
 					ret = true;
 				}
+				IsModif = true;
 			}
 			return ret;
 		}
@@ -289,6 +325,7 @@ namespace AE_RemapTria
 					CellData.SetCellNumBS();
 					ret = true;
 				}
+				IsModif = true;
 			}
 			return ret;
 		}
@@ -300,6 +337,7 @@ namespace AE_RemapTria
 				CellData.SetCellNumEmpty(true);
 				ret = true;
 			}
+			IsModif = true;
 			return ret;
 		}
 		public void ChkSelectionV()
@@ -360,6 +398,7 @@ namespace AE_RemapTria
 				{
 					ret = InputSame();
 				}
+				IsModif = true;
 			}
 			return ret;
 
@@ -368,18 +407,21 @@ namespace AE_RemapTria
 		{
 			CellData.SetCellNumSame();
 			ChkSelectionV();
+			IsModif = true;
 			return true;
 		}
 		public bool InputInc()
 		{
 			CellData.SetCellNumInc();
 			ChkSelectionV();
+			IsModif = true;
 			return true;
 		}
 		public bool InputDec()
 		{
 			CellData.SetCellNumDec();
 			ChkSelectionV();
+			IsModif = true;
 			return true;
 		}
 
@@ -610,6 +652,7 @@ namespace AE_RemapTria
 					m_Menu.Text = T_Def.GetName(p);
 					m_Menu.Invalidate();
 				}
+				IsModif = false;
 
 			}
 			return ret;
@@ -719,6 +762,7 @@ namespace AE_RemapTria
 					m_Menu.Text = T_Def.GetName(p);
 					m_Menu.Invalidate();
 				}
+				IsModif = false;
 				this.Invalidate();
 			}
 			return ret;
@@ -726,6 +770,7 @@ namespace AE_RemapTria
 		}
 		public bool CellRemove()
 		{
+			IsModif = true;
 			return CellData.RemoveCell();
 		}
 		public bool CellInsert()
@@ -750,6 +795,7 @@ namespace AE_RemapTria
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret =CellData.InsertCell(dlg.ValueText);
+				IsModif = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
 			dlg.Dispose();
@@ -757,10 +803,12 @@ namespace AE_RemapTria
 		}
 		public bool FrameInsert()
 		{
+			IsModif = true;
 			return CellData.InsertFrame();
 		}
 		public bool FrameRemove()
 		{
+			IsModif = true;
 			return CellData.RemoveFrame();
 		}
 		public string ToArdj()
@@ -776,6 +824,7 @@ namespace AE_RemapTria
 			bool ret = CellData.Cut();
 			if (ret)
 			{
+				IsModif = true;
 				this.Invalidate();
 			}
 			return ret;
@@ -785,6 +834,7 @@ namespace AE_RemapTria
 			bool ret = CellData.Paste();
 			if (ret)
 			{
+				IsModif = true;
 				this.Invalidate();
 			}
 			return ret;
@@ -840,6 +890,7 @@ namespace AE_RemapTria
 				if (CellData.FrameCount!= frameCount) CellData.SetFrameCount(frameCount);
 				CellData.FromArray(cell);
 				CellData._undoPushFlag = u;
+				IsModif = true;
 				this.Invalidate();
 
 			}
@@ -870,6 +921,7 @@ namespace AE_RemapTria
 			dlg.SetCelLData(CellData);
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
+				IsModif = true;
 				dlg.GetCellData(ref CellData);
 				ret = true;
 			}
@@ -899,6 +951,7 @@ namespace AE_RemapTria
 			{
 				CellData.SetCaptionTarget(dlg.ValueText);
 				if (m_Form != null) m_Form.Invalidate();
+				IsModif = true;
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
@@ -927,6 +980,7 @@ namespace AE_RemapTria
 			{
 				CellData.OffSetFrame = dlg.Value;
 				if (m_Form != null) m_Form.Invalidate();
+				IsModif = true;
 				ret = true;
 			}
 			if (m_Form != null) m_Form.TopMost = b;
@@ -964,6 +1018,7 @@ namespace AE_RemapTria
 				m_AutoinputLast = dlg.Last;
 				m_AutoinputKoam = dlg.Koma;
 				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
+				IsModif = true;
 				this.Invalidate();
 				ret = true;
 			}

@@ -1,4 +1,5 @@
 ﻿using BRY;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.IO.Pipes;
@@ -95,7 +96,17 @@ namespace AE_RemapTria
 			this.KeyPreview = true;
 			this.AllowDrop = true;
 		}
-
+		public void Quit()
+		{
+			if(m_grid!=null)
+			{
+				m_grid.Quit();
+			}
+			else
+			{
+				Application.Exit();
+			}
+		}
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
@@ -750,6 +761,20 @@ namespace AE_RemapTria
 
 			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
 		}
+		/*
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (m_grid!=null)
+			{
+				if ((m_grid.IsModif)&&(m_grid.IsMultExecute==false))
+				{
+					m_grid.SaveAs();
+					e.Cancel = false;
+				}
+			}
+			//base.OnFormClosing(e);
+		}
+		*/
 	}
 
 }

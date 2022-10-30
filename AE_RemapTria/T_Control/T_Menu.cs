@@ -362,7 +362,10 @@ namespace AE_RemapTria
 						r = new Rectangle(x, 0, w, this.Height);
 						sb.Color = m_grid.Colors.Moji;
 						Alignment = StringAlignment.Near;
-						DrawStr(g, "[ " + this.Text+" ]", sb, r);
+						string s = " ]";
+						if (m_grid != null) if (m_grid.IsModif) s = "* ]";
+
+						DrawStr(g, "[ " + this.Text+s, sb, r);
 					}
 				}
 
