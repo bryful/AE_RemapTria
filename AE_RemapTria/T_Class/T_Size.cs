@@ -8,6 +8,8 @@ namespace AE_RemapTria
 {
 	public class T_Size
 	{
+		private T_Grid m_grid = null;
+		public void SetGrid(T_Grid tg) { m_grid = tg; }
 		public event EventHandler? ChangeGridSize;
 		public event EventHandler? ChangeDispMax;
 		public event EventHandler? ChangeDisp;
@@ -209,7 +211,12 @@ namespace AE_RemapTria
 
 
 			if (b == true) OnChangeDispMax(new EventArgs());
-			if (b2 == true) OnChangeDisp(new EventArgs());
+			if (b2 == true)
+			{
+				//if (m_grid != null) m_grid.Invalidate();
+				OnChangeDisp(new EventArgs());
+			}
+
 
 		}
 		//---------------------------------------
@@ -256,6 +263,7 @@ namespace AE_RemapTria
 				{
 					m_Disp.Y = v;
 					ChkDisp();
+					if (m_grid != null) m_grid.Invalidate();
 					OnChangeDisp(new EventArgs());
 				}
 			}

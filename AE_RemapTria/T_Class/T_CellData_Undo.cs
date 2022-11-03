@@ -160,5 +160,17 @@ namespace AE_RemapTria
 			return ret;
 		}
 		// ******************************************************
+		public T_Selection GetUndoSel()
+		{
+			T_Selection ret = new T_Selection();
+			ret.Start = 0;
+			ret.Length = 1;
+			ret.Target = 0;
+			if (m_BackupCells.Count > 0)
+			{
+				ret.Copy( m_BackupCells[m_BackupCells.Count - 1].sel);
+			}
+			return ret;
+		}
 	}
 }

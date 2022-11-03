@@ -140,8 +140,8 @@ namespace AE_RemapTria
 				{
 					int y = (e.Y + m_grid.Sizes.DispY)/m_grid.Sizes.CellHeight;
 
-					m_grid.CellData.SetStart(y);
-
+					m_grid.SetCellStart(y);
+					this.Invalidate();
 				}
 			}
 			base.OnMouseDown(e);

@@ -406,7 +406,7 @@ namespace AE_RemapTria
 			return cs;
 		}
 		// ******************************************************
-		public void SetTarget(int c)
+		public void SetTargetCell(int c)
 		{
 			int cc = c;
 			if (cc < 0) cc = 0;
@@ -419,7 +419,7 @@ namespace AE_RemapTria
 			}
 		}
 		// ******************************************************
-		public void SetStart(int f)
+		public void SetSelStart(int f)
 		{
 			int ff = f;
 			if (ff < 0) ff = 0;
@@ -428,7 +428,7 @@ namespace AE_RemapTria
 			{
 				PushUndo(BackupSratus.SelectionChange);
 				m_sel.SetStart(ff);
-				OnSelChanged(new EventArgs());
+				//OnSelChanged(new EventArgs());
 			}
 		}
 		// ******************************************************

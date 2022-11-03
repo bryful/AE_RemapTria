@@ -405,7 +405,14 @@ namespace AE_RemapTria
 			b = (m_Value != v);
 			m_Value = v;
 			this.Invalidate();
-			if (b) OnChangeValueEvent(new EventArgs());
+			if (b)
+			{
+				if (m_grid != null)
+				{
+					m_grid.Sizes.DispY = m_Value;
+					//m_grid.Invalidate();
+				};
+			}
 			//base.OnMouseUp(e);
 		}
 	}

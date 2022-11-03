@@ -71,6 +71,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SetSelection11, Keys.F11));
 			lst.Add(new FuncItem(SetSelection12, Keys.F12));
 			lst.Add(new FuncItem(SelectionAll, Keys.Control | Keys.A));
+			lst.Add(new FuncItem(SelectionToEnd, Keys.Control | Keys.End));
 			lst.Add(new FuncItem(Undo, Keys.Control|Keys.Z));
 			lst.Add(new FuncItem(Quit, Keys.Control | Keys.Q ,"終了"));
 			lst.Add(new FuncItem(Save, Keys.Control | Keys.S, "保存"));
@@ -129,6 +130,8 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(1, "Paste");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "ClearAll");
+			m_Menu.AddSubMenu(1, "SelectionAll");
+			m_Menu.AddSubMenu(1, "SelectionToEnd");
 			m_Menu.AddSubMenu(1, "AutoInputDialog");
 			m_Menu.AddSubMenuSepa(1);
 			m_Menu.AddSubMenu(1, "CellInsert");
@@ -224,7 +227,8 @@ namespace AE_RemapTria
 		public bool Undo()
 		{
 			BackupSratus bs = CellData.PopUndo();
-			if(bs== BackupSratus.All)
+			ChkOffScr();
+			if (bs== BackupSratus.All)
 			{
 				ChkMinMax();
 				ChkHScrl();
@@ -242,6 +246,39 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ************************************************************************************
+		public bool SetCellTarget(int c)
+		{
+			if((CellData.TargetIndex!=c)&&(c>=0)&&(c<CellData.CellCount))
+			{
+				int bi = CellData.TargetIndex;
+				CellData.SetTargetCell(c);
+				DrawCellOffScr(bi);
+				DrawCellOffScr();
+				this.Invalidate();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public bool SetCellStart(int f)
+		{
+			if ((f >= 0) && (f < CellData.FrameCount))
+			{
+				int bs = CellData.Selection.Start;
+				CellData.SetSelStart(f);
+				if(f!=bs) DrawCellOffScr(bs);
+				DrawCellOffScr();
+				this.Invalidate();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		// ************************************************************************************
 		/// <summary>
 		/// すべて消す
 		/// </summary>
@@ -250,26 +287,34 @@ namespace AE_RemapTria
 		{
 			IsModif = false;
 			CellData.ClearAll();
+			DrawAllOffScr();
 			return true;
 		}
 		// ************************************************************************************
 		public bool ToggleFrameEnabled()
 		{
 			IsModif = true;
-			return CellData.ToggleFrameEnabled();
+			bool ret = CellData.ToggleFrameEnabled();
+			if(ret)
+			{
+				DrawAllOffScr();
+			}
+			return ret; 
 		}
 		// ************************************************************************************
 		public bool FrameEnabledON()
 		{
 			IsModif = true;
 			CellData.SetFrameEnabled(true);
-			return	true;
+			DrawAllOffScr();
+			return true;
 		}
 		// ************************************************************************************
 		public bool FrameEnabledOFF()
 		{
 			IsModif = true;
 			CellData.SetFrameEnabled(false);
+			DrawAllOffScr();
 			return true;
 		}
 		// ************************************************************************************
@@ -280,6 +325,10 @@ namespace AE_RemapTria
 			{
 				IsModif = true;
 				ret = m_Input.InputAddKey(v);
+				if(ret)
+				{
+					DrawOffScr();
+				}
 			}
 			return ret;
 		}
@@ -326,6 +375,7 @@ namespace AE_RemapTria
 					ret = true;
 				}
 				IsModif = true;
+				if(ret) DrawOffScr();
 			}
 			return ret;
 		}
@@ -336,6 +386,7 @@ namespace AE_RemapTria
 			{
 				CellData.SetCellNumEmpty(true);
 				ret = true;
+				if (ret) DrawOffScr();
 			}
 			IsModif = true;
 			return ret;
@@ -399,6 +450,8 @@ namespace AE_RemapTria
 					ret = InputSame();
 				}
 				IsModif = true;
+				if (ret) DrawOffScr();
+
 			}
 			return ret;
 
@@ -408,6 +461,8 @@ namespace AE_RemapTria
 			CellData.SetCellNumSame();
 			ChkSelectionV();
 			IsModif = true;
+			DrawOffScr();
+
 			return true;
 		}
 		public bool InputInc()
@@ -415,6 +470,8 @@ namespace AE_RemapTria
 			CellData.SetCellNumInc();
 			ChkSelectionV();
 			IsModif = true;
+			DrawOffScr();
+
 			return true;
 		}
 		public bool InputDec()
@@ -422,6 +479,8 @@ namespace AE_RemapTria
 			CellData.SetCellNumDec();
 			ChkSelectionV();
 			IsModif = true;
+			DrawOffScr();
+
 			return true;
 		}
 
@@ -431,6 +490,8 @@ namespace AE_RemapTria
 			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool ret = CellData.Selection.MoveDown();
 			ChkSelectionV();
+			if (ret) DrawOffScr();
+
 			return ret;
 		}
 		// ************************************************************************************
@@ -439,6 +500,8 @@ namespace AE_RemapTria
 			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool ret = CellData.Selection.MoveUp();
 			ChkSelectionV();
+			if (ret) DrawOffScr();
+
 			return ret;
 		}
 		// ************************************************************************************
@@ -447,6 +510,8 @@ namespace AE_RemapTria
 			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool b = CellData.Selection.MoveRight();
 			ChkSelectionH();
+			if (b) DrawOffScr();
+
 			return b;
 		}
 		public bool SelMoveLeft()
@@ -454,11 +519,14 @@ namespace AE_RemapTria
 			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool b = CellData.Selection.MoveLeft();
 			ChkSelectionH();
+			if (b) DrawOffScr();
+
 			return b;
 		}
 		public bool Home()
 		{
 			Sizes.DispY = 0;
+
 			return true;
 
 		}
@@ -500,7 +568,9 @@ namespace AE_RemapTria
 		}
 		public bool SelAdd()
 		{
-			return CellData.SelectionAdd(1);
+			bool ret = CellData.SelectionAdd(1);
+			if (ret) DrawOffScr();
+			return ret;
 		}
 		public bool SelDec()
 		{
@@ -508,6 +578,7 @@ namespace AE_RemapTria
 			if (CellData.Selection.Length > 1)
 			{
 				ret = CellData.SelectionAdd(-1);
+				if (ret) DrawOffScr();
 			}
 			return ret;
 		}
@@ -518,6 +589,8 @@ namespace AE_RemapTria
 			{
 				CellData.PushUndo(BackupSratus.SelectionChange);
 				ret = CellData.SelectionAll();
+				if (ret) DrawOffScr();
+
 			}
 			return ret;
 		}
@@ -540,9 +613,25 @@ namespace AE_RemapTria
 				CellData.PushUndo(BackupSratus.SelectionChange);
 				CellData.Selection.Length = v;
 				b = true;
+				DrawCellOffScr();
+
 				this.Invalidate();
 			}
 			return b;
+		}
+		public bool SelectionToEnd()
+		{
+			bool ret = false;
+
+			int l2 = CellData.FrameCount - CellData.Selection.Start;
+			if(CellData.Selection.Length<l2)
+			{
+				CellData.Selection.SetLength(l2);
+				ret = true;
+				DrawCellOffScr();
+				this.Invalidate();
+			}
+			return ret;
 		}
 		#region Selection
 		public bool SetSelection1()
@@ -763,6 +852,8 @@ namespace AE_RemapTria
 					m_Menu.Invalidate();
 				}
 				IsModif = false;
+				ChkOffScr();
+				DrawAllOffScr();
 				this.Invalidate();
 			}
 			return ret;
@@ -771,7 +862,9 @@ namespace AE_RemapTria
 		public bool CellRemove()
 		{
 			IsModif = true;
-			return CellData.RemoveCell();
+			bool ret = CellData.RemoveCell();
+			if (ret) DrawOffScr();
+			return ret;
 		}
 		public bool CellInsert()
 		{
@@ -796,6 +889,8 @@ namespace AE_RemapTria
 			{
 				ret =CellData.InsertCell(dlg.ValueText);
 				IsModif = true;
+				ChkOffScr();
+				DrawAllOffScr();
 			}
 			if (m_Form != null) m_Form.TopMost = b;
 			dlg.Dispose();
@@ -804,12 +899,16 @@ namespace AE_RemapTria
 		public bool FrameInsert()
 		{
 			IsModif = true;
-			return CellData.InsertFrame();
+			bool ret = CellData.InsertFrame();
+			if (ret) DrawOffScr();
+			return ret;
 		}
 		public bool FrameRemove()
 		{
 			IsModif = true;
-			return CellData.RemoveFrame();
+			bool ret = CellData.RemoveFrame();
+			if (ret) DrawOffScr();
+			return ret;
 		}
 		public string ToArdj()
 		{
@@ -825,6 +924,7 @@ namespace AE_RemapTria
 			if (ret)
 			{
 				IsModif = true;
+				DrawOffScr();
 				this.Invalidate();
 			}
 			return ret;
@@ -835,6 +935,7 @@ namespace AE_RemapTria
 			if (ret)
 			{
 				IsModif = true;
+				DrawOffScr();
 				this.Invalidate();
 			}
 			return ret;
@@ -845,6 +946,7 @@ namespace AE_RemapTria
 			if (ret)
 			{
 				ChkSelectionH();
+				DrawOffScr();
 				this.Invalidate();
 			}
 			return ret;
@@ -855,6 +957,7 @@ namespace AE_RemapTria
 			if (ret)
 			{
 				ChkSelectionH();
+				DrawOffScr();
 				this.Invalidate();
 			}
 			return ret;
@@ -891,6 +994,7 @@ namespace AE_RemapTria
 				CellData.FromArray(cell);
 				CellData._undoPushFlag = u;
 				IsModif = true;
+				DrawAllOffScr();
 				this.Invalidate();
 
 			}
@@ -1018,6 +1122,7 @@ namespace AE_RemapTria
 				m_AutoinputLast = dlg.Last;
 				m_AutoinputKoam = dlg.Koma;
 				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
+				DrawOffScr();
 				IsModif = true;
 				this.Invalidate();
 				ret = true;

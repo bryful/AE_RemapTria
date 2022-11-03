@@ -68,7 +68,7 @@
         "",
         ""};
 			this.t_ListBox1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
-			this.t_ListBox1.Size = new System.Drawing.Size(160, 344);
+			this.t_ListBox1.Size = new System.Drawing.Size(222, 344);
 			this.t_ListBox1.TabIndex = 0;
 			this.t_ListBox1.SelectedIndexChanged += new System.EventHandler(this.t_ListBox1_SelectedIndexChanged);
 			// 
@@ -78,7 +78,7 @@
 			this.tbJap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tbJap.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbJap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.tbJap.Location = new System.Drawing.Point(233, 66);
+			this.tbJap.Location = new System.Drawing.Point(295, 66);
 			this.tbJap.MyFontIndex = 5;
 			this.tbJap.MyFonts = this.t_MyFonts1;
 			this.tbJap.MyFontSize = 10F;
@@ -105,7 +105,7 @@
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(234, 351);
+			this.btnOK.Location = new System.Drawing.Point(296, 351);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFonts = this.t_MyFonts1;
 			this.btnOK.MyFontSize = 12F;
@@ -135,7 +135,7 @@
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LeftBar = 0;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(233, 311);
+			this.btnCancel.Location = new System.Drawing.Point(295, 311);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFonts = this.t_MyFonts1;
 			this.btnCancel.MyFontSize = 12F;
@@ -157,7 +157,7 @@
 			this.t_Label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.t_Label2.LeftBar = new System.Drawing.Size(14, 14);
 			this.t_Label2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label2.Location = new System.Drawing.Point(233, 41);
+			this.t_Label2.Location = new System.Drawing.Point(295, 41);
 			this.t_Label2.MyFontIndex = 5;
 			this.t_Label2.MyFonts = this.t_MyFonts1;
 			this.t_Label2.MyFontSize = 10F;
@@ -186,7 +186,7 @@
 			this.btnGetKey1.IsMouseDown = false;
 			this.btnGetKey1.LeftBar = 12;
 			this.btnGetKey1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnGetKey1.Location = new System.Drawing.Point(233, 146);
+			this.btnGetKey1.Location = new System.Drawing.Point(295, 146);
 			this.btnGetKey1.MyFontIndex = 5;
 			this.btnGetKey1.MyFonts = this.t_MyFonts1;
 			this.btnGetKey1.MyFontSize = 9F;
@@ -216,7 +216,7 @@
 			this.btnGetKey2.IsMouseDown = false;
 			this.btnGetKey2.LeftBar = 12;
 			this.btnGetKey2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnGetKey2.Location = new System.Drawing.Point(232, 188);
+			this.btnGetKey2.Location = new System.Drawing.Point(294, 188);
 			this.btnGetKey2.MyFontIndex = 5;
 			this.btnGetKey2.MyFonts = this.t_MyFonts1;
 			this.btnGetKey2.MyFontSize = 9F;
@@ -238,7 +238,7 @@
 			this.lbCaution.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbCaution.LeftBar = new System.Drawing.Size(14, 14);
 			this.lbCaution.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbCaution.Location = new System.Drawing.Point(232, 230);
+			this.lbCaution.Location = new System.Drawing.Point(294, 230);
 			this.lbCaution.MyFontIndex = 5;
 			this.lbCaution.MyFonts = this.t_MyFonts1;
 			this.lbCaution.MyFontSize = 7F;
@@ -260,7 +260,7 @@
 			this.t_Label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.t_Label3.LeftBar = new System.Drawing.Size(14, 14);
 			this.t_Label3.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label3.Location = new System.Drawing.Point(232, 118);
+			this.t_Label3.Location = new System.Drawing.Point(294, 118);
 			this.t_Label3.MyFontIndex = 5;
 			this.t_Label3.MyFonts = this.t_MyFonts1;
 			this.t_Label3.MyFontSize = 10F;
@@ -275,7 +275,7 @@
 			// t_Zebra1
 			// 
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra1.Location = new System.Drawing.Point(232, 260);
+			this.t_Zebra1.Location = new System.Drawing.Point(294, 260);
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(160, 45);
 			this.t_Zebra1.TabIndex = 13;
@@ -308,7 +308,7 @@
 			this.t_Label1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Label1.Name = "t_Label1";
 			this.t_Label1.RightBar = new System.Drawing.Size(0, 0);
-			this.t_Label1.Size = new System.Drawing.Size(349, 24);
+			this.t_Label1.Size = new System.Drawing.Size(411, 24);
 			this.t_Label1.TabIndex = 15;
 			this.t_Label1.Text = "Keybind  Settings";
 			this.t_Label1.TopBar = new System.Drawing.Size(0, 0);
@@ -317,7 +317,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(433, 406);
+			this.ClientSize = new System.Drawing.Size(496, 406);
 			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_Zebra2);
 			this.Controls.Add(this.t_Zebra1);

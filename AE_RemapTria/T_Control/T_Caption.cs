@@ -162,7 +162,7 @@ namespace AE_RemapTria
 			if (m_grid != null)
 			{
 				int t = (e.Location.X + m_grid.Sizes.Disp.X) / m_grid.Sizes.CellWidth;
-				m_grid.CellData.SetTarget(t);
+				m_grid.SetCellTarget(t);
 			}
 			base.OnMouseDown(e);
 		}
