@@ -353,7 +353,32 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 
         return ret;
     }
+//-------------------------------------------------------------------------
+	var closeAE_Reamp = function()
+	{
+        var ret = false;
+		var aeremapCall = new File(aeremapCallPath);
+		var cmd =  "\"" + aeremapCall.fsName +"\"";
+		try{
+            if (aeremapCall.exists==true){
+                var r = "";
+                r = system.callSystem(cmd + " /exenow");
 
+                r = r.trim().toLowerCase();
+                if (r=="false")
+                {
+                    return ret;
+                }
+                system.callSystem(cmd + " /quit");
+            }else{
+                alert(cmd + " : がありません");
+            }
+        }catch(e){
+            alert(e.toString());
+        }
+
+        return ret;
+    }
     // ********************************************************************************************
     var winObj = (me instanceof Panel)? me : new Window('palette{text:"AE_RemapTria",orientation : "column", properties : {resizeable : true} }');
     // ********************************************************************************************
@@ -367,7 +392,8 @@ btnSaveAs:Button{alignment:["fill","top"],text:"Save Ardj"},\
 btnOpen:Button{alignment:["fill","top"],text:"Open Ardj"},\
 btnGetCellLayer:Button{alignment:["fill","top"],text:"GetCellLayer"},\
 cmbOP:DropDownList{alignment:["fill","top"]},\
-cbInOutPoint:Checkbox{alignment:["fill","top"],text:"InOutPoint"}},\
+cbInOutPoint:Checkbox{alignment:["fill","top"],text:"InOutPoint"},\
+btnClose:Button{alignment:["fill","top"],text:"Quit AE_Remap"}},\
 g1:Group{alignment:["fill","fill"],orientation:"column",\
 edSheetName:EditText{alignment:["fill","top"]},\
 pnlCells:Panel{alignment:["fill","fill"],orientation:"row",text:"Cells"}}\
@@ -388,6 +414,7 @@ pnlCells:Panel{alignment:["fill","fill"],orientation:"row",text:"Cells"}}\
     winObj.gr.g0.btnRun.onClick = execAE_Reamp;
     winObj.gr.g0.btnOpen.onClick = openAE_Reamp;
     winObj.gr.g0.btnSaveAs.onClick = saveAsAE_Reamp;
+    winObj.gr.g0.btnClose.onClick = closeAE_Reamp;
     /*
     btnSaveArdj.onClick = export_ardj;
     btnCenter.onClick = cenertAE_Reamp;
