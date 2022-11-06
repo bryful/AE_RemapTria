@@ -299,7 +299,7 @@ namespace AE_RemapTria
 			Rectangle rct = Screen.PrimaryScreen.Bounds;
 			Point p = new Point((rct.Width - this.Width) / 2, (rct.Height - this.Height) / 2);
 			this.Location = p;
-			Wa.SetForegroundWindow(this.Handle);
+			F_W.SetForegroundWindow(this.Handle);
 		}
 		// *****************************************************************
 		protected override void OnLoad(EventArgs e)

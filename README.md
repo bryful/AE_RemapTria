@@ -50,9 +50,12 @@ C#のフレームワークを.NET6に変えました。今現在パフォーマ�
 * キーコンフィグ
 * Shiftキーを押しながら起動で設定の初期化を行うようにした。
 * OpenSaveダイアログも自前で作成
+* AE_RemapTriaCall.exeを廃止
+* 高速化のためGrid表示を自前のダブルバッファーに。
 
 # 今後の予定
 
+* 簡単なマニュアルを作成
 * フレーム表示設定を切り替えるメニューを作成
 * TextBoxカスタムコントロールのカスタム描画
 * バグだし。
@@ -62,12 +65,11 @@ C#のフレームワークを.NET6に変えました。今現在パフォーマ�
 # Install
 
 * AE_RemapTria.exe
-* AE_RemapTriaCall.exe
 * AE_RemapTria.jsx
 * AE_RemapTriaJson.jsx
 
-上記の４個のファイルをScriptUI Panelsにコピーしてください。<br>
-フローティングパネルにしたくないときは、適当な場所に4個のファイルを入れても大丈夫です。
+上記の3個のファイルをScriptUI Panelsにコピーしてください。<br>
+フローティングパネルにしたくないときは、適当な場所に3個のファイルを入れても大丈夫です。
 
 # Usage
 AE_RemapTria.jsxを実行してください。<br>

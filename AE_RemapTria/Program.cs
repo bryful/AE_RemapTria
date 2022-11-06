@@ -5,9 +5,10 @@ namespace AE_RemapTria
 
 	internal static class Program
 	{
-		private const string ApplicationId = "AE_RemapTria"; // GUIDなどユニークなもの
-		private static System.Threading.Mutex _mutex = new System.Threading.Mutex(false, ApplicationId);
-
+		public const string MyAppId = "SkeltonWinForm"; // GUIDなどユニークなもの
+		public const string MyCallBackId = "SkeltonWinFormCallBack"; // GUIDなどユニークなもの
+		// *******************************************************************************************
+		private static System.Threading.Mutex _mutex = new System.Threading.Mutex(false, MyAppId);
 		// *******************************************************************************************
 		[STAThread]
 		static void Main(string[] args)
@@ -16,54 +17,84 @@ namespace AE_RemapTria
 			//ApplicationConfiguration.Initialize();
 			//Application.Run(new Form1());
 
-			bool IsMultExecute = false;
-			if (args.Length > 0)
+			bool IsRunning = (_mutex.WaitOne(0, false))==false;
+			//起動だけを調べる
+			F_Args cmd = new F_Args(args);
+			if (cmd.IsOptions(new string[] { "exenow", "isrun", "isrunning", "execnow" }))
 			{
-				foreach(string arg in args)
+				string re = "false";
+				if (IsRunning==true)
 				{
-					string arg1 = arg.ToLower();
-					if ((arg1[0]=='/')|| (arg1[0] == '-'))
-					{
-						string arg2 = arg1.Substring(1);
-						if ((arg2 == "m") || (arg2 == "mult"))
-						{
-							IsMultExecute = true;
-							break;
-						}
-
-					}
+					re = "true";
 				}
-
+				F_W.SettupConsole();
+				Console.WriteLine(re);
+				F_W.EndConsole();
+				return;　//終わる
 			}
+			F_Pipe cbserver = new F_Pipe();
 
+			
+			bool IsMultExecute = cmd.IsOptions(new string[] {"m","mult"});
+	
 			// 二重起動を許可
 			if (IsMultExecute)
 			{
-				T_Form._execution = false;
 				ApplicationConfiguration.Initialize();
-				Form1 fm = new Form1();
-				fm.IsMultExecute = true;
-				Application.Run(fm);
+				Form1 mf = new Form1();
+				mf.IsMultExecute = false;
+				Application.Run(mf);
 			}
-			else if (_mutex.WaitOne(0, false))
+			else if (IsRunning==false)
 			{//起動していない
-				T_Form._execution = true;
-				T_Form.ArgumentPipeServer(ApplicationId);
-				ApplicationConfiguration.Initialize();
-				Form1 fm = new Form1();
-				fm.IsMultExecute = false;
-				Application.Run(fm);
-				T_Form._execution = false;
+				string[] calls = new string[] { "call", "exec","start" };
+				//さらに自分自身を呼び出す。
+				if (cmd.IsOptions(calls))
+				{
+					_mutex.ReleaseMutex();
+					_mutex.Dispose();
+					string fullName = Application.ExecutablePath;
+					if (fullName != null)
+					{
+						F_W.ProcessStart(fullName, cmd.ArgsString(calls));
+					}
+				}
+				else
+				{
+					//　通常起動
+					ApplicationConfiguration.Initialize();
+					Form1 mf = new Form1();
+					mf.StartServer(MyAppId);
+					Application.Run(mf);
+					mf.StopServer();
+				}
 			}
 			else
 			{ //起動している
-              //MessageBox.Show("すでに起動しています",
-              //				ApplicationId,
-              //				MessageBoxButtons.OK, MessageBoxIcon.Hand);
+			  //MessageBox.Show("すでに起動しています",
+			  //				ApplicationId,
+			  //				MessageBoxButtons.OK, MessageBoxIcon.Hand);
 
-                BRY.PipeData pd = new BRY.PipeData(args, PIPECALL.DoubleExec);
-				Pipe pp = new Pipe();
-				pp.PipeClient(ApplicationId, pd.ToJson()).Wait();
+				bool Resp = (cmd.FindOption("export") >= 0);
+				if (Resp)
+				{
+					cbserver.Server(MyCallBackId);
+					cbserver.Reception += Cbserver_Reception;
+				}
+				PipeData pd = new PipeData(cmd.ToStringArray(), PIPECALL.DoubleExec);
+				F_Pipe.Client(MyAppId, pd.ToJson()).Wait();
+				if (Resp)
+				{
+					cbserver.Wait(1500);
+				}
+			}
+			void Cbserver_Reception(object sender, ReceptionArg e)
+			{
+				F_W.SettupConsole();
+				Console.WriteLine(e.Text);
+				cbserver.StopServer();
+				F_W.EndConsole();
+				//Application.Exit();
 			}
 		}
 	}

@@ -45,7 +45,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 
     //グローバルな変数
 	var scriptName = File.decode($.fileName.getName().changeExt(""));
-	var aeremapCallPath = File.decode($.fileName.getParent()+"/AE_RemapTriaCall.exe");
+	var aeremapCallPath = File.decode($.fileName.getParent()+"/AE_RemapTria.exe");
 
     //読み込む出るデータ
     var cellData = null;
@@ -504,6 +504,7 @@ pnlCells:Panel{alignment:["fill","fill"],orientation:"row",text:"Cells"}}\
                     alert("接続が切れました。\r\nAE_Remap Exceedを再起動させてください");
                     return ret;
                 }
+                //alert(r);
                 var obj = FsJSON.parse(r);
                 if((obj.header =="ardjV2")) {
                     winObj.gr.g1.edSheetName.text = obj.sheetName;

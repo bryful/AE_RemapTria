@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AE_RemapTriaCall", "AE_RemapTriaCall\AE_RemapTriaCall.csproj", "{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AE_RemapTria", "AE_RemapTria\AE_RemapTria.csproj", "{3916DB81-62F7-4FDD-9AAA-E36D863D9536}"
 EndProject
 Global
@@ -17,18 +15,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|x64.Build.0 = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Debug|x86.Build.0 = Debug|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|x64.ActiveCfg = Release|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|x64.Build.0 = Release|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|x86.ActiveCfg = Release|Any CPU
-		{84E0593E-10BD-4A73-873E-1E6A6DB3EEE7}.Release|x86.Build.0 = Release|Any CPU
 		{3916DB81-62F7-4FDD-9AAA-E36D863D9536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3916DB81-62F7-4FDD-9AAA-E36D863D9536}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3916DB81-62F7-4FDD-9AAA-E36D863D9536}.Debug|x64.ActiveCfg = Debug|x64

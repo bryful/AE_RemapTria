@@ -14,11 +14,16 @@
 
   <ItemGroup>
     <Compile Remove="Ctrl\**" />
+    <Compile Remove="sampleCode\pld\**" />
     <EmbeddedResource Remove="Ctrl\**" />
+    <EmbeddedResource Remove="sampleCode\pld\**" />
     <None Remove="Ctrl\**" />
+    <None Remove="sampleCode\pld\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="class\F_MainForm.cs" />
+    <Compile Remove="class\F_Program.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
@@ -87,6 +92,14 @@
     <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\CmtAlign.Designer.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.Designer.cs" />
+    <Compile Remove="sampleCode\old\AEJson.cs" />
+    <Compile Remove="sampleCode\old\Args.cs" />
+    <Compile Remove="sampleCode\old\CallExe.cs" />
+    <Compile Remove="sampleCode\old\Pipe.cs" />
+    <Compile Remove="sampleCode\old\PipeData.cs" />
+    <Compile Remove="sampleCode\old\PrefFile.cs" />
+    <Compile Remove="sampleCode\old\StreamString.cs" />
+    <Compile Remove="sampleCode\old\Wa.cs" />
     <Compile Remove="sampleCode\TS\TS_Caption.cs" />
     <Compile Remove="sampleCode\TS\TS_CellData.cs" />
     <Compile Remove="sampleCode\TS\TS_CellLayer.cs" />
@@ -101,6 +114,7 @@
     <Compile Remove="sampleCode\TS\TS_Position.cs" />
     <Compile Remove="sampleCode\TS\TS_Selection.cs" />
     <Compile Remove="sampleCode\TS\TS_VScrol.cs" />
+    <Compile Remove="T_Class\Wa.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -129,6 +143,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="class\F_MainForm.cs" />
+    <None Include="class\F_Program.cs" />
     <None Include="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
@@ -215,6 +231,14 @@
     <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.cs" />
     <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.Designer.cs" />
     <None Include="sampleCode\AE_RemapExceed\UserCtrl\ColorCaption.resx" />
+    <None Include="sampleCode\old\AEJson.cs" />
+    <None Include="sampleCode\old\Args.cs" />
+    <None Include="sampleCode\old\CallExe.cs" />
+    <None Include="sampleCode\old\Pipe.cs" />
+    <None Include="sampleCode\old\PipeData.cs" />
+    <None Include="sampleCode\old\PrefFile.cs" />
+    <None Include="sampleCode\old\StreamString.cs" />
+    <None Include="sampleCode\old\Wa.cs" />
     <None Include="sampleCode\TS\TS_Caption.cs" />
     <None Include="sampleCode\TS\TS_CellData.cs" />
     <None Include="sampleCode\TS\TS_CellLayer.cs" />

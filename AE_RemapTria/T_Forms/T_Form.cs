@@ -13,18 +13,15 @@ namespace AE_RemapTria
 
 	public partial class T_Form : Form
 	{
-		private Bitmap m_Back = Properties.Resources.BackGrad;
-		/// <summary>
-		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
-		/// </summary>
+		// ********************************************************************
 		public bool IsMultExecute
 		{
-			get 
+			get
 			{
 				bool ret = false;
 				if (m_grid != null)
 				{
-					ret =  m_grid.IsMultExecute;
+					ret = m_grid.IsMultExecute;
 				}
 				return ret;
 			}
@@ -32,10 +29,37 @@ namespace AE_RemapTria
 			{
 				if (m_grid != null)
 				{
-					m_grid.IsMultExecute =value;
+					m_grid.IsMultExecute = value;
 				}
 			}
+		}       
+		// ********************************************************************
+		private F_Pipe m_Server = new F_Pipe();
+		public void StartServer(string pipename)
+		{
+			m_Server.Server(pipename);
+			m_Server.Reception += M_Server_Reception;
 		}
+		// ********************************************************************
+		public void StopServer()
+		{
+			m_Server.StopServer();
+		}
+		// ********************************************************************
+		private void M_Server_Reception(object sender, ReceptionArg e)
+		{
+			this.Invoke((Action)(() => {
+				PipeData pd = new PipeData(e.Text);
+				Command(pd.Args, PIPECALL.PipeExec);
+				ForegroundWindow();
+			}));
+		}
+
+		private Bitmap m_Back = Properties.Resources.BackGrad;
+		/// <summary>
+		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
+		/// </summary>
+
 		private enum MDPos
 		{
 			None,
@@ -65,7 +89,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		public static bool _execution = true;
+		//public static bool _execution = true;
 		NavBar m_navBar = new NavBar();
 
 		private bool m_IsMouseBR = false;
@@ -132,12 +156,12 @@ namespace AE_RemapTria
 				}
 				if (m_grid != null)
 				{
-					string bp = Path.Combine(pf.Dir, "backup.ardj.json");
+					string bp = Path.Combine(pf.FileDirectory, "backup.ardj.json");
 					if (File.Exists(bp))
 					{
 						m_grid.OpenBackup(bp);
 					}
-					string kp = Path.Combine(pf.Dir, T_Grid.KeyBaindName);
+					string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
 					if(m_grid.Funcs.Load(kp))
 					{
 						m_grid.UpdateMenu();
@@ -166,8 +190,8 @@ namespace AE_RemapTria
 				PrefFile pf = new PrefFile(this);
 				if (m_grid != null)
 				{
-					m_grid.SaveBackup(Path.Combine(pf.Dir, "backup.ardj.json"));
-					string kp = Path.Combine(pf.Dir, T_Grid.KeyBaindName);
+					m_grid.SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
+					string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
 					m_grid.Funcs.Save(kp);
 
 				}
@@ -496,7 +520,7 @@ namespace AE_RemapTria
 		// ********************************************************************
 		public void ForegroundWindow()
 		{
-			Wa.SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
+			F_W.SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
 		}
 		// ********************************************************************
 		public bool HeightMax()
@@ -544,34 +568,31 @@ namespace AE_RemapTria
 			bool err = true;
 
 			EXEC_MODE em = EXEC_MODE.NONE;
-			Args args1 = new Args(args);
+			F_Args args1 = new F_Args(args);
 			if (args1.OptionCount > 0)
 			{
 				for (int i = 0; i < args1.OptionCount; i++)
 				{
 					if (err == false) break;
-					Param p = args1.Option(i);
-					string op = p.OptionStr.ToLower();
-					switch (op)
+					F_ArgItem p = args1.Option(i);
+					if(p== null) continue;
+					string tag = p.Option.ToLower();
+					switch (tag)
 					{
 						case "tocenter":
 						case "center":
-							this.Invoke((Action)(() => {
-								ToCenter();
-							}));
+							ToCenter();
 							em = EXEC_MODE.NONE;
 							break;
 						case "active":
 						case "foreground":
 						case "foregroundwindow":
-							this.Invoke((Action)(() => {
-								ForegroundWindow();
-							}));
+							ForegroundWindow();
 							em = EXEC_MODE.NONE;
 							break;
 						case "exit":
 						case "quit":
-							if ((args1.ParamsCount == 1) && ((IsPipe == PIPECALL.DoubleExec) || (IsPipe == PIPECALL.PipeExec)))
+							if ((args1.Count == 1) && ((IsPipe == PIPECALL.DoubleExec) || (IsPipe == PIPECALL.PipeExec)))
 							{
 								em = EXEC_MODE.QUIT;
 							}
@@ -589,16 +610,14 @@ namespace AE_RemapTria
 							}
 							break;
 						default:
-							this.Invoke((Action)(() => {
-								if (m_grid != null)
+							if (m_grid != null)
+							{
+								FuncItem? fi = m_grid.Funcs.FindFunc(tag);
+								if (fi != null)
 								{
-									FuncItem? fi = m_grid.Funcs.FindFunc(op);
-									if (fi != null)
-									{
-										if (fi.Func != null) fi.Func();
-									}
+									if (fi.Func != null) fi.Func();
 								}
-							}));
+							}
 							break;
 					}
 				}
@@ -607,60 +626,50 @@ namespace AE_RemapTria
 			switch(em)
 			{
 				case EXEC_MODE.EXPORT:
-						if (m_grid != null){
-							//MessageBox.Show(m_grid.ToArdj());
-							Pipe pp = new Pipe();
-							pp._execution = true;
-							pp.PipeClient("AE_RemapTriaCall", m_grid.ToArdj()).Wait();
-						}
+					if (m_grid != null){
+						//MessageBox.Show(m_grid.ToArdj());
+						F_Pipe.Client(Program.MyCallBackId, m_grid.ToArdj()).Wait();
+					}
 					break;
 				case EXEC_MODE.IMPORT_LAYER:
 					if ((m_grid != null)&&(args.Length > 1))
 					{
-						this.Invoke((Action)(() => {
-							m_grid.Import_layer(args[1]);
-							//MessageBox.Show(args[1]);
-						}));
+						m_grid.Import_layer(args[1]);
+						//MessageBox.Show(args[1]);
 					}
 					break;
 				case EXEC_MODE.QUIT:
-					this.Invoke((Action)(() => {
-						Application.Exit();
-					}));
+					Application.Exit();
 					break;
 				case EXEC_MODE.NONE:
 				default:
-					if (args1.ParamsCount > 0)
+					if (args1.Count > 0)
 					{
 						// パラメータが1個なら読み込み
-						if (args1.ParamsCount == 1)
+						if (m_grid != null)
 						{
-							this.Invoke((Action)(() => {
-								if (m_grid != null)
+							for (int i = 0; i < args1.Count; i++)
+							{
+								if (args1[i].IsOption==false)
 								{
-									for (int i = 0; i < args1.ParamsCount; i++)
+									string p = args1[i].Name;
+									if (File.Exists(p))
 									{
-										if (args1.Params[i].IsPath)
+										if (m_grid.Open(p) == true)
 										{
-											string p = args1.Params[i].Arg;
-											if (File.Exists(p))
-											{
-												if (m_grid.Open(p) == true)
-												{
-													break;
-												}
-											}
-
+											break;
 										}
 									}
+
 								}
-							}));
+							}
 						}
 					}
 					break;
 			}
 		}
 		// *******************************************************************************
+		/*
 		static public void ArgumentPipeServer(string pipeName)
 		{
             Task.Run(() =>
@@ -709,7 +718,7 @@ namespace AE_RemapTria
 					}
 				}
 			});
-		}
+		}*/
 		// ************************************************************************
 		/// <summary>
 		/// 子コントロールにMouseイベントハンドラを設定(再帰)
