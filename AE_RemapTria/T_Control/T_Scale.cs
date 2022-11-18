@@ -13,11 +13,13 @@ namespace AE_RemapTria
 	public partial class T_Scale : T_BaseControl
 	{
 		private DrawSCalePrm m_sp = new DrawSCalePrm();
+		[Category("_AE_Remap")]
 		public int CenterLength
 		{
 			get { return m_sp.CenterLength; }
 			set { m_sp.CenterLength = value; }
 		}
+		[Category("_AE_Remap")]
 		public int CenterWeight
 		{
 			get { return m_sp.CenterWeight; }
@@ -32,6 +34,7 @@ namespace AE_RemapTria
 		}
 
 
+		[Category("_AE_Remap")]
 		public int[] Inter
 		{
 			get { return m_sp.Inter; }
@@ -41,6 +44,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int []Weight
 		{
 			get { return m_sp.Weight; }
@@ -50,6 +54,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int []Length
 		{
 			get { return m_sp.Length; }
@@ -59,6 +64,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int []Count
 		{
 			get { return m_sp.Count; }

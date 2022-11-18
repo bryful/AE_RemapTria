@@ -41,28 +41,28 @@ namespace AE_RemapTria
 		public T_Colors()
 		{
 			cols[(int)COLS.Base] = Color.Transparent;
-			cols[(int)COLS.Line] = Color.FromArgb(255, 100, 200, 255);
-			cols[(int)COLS.LineA] = Color.FromArgb(255, 50, 100, 128);
-			cols[(int)COLS.LineB] = Color.FromArgb(255, 50, 100, 150);
-			cols[(int)COLS.Frame] = Color.FromArgb(255, 0, 30, 50);
-			cols[(int)COLS.Caption] = Color.FromArgb(255, 25, 45, 50);
-			cols[(int)COLS.Caption2] = Color.FromArgb(255, 10, 10, 20);
+			cols[(int)COLS.Line] = Color.FromArgb( 100, 200, 255);
+			cols[(int)COLS.LineA] = Color.FromArgb( 100, 150, 200);
+			cols[(int)COLS.LineB] = Color.FromArgb( 75, 120, 180);
+			cols[(int)COLS.Frame] = Color.FromArgb( 0, 30, 50);
+			cols[(int)COLS.Caption] = Color.FromArgb( 25, 45, 50);
+			cols[(int)COLS.Caption2] = Color.FromArgb( 10, 10, 20);
 
-			cols[(int)COLS.Input] = Color.FromArgb(64, 0, 0, 0);
-			cols[(int)COLS.InputLine] = Color.FromArgb(255, 55, 100, 125);
-			cols[(int)COLS.InputLineA] = Color.FromArgb(255, 110, 200, 250);
-			cols[(int)COLS.Kagi] = Color.FromArgb(255, 30, 150, 250);
+			cols[(int)COLS.Input] = Color.FromArgb( 0, 0, 0);
+			cols[(int)COLS.InputLine] = Color.FromArgb( 55, 100, 125);
+			cols[(int)COLS.InputLineA] = Color.FromArgb( 110, 200, 250);
+			cols[(int)COLS.Kagi] = Color.FromArgb( 30, 150, 250);
 
-			cols[(int)COLS.CellA] = Color.FromArgb(64, 100, 100, 150);
+			cols[(int)COLS.CellA] = Color.FromArgb( 30, 30, 60);
 			cols[(int)COLS.CellA_sdw] = Color.Transparent;
 			cols[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
 			cols[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
 			cols[(int)COLS.Selection] = Color.FromArgb(255, 0, 75, 128);
-			cols[(int)COLS.SelectionCaption] = Color.FromArgb(255, 0, 75, 128);
-			cols[(int)COLS.Moji] = Color.FromArgb(255, 120, 220, 250);
-			cols[(int)COLS.GrayMoji] = Color.FromArgb(255, 80, 80, 150);
-			cols[(int)COLS.Gray] = Color.FromArgb(255, 20, 20, 50);
-			cols[(int)COLS.TopBar] = Color.FromArgb(255, 10, 20, 25);
+			cols[(int)COLS.SelectionCaption] = Color.FromArgb( 0, 75, 128);
+			cols[(int)COLS.Moji] = Color.FromArgb( 120, 220, 250);
+			cols[(int)COLS.GrayMoji] = Color.FromArgb( 80, 80, 150);
+			cols[(int)COLS.Gray] = Color.FromArgb( 20, 20, 50);
+			cols[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
 
 
 		}

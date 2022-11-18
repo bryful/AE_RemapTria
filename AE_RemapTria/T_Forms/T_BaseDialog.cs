@@ -404,9 +404,7 @@ namespace AE_RemapTria
 			try
 			{
 				Rectangle r = new Rectangle(0, 0, this.Width, this.Height);
-				sb.Color = Color.Black;
-				Fill(g, sb,r);
-				DrawBackImage(g,Properties.Resources.Back);
+				T_G.GradBG(g, this.ClientRectangle);
 				if(m_MD_Mode==2)
 				{
 					sb.Color= Color.FromArgb(64, m_EdgeColor.R, m_EdgeColor.G, m_EdgeColor.B);

@@ -16,21 +16,25 @@ namespace AE_RemapTria
 		private T_Label m_Label = new T_Label();
 		private T_TextBox m_TextBox = new T_TextBox();
 
+		[Category("_AE_Remap")]
 		public string Caption
 		{
 			get { return m_Label.Text; }
 			set { m_Label.Text = value; }
 		}
+		[Category("_AE_Remap")]
 		public int CaptionWidth
 		{
 			get { return m_Label.Width; }
 			set { m_Label.Width = value; ChkSize(); }
 		}
+		[Category("_AE_Remap")]
 		public string ValueText
 		{
 			get { return m_TextBox.Text; }
 			set { m_TextBox.Text = value; }
 		}
+		[Category("_AE_Remap")]
 		public new T_MyFonts? MyFonts
 		{
 			get { return base.MyFonts; }
@@ -41,6 +45,7 @@ namespace AE_RemapTria
 				base.MyFonts = value;
 			}
 		}
+		[Category("_AE_Remap")]
 		public new float MyFontSize
 		{
 			get { return base.MyFontSize; }

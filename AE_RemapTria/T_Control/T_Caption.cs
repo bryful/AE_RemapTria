@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BRY;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
@@ -37,6 +37,7 @@ namespace AE_RemapTria
 			MyFontSize = 9;
 		}
 		//--------------------------------------------
+		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -134,7 +135,8 @@ namespace AE_RemapTria
 				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 
 				//とりあえず塗りつぶし
-				Fill(g, sb);
+				//Fill(g, sb);
+				T_G.GradBG2(g,this.ClientRectangle);
 				Rectangle r = m_grid.Sizes.DispCell;
 				for (int i = r.Left; i <= r.Right; i++)
 				{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace AE_RemapTria
 		public string m_Sec = "";
 		public string m_Frame = "";
 		private T_Fps m_Fps = T_Fps.FPS24;
+		[Category("_AE_Remap")]
 		public int Frame
 		{
 			get { return (int)((double)m_Fps * (double)m_Duration); }
@@ -45,6 +47,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public T_Fps Fps
 		{
 			get { return m_Fps; }
@@ -66,6 +69,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public string Info
 		{
 			get

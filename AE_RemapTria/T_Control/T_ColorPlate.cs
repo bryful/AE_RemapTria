@@ -28,6 +28,7 @@ namespace AE_RemapTria
 			set { m_ColorPlate = value; this.Invalidate(); }
 		}
 		private int m_Opacity = 128;
+		[Category("_AE_Remap")]
 		public int Opacity
 		{
 			get { return m_Opacity; }

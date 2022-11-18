@@ -25,6 +25,7 @@ namespace AE_RemapTria
 		/// <summary>
 		/// フォントの数
 		/// </summary>
+		[Category("_AE_Remap")]
 		public int FontCount
 		{
 			get

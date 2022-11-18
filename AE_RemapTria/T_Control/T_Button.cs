@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace AE_RemapTria
 
 		#region Prop
 		private bool m_IsDrawFrame = true;
+		[Category("_Button")]
 		public bool IsDrawFrame
 		{
 			get { return m_IsDrawFrame; }
@@ -29,12 +31,14 @@ namespace AE_RemapTria
 		}
 
 		public int m_Id = 0;
+		[Category("_Button")]
 		public int Id
 		{
 			get { return m_Id; }
 			set { m_Id = value; }
 		}
 		private bool m_IsCheckMode = false;
+		[Category("_Button")]
 		public bool IsCheckMode
 		{
 			get { return m_IsCheckMode; }
@@ -48,6 +52,7 @@ namespace AE_RemapTria
 			}
 		}
 		private bool m_Checked = false;
+		[Category("_Button")]
 		public bool Checked
 		{
 			get { return m_Checked; }
@@ -66,42 +71,49 @@ namespace AE_RemapTria
 		#endregion
 		#region Layout
 		private int m_LeftBar = 4;
+		[Category("_Button_Size")]
 		public int LeftBar
 		{
 			get { return m_LeftBar; }
 			set { m_LeftBar = value; this.Invalidate(); }
 		}
 		private int m_RightBar = 4;
+		[Category("_Button_Size")]
 		public int RightBar
 		{
 			get { return m_RightBar; }
 			set { m_RightBar = value; this.Invalidate(); }
 		}
 		private int m_TopBar = 0;
+		[Category("_Button_Size")]
 		public int TopBar
 		{
 			get { return m_TopBar; }
 			set { m_TopBar = value; this.Invalidate(); }
 		}
 		private int m_BottomBar = 0;
+		[Category("_Button_Size")]
 		public int BottomBar
 		{
 			get { return m_BottomBar; }
 			set { m_BottomBar = value; this.Invalidate(); }
 		}
 		private Color m_Color_line = Color.FromArgb(255, 150, 150, 200);
-        public Color Color_line
+		[Category("_Button_Color")]
+		public Color Color_line
         {
             get { return m_Color_line; }
             set { m_Color_line = value; Invalidate(); }
         }
         private Color m_Color_Enter = Color.FromArgb(64, 150, 150, 200);
+		[Category("_Button_Color")]
 		public Color Color_Enter
 		{
 			get { return m_Color_Enter; }
 			set { m_Color_Enter = value; Invalidate(); }
 		}
 		private Color m_Color_Down = Color.FromArgb(200, 220, 220, 255);
+		[Category("_Button_Color")]
 		public Color Color_Down
 		{
 			get { return m_Color_Down; }

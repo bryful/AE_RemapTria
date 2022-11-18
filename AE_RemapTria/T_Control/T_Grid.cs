@@ -11,14 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using BRY;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 	public partial class T_Grid : T_BaseControl
 	{
+		[Category("_AE_Remap")]
 		public bool IsModif = false;
-		private Bitmap m_offscr = new Bitmap(10,10); 
+		private Bitmap m_offscr = new Bitmap(10,10);
 
+		[Category("_AE_Remap")]
 		public bool IsMultExecute = false;
 		private bool m_IsJapanOS = true;
 		public bool IsJapanOS { get { return m_IsJapanOS; } }
@@ -28,6 +31,7 @@ namespace AE_RemapTria
 		public T_Colors Colors = new T_Colors();
 		public T_Funcs Funcs = new T_Funcs();
 
+		[Category("_AE_Remap")]
 		public int FrameCount
 		{
 			get { return CellData.FrameCount; }
@@ -69,8 +73,11 @@ namespace AE_RemapTria
 		{
 			m_Form = fm;
 		}
+		[Category("_AE_Remap")]
 		public string FileName = "";
+		[Category("_AE_Remap")]
 		public string KeyBaindFile = "";
+		[Category("_AE_Remap")]
 		public const  string KeyBaindName = "AE_Remap_key.json";
 
 		// ************************************************************************************
@@ -167,6 +174,7 @@ namespace AE_RemapTria
 			Sizes.SizeSetting(this.Size, CellData);
 		}
 		//-------------------------------------------------
+		[Category("_AE_Remap")]
 		public T_HScrol HScrol
 		{
 			get { return m_HScrol; }
@@ -195,6 +203,7 @@ namespace AE_RemapTria
 
 
 		//-------------------------------------------------------------
+		[Category("_AE_Remap")]
 		public T_VScrol VScrol
 		{
 			get { return m_VScrol; }
@@ -390,7 +399,7 @@ namespace AE_RemapTria
 					break;
 				case CellType.SameAsBefore:
 					if (IsUnEnabled) p.Color = Colors.GrayMoji;
-					else p.Color = Colors.Moji;
+					else p.Color = Colors.LineB;
 					DrawVerLine(g, p, r.Left + r.Width / 2, r.Top, r.Bottom-1);
 					break;
 				case CellType.EmptyStart:
@@ -428,10 +437,12 @@ namespace AE_RemapTria
 				p.Color = Colors.Line;
 				DrawHorLine(g, p, r.Left, r.Right, r.Top);
 				DrawHorLine(g, p, r.Left, r.Right, r.Top - 1);
+				DrawHorLine(g, p, r.Left, r.Right, r.Top + 1);
 			}
 			else if (f % HSec == 0)
 			{
 				p.Color = Colors.Line;
+				DrawHorLine(g, p, r.Left, r.Right, r.Top-1);
 				DrawHorLine(g, p, r.Left, r.Right, r.Top);
 
 			}
@@ -439,7 +450,7 @@ namespace AE_RemapTria
 			{
 				if (f % HHSec == 0)
 				{
-					p.Color = Colors.LineA;
+					p.Color = Colors.Line;
 					DrawHorLine(g, p, r.Left, r.Right, r.Top);
 				}
 				else
@@ -542,8 +553,7 @@ namespace AE_RemapTria
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			try
 			{
-				sb.Color = Color.Transparent;
-				Fill(g, sb);
+				T_G.GradBG(g, this.ClientRectangle);
 				g.DrawImage(m_offscr, Sizes.DispX * -1, Sizes.DispY * -1);
 				p.Color = Colors.Line;
 				DrawFrame(g, p);

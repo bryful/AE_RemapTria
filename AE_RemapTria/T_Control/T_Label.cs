@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,28 @@ namespace AE_RemapTria
 	public class T_Label : T_BaseControl
 	{
 		private Size m_LeftBar = new Size(14, 14);
+		[Category("_AE_Remap")]
 		public Size LeftBar
 		{
 			get { return m_LeftBar; }
 			set { m_LeftBar = value; this.Invalidate(); }
 		}
 		private Size m_RightBar = new Size(0, 0);
+		[Category("_AE_Remap")]
 		public Size RightBar
 		{
 			get { return m_RightBar; }
 			set { m_RightBar = value; this.Invalidate(); }
 		}
 		private Size m_TopBar = new Size(0, 0);
+		[Category("_AE_Remap")]
 		public Size TopBar
 		{
 			get { return m_TopBar; }
 			set { m_TopBar = value; this.Invalidate(); }
 		}
 		private Size m_BottomBar = new Size(0, 0);
+		[Category("_AE_Remap")]
 		public Size BottomBar
 		{
 			get { return m_BottomBar; }
@@ -42,6 +47,13 @@ namespace AE_RemapTria
 			MyFontSize = 8;
 			Alignment = StringAlignment.Near;
 			LineAlignment = StringAlignment.Center;
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Transparent;
 		}
 		//--------------------------------------------------------
 		protected override void OnPaint(PaintEventArgs pe)

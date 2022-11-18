@@ -135,6 +135,7 @@ namespace AE_RemapTria
 
 		}
 		//----------------------------------------------------------------
+		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -266,6 +267,7 @@ namespace AE_RemapTria
 
 		}
 		//------------------------------------------------
+		[Category("_AE_Remap")]
 		public int Maximum
 		{
 			get { return m_Maximum; }
@@ -287,6 +289,7 @@ namespace AE_RemapTria
 			}
 		}
 		//------------------------------------------------
+		[Category("_AE_Remap")]
 		public int Value
 		{
 			get { return m_Value; }

@@ -13,6 +13,7 @@ namespace AE_RemapTria
 	public partial class T_TextBox : TextBox
 	{
 		private T_MyFonts? m_MyFonts = null;
+		[Category("_AE_Remap")]
 		public T_MyFonts? MyFonts
 		{
 			get { return m_MyFonts; }
@@ -27,6 +28,7 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_MyFontIndex = 5;
+		[Category("_AE_Remap")]
 		public int MyFontIndex
 		{
 			get { return m_MyFontIndex; }
@@ -41,6 +43,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public float MyFontSize
 		{
 			get { return this.Font.Size; }
@@ -49,6 +52,7 @@ namespace AE_RemapTria
 				SetFontSizeStyle(value, this.Font.Style);
 			}
 		}
+		[Category("_AE_Remap")]
 		public FontStyle MyFontStyle
 		{
 			get { return this.Font.Style; }

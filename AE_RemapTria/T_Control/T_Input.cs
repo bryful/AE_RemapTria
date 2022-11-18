@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BRY;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
@@ -18,6 +18,7 @@ namespace AE_RemapTria
 		private T_Grid? m_grid = null;
 
 		private int m_value = -1;
+		[Category("_AE_Remap")]
 		public int Value
 		{
 			get { return m_value; } 
@@ -50,6 +51,7 @@ namespace AE_RemapTria
 			m_value = -1;
 		}
 		//-------------------------------------------
+		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -178,7 +180,8 @@ namespace AE_RemapTria
 				Graphics g = e.Graphics;
 				g.SmoothingMode = SmoothingMode.AntiAlias;
 				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-				Fill(g, sb);
+				T_G.GradBG2(g,this.ClientRectangle);
+				//Fill(g, sb);
 
 				if (m_grid != null)
 				{

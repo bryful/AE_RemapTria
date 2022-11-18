@@ -43,7 +43,6 @@
 			this.BList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.BList.BackColor = System.Drawing.Color.Transparent;
 			this.BList.DispY = 0;
 			this.BList.Flist = null;
 			this.BList.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -85,7 +84,6 @@
 			this.btnAdd.Alignment = System.Drawing.StringAlignment.Center;
 			this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAdd.BackColor = System.Drawing.Color.Transparent;
 			this.btnAdd.BottomBar = 0;
 			this.btnAdd.Checked = false;
 			this.btnAdd.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
@@ -115,7 +113,6 @@
 			// 
 			this.btnDell.Alignment = System.Drawing.StringAlignment.Center;
 			this.btnDell.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnDell.BackColor = System.Drawing.Color.Transparent;
 			this.btnDell.BottomBar = 0;
 			this.btnDell.Checked = false;
 			this.btnDell.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
@@ -146,7 +143,6 @@
 			// 
 			this.btnUp.Alignment = System.Drawing.StringAlignment.Center;
 			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnUp.BackColor = System.Drawing.Color.Transparent;
 			this.btnUp.BottomBar = 0;
 			this.btnUp.Checked = false;
 			this.btnUp.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
@@ -176,7 +172,6 @@
 			// 
 			this.btnDown.Alignment = System.Drawing.StringAlignment.Center;
 			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDown.BackColor = System.Drawing.Color.Transparent;
 			this.btnDown.BottomBar = 0;
 			this.btnDown.Checked = false;
 			this.btnDown.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BRY;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
@@ -38,6 +38,7 @@ namespace AE_RemapTria
 			Alignment = StringAlignment.Far;
 		}
 		//-------------------------------------------
+		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -201,10 +202,9 @@ namespace AE_RemapTria
 				r.Y += y;
 				Fill(g, sb, r);
 				p.Color = m_grid.Colors.Line;
-				int y2 = y - 1;
-				DrawHorLine(g, p, rct.Left, rct.Right, y2);
-				y2--;
-				DrawHorLine(g, p, rct.Left, rct.Right, y2);
+				DrawHorLine(g, p, rct.Left, rct.Right, y +1);
+				DrawHorLine(g, p, rct.Left, rct.Right, y);
+				DrawHorLine(g, p, rct.Left, rct.Right, y-1);
 			}
 			else if (f % HSecBar == 0)
 			{
@@ -212,8 +212,8 @@ namespace AE_RemapTria
 				r.Y += y;
 				Fill(g, sb, r);
 				p.Color = m_grid.Colors.Line;
-				int y2 = y - 1;
-				DrawHorLine(g, p, rct.Left, rct.Right, y2);
+				DrawHorLine(g, p, rct.Left, rct.Right, y );
+				DrawHorLine(g, p, rct.Left, rct.Right, y-1);
 
 			}
 			else
@@ -246,8 +246,9 @@ namespace AE_RemapTria
 				g.SmoothingMode = SmoothingMode.AntiAlias;
 				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 				//とりあえず塗りつぶし
-				sb.Color = Color.Transparent;
-				Fill(g, sb);
+				T_G.GradBG(g, this.ClientRectangle);
+				//sb.Color = Color.Transparent;
+				//Fill(g, sb);
 
 				if (m_grid != null)
 				{

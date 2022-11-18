@@ -143,8 +143,7 @@ namespace AE_RemapTria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.BackgroundImage = global::AE_RemapTria.Properties.Resources.Back;
+			this.BackColor = System.Drawing.Color.Black;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(200, 25);
 			this.ContextMenuStrip = this.contextMenuStrip1;

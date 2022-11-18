@@ -572,5 +572,49 @@ namespace BRY
                 return Color.FromArgb(col.A,col.R/2, col.G/2, col.B/2);
             }
         }
+		static public void GradV(Graphics g, Color c0, Color c1, Color c2, Rectangle rct)
+		{
+			Rectangle r = new Rectangle(rct.X, rct.Y, rct.Width, rct.Height);
+			LinearGradientBrush gb = new LinearGradientBrush(
+				r,
+				c0,
+				c2,
+				LinearGradientMode.Vertical);
+			ColorBlend blend = new ColorBlend();
+			blend.Positions = new float[] { 0, 0.5f, 1 };
+			blend.Colors = new Color[] { c0, c1, c2 };
+			gb.InterpolationColors = blend;
+			g.FillRectangle(gb, r);
+			gb.Dispose();
+
+		}
+		static public void GradV(Graphics g, Color c0, Color c1,Rectangle rct)
+		{
+			Rectangle r = new Rectangle(rct.X, rct.Y, rct.Width, rct.Height);
+			LinearGradientBrush gb = new LinearGradientBrush(
+				r,
+				c0,
+				c1,
+				LinearGradientMode.Vertical);
+			//ColorBlend blend = new ColorBlend();
+			//blend.Positions = new float[] { 0,  1 };
+			//gb.InterpolationColors = blend;
+			g.FillRectangle(gb, r);
+			gb.Dispose();
+
+		}
+		static public void GradBG(Graphics g, Rectangle rct)
+        {
+
+            GradV(g, Color.FromArgb(16, 32, 75), Color.FromArgb(1, 2, 5), Color.FromArgb(11, 21, 49), rct);
+
+		}
+		static public void GradBG2(Graphics g, Rectangle rct)
+		{
+
+			GradV(g, Color.FromArgb(16, 32, 75), Color.FromArgb(1, 2, 5), rct);
+
+		}
+
 	}
 }

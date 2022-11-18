@@ -14,6 +14,7 @@ namespace AE_RemapTria
 	public partial class T_Form : Form
 	{
 		// ********************************************************************
+		[Category("_AE_Remap")]
 		public bool IsMultExecute
 		{
 			get
@@ -55,7 +56,7 @@ namespace AE_RemapTria
 			}));
 		}
 
-		private Bitmap m_Back = Properties.Resources.BackGrad;
+		//private Bitmap m_Back = Properties.Resources.BackGrad;
 		/// <summary>
 		/// 多重起動可能フラグ。プロセス間通信が出来なくなる
 		/// </summary>
@@ -331,8 +332,8 @@ namespace AE_RemapTria
 			SolidBrush sb = new SolidBrush(Color.Black);
 			try
 			{
-				g.DrawImage(Properties.Resources.Back, new Rectangle(0, 0, this.Width, this.Height));
-
+				//g.DrawImage(Properties.Resources.Back, new Rectangle(0, 0, this.Width, this.Height));
+				T_G.GradBG(g, this.ClientRectangle);
 				int w0 = 5;
 				int w1 = this.Width - 20 - w0;
 				int h0 = 25;
@@ -370,10 +371,11 @@ namespace AE_RemapTria
 
 		}
 		// ********************************************************************
-		
+
 
 		// ********************************************************************
 
+		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
 			get { return m_grid; }
@@ -426,6 +428,7 @@ namespace AE_RemapTria
 			SetLocSize();
 		}
 		// ********************************************************************
+		[Category("_AE_Remap")]
 		public T_Input Input
 		{
 			get { return m_input; }

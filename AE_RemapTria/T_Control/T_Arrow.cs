@@ -27,11 +27,13 @@ namespace AE_RemapTria
 			set { m_ap.Height = value; this.Invalidate(); }
 		}
 		*/
+		[Category("_AE_Remap")]
 		public bool IsCut
 		{
 			get { return m_ap.IsCut; }
 			set { m_ap.IsCut = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public ArrowDir ArrowDir
 		{
 			get { return m_ap.Dir; }

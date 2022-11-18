@@ -27,6 +27,7 @@ namespace AE_RemapTria
 	public partial class T_Zebra : Control
 	{
 		private ZEBRA_TYPE m_ZebraIndex = ZEBRA_TYPE.YELLOW;
+		[Category("_AE_Remap")]
 		public ZEBRA_TYPE ZebraIndex
 		{
 			get { return m_ZebraIndex; }

@@ -1,5 +1,6 @@
-﻿using System.Drawing.Drawing2D;
-
+﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
+using BRY;
 namespace AE_RemapTria
 {
 	public partial class T_BaseControl : Control
@@ -8,6 +9,7 @@ namespace AE_RemapTria
 		/// <summary>
 		/// リソースフォント管理のコンポーネント
 		/// </summary>
+		[Category("_AE_Remap")]
 		public T_MyFonts? MyFonts
 		{
 			get { return m_MyFonts; }
@@ -21,6 +23,7 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_MyFontIndex = 5;
+		[Category("_AE_Remap")]
 		public int MyFontIndex
 		{
 			get { return m_MyFontIndex; }
@@ -34,6 +37,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public float MyFontSize
 		{
 			get { return this.Font.Size; }
@@ -42,6 +46,7 @@ namespace AE_RemapTria
 				SetFontSizeStyle(value, this.Font.Style);
 			}
 		}
+		[Category("_AE_Remap")]
 		public FontStyle MyFontStyle
 		{
 			get { return this.Font.Style; }
@@ -66,12 +71,14 @@ namespace AE_RemapTria
 		private StringAlignment m_LineAlignment_Bak;
 		private StringAlignment m_Alignment_Bak;
 		// ************************************************************************
+		[Category("_AE_Remap")]
 		public StringAlignment Alignment
 		{
 			get { return m_format.Alignment; }
 			set { m_format.Alignment = value; }
 		}
 		// ************************************************************************
+		[Category("_AE_Remap")]
 		public StringAlignment LineAlignment
 		{
 			get { return m_format.LineAlignment; }
@@ -103,10 +110,10 @@ namespace AE_RemapTria
 			this.SetStyle(
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint |
-				ControlStyles.SupportsTransparentBackColor,
+				ControlStyles.AllPaintingInWmPaint,
+				//ControlStyles.SupportsTransparentBackColor,
 				true);
-			this.BackColor = Color.White;
+			this.BackColor = Color.Black;
 			this.UpdateStyles();
 			m_Alignment_Bak =
 			Alignment = StringAlignment.Far;
@@ -136,7 +143,8 @@ namespace AE_RemapTria
 		{
 			//base.OnPaint(pe);
 			Graphics g = pe.Graphics;
-			Fill(g, this.BackColor);
+			T_G.GradBG(g,this.ClientRectangle);
+			//Fill(g, this.BackColor);
 		}
 		// ************************************************************************
 		public void Fill(Graphics g, SolidBrush sb)
