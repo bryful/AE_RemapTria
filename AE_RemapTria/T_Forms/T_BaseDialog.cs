@@ -24,6 +24,7 @@ namespace AE_RemapTria
 		#endregion
 		#region Font
 		private T_MyFonts? m_MyFonts = null;
+		[Category("_AE_Remap")]
 		public T_MyFonts? MyFonts
 		{
 			get { return m_MyFonts; }
@@ -36,6 +37,7 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_MyFontIndex = 5;
+		[Category("_AE_Remap")]
 		public int MyFontIndex
 		{
 			get { return m_MyFontIndex; }
@@ -49,6 +51,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public float MyFontSize
 		{
 			get { return this.Font.Size; }
@@ -57,6 +60,7 @@ namespace AE_RemapTria
 				SetFontSizeStyle(value, this.Font.Style);
 			}
 		}
+		[Category("_AE_Remap")]
 		public FontStyle MyFontStyle
 		{
 			get { return this.Font.Style; }
@@ -88,12 +92,14 @@ namespace AE_RemapTria
 		}       
 		// ************************************************************************
 		private StringFormat m_format = new StringFormat();
+		[Category("_AE_Remap")]
 		public StringAlignment Alignment
 		{
 			get { return m_format.Alignment; }
 			set { m_format.Alignment = value; }
 		}
 		// ************************************************************************
+		[Category("_AE_Remap")]
 		public StringAlignment LineAlignment
 		{
 			get { return m_format.LineAlignment; }
@@ -105,16 +111,19 @@ namespace AE_RemapTria
 		private int m_KagiWidth= 30;
 		private int m_KagiHeight = 10;
 		private int m_KagiWeight = 5;
+		[Category("_AE_Remap")]
 		public int KagiWidth
 		{
 			get { return this.m_KagiWidth; }
 			set { this.m_KagiWidth = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public int KagiHeight
 		{
 			get { return this.m_KagiHeight; }
 			set { this.m_KagiHeight = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public int KagiWeight
 		{
 			get { return this.m_KagiWeight; }
@@ -125,12 +134,14 @@ namespace AE_RemapTria
 
 		#region Edge
 		private Rectangle m_Edge = new Rectangle(10, 5, 10, 10);
+		[Category("_AE_Remap")]
 		public Rectangle Edge
 		{
 			get {return m_Edge; }
 			set { m_Edge = value; this.Invalidate(); }
 		}
 		private Color m_EdgeColor = Color.FromArgb(128, 200, 200, 255);
+		[Category("_AE_Remap")]
 		public Color EdgeColor
 		{
 			get { return m_EdgeColor; }
@@ -140,6 +151,7 @@ namespace AE_RemapTria
 
 		#region Scale
 		private Color m_ScaleColor = Color.FromArgb(255, 100, 100, 200);
+		[Category("_AE_Remap")]
 		public Color ScaleColor
 		{
 			get { return m_ScaleColor; }
@@ -147,17 +159,20 @@ namespace AE_RemapTria
 		}
 		private DrawSCalePrm m_side = new DrawSCalePrm();
 		private DrawSCalePrm m_TB = new DrawSCalePrm();
+		[Category("_AE_Remap")]
 		public int SideCenterLength
 		{
 			get { return m_side.CenterLength; }
 			set { m_side.CenterLength = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public int SideCenterWeight
 		{
 			get { return m_side.CenterWeight; }
 			set { m_side.CenterWeight = value; this.Invalidate(); }
 		}
 
+		[Category("_AE_Remap")]
 		public int[] SideInter
 		{
 			get { return m_side.Inter; }
@@ -167,6 +182,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] SideWeight
 		{
 			get { return m_side.Weight; }
@@ -176,6 +192,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] SideLength
 		{
 			get { return m_side.Length; }
@@ -185,6 +202,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] SideCount
 		{
 			get { return m_side.Count; }
@@ -194,17 +212,20 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int TBCenterLength
 		{
 			get { return m_TB.CenterLength; }
 			set { m_TB.CenterLength = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public int TBCenterWeight
 		{
 			get { return m_TB.CenterWeight; }
 			set { m_TB.CenterWeight = value; this.Invalidate(); }
 		}
 
+		[Category("_AE_Remap")]
 		public int[] TBInter
 		{
 			get { return m_TB.Inter; }
@@ -214,6 +235,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] TBWeight
 		{
 			get { return m_TB.Weight; }
@@ -223,6 +245,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] TBLength
 		{
 			get { return m_TB.Length; }
@@ -232,6 +255,7 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		[Category("_AE_Remap")]
 		public int[] TBCount
 		{
 			get { return m_TB.Count; }
@@ -245,6 +269,7 @@ namespace AE_RemapTria
 
 
 		private Color m_FrameColor = Color.FromArgb(255, 80, 80, 100);
+		[Category("_AE_Remap")]
 		public Color FrameColor
 		{
 			get { return m_FrameColor; }
@@ -260,6 +285,7 @@ namespace AE_RemapTria
 		// ************************************************************************
 		// ************************************************************************
 		private bool m_CanReSize = false;
+		[Category("_AE_Remap")]
 		public bool CanReSize
 		{
 			get { return m_CanReSize; }
@@ -272,8 +298,8 @@ namespace AE_RemapTria
 			this.SetStyle(
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint |
-				ControlStyles.SupportsTransparentBackColor,
+				ControlStyles.AllPaintingInWmPaint,
+				//ControlStyles.SupportsTransparentBackColor,
 				true);
 			//this.BackColor = Color.Transparent;
 			//this.TransparencyKey = Color.Transparent;

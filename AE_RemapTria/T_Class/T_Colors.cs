@@ -10,7 +10,7 @@ namespace AE_RemapTria
 	{
 		Base = 0,
 		Line,
-		LineA,
+		LineDark,
 		LineB,
 		Frame,
 		Caption,
@@ -18,7 +18,7 @@ namespace AE_RemapTria
 		Input,
 		InputLine,
 		InputLineA,
-		CellA,
+		CellEven,
 		CellA_sdw,
 		CellB,
 		CellB_sdw,
@@ -42,7 +42,7 @@ namespace AE_RemapTria
 		{
 			cols[(int)COLS.Base] = Color.Transparent;
 			cols[(int)COLS.Line] = Color.FromArgb( 100, 200, 255);
-			cols[(int)COLS.LineA] = Color.FromArgb( 100, 150, 200);
+			cols[(int)COLS.LineDark] = Color.FromArgb( 100, 150, 200);
 			cols[(int)COLS.LineB] = Color.FromArgb( 75, 120, 180);
 			cols[(int)COLS.Frame] = Color.FromArgb( 0, 30, 50);
 			cols[(int)COLS.Caption] = Color.FromArgb( 25, 45, 50);
@@ -53,11 +53,11 @@ namespace AE_RemapTria
 			cols[(int)COLS.InputLineA] = Color.FromArgb( 110, 200, 250);
 			cols[(int)COLS.Kagi] = Color.FromArgb( 30, 150, 250);
 
-			cols[(int)COLS.CellA] = Color.FromArgb( 30, 30, 60);
+			cols[(int)COLS.CellEven] = Color.FromArgb( 30, 30, 60);
 			cols[(int)COLS.CellA_sdw] = Color.Transparent;
 			cols[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
 			cols[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
-			cols[(int)COLS.Selection] = Color.FromArgb(255, 0, 75, 128);
+			cols[(int)COLS.Selection] = Color.FromArgb(25, 100, 144);
 			cols[(int)COLS.SelectionCaption] = Color.FromArgb( 0, 75, 128);
 			cols[(int)COLS.Moji] = Color.FromArgb( 120, 220, 250);
 			cols[(int)COLS.GrayMoji] = Color.FromArgb( 80, 80, 150);
@@ -88,10 +88,10 @@ namespace AE_RemapTria
 			set { cols[(int)COLS.Line] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color LineA
+		public Color LineDark
 		{
-			get { return cols[(int)COLS.LineA]; }
-			set { cols[(int)COLS.LineA] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.LineDark]; }
+			set { cols[(int)COLS.LineDark] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
 		public Color LineB
@@ -143,10 +143,10 @@ namespace AE_RemapTria
 			set { cols[(int)COLS.Kagi] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color CellA
+		public Color CellEven
 		{
-			get { return cols[(int)COLS.CellA]; }
-			set { cols[(int)COLS.CellA] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.CellEven]; }
+			set { cols[(int)COLS.CellEven] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
 		public Color CellA_sdw

@@ -603,13 +603,47 @@ namespace BRY
 			gb.Dispose();
 
 		}
+		static public void GradFrame(Graphics g, Rectangle rct)
+		{
+
+			GradV(g,
+				Color.FromArgb(16+12, 32 + 12, 64 + 12),
+				Color.FromArgb(1 + 12, 2 + 12, 4 + 12),
+				Color.FromArgb(11 + 12, 22 + 12, 44 + 12),
+				rct);
+
+		}
 		static public void GradBG(Graphics g, Rectangle rct)
         {
 
-            GradV(g, Color.FromArgb(16, 32, 75), Color.FromArgb(1, 2, 5), Color.FromArgb(11, 21, 49), rct);
+            GradV(g, 
+                Color.FromArgb(16, 32, 64), 
+                Color.FromArgb(1, 2, 4), 
+                Color.FromArgb(11, 22, 44), 
+                rct);
 
 		}
-		static public void GradBG2(Graphics g, Rectangle rct)
+		static public void GradBGEven(Graphics g, Rectangle rct)
+		{
+
+			GradV(g, 
+                Color.FromArgb(24,40,72), 
+                Color.FromArgb(9,10,12),
+                Color.FromArgb(19, 30, 52),
+                rct);
+
+		}
+		static public void GradBGCurrent(Graphics g, Rectangle rct)
+		{
+
+			GradV(g,
+				Color.FromArgb(27, 54, 108),
+				Color.FromArgb(16, 32, 64),
+				Color.FromArgb(27, 54, 108),
+				rct);
+
+		}
+		static public void GradBG_Top(Graphics g, Rectangle rct)
 		{
 
 			GradV(g, Color.FromArgb(16, 32, 75), Color.FromArgb(1, 2, 5), rct);

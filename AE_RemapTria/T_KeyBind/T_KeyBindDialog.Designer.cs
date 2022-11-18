@@ -295,7 +295,7 @@
 			// t_Label1
 			// 
 			this.t_Label1.Alignment = System.Drawing.StringAlignment.Near;
-			this.t_Label1.BackColor = System.Drawing.Color.Black;
+			this.t_Label1.BackColor = System.Drawing.Color.Transparent;
 			this.t_Label1.BottomBar = new System.Drawing.Size(0, 0);
 			this.t_Label1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));

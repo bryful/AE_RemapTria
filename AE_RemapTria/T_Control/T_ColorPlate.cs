@@ -22,6 +22,7 @@ namespace AE_RemapTria
 	public partial class T_ColorPlate : T_BaseControl
 	{
 		private ColorPlate m_ColorPlate = ColorPlate.Fill;
+		[Category("_AE_Remap")]
 		public ColorPlate ColorPlate
 		{
 			get { return m_ColorPlate; }
@@ -44,20 +45,28 @@ namespace AE_RemapTria
 		}
 		public int m_KagiHWeight = 10;
 		public int m_KagiVWeight = 10;
+		[Category("_AE_Remap")]
 		public int KagiHWeight { get { return m_KagiHWeight; } set { m_KagiHWeight = value;this.Invalidate(); } }
+		[Category("_AE_Remap")]
 		public int KagiVWeight { get { return m_KagiVWeight; } set { m_KagiVWeight = value; this.Invalidate(); } }
 		public T_ColorPlate()
 		{
 			this.Size = new Size(40, 40);
 			this.ForeColor = Color.FromArgb(m_Opacity, 200, 200, 255);
 			InitializeComponent();
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint |
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Transparent;
+			//this.TransparencyKey = Color.Transparent;	
 		}
 
 		protected override void OnPaint(PaintEventArgs pe)
 		{
 			Graphics g = pe.Graphics;
-			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 			SolidBrush sb = new SolidBrush(Color.Transparent);
 			try
 			{

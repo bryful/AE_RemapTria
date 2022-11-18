@@ -54,6 +54,7 @@ namespace AE_RemapTria
 		// *************************************************************************
 		#region IO
 		private DirectoryInfo m_dir = new DirectoryInfo("C:\\");
+		[Category("_AE_Remap")]
 		public DirectoryInfo Dir
 		{
 			get { return m_dir; }
@@ -66,6 +67,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public string FullName
 		{
 			get { return m_dir.FullName; }
@@ -85,12 +87,14 @@ namespace AE_RemapTria
 		#endregion
 		#region Layout
 		private int m_RowHeight = 20;
+		[Category("_AE_Remap")]
 		public int RowHeight
 		{
 			get { return m_RowHeight; }
 			set { m_RowHeight = value; this.Invalidate(); }
 		}
 		private int m_DispMaxY = 0;
+		[Category("_AE_Remap")]
 		public int DispMaxY
 		{
 			get { return m_DispMaxY; }
@@ -99,6 +103,7 @@ namespace AE_RemapTria
 		private int m_RowBottom = 0;
 
 		private int m_DispY = 0;
+		[Category("_AE_Remap")]
 		public int DispY
 		{
 			get { return m_DispY; }
@@ -122,18 +127,21 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_ScrolBarWidth = 20;
+		[Category("_AE_Remap")]
 		public int ScrolBarWidth
 		{
 			get { return m_ScrolBarWidth; }
 			set { m_ScrolBarWidth = value; this.Invalidate(); }
 		}
 		private Color m_FrameColor = Color.FromArgb(180, 180, 220);
+		[Category("_AE_Remap")]
 		public Color FrameColor
 		{
 			get { return m_FrameColor; }
 			set { m_FrameColor = value; this.Invalidate(); }
 		}
 		private Color m_ForcusColor = Color.FromArgb(75, 75, 120);
+		[Category("_AE_Remap")]
 		public Color ForcusColor
 		{
 			get { return m_ForcusColor; }
@@ -143,6 +151,7 @@ namespace AE_RemapTria
 		#endregion
 
 		private string[] m_TragetExt = new string[] { ".ardj.json", ".ardj", ".ardj", ".sts"};
+		[Category("_AE_Remap")]
 		public string[] TragetExt
 		{
 			get { return m_TragetExt; }
@@ -158,6 +167,7 @@ namespace AE_RemapTria
 		}
 		#region Contrl
 		private T_VScrBar? m_VScrBar = null;
+		[Category("_AE_Remap")]
 		public T_VScrBar? VScrBar
 		{
 			get { return m_VScrBar; }
@@ -174,6 +184,7 @@ namespace AE_RemapTria
 			}
 		}
 		private T_Label? m_DirectoryLabel = null;
+		[Category("_AE_Remap")]
 		public T_Label? DirectoryLabel
 		{
 			get { return m_DirectoryLabel; }
@@ -183,6 +194,7 @@ namespace AE_RemapTria
 			}
 		}
 		private T_TextBox? m_FileTextBox = null;
+		[Category("_AE_Remap")]
 		public T_TextBox? FileTextBox
 		{
 			get { return m_FileTextBox; }
@@ -199,6 +211,7 @@ namespace AE_RemapTria
 		}
 
 		private T_Button? m_ToRootBtn = null;
+		[Category("_AE_Remap")]
 		public T_Button? ToRootBtn
 		{
 			get { return m_ToRootBtn; }
@@ -217,6 +230,7 @@ namespace AE_RemapTria
 			ToRoot();
 		}
 		private T_Button? m_ToParentBtn = null;
+		[Category("_AE_Remap")]
 		public T_Button? ToParentBtn
 		{
 			get { return m_ToParentBtn; }
@@ -236,6 +250,7 @@ namespace AE_RemapTria
 		}
 
 		private T_FileExtFilter? m_FileExtFilter = null;
+		[Category("_AE_Remap")]
 		public T_FileExtFilter? FileExtFilter
 		{
 			get { return m_FileExtFilter; }

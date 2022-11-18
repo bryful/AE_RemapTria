@@ -44,7 +44,7 @@
 			this.btnOK = new AE_RemapTria.T_Button();
 			this.btnCancel = new AE_RemapTria.T_Button();
 			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
-			this.t_bList1 = new AE_RemapTria.T_BList();
+			this.t_bListBox1 = new AE_RemapTria.T_BListBox();
 			this.SuspendLayout();
 			// 
 			// lbCaption
@@ -390,29 +390,19 @@
 			this.t_ColorPlate1.TabIndex = 7;
 			this.t_ColorPlate1.Text = "t_ColorPlate1";
 			// 
-			// t_bList1
+			// t_bListBox1
 			// 
-			this.t_bList1.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_bList1.BackColor = System.Drawing.Color.Black;
-			this.t_bList1.DispY = 0;
-			this.t_bList1.Flist = this.FList;
-			this.t_bList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
-			this.t_bList1.FrameColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(220)))));
-			this.t_bList1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_bList1.Location = new System.Drawing.Point(26, 173);
-			this.t_bList1.MyFontIndex = 5;
-			this.t_bList1.MyFonts = null;
-			this.t_bList1.MyFontSize = 9F;
-			this.t_bList1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_bList1.Name = "t_bList1";
-			this.t_bList1.RowHeight = 20;
-			this.t_bList1.SelectedCaption = "";
-			this.t_bList1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(120)))));
-			this.t_bList1.SelectedIndex = -1;
-			this.t_bList1.Size = new System.Drawing.Size(167, 267);
-			this.t_bList1.TabIndex = 15;
-			this.t_bList1.Text = "t_bList1";
-			this.t_bList1.VScrBar = null;
+			this.t_bListBox1.BackColor = System.Drawing.Color.Transparent;
+			this.t_bListBox1.Flist = this.FList;
+			this.t_bListBox1.Location = new System.Drawing.Point(26, 145);
+			this.t_bListBox1.MinimumSize = new System.Drawing.Size(166, 164);
+			this.t_bListBox1.MyFontIndex = 5;
+			this.t_bListBox1.MyFonts = null;
+			this.t_bListBox1.MyFontSize = 9F;
+			this.t_bListBox1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_bListBox1.Name = "t_bListBox1";
+			this.t_bListBox1.Size = new System.Drawing.Size(166, 295);
+			this.t_bListBox1.TabIndex = 15;
 			// 
 			// T_OpenSaveDialog
 			// 
@@ -420,7 +410,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CanReSize = true;
 			this.ClientSize = new System.Drawing.Size(680, 553);
-			this.Controls.Add(this.t_bList1);
+			this.Controls.Add(this.t_bListBox1);
 			this.Controls.Add(this.btnToParent);
 			this.Controls.Add(this.btnToRoot);
 			this.Controls.Add(this.FList);
@@ -499,9 +489,8 @@
 		private T_Button btnCancel;
 		private T_FList FList;
 		private T_ColorPlate t_ColorPlate1;
-		private T_BListBox t_bListBox1;
 		private T_Button btnToRoot;
 		private T_Button btnToParent;
-		private T_BList t_bList1;
+		private T_BListBox t_bListBox1;
 	}
 }

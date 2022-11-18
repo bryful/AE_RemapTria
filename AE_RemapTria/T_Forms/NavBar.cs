@@ -1,4 +1,5 @@
 ﻿using BRY;
+using System.ComponentModel;
 
 namespace AE_RemapTria
 {
@@ -15,6 +16,7 @@ namespace AE_RemapTria
 			BOTTOMLEFT
 		};
 		private ModePos m_PosMode = ModePos.TOPLEFT;
+		[Category("_AE_Remap")]
 		public ModePos PosMode
 		{
 			get { return m_PosMode; }
@@ -31,6 +33,7 @@ namespace AE_RemapTria
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
 		private Form m_form = null;
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+		[Category("_AE_Remap")]
 		public Form Form
 		{
 			get { return m_form; }
@@ -59,12 +62,14 @@ namespace AE_RemapTria
 		}
 
 		private bool m_IsFront = false;
+		[Category("_AE_Remap")]
 		public bool IsFront
 		{
 			get { return m_IsFront; }
 			set { SetIsFront(value); }
 		}
 
+		[Category("_AE_Remap")]
 		public string Caption
 		{
 			get { return label1.Text; }
@@ -94,6 +99,14 @@ namespace AE_RemapTria
 				this.Visible = false;
 			}
 			this.TopMost = true;
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint,
+				//ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Black;
+			this.UpdateStyles();
 		}
 
 		// *****************************************************************
@@ -264,5 +277,9 @@ namespace AE_RemapTria
 		}
 
 		// *****************************************************************
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			T_G.GradBG(e.Graphics, this.ClientRectangle);
+		}
 	}
 }

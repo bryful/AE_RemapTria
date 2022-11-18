@@ -15,6 +15,7 @@ namespace AE_RemapTria
 	public partial class T_BListBox : UserControl
 	{
 		// ******************************************************
+		[Category("_AE_Remap")]
 		public T_FList? Flist
 		{
 			get { return BList.Flist; }
@@ -30,6 +31,7 @@ namespace AE_RemapTria
 		/// <summary>
 		/// リソースフォント管理のコンポーネント
 		/// </summary>
+		[Category("_AE_Remap")]
 		public T_MyFonts? MyFonts
 		{
 			get { return m_MyFonts; }
@@ -49,6 +51,7 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_MyFontIndex = 5;
+		[Category("_AE_Remap")]
 		public int MyFontIndex
 		{
 			get { return m_MyFontIndex; }
@@ -67,6 +70,7 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public float MyFontSize
 		{
 			get { return this.Font.Size; }
@@ -80,6 +84,7 @@ namespace AE_RemapTria
 				BList.MyFontSize = value;
 			}
 		}
+		[Category("_AE_Remap")]
 		public FontStyle MyFontStyle
 		{
 			get { return this.Font.Style; }

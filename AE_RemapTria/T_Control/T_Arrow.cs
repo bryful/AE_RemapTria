@@ -43,6 +43,13 @@ namespace AE_RemapTria
 		{
 			this.ForeColor = Color.FromArgb(200, 200, 200, 250);
 			InitializeComponent();
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Transparent;
 		}
 
 		protected override void OnPaint(PaintEventArgs pe)

@@ -19,7 +19,7 @@ namespace AE_RemapTria
 	{
 		[Category("_AE_Remap")]
 		public bool IsModif = false;
-		private Bitmap m_offscr = new Bitmap(10,10);
+		//private Bitmap m_offscr = new Bitmap(10,10);
 
 		[Category("_AE_Remap")]
 		public bool IsMultExecute = false;
@@ -94,8 +94,6 @@ namespace AE_RemapTria
 
 			MakeFuncs();
 
-			ChkOffScr();
-
 			CellData.ValueChanged += CellData_ValueChangedEvent;
 			CellData.SelChanged += CellData_SelChangedEvent;
 			CellData.CountChanged += CellData_CountChanged;
@@ -105,19 +103,9 @@ namespace AE_RemapTria
 			Sizes.ChangeDispMax += Sizes_ChangeDisp;
 			this.AllowDrop = true;
 		}
-		public void ChkOffScr()
-		{
-			int w = Sizes.CellWidth * CellData.CellCount;
-			int h = Sizes.CellHeight * CellData.FrameCount;
-			if((w != m_offscr.Width)||(h!=m_offscr.Height))
-			{
-				m_offscr = new Bitmap(w, h, PixelFormat.Format32bppArgb);
-				DrawAllOffScr();
-			}
-		}
+	
 		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
-			ChkOffScr();
 			ChkMinMax();
 			ChkHScrl();
 			ChkVScrl();
@@ -300,12 +288,10 @@ namespace AE_RemapTria
 					}
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.Set2Frame(y0,y1);
-					DrawCellOffScr();
 				}else if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 				{
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SelToEnd();
-					DrawCellOffScr();
 				}
 				else
 				{
@@ -313,7 +299,6 @@ namespace AE_RemapTria
 
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
-					DrawAllOffScr();
 
 				}
 				this.Invalidate();
@@ -336,7 +321,6 @@ namespace AE_RemapTria
 					}
 					Point cp = Sizes.PosCell(e.X, e.Y);
 					CellData.Selection.Set2Frame(m_mdFrame, cp.Y);
-					DrawCellOffScr();
 					this.Invalidate();
 					Sizes.CallOnChangeDisp();
 				}
@@ -348,224 +332,12 @@ namespace AE_RemapTria
 			if(m_mdFrame>=0)
 			{
 				m_mdFrame = -1;
-				DrawCellOffScr();
 				this.Invalidate();
 			}
 			base.OnMouseUp(e);
 		}
-		//-------------------------------------------------
-		private void DrawCellOffScr(Graphics g, SolidBrush sb, Pen p, int c, int f)
-		{
-			int x = c * Sizes.CellWidth;
-			int y = f * Sizes.CellHeight;
-
-			Rectangle r = new Rectangle(x, y, Sizes.CellWidth, Sizes.CellHeight);
-			//塗りつぶし
-			sb.Color = Color.FromArgb(0,0,0,0);
-			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-			g.FillRectangle(sb, new Rectangle(x,y, Sizes.CellWidth-1, Sizes.CellHeight-1));
-			//g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-			bool IsSel = (CellData.IsSelected(c, f));
-			bool IsUnEnabled = !CellData.EnableFrame(f);
-			if (IsSel == true)
-			{
-				sb.Color = Colors.Selection;
-				g.FillRectangle(sb, r);
-			}
-			else if (IsUnEnabled)
-			{
-				sb.Color = Colors.Gray;
-				g.FillRectangle(sb, r);
-			}
-			else
-			{
-				if (c % 2 == 0)
-				{
-					sb.Color = Colors.CellA;
-					g.FillRectangle(sb, r);
-				}
-			}
-
-			//文字を書く
-			CellSatus cs = CellData.GetCellStatus(c, f);
-			switch (cs.Status)
-			{
-				case CellType.Normal:
-					if (IsUnEnabled) sb.Color = Colors.GrayMoji;
-					else sb.Color = Colors.Moji;
-					g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-					DrawStr(g, CellData.GetCellData(c, f).ToString(), sb, r);
-					g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-					break;
-				case CellType.SameAsBefore:
-					if (IsUnEnabled) p.Color = Colors.GrayMoji;
-					else p.Color = Colors.LineB;
-					DrawVerLine(g, p, r.Left + r.Width / 2, r.Top, r.Bottom-1);
-					break;
-				case CellType.EmptyStart:
-					if (IsUnEnabled) p.Color = Colors.GrayMoji;
-					else p.Color = Colors.Moji;
-					DrawBatsu(g, p, r);
-					break;
-				case CellType.None:
-					break;
-			}
-			//枠線を書く
-			p.Width = 1;
-			p.Color = Colors.LineA;
-			DrawVerLine(g, p, r.Left, r.Top, r.Bottom - 1);
-			DrawVerLine(g, p, r.Right, r.Top, r.Bottom - 1);
-
-			int Sec = 24;
-			int HSec = 12;
-			int HHSec = 6;
-			switch (CellData.FrameRate)
-			{
-				case T_Fps.FPS24:
-					Sec = 24;
-					HSec = 12;
-					HHSec = 6;
-					break;
-				case T_Fps.FPS30:
-					Sec = 30;
-					HSec = 15;
-					HHSec = 5;
-					break;
-			}
-			if (f % Sec == 0)
-			{
-				p.Color = Colors.Line;
-				DrawHorLine(g, p, r.Left, r.Right, r.Top);
-				DrawHorLine(g, p, r.Left, r.Right, r.Top - 1);
-				DrawHorLine(g, p, r.Left, r.Right, r.Top + 1);
-			}
-			else if (f % HSec == 0)
-			{
-				p.Color = Colors.Line;
-				DrawHorLine(g, p, r.Left, r.Right, r.Top-1);
-				DrawHorLine(g, p, r.Left, r.Right, r.Top);
-
-			}
-			else
-			{
-				if (f % HHSec == 0)
-				{
-					p.Color = Colors.Line;
-					DrawHorLine(g, p, r.Left, r.Right, r.Top);
-				}
-				else
-				{
-					p.Color = Colors.LineB;
-					DrawHorLine(g, p, r.Left, r.Right, r.Top);
-				}
-			}
-		}
-		public void DrawAllOffScr()
-		{
-			Graphics g = Graphics.FromImage(m_offscr);
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			//g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-			SolidBrush sb = new SolidBrush(this.BackColor);
-			Pen p = new Pen(this.ForeColor);
-
-			try
-			{
-				for (int c = 0; c < CellData.CellCount; c++)
-				{
-					for (int f = 0; f < CellData.FrameCount; f++)
-					{
-						DrawCellOffScr(g, sb, p, c, f);
-					}
-
-				}
-			}
-			catch
-			{
-				sb.Dispose();
-				p.Dispose();
-			}
-		}
-		public void DrawCellOffScr()
-		{
-			DrawCellOffScr(CellData.Selection.Target);
-		}
-		public void DrawCellOffScr(int c)
-		{
-			Graphics g = Graphics.FromImage(m_offscr);
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			//g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-			SolidBrush sb = new SolidBrush(this.BackColor);
-			Pen p = new Pen(this.ForeColor);
-
-			try
-			{
-				for (int f = 0; f < CellData.FrameCount; f++)
-				{
-					DrawCellOffScr(g, sb, p, c, f);
-				}
-			}
-			catch
-			{
-				sb.Dispose();
-				p.Dispose();
-			}
-		}
-		public void DrawOffScr()
-		{
-			Graphics g = Graphics.FromImage(m_offscr);
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			SolidBrush sb = new SolidBrush(this.BackColor);
-			Pen p = new Pen(this.ForeColor);
-
-			try
-			{
-				T_Selection bsel = CellData.GetUndoSel();
-				for (int f = 0; f < bsel.Length; f++)
-				{
-					int idx = bsel.Start + f;
-					if ((idx >= 0) && (idx < CellData.FrameCount))
-					{
-						DrawCellOffScr(g, sb, p, bsel.Target, idx);
-					}
-				}
-				for (int f = 0; f < CellData.Selection.Length; f++)
-				{
-					int idx = CellData.Selection.Start + f;
-					if ((idx >= 0) && (idx < CellData.FrameCount))
-					{
-						DrawCellOffScr(g, sb, p, CellData.Selection.Target, idx);
-					}
-				}
-			}
-			finally
-			{
-				sb.Dispose();
-				p.Dispose();
-			}
 
 
-		}
-		protected override void OnPaint(PaintEventArgs pe)
-		{
-			Pen p = new Pen(Color.Black);
-			SolidBrush sb = new SolidBrush(Color.White);
-			Graphics g = pe.Graphics;
-			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-			try
-			{
-				T_G.GradBG(g, this.ClientRectangle);
-				g.DrawImage(m_offscr, Sizes.DispX * -1, Sizes.DispY * -1);
-				p.Color = Colors.Line;
-				DrawFrame(g, p);
-			}
-			finally
-			{
-				p.Dispose();
-				sb.Dispose();
-			}
-
-
-		}
 		protected override void OnDragEnter(DragEventArgs drgevent)
 		{
 			if (drgevent != null)

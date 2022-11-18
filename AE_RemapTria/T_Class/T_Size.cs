@@ -56,11 +56,11 @@ namespace AE_RemapTria
 		// ***********************************************************
 		public Size InputSize()
 		{
-			return new Size(m_FrameWidth,m_CaptionHeight + m_CaptionHeight2);
+			return new Size(m_FrameWidth - m_FrameWidth2,m_CaptionHeight);
 		}
 		public Point InputLoc()
 		{
-			return new Point(0, m_MenuHeight + m_InterHeight);
+			return new Point(m_FrameWidth2, m_MenuHeight + m_InterHeight+m_CaptionHeight2);
 		}
 		// ***********************************************************
 		public T_Size()
@@ -230,7 +230,7 @@ namespace AE_RemapTria
 			m_DispCell.Width = m_DispSize.Width / m_CellWidth + 1;
 			if (m_DispCell.Width > m_CellCount) m_DispCell.Width = m_CellCount;
 
-			m_DispCell.Height = m_DispSize.Height / m_CellHeight + 1;
+			m_DispCell.Height = m_DispSize.Height / m_CellHeight + 2;
 			if (m_DispCell.Height > m_FrameCountTrue) m_DispCell.Height = m_FrameCountTrue;
 		}
 		//---------------------------------------

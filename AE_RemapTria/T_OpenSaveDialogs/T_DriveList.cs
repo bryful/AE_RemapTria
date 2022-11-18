@@ -42,6 +42,7 @@ namespace AE_RemapTria
 		#endregion
 		// **********************************************************************
 		private FInfo[] m_drives = new FInfo[0];
+		[Category("_AE_Remap")]
 		public string[] Drivers
 		{
 			get 
@@ -198,12 +199,14 @@ namespace AE_RemapTria
 		// **********************************************************************
 		#region Prop
 		private bool m_IsHor = true;
+		[Category("_AE_Remap")]
 		public bool IsHor
 		{
 			get { return m_IsHor; }
 			set { m_IsHor = value; this.Invalidate(); }
 		}
 		private int m_SelectedIndex = -1;
+		[Category("_AE_Remap")]
 		public int SelectedIndex
 		{
 			get { return m_SelectedIndex; }
@@ -231,29 +234,34 @@ namespace AE_RemapTria
 		#region Layout
 		private int m_IconWidth = 32;
 		private int m_IconHeight = 32;
+		[Category("_AE_Remap")]
 		public int IconWidth
 		{
 			get { return m_IconWidth; }
 			set { m_IconWidth = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public int IconHeight
 		{
 			get { return m_IconHeight; }
 			set { m_IconHeight = value; this.Invalidate(); }
 		}
 		private Color m_IconBaseColor = Color.FromArgb(30, 50, 70);
+		[Category("_AE_Remap")]
 		public Color IconBaseColor
 		{
 			get { return m_IconBaseColor; }
 			set { m_IconBaseColor = value; this.Invalidate(); }
 		}
 		private Color m_IconFrameColor = Color.FromArgb(100, 100, 150);
+		[Category("_AE_Remap")]
 		public Color IconFrameColor
 		{
 			get { return m_IconFrameColor; }
 			set { m_IconFrameColor = value; this.Invalidate(); }
 		}
 		private Color m_IconFrameColorLo = Color.FromArgb(50, 50, 75);
+		[Category("_AE_Remap")]
 		public Color IconFrameColorLo
 		{
 			get { return m_IconFrameColorLo; }
@@ -278,6 +286,7 @@ namespace AE_RemapTria
 			}
 			return idx;
 		}
+		[Category("_AE_Remap")]
 		public string FullName
 		{
 			get 
@@ -422,6 +431,7 @@ namespace AE_RemapTria
 		}
 		// *********************************************************************
 		private T_FList? m_FList = null;
+		[Category("_AE_Remap")]
 		public T_FList? FList
 		{
 			get { return m_FList; }

@@ -24,8 +24,17 @@ namespace AE_RemapTria
 		public T_Caption()
 		{
 			this.Size = new Size(T_Size.CellWidthDef*10, T_Size.CaptionHeightDef+ T_Size.CaptionHeightDef);
-			Init();
 
+						this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Transparent;
+			this.UpdateStyles();
+			Alignment = StringAlignment.Far;
+			LineAlignment = StringAlignment.Center;
 			Alignment = StringAlignment.Center;
 			MyFontSize = 9;
 		}
@@ -118,7 +127,7 @@ namespace AE_RemapTria
 				g.DrawImage(CellArrowNone, new Point(x + m_grid.Sizes.CellWidth / 2 - 6, m_grid.Sizes.CaptionHeight2 - 12));
 			}
 			Fill(g, sb, r);
-			p.Color = m_grid.Colors.LineA;
+			p.Color = m_grid.Colors.LineDark;
 			DrawVerLine(g, p, x, m_grid.Sizes.CaptionHeight2, m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 - 1);
 			sb.Color = m_grid.Colors.Moji;
 			DrawStr(g, m_grid.CellData.CaptionFromIndex(l), sb, r);
@@ -136,7 +145,7 @@ namespace AE_RemapTria
 
 				//とりあえず塗りつぶし
 				//Fill(g, sb);
-				T_G.GradBG2(g,this.ClientRectangle);
+				T_G.GradBG_Top(g,this.ClientRectangle);
 				Rectangle r = m_grid.Sizes.DispCell;
 				for (int i = r.Left; i <= r.Right; i++)
 				{

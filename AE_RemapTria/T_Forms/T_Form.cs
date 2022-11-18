@@ -71,6 +71,7 @@ namespace AE_RemapTria
 		private T_Grid? m_grid = null;
 		private T_Input? m_input = null;
 
+		[Category("_AE_Remap")]
 		public string FileName 
 		{
 			get 
@@ -114,8 +115,8 @@ namespace AE_RemapTria
 			this.SetStyle(
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint |
-				ControlStyles.SupportsTransparentBackColor,
+				ControlStyles.AllPaintingInWmPaint ,
+				//ControlStyles.SupportsTransparentBackColor,
 				true);
 			this.UpdateStyles();
 			this.KeyPreview = true;
@@ -359,7 +360,7 @@ namespace AE_RemapTria
 					g.FillRectangle(sb, r0);
 				}
 
-				if (m_grid != null) p.Color = m_grid.Colors.LineA;
+				if (m_grid != null) p.Color = m_grid.Colors.LineDark;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
 				g.DrawRectangle(p, r);
 			}

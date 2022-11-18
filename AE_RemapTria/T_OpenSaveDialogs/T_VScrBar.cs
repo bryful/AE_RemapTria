@@ -38,6 +38,7 @@ namespace AE_RemapTria
 		private Bitmap CCD = Properties.Resources.HVS_Cursol_down;
 
 		private int m_Value=0;
+		[Category("_AE_Remap")]
 		public int Value
 		{
 			get { return m_Value; }
@@ -65,6 +66,7 @@ namespace AE_RemapTria
 			}
 		}
 		private int m_MaxValue = 100;
+		[Category("_AE_Remap")]
 		public int MaxValue
 		{
 			get { return m_MaxValue; }

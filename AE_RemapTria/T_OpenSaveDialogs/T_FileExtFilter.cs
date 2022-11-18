@@ -72,11 +72,13 @@ namespace AE_RemapTria
 		}
 		#endregion
 		private Color m_SelectedColor = Color.FromArgb(90, 90, 120);
+		[Category("_AE_Remap")]
 		public Color SelectedColor
 		{
 			get { return m_SelectedColor; }
 			set { m_SelectedColor = value; this.Invalidate(); }
 		}
+		[Category("_AE_Remap")]
 		public string[] Filter
 		{
 			get

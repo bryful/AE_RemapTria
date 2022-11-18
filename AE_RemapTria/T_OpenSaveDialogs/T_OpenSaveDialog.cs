@@ -17,6 +17,7 @@ namespace AE_RemapTria
 {
 	public partial class T_OpenSaveDialog : T_BaseDialog
 	{
+		[Category("_AE_Remap")]
 		public string Caption
 		{
 			get { return lbCaption.Text; }
@@ -25,6 +26,7 @@ namespace AE_RemapTria
 		/// <summary>
 		/// カレントのフォルダ
 		/// </summary>
+		[Category("_AE_Remap")]
 		public string DirectoryName
 		{
 			get { return FList.FullName; }
@@ -36,11 +38,13 @@ namespace AE_RemapTria
 				}
 			}
 		}
+		[Category("_AE_Remap")]
 		public string FileName
 		{
 			get { return tbFileName.Text; }
 			set { tbFileName.Text = value; }
 		}
+		[Category("_AE_Remap")]
 		public string FullName
 		{
 			get { return Path.Combine(DirectoryName, FileName); }

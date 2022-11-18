@@ -128,7 +128,14 @@ namespace AE_RemapTria
             Alignment = StringAlignment.Center;
             LineAlignment = StringAlignment.Center;
             ForeColor = Color.FromArgb(255, 200, 200, 250);
-        }
+			this.SetStyle(
+			   ControlStyles.DoubleBuffer |
+			   ControlStyles.UserPaint |
+			   ControlStyles.AllPaintingInWmPaint|
+			   ControlStyles.SupportsTransparentBackColor,
+			   true);
+			BackColor = Color.Transparent;
+		}
         // *********************************************************
         protected override void OnPaint(PaintEventArgs pe)
         {

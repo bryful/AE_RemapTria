@@ -16,7 +16,7 @@ namespace AE_RemapTria
 		{
 			InitializeComponent();
 			SetEventHandler(t_Zebra1);
-			SetEventHandler(t_ColorPlate1);
+			//SetEventHandler(t_ColorPlate1);
 			SetEventHandler(t_ColorPlate2);
 
 		}

@@ -96,14 +96,14 @@ namespace AE_RemapTria
 			if (m_grid != null)
 			{
 				z = new Size(
-					m_grid.Sizes.FrameWidth, 
-					m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2);
+					m_grid.Sizes.FrameWidth- m_grid.Sizes.FrameWidth2, 
+					m_grid.Sizes.CaptionHeight);
 			}
 			else
 			{
 				z = new Size(
-					T_Size.FrameWidthDef,
-					T_Size.CaptionHeightDef + T_Size.CaptionHeight2Def
+					T_Size.FrameWidthDef -T_Size.FrameWidth2Def,
+					T_Size.CaptionHeightDef
 					);
 			}
 			if (this.Size != z)
@@ -178,14 +178,11 @@ namespace AE_RemapTria
 			try
 			{
 				Graphics g = e.Graphics;
-				g.SmoothingMode = SmoothingMode.AntiAlias;
-				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-				T_G.GradBG2(g,this.ClientRectangle);
-				//Fill(g, sb);
+				T_G.GradBG_Top(g,this.ClientRectangle);
 
 				if (m_grid != null)
 				{
-					Rectangle rct = new Rectangle(m_grid.Sizes.FrameWidth2, m_grid.Sizes.CaptionHeight2,m_grid.Sizes.FrameWidth- m_grid.Sizes.FrameWidth2, m_grid.Sizes.CaptionHeight);
+					Rectangle rct = new Rectangle(0, 0,m_grid.Sizes.FrameWidth- m_grid.Sizes.FrameWidth2, m_grid.Sizes.CaptionHeight);
 					if (m_value >= 0)
 					{
 						sb.Color = m_grid.Colors.Moji;

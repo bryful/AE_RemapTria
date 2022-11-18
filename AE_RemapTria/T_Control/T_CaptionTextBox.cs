@@ -68,8 +68,17 @@ namespace AE_RemapTria
 			this.Controls.Add(m_Label);
 			this.Controls.Add(m_TextBox);
 			InitializeComponent();
-			m_Label.BackColor = Color.FromArgb(20,20,50);
+			m_Label.BackColor = Color.Transparent;
 			m_Label.GotFocus += M_Label_GotFocus;
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			//this.BackColor = Color.Black;
+			this.UpdateStyles();
+			this.BackColor = Color.Transparent;
 		}
 
 		private void M_Label_GotFocus(object? sender, EventArgs e)
@@ -96,7 +105,7 @@ namespace AE_RemapTria
 
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			base.OnPaint(pe);
+			Fill(pe.Graphics, this.BackColor);
 		}
 		protected override void OnGotFocus(EventArgs e)
 		{

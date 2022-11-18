@@ -223,7 +223,7 @@ namespace AE_RemapTria
 				Fill(g, sb, r);
 				if (f % HHSecBar == 0)
 				{
-					p.Color = m_grid.Colors.LineA;
+					p.Color = m_grid.Colors.LineDark;
 					int y2 = y - 1;
 					DrawHorLine(g, p, rct.Left, rct.Right, y2);
 				}
@@ -246,9 +246,7 @@ namespace AE_RemapTria
 				g.SmoothingMode = SmoothingMode.AntiAlias;
 				g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 				//とりあえず塗りつぶし
-				T_G.GradBG(g, this.ClientRectangle);
-				//sb.Color = Color.Transparent;
-				//Fill(g, sb);
+				T_G.GradFrame(g, this.ClientRectangle);
 
 				if (m_grid != null)
 				{
