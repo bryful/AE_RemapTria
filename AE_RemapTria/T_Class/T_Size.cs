@@ -273,6 +273,33 @@ namespace AE_RemapTria
 		{
 			get { return m_Disp; }
 		}
+		public void SetDisp(int x,int y)
+		{
+			int vx = x;
+			if (vx < 0) vx = 0;
+			else if (vx > m_DispMax.X) vx = m_DispMax.X;
+			int vy = y;
+			if (vy < 0) vy = 0;
+			else if (vy > m_DispMax.Y) vy = m_DispMax.Y;
+			bool b = false;
+
+			if (m_Disp.X != vx)
+			{
+				m_Disp.X = vx;
+				b = true;
+			}
+			if (m_Disp.Y != vy)
+			{
+				m_Disp.Y = vy;
+				b = true;
+			}
+			if (b)
+			{
+				ChkDisp();
+				if (m_grid != null) m_grid.Invalidate();
+				OnChangeDisp(new EventArgs());
+			}
+		}
 		//---------------------------------------
 		/// <summary>
 		///表示されていない範囲のサイズ

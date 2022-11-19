@@ -25,7 +25,6 @@ namespace AE_RemapTria
 				}
 			}
 		}
-
 		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
 			if (m_grid != null)

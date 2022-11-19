@@ -167,12 +167,12 @@ namespace BRY
 
             if( (up & Keys.Shift)== Keys.Shift)
 			{
-                ret += "Shift";
+                ret += "Shft";
             }
 			if ((up & Keys.Control) == Keys.Control)
             {
                 if (ret != "") ret += "+";
-				ret += "Control";
+				ret += "Cntrl";
 			}
 			if ((up & Keys.Alt) == Keys.Alt)
 			{

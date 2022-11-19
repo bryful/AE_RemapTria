@@ -166,7 +166,6 @@ namespace AE_RemapTria
 					string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
 					if(m_grid.Funcs.Load(kp))
 					{
-						m_grid.UpdateMenu();
 						m_grid.KeyBaindFile = kp;
 					}
 				}

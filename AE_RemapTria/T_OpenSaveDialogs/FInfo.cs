@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BRY;
 namespace AE_RemapTria
 {
     public enum FInfoType
@@ -268,6 +268,10 @@ namespace AE_RemapTria
             return ret;
 
         }
+		public Image IconImage()
+		{
+			return F_W.FileAssociatedImage(FullName, false);
+		}
 
-    }
+	}
 }

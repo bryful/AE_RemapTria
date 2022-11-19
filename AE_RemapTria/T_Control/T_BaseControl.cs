@@ -229,8 +229,11 @@ namespace AE_RemapTria
 		// ************************************************************************
 		public void DrawBatsu(Graphics g, Pen p, Rectangle r)
 		{
-			g.DrawLine(p, r.Left,r.Top,r.Right,r.Bottom);
-			g.DrawLine(p, r.Left, r.Bottom, r.Right, r.Top);
+			float cx = (float)r.Left + (float)r.Width / 2;
+			float cy = (float)r.Top + (float)r.Height / 2;
+			float l = (float)r.Height / 2 - 4;
+			g.DrawLine(p, cx - l, cy - l, cx + l, cy + l);
+			g.DrawLine(p, cx - l, cy + l, cx + l, cy - l);
 		}
 		public Color EnabledColor(Color col,bool isEnabled)
 		{

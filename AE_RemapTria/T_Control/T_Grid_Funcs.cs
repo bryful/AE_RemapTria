@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BRY;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -100,19 +101,21 @@ namespace AE_RemapTria
 		#endregion
 		#region Menu
 		// ************************************************************************************
+		/*
 		public void UpdateMenu()
 		{
 			if (m_Menu == null) return;
 			m_Menu.UpdateMenu();
 		}
+		*/
 		// ************************************************************************************
 		public void MakeMenu()
 		{
 			if (m_Menu == null) return;
 			m_Menu.ClearMenu();
-			m_Menu.AddMenu("AE_Remapτρία", 93);
-			m_Menu.AddMenu("Edit", 40);
-			m_Menu.AddMenu("Windw", 50);
+			m_Menu.AddTopMenu("AE_Remapτρία", 93);
+			m_Menu.AddTopMenu("Edit", 40);
+			m_Menu.AddTopMenu("Windw", 50);
 
 			m_Menu.AddSubMenu(0, "SheetSettings");
 			m_Menu.AddSubMenu(0, "SeetInfoDialog");
@@ -1118,9 +1121,12 @@ namespace AE_RemapTria
 			if (m_Form == null) return false;
 			m_Form.ForegroundWindow();
 			T_AboutDialog dlg = new T_AboutDialog();
-			var dt = File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location);
+			string s =  Application.ExecutablePath;
+			DateTime dt = File.GetLastWriteTimeUtc(s);
+			//DateTime dt = F_W.GetBuildDateTime(s);
+
 			dt = dt + new TimeSpan(9, 0, 0);
-			dlg.Info = "Build:" + dt.ToString();
+			dlg.Info = "build:" +dt.ToString() ;
 			dlg.SetForm(m_Form);
 			dlg.Location = new Point(
 				m_Form.Left + 20,

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,6 +11,17 @@ namespace BRY
 {
 	public class F_W
 	{
+		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+		struct SHFILEINFO
+		{
+			public IntPtr hIcon;
+			public IntPtr iIcon;
+			public uint dwAttributes;
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+			public string szDisplayName;
+			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+			public string szTypeName;
+		}
 		// *************************************************************************
 		/// <summary>
 		/// アプリケーションを全面に
@@ -17,7 +29,61 @@ namespace BRY
 		/// <param name="hWnd"></param>
 		/// <returns></returns>
 		// *************************************************************************
+		const uint SHGFI_LARGEICON = 0x00000000;
+		const uint SHGFI_SMALLICON = 0x00000001;
+		const uint SHGFI_USEFILEATTRIBUTES = 0x00000010;
+		const uint SHGFI_ICON = 0x00000100;
+		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
+		static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		static extern bool DestroyIcon(IntPtr hIcon);
 
+		/// <summary>
+		/// 指定したファイルパスに関連付けされたアイコンイメージを取得する。
+		/// </summary>
+		/// <remarks>
+		/// このメソッドは、ファイルの存在チェックを行ない、指定されなかった第３パラメータの
+		/// 値を決定する。
+		/// </remarks>
+		/// <param name="path">アイコンイメージ取得対象のファイルのパス</param>
+		/// <param name="isLarge">大きいアイコンを取得するとき true、小さいアイコンを取得するとき false</param>
+		/// <returns>取得されたアイコンのビットマップイメージを返す。</returns>
+		public static Image FileAssociatedImage(string path, bool isLarge)
+		{
+			return FileAssociatedImage(path, isLarge, File.Exists(path));
+		}
+		/// <summary>
+		/// 指定したファイルパスに関連付けされたアイコンイメージを取得する。
+		/// </summary>
+		/// <param name="path">アイコンイメージ取得対象のファイルのパス</param>
+		/// <param name="isLarge">
+		/// 大きいアイコンを取得するとき true、小さいアイコンを取得するとき false
+		/// </param>
+		/// <param name="isExist">
+		/// ファイルが実在するときだけ動作させるとき true、実在しなくて動作させるとき false
+		/// </param>
+		/// <returns>取得されたアイコンのビットマップイメージを返す。</returns>
+		public static Image FileAssociatedImage(string path, bool isLarge, bool isExist)
+		{
+			SHFILEINFO fileInfo = new SHFILEINFO();
+			uint flags = SHGFI_ICON;
+			if (!isLarge) flags |= SHGFI_SMALLICON;
+			if (!isExist) flags |= SHGFI_USEFILEATTRIBUTES;
+			try
+			{
+				SHGetFileInfo(path, 0x10, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flags);
+				if (fileInfo.hIcon == IntPtr.Zero)
+					return null;
+				else
+					return Icon.FromHandle(fileInfo.hIcon).ToBitmap();
+			}
+			finally
+			{
+				if (fileInfo.hIcon != IntPtr.Zero)
+					DestroyIcon(fileInfo.hIcon);
+			}
+		}
 		#region Process
 		[StructLayout(LayoutKind.Sequential)]
 		public struct PROCESS_INFORMATION
@@ -349,6 +415,64 @@ namespace BRY
 				FreeConsole();
 			}
 
+		}
+		static public DateTime GetBuildDateTime(string asmPath)
+		{
+			// ファイルオープン
+			using (FileStream fs = new FileStream(asmPath, FileMode.Open, FileAccess.Read))
+			using (BinaryReader br = new BinaryReader(fs))
+			{
+				// まずはシグネチャを探す
+				byte[] signature = { 0x50, 0x45, 0x00, 0x00 };// "PE\0\0"
+				List<byte> bytes = new List<byte>();
+				while (true)
+				{
+					bytes.Add(br.ReadByte());
+
+					if (bytes.Count < signature.Length)
+					{
+						continue;
+					}
+
+					while (signature.Length < bytes.Count)
+					{
+						bytes.RemoveAt(0);
+					}
+
+					bool isMatch = true;
+					for (int i = 0; i < signature.Length; i++)
+					{
+						if (signature[i] != bytes[i])
+						{
+							isMatch = false;
+							break;
+						}
+					}
+					if (isMatch)
+					{
+						break;
+					}
+				}
+
+				// COFFファイルヘッダを読み取る
+				var coff = new
+				{
+					Machine = br.ReadBytes(2),
+					NumberOfSections = br.ReadBytes(2),
+					TimeDateStamp = br.ReadBytes(4),
+					PointerToSymbolTable = br.ReadBytes(4),
+					NumberOfSymbols = br.ReadBytes(4),
+					SizeOfOptionalHeader = br.ReadBytes(2),
+					Characteristics = br.ReadBytes(2),
+				};
+
+				// タイムスタンプをDateTimeに変換
+				int timestamp = BitConverter.ToInt32(coff.TimeDateStamp, 0);
+				DateTime baseDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+				DateTime buildDateTimeUtc = baseDateTime.AddSeconds(timestamp);
+				DateTime buildDateTimeLocal = buildDateTimeUtc.ToUniversalTime();
+				return buildDateTimeLocal;
+			}
 		}
 	}
 }

@@ -86,6 +86,14 @@ namespace AE_RemapTria
 			this.Size = new Size(150, 30);
 			Alignment = StringAlignment.Far;
 			LineAlignment = StringAlignment.Center;
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.BackColor = Color.Transparent;
+
 		}
 		public void SetFrame(T_Fps fps,int f)
 		{
@@ -239,7 +247,7 @@ namespace AE_RemapTria
 		// *************************************************************
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			base.OnPaint(pe);
+			//base.OnPaint(pe);
 			Graphics g = pe.Graphics;
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;

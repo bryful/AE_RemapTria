@@ -43,10 +43,12 @@ namespace AE_RemapTria
 		#endregion
 		// *********************************************************************
 		private List<FInfo> m_Items = new List<FInfo> ();
+		[Category("_AE_Remap")]
 		public int Count
 		{
 			get { return m_Items.Count; }
 		}
+		[Category("_AE_Remap")]
 		public string SelectedCaption
 		{
 			get
@@ -71,12 +73,14 @@ namespace AE_RemapTria
 		// *********************************************************************
 		#region Layout
 		private int m_RowHeight = 20;
+		[Category("_AE_Remap")]
 		public int RowHeight
 		{
 			get { return m_RowHeight; }
 			set { m_RowHeight = value; this.Invalidate(); }
 		}
 		private int m_DispMaxY = 0;
+		[Category("_AE_Remap")]
 		public int DispMaxY
 		{
 			get { return m_DispMaxY; }
@@ -85,6 +89,7 @@ namespace AE_RemapTria
 		private int m_RowBottom = 0;
 
 		private int m_DispY = 0;
+		[Category("_AE_Remap")]
 		public int DispY
 		{
 			get { return m_DispY; }
@@ -108,18 +113,21 @@ namespace AE_RemapTria
 			}
 		}
 		private Color m_FrameColor = Color.FromArgb(180, 180, 220);
+		[Category("_AE_Remap")]
 		public Color FrameColor
 		{
 			get { return m_FrameColor; }
 			set { m_FrameColor = value; this.Invalidate(); }
 		}
 		private Color m_SelectedColor = Color.FromArgb(75, 75, 120);
+		[Category("_AE_Remap")]
 		public Color SelectedColor
 		{
 			get { return m_SelectedColor; }
 			set { m_SelectedColor = value; this.Invalidate(); }
 		}
 		public int m_SelectedIndex = -1;
+		[Category("_AE_Remap")]
 		public int SelectedIndex
 		{
 			get { return m_SelectedIndex; }
@@ -140,6 +148,7 @@ namespace AE_RemapTria
 		#endregion
 		#region Control
 		private T_VScrBar? m_VScrBar = null;
+		[Category("_AE_Remap")]
 		public T_VScrBar? VScrBar
 		{
 			get { return m_VScrBar; }
@@ -156,6 +165,7 @@ namespace AE_RemapTria
 			}
 		}
 		private T_FList? m_Flist = null;
+		[Category("_AE_Remap")]
 		public T_FList? Flist
 		{
 			get { return m_Flist; }

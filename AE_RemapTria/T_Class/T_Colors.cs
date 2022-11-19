@@ -29,6 +29,11 @@ namespace AE_RemapTria
 		GrayMoji,
 		Gray,
 		TopBar,
+		
+		MenuBack,
+		MenuBackNoActive,
+		MenuMoji,
+		MenuMojiNoActive,
 		Count
 	};
 	public class T_Colors
@@ -57,13 +62,17 @@ namespace AE_RemapTria
 			cols[(int)COLS.CellA_sdw] = Color.Transparent;
 			cols[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
 			cols[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
-			cols[(int)COLS.Selection] = Color.FromArgb(25, 100, 144);
+			cols[(int)COLS.Selection] = Color.FromArgb(50, 100, 180);
 			cols[(int)COLS.SelectionCaption] = Color.FromArgb( 0, 75, 128);
 			cols[(int)COLS.Moji] = Color.FromArgb( 120, 220, 250);
 			cols[(int)COLS.GrayMoji] = Color.FromArgb( 80, 80, 150);
 			cols[(int)COLS.Gray] = Color.FromArgb( 20, 20, 50);
 			cols[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
 
+			cols[(int)COLS.MenuBack] = Color.FromArgb(75, 88, 156);
+			cols[(int)COLS.MenuBackNoActive] = Color.FromArgb(75,81, 109);
+			cols[(int)COLS.MenuMoji] = Color.FromArgb(194, 202, 243);
+			cols[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
 
 		}
 		//---------------------------------------
@@ -201,6 +210,27 @@ namespace AE_RemapTria
 		{
 			get { return cols[(int)COLS.TopBar]; }
 			set { cols[(int)COLS.TopBar] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		//---------------------------------------
+		public Color MenuBack
+		{
+			get { return cols[(int)COLS.MenuBack]; }
+			set { cols[(int)COLS.MenuBack] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuBackNoActive
+		{
+			get { return cols[(int)COLS.MenuBackNoActive]; }
+			set { cols[(int)COLS.MenuBackNoActive] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuMoji
+		{
+			get { return cols[(int)COLS.MenuMoji]; }
+			set { cols[(int)COLS.MenuMoji] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuMojiNoActive
+		{
+			get { return cols[(int)COLS.MenuMojiNoActive]; }
+			set { cols[(int)COLS.MenuMojiNoActive] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 	}
 }

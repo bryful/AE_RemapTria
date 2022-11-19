@@ -375,17 +375,21 @@ namespace AE_RemapTria
 							sb.Color = m_ForcusColor;
 							g.FillRectangle(sb, r);
 						}
+						Image Ii = m_Items[i].IconImage();
+						g.DrawImage(Ii, 4, m_RowHeight * i - m_DispY);
+						Ii.Dispose();
+
 						sb.Color = this.ForeColor;
-						r = new Rectangle(5, m_RowHeight * i - m_DispY, this.Width - 25, m_RowHeight);
+						r = new Rectangle(5+16, m_RowHeight * i - m_DispY, this.Width - 25-16, m_RowHeight);
 						if (m_Items[i].IsDir)
 						{
-							g.DrawString("<DIR> " + m_Items[i].Caption, this.Font, sb, r, sf);
+							g.DrawString(m_Items[i].Caption, this.Font, sb, r, sf);
 						}
 						else
 						{
 							string n = T_Def.GetNameNoExt(m_Items[i].Caption);
 							string e = T_Def.GetExt(m_Items[i].Caption);
-							g.DrawString("      " + n, this.Font, sb, r, sf);
+							g.DrawString(n, this.Font, sb, r, sf);
 							sf.Alignment = StringAlignment.Far;
 							g.DrawString(e, this.Font, sb, r, sf);
 

@@ -19,21 +19,6 @@ namespace AE_RemapTria
 			InitializeComponent();
 			SetEventHandler(t_Menu1);
 		}
-
-		
-		private void button1_Click_1(object sender, EventArgs e)
-		{
-			string s = @"C:\AAA\bbb.ardj.jsx";
-
-			//string p = T_Def.GetDir(s);
-			//string n = T_Def.GetName(s);
-			//string ne = T_Def.GetNameNoExt(s);
-			//string ee = T_Def.GetExt(s);
-			string js = T_Def.ToJSPath(s);
-			string ws = T_Def.ToWindwsPath(js);
-			//string s2 = $"{p}\r\n{n}\r\n{ne}\r\n{ee}";
-			MessageBox.Show(js+"\r\n"+ws);
-
-		}
+	
 	}
 }

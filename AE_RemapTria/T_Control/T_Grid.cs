@@ -10,12 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using BRY;
 namespace AE_RemapTria
 {
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
-	public partial class T_Grid : T_BaseControl
+    public partial class T_Grid : T_BaseControl
 	{
 		[Category("_AE_Remap")]
 		public bool IsModif = false;
@@ -24,6 +23,7 @@ namespace AE_RemapTria
 		[Category("_AE_Remap")]
 		public bool IsMultExecute = false;
 		private bool m_IsJapanOS = true;
+		[Category("_AE_Remap")]
 		public bool IsJapanOS { get { return m_IsJapanOS; } }
 
 		public T_CellData CellData = new T_CellData();
@@ -67,12 +67,41 @@ namespace AE_RemapTria
 		public void SetT_Menu(T_Menu tm)
 		{
 			m_Menu = tm;
+			if(m_Menu != null)
+			{
+				if (m_Form != null)
+				{
+					m_Form.Activated += M_Form_Activated;
+					m_Form.Deactivate += M_Form_Deactivate;
+				}
+			}
 		}
+
+		private void M_Form_Deactivate(object? sender, EventArgs e)
+		{
+			if (m_Menu != null) m_Menu.IsActive = false;
+		}
+
+		private void M_Form_Activated(object? sender, EventArgs e)
+		{
+			if (m_Menu != null) m_Menu.IsActive = true;
+		}
+
 		private T_Form? m_Form = null;
 		public void SetForm(T_Form fm)
 		{
 			m_Form = fm;
+			if(m_Form!=null)
+			{
+				if (m_Menu != null)
+				{
+					m_Form.Activated += M_Form_Activated;
+					m_Form.Deactivate += M_Form_Deactivate;
+				}
+			}
 		}
+		public T_Form Form { get { return m_Form; } }
+
 		[Category("_AE_Remap")]
 		public string FileName = "";
 		[Category("_AE_Remap")]
@@ -269,6 +298,9 @@ namespace AE_RemapTria
 		}
 		//-------------------------------------------------
 		private int m_mdFrame = -1;
+		private int m_CopyFrame = -1; 
+		private Point m_md = new Point(-1,-1);
+		private Point m_disp = new Point(-1, -1);
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
@@ -288,7 +320,7 @@ namespace AE_RemapTria
 					}
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.Set2Frame(y0,y1);
-				}else if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+				}else if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt)
 				{
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SelToEnd();
@@ -296,36 +328,67 @@ namespace AE_RemapTria
 				else
 				{
 					m_mdFrame = cp.Y;
-
 					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
+					if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+					{
+						m_CopyFrame = CellData.GetCellData(cp.X, cp.Y);
+						CellData.PushUndo(BackupSratus.NumberInput);
+					}
+					else
+					{
+						m_CopyFrame = -1;
+					}
 
 				}
 				this.Invalidate();
 				Sizes.CallOnChangeDisp();
+			}else if ((e.Button & MouseButtons.Middle) == MouseButtons.Middle)
+			{
+				m_md = new Point(e.X, e.Y);
+				m_disp = Sizes.Disp;
 			}
-			base.OnMouseDown(e);
+				base.OnMouseDown(e);
 		}
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
-				if(m_mdFrame>=0)
+				if (m_mdFrame >= 0)
 				{
-					if(e.Y>=this.Height)
+					bool b = CellData._undoPushFlag;
+					if (m_CopyFrame >= 0)
+					{
+						CellData._undoPushFlag = false;
+					}
+					if (e.Y >= this.Height)
 					{
 						Sizes.DispY += Sizes.CellHeight;
-					}else if(e.Y<0)
+					}
+					else if (e.Y < 0)
 					{
 						Sizes.DispY -= Sizes.CellHeight;
 					}
 					Point cp = Sizes.PosCell(e.X, e.Y);
 					CellData.Selection.Set2Frame(m_mdFrame, cp.Y);
+					if (m_CopyFrame >= 0)
+					{
+						CellData.SetCellNum(m_CopyFrame, false);
+					}
+					CellData._undoPushFlag = b;
 					this.Invalidate();
 					Sizes.CallOnChangeDisp();
 				}
+				else if ((e.Button & MouseButtons.Middle) == MouseButtons.Middle)
+				{
+					int ax = e.X - m_md.X;
+					int ay = e.Y - m_md.Y;
+
+					Sizes.SetDisp(m_disp.X + ax, m_disp.Y + ay);
+					this.Invalidate();
+				}
+				base.OnMouseMove(e);
 			}
-			base.OnMouseMove(e);
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
@@ -334,6 +397,9 @@ namespace AE_RemapTria
 				m_mdFrame = -1;
 				this.Invalidate();
 			}
+			m_md = new Point(-1, -1);
+			m_disp = new Point(-1, -1);
+			m_CopyFrame = -1;
 			base.OnMouseUp(e);
 		}
 
