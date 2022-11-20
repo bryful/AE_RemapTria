@@ -23,8 +23,6 @@
 
   <ItemGroup>
     <Compile Remove="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
-    <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSData.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSdef.cs" />
     <Compile Remove="sampleCode\AE_RemapExceed\CustumClass\TSFunctions.cs" />
@@ -129,13 +127,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\SourceHanCodeJP.ttc" />
+    <None Remove="T_PDF\GenShinGothic-Monospace-Bold.ttf" />
+    <None Remove="T_PDF\GenShinGothic-Monospace-Light.ttf" />
+    <None Remove="T_PDF\GenShinGothic-Monospace-Medium.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\SourceHanCodeJP.ttc" />
+    <EmbeddedResource Include="T_PDF\GenShinGothic-Monospace-Bold.ttf" />
+    <EmbeddedResource Include="T_PDF\GenShinGothic-Monospace-Light.ttf" />
+    <EmbeddedResource Include="T_PDF\GenShinGothic-Monospace-Medium.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="sampleCode\AE_RemapExceed\AE_Remoto.cs" />
-    <None Include="sampleCode\AE_RemapExceed\CustumClass\Ard_prms.cs" />
-    <None Include="sampleCode\AE_RemapExceed\CustumClass\TSColors.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumClass\TSData.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumClass\TSdef.cs" />
     <None Include="sampleCode\AE_RemapExceed\CustumClass\TSFunctions.cs" />
@@ -236,7 +246,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Management" Version="6.0.0" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.41" />
+    <PackageReference Include="System.Management" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

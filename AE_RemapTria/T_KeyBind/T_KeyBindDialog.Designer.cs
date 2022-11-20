@@ -393,7 +393,7 @@
 		private T_Label t_Label3;
 		private T_Zebra t_Zebra1;
 		private T_Zebra t_Zebra2;
-		private TextBox textBox1;
+		//private TextBox textBox1;
 		private T_Label t_Label1;
 	}
 }

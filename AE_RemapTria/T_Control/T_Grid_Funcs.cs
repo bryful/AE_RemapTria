@@ -95,6 +95,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
 			lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
 			lst.Add(new FuncItem(OpenSaveDialog, Keys.Control | Keys.T, "FileDialogのテスト"));
+			lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF Export"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -124,6 +125,8 @@ namespace AE_RemapTria
 			m_Menu.AddSubMenu(0, "Open");
 			m_Menu.AddSubMenu(0, "Save");
 			m_Menu.AddSubMenu(0, "SaveAs");
+			m_Menu.AddSubMenuSepa(0);
+			m_Menu.AddSubMenu(0, "WritePDF");
 			m_Menu.AddSubMenu(0, "Quit");
 
 			m_Menu.AddSubMenu(1, "Undo");

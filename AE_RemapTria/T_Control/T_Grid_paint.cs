@@ -171,6 +171,30 @@ namespace AE_RemapTria
 
 		}
 		//-------------------------------------------------
+		public bool WritePDF(string p)
+		{
+			return T_PDF.ExportPDF(p,this);
+		}
+		//-------------------------------------------------
+		public bool WritePDF()
+		{
+			bool ret = false;
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "*.pdf|*.pdf|*.*|*.*";
+			if (FileName != "")
+			{
+				dlg.InitialDirectory = T_Def.GetDir(FileName);
+				dlg.FileName = T_Def.GetNameNoExt(FileName) + ".pdf";
+			}
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				ret = WritePDF(T_Def.ChangeExt(dlg.FileName, ".pdf"));
+				FileName = T_Def.ChangeExt(dlg.FileName,".ardj.json");
+			}
+			dlg.Dispose();
+			return ret;
+		}
+		//-------------------------------------------------
 		/*
 		private void DrawCellOffScr(Graphics g, SolidBrush sb, Pen p, int c, int f)
 		{

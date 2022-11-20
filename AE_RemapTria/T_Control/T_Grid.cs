@@ -108,11 +108,11 @@ namespace AE_RemapTria
 		public string KeyBaindFile = "";
 		[Category("_AE_Remap")]
 		public const  string KeyBaindName = "AE_Remap_key.json";
-
 		// ************************************************************************************
 		public T_Grid()
 		{
-			m_IsJapanOS = (System.Globalization.CultureInfo.CurrentUICulture.Name== "ja-JP");
+
+		m_IsJapanOS = (System.Globalization.CultureInfo.CurrentUICulture.Name== "ja-JP");
 			InitializeComponent();
 
 			Init();

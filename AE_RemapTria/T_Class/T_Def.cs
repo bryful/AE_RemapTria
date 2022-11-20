@@ -155,6 +155,12 @@ namespace AE_RemapTria
 			string e = GetExt(p);
 			return Path.Combine(d, newName + e);
 		}
+		public static string ChangeExt(string p, string newExt)
+		{
+			string d = GetDir(p);
+			string n = GetNameNoExt(p);
+			return Path.Combine(d, n + newExt);
+		}
 		// ********************************************************
 		private static int IndexOfMuitPriod(string p)
 		{
