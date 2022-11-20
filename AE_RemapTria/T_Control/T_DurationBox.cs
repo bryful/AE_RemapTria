@@ -17,7 +17,7 @@ namespace AE_RemapTria
 		{
 			if (DurationChanged != null)
 			{
-				DurationChanged(this, e);
+				DurationChanged(this, e); 
 			}
 		}
 		private double m_Duration = 0;

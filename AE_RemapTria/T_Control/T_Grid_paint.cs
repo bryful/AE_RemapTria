@@ -10,7 +10,7 @@ namespace AE_RemapTria
 {
 	public partial class T_Grid
 	{
-		//-------------------------------------------------
+		//------------------------------------------------- 
 		private void DrawCell(Graphics g, SolidBrush sb, Pen p, int c, int f)
 		{
 			int x = c * Sizes.CellWidth - Sizes.DispX;

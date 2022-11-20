@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using BRY;
 namespace AE_RemapTria
 {
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。 
     public partial class T_Grid : T_BaseControl
 	{
 		[Category("_AE_Remap")]

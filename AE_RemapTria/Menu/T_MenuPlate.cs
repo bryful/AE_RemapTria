@@ -17,7 +17,7 @@ namespace AE_RemapTria
 	public partial class T_MenuPlate : T_BaseDialog
 	{
 		private T_MyFonts m_Fonts = new T_MyFonts();
-
+		 
 		private T_SubMenuItem[] m_Items = new T_SubMenuItem[0];
 		private T_Menu? m_menu = null;
 		[Category("_AE_Remap")]

@@ -41,7 +41,7 @@ namespace AE_RemapTria
 		protected override void InitLayout()
 		{
 			base.InitLayout();
-			ChkGrid();
+			ChkGrid(); 
 			Alignment = StringAlignment.Center;
 			MyFontSize = 9;
 		}

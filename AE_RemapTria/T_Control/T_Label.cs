@@ -10,7 +10,7 @@ namespace AE_RemapTria
 {
 	public class T_Label : T_BaseControl
 	{
-		private Size m_LeftBar = new Size(14, 14);
+		private Size m_LeftBar = new Size(14, 14); 
 		[Category("_AE_Remap")]
 		public Size LeftBar
 		{

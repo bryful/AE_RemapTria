@@ -120,7 +120,7 @@ namespace AE_RemapTria
 			set { m_Color_Down = value; Invalidate(); }
 		}
 		#endregion
-		// *********************************************************
+		// ********************************************************* 
 		public T_Button()
         {
             Size = new Size(100, 25);

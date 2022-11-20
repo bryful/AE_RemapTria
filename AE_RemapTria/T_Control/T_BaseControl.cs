@@ -99,7 +99,7 @@ namespace AE_RemapTria
 		{
 			if (m_MyFonts != null)
 			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style); 
 			}
 			base.InitLayout();
 		}
