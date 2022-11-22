@@ -81,6 +81,22 @@ namespace AE_RemapTria
 			}
 		}
 		// ******************************************************
+		public int[][] PrintCellData()
+		{
+			int[][] ret = new int[CellCount][];
+			for(int c=0; c<CellCount;c++)
+			{
+				int[] raw = m_cells[i].RawData(m_FrameEnabled);
+				ret[c][][] = new int[raw.Length][0];
+				for(int f=0; f<raw.Length; f++)
+				{
+					ret[c][f] = raw[f];
+				}
+
+			}
+			return ret;
+		}
+		// ******************************************************
 		public JsonObject RawData
 		{
 			get

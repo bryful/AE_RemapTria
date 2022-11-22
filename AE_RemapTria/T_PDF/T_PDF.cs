@@ -313,6 +313,8 @@ namespace AE_RemapTria
 			#endregion
 			#region コマ数
 
+			int[][] cd = gd.CellData.PrintCellData();
+
 			p.Width = lws;
 			for(int c=0; c<cc;c++)
 			{
@@ -440,7 +442,7 @@ namespace AE_RemapTria
 				GlobalFontSettings.FontResolver = new JapaneseFontResolver();
 				_loadFontResolver = true;
 			}
-			T_Grid m_grid = gd;
+			Ardj Ardj = T_Ardj.FromCellDataToArdj(gd.CellData);
 			bool ret = false;
             try
             {
@@ -448,9 +450,9 @@ namespace AE_RemapTria
                 using (var document = new PdfDocument())
                 {
 					// 新規ドキュメントを作成
-					int pageF = (int)m_grid.CellData.FrameRate * 6;
+					int pageF = (int)Ardj.frameRate * 6;
 
-					int pc = m_grid.CellData.FrameCount / pageF;
+					int pc = (int)Ardj.frameCount / pageF;
                     if (m_grid.CellData.FrameCount % pageF>0) pc++;
 					XPen p = new XPen(XColor.FromArgb(0, 0, 0), 1);
 					for (int i = 0; i < pc; i++)
