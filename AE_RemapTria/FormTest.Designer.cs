@@ -35,7 +35,7 @@
 			this.Alignment = System.Drawing.StringAlignment.Near;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.ClientSize = new System.Drawing.Size(383, 313);
+			this.ClientSize = new System.Drawing.Size(298, 415);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.FontSize = 5F;
 			this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
