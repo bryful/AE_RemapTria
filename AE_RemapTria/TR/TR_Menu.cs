@@ -255,6 +255,7 @@ namespace AE_RemapTria
 			}
         }
         private int m_mm = -1;
+        // **********************************************************************
         private bool mmPos(int x)
         {
             bool ret = false;
@@ -267,7 +268,7 @@ namespace AE_RemapTria
                     break;
                 }
             }
-            if (m_mm != xx && xx >= 0)
+            if (m_MDown && xx >= 0)
             {
                 m_mm = xx;
                 ret = true;
@@ -275,43 +276,50 @@ namespace AE_RemapTria
 
             return ret;
         }
-        public bool ChkMouseDown(MouseEventArgs e)
+
+		// **********************************************************************
+		public override bool ChkMouseDown(MouseEventArgs e)
         {
-            bool ret = false;
-            int x = e.X - m_Location.X;
-            int y = e.Y - m_Location.Y;
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left && y < MenuHeight)
+			bool ret = false;
+			base.ChkMouseDown(e);
+            if (m_inMouse)
             {
-                if (mmPos(x))
+                if (mmPos(m_MDownPoint.X))
                 {
-                    //MakeSubMenu();
-                    Invalidate();
+					MakeSubMenu();
                     ret = true;
                 }
             }
             return ret;
         }
-        public bool ChkMouseMove(MouseEventArgs e)
+		// **********************************************************************
+		public override bool ChkMouseMove(MouseEventArgs e)
         {
             bool ret = false;
-            int x = e.X - m_Location.X;
-            int y = e.Y - m_Location.Y;
-            if (mmPos(x))
+			base.ChkMouseMove(e);
+            if(m_inMouse)
             {
-                Invalidate();
-
-            }
-            return false;
+                int oldmm = m_mm;
+				if (mmPos(m_MMovePoint.X))
+				{
+                    if(m_mm!= oldmm)
+                    {
+                        ChkOffScr();
+                    }
+				}
+			}
+			return ret;
         }
-        public bool OnMouseLeave(EventArgs e)
+        public override bool ChkMouseUp(MouseEventArgs e)
         {
             bool ret = false;
-            if (m_mm >= 0)
+			base.ChkMouseUp(e);
+			if (m_mm >= 0)
             {
                 m_mm = -1;
-                Invalidate();
-            }
-            return false;
+				ChkOffScr();
+			}
+            return ret;
         }
     }
 }

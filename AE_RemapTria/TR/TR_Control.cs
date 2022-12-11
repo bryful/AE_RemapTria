@@ -17,33 +17,33 @@ namespace AE_RemapTria
         public const int MenuHeight = 20;
 
         protected TR_Form? m_form = null;
-		protected Font? m_font = null;
+        protected Font? m_font = null;
         protected int m_FontIndex = 5;
-		public int FontIndex
-		{
-			get { return m_FontIndex; }
-			set
-			{
-				if (m_FontIndex != value)
-				{
-					m_FontIndex = value;
-					if (m_form != null)
-					{
-						m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
-						ChkOffScr();
-					}
+        public int FontIndex
+        {
+            get { return m_FontIndex; }
+            set
+            {
+                if (m_FontIndex != value)
+                {
+                    m_FontIndex = value;
+                    if (m_form != null)
+                    {
+                        m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
+                        ChkOffScr();
+                    }
 
-				}
-			}
-		}
+                }
+            }
+        }
 
-		protected float m_FontSize = 12;
-		public float FontSize
+        protected float m_FontSize = 12;
+        public float FontSize
         {
             get { return m_FontSize; }
-            set 
+            set
             {
-                if(m_FontSize != value)
+                if (m_FontSize != value)
                 {
                     m_FontSize = value;
                     if (m_form != null)
@@ -52,29 +52,12 @@ namespace AE_RemapTria
                         ChkOffScr();
                     }
 
-				}
-			}
-        }
-        // ************************************************************************
-        public delegate void SizeChangedHandler(object sender, EventArgs e);
-        public event SizeChangedHandler? SizeChanged;
-        protected virtual void OnSizeChanged(EventArgs e)
-        {
-            if (SizeChanged != null)
-            {
-                SizeChanged(this, e);
+                }
             }
         }
         // ************************************************************************
-        public delegate void LocationChangedHandler(object sender, EventArgs e);
-        public event LocationChangedHandler? LocationChanged;
-        protected virtual void OnLocationChanged(EventArgs e)
-        {
-            if (LocationChanged != null)
-            {
-                LocationChanged(this, e);
-            }
-        }
+
+        // ************************************************************************
         // ************************************************************************
         private Bitmap m_OffScr = new Bitmap(10, 10, PixelFormat.Format32bppArgb);
         public Bitmap Offscr() { return m_OffScr; }
@@ -192,37 +175,30 @@ namespace AE_RemapTria
             if (m_form != null)
             {
                 m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
-                m_form.SizeChanged += M_form_SizeChanged;
                 ChkOffScr();
             }
             Invalidate();
         }
-		// ************************************************************************
-		public void ChkOffScr()
+        // ************************************************************************
+        public void ChkOffScr()
         {
-            if(m_Size!= m_OffScr.Size)
+            if (m_Size != m_OffScr.Size)
             {
-                m_OffScr = new Bitmap(m_Size.Width, m_Size.Height,PixelFormat.Format32bppArgb);
-			}
-			if (m_form != null)
-			{
-				Graphics g = Graphics.FromImage(m_OffScr);
-				g.SmoothingMode = SmoothingMode.AntiAlias;
-				g.Clear(Color.Transparent);
-				Draw(g);
-			}
-		}
-		// ************************************************************************
-		public void Invalidate()
+                m_OffScr = new Bitmap(m_Size.Width, m_Size.Height, PixelFormat.Format32bppArgb);
+            }
+            if (m_form != null)
+            {
+                Graphics g = Graphics.FromImage(m_OffScr);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.Clear(Color.Transparent);
+                Draw(g);
+            }
+        }
+        // ************************************************************************
+        public void Invalidate()
         {
             if (m_form != null) m_form.Invalidate();
         }
-        // ************************************************************************
-        private void M_form_SizeChanged(object? sender, EventArgs e)
-        {
-            SetLocSize();
-        }
-
         // ************************************************************************
         public virtual void Draw(Graphics g)
         {
@@ -299,7 +275,7 @@ namespace AE_RemapTria
             {
                 if (m_form != null)
                 {
-                   g.DrawString(s, m_font, sb, rct, m_form.StringFormat);
+                    g.DrawString(s, m_font, sb, rct, m_form.StringFormat);
                 }
             }
             catch
@@ -341,5 +317,58 @@ namespace AE_RemapTria
             }
         }
         // ************************************************************************
+        protected bool m_MDown = false;
+        protected Point m_MDownPoint = new Point(0, 0);
+        protected Point m_MMovePoint = new Point(0, 0);
+        protected Point m_MUpPoint = new Point(0, 0);
+        protected bool m_inMouse = false;
+        // **********************************************************************
+
+
+        // **********************************************************************
+        protected bool InMouse(int x, int y)
+        {
+            return ((x >= 0) && (y >= 0) && (x < m_Size.Width) && (y < m_Size.Height));
+        }
+        // **********************************************************************
+        public virtual bool ChkMouseDown(MouseEventArgs e)
+        {
+            bool ret = false;
+            int x = e.X - m_Location.X;
+            int y = e.Y - m_Location.Y;
+            m_inMouse = InMouse(x, y);
+            if (m_inMouse)
+            {
+                m_MDown = true;
+                m_MDownPoint = new Point(x, y);
+            }
+            return ret;
+        }
+        // **********************************************************************
+        public virtual bool ChkMouseMove(MouseEventArgs e)
+        {
+            bool ret = false;
+            int x = e.X - m_Location.X;
+            int y = e.Y - m_Location.Y;
+
+            m_inMouse = InMouse(x, y);
+            m_MMovePoint = new Point(x, y);
+            return ret;
+        }
+        // **********************************************************************
+        public virtual bool ChkMouseUp(MouseEventArgs e)
+        {
+            bool ret = false;
+            int x = e.X - m_Location.X;
+            int y = e.Y - m_Location.Y;
+            m_inMouse = InMouse(x, y);
+            if (m_MDown)
+            {
+                m_MDown = false;
+            }
+            m_MUpPoint = new Point(x, y);
+            return ret;
+        }
+        // **********************************************************************
     }
 }

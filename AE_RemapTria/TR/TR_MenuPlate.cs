@@ -196,15 +196,6 @@ namespace AE_RemapTria
 									m_RowHeight * i + (m_RowHeight - ds) / 2 + m_MenuHeight + m_RowHeight / 2,
 									ds, ds);
 							}
-							else
-							{
-								int ds1 = ds * 4;
-								int ds2 = ds / 8;
-								r = new Rectangle(
-									m_LeftSideWidth + ds1 / 2,
-									m_RowHeight * i + (m_RowHeight - ds2) / 2 + m_MenuHeight + m_RowHeight / 2,
-									ds1, ds2);
-							}
 							g.FillRectangle(sb, r);
 
 							r = new Rectangle(
@@ -212,23 +203,13 @@ namespace AE_RemapTria
 								m_RowHeight * i +  m_MenuHeight + m_RowHeight / 2, 
 								this.Width-(m_LeftSideWidth+ds*2+5), 
 								m_RowHeight);
-							if (m_SubIndex == i)
-							{
-								sf.Alignment = StringAlignment.Far;
-							}
-							else
-							{
-								sf.Alignment = StringAlignment.Near;
-							}
+							sf.Alignment = StringAlignment.Near;
 							g.DrawString(m_Items[i].Caption, this.Font, sb, r, sf);
 							sf.Alignment = StringAlignment.Far;
-							if (m_SubIndex != i)
+							string k = m_Items[i].Shrtcut;
+							if (k != "")
 							{
-								string k = m_Items[i].Shrtcut;
-								if (k != "")
-								{
-									g.DrawString(k, this.Font, sb, r, sf);
-								}
+								g.DrawString(k, this.Font, sb, r, sf);
 							}
 						}
 					}

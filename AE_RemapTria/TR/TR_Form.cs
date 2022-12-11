@@ -374,11 +374,16 @@ namespace AE_RemapTria
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if (m_mdPos != MDPos.None) return;
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+
+			if (Menu.ChkMouseDown(e))
+			{
+
+			}
+			else
 			{
 				int headerY = 25;
 				int x1 = this.Width - 25;
-				int xmid = this.Width/2;
+				int xmid = this.Width / 2;
 				int y1 = this.Height - 25;
 				m_mdPos = MDPos.None;
 				if ((e.Y < headerY))
@@ -391,10 +396,12 @@ namespace AE_RemapTria
 				}
 				if (m_mdPos != MDPos.None)
 				{
-					m_MD = new Point(e.X,e.Y);
+					m_MD = new Point(e.X, e.Y);
 					m_MDS = new Size(this.Size.Width, this.Size.Height);
 				}
 			}
+
+
 			base.OnMouseDown(e);
 		}
 		// ********************************************************************
@@ -428,30 +435,34 @@ namespace AE_RemapTria
 				}
 			}
 
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			if (Menu.ChkMouseMove(e))
 			{
-				if (m_mdPos != MDPos.None)
+
+			}
+			else if (m_mdPos != MDPos.None)
+			{
+				int ax = e.X - m_MD.X;
+				int ay = e.Y - m_MD.Y;
+				switch (m_mdPos)
 				{
-					int ax = e.X - m_MD.X;
-					int ay = e.Y - m_MD.Y;
-					switch (m_mdPos)
-					{
-						case MDPos.Header:
-							this.Location = new Point(this.Location.X + ax, this.Location.Y + ay);
-							break;
-						case MDPos.BottomRight:
-							this.Size = new Size(m_MDS.Width + ax, m_MDS.Height + ay);
-							break;
-					}
-					this.Refresh();
+					case MDPos.Header:
+						this.Location = new Point(this.Location.X + ax, this.Location.Y + ay);
+						break;
+					case MDPos.BottomRight:
+						this.Size = new Size(m_MDS.Width + ax, m_MDS.Height + ay);
+						break;
 				}
+				this.Invalidate();
 			}
 			//base.OnMouseMove(e);
 		}
 		// ********************************************************************
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if(m_mdPos!=MDPos.None)
+			if(Menu.ChkMouseUp(e))
+			{
+
+			}else if(m_mdPos!=MDPos.None)
 			{
 				m_mdPos = MDPos.None;
 			}
