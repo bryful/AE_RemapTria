@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_Form
+	partial class TR_Form
 	{
 		/// <summary>
 		///  Required designer variable.
@@ -30,7 +30,7 @@
 		{
 			this.SuspendLayout();
 			// 
-			// T_Form
+			// TR_Form
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -43,7 +43,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(4);
-			this.Name = "T_Form";
+			this.Name = "TR_Form";
 			this.ResumeLayout(false);
 
 		}

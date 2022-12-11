@@ -313,7 +313,7 @@ namespace AE_RemapTria
 			#endregion
 			#region コマ数
 
-			int[][] cd = gd.CellData.PrintCellData();
+			int[][] cd = m_grid.CellData.PrintCellData();
 
 			p.Width = lws;
 			for(int c=0; c<cc;c++)
@@ -453,7 +453,7 @@ namespace AE_RemapTria
 					int pageF = (int)Ardj.frameRate * 6;
 
 					int pc = (int)Ardj.frameCount / pageF;
-                    if (m_grid.CellData.FrameCount % pageF>0) pc++;
+                    if (gd.CellData.FrameCount % pageF>0) pc++;
 					XPen p = new XPen(XColor.FromArgb(0, 0, 0), 1);
 					for (int i = 0; i < pc; i++)
                     {

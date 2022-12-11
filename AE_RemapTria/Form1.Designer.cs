@@ -63,7 +63,7 @@ namespace AE_RemapTria
 			this.t_Grid1.MyFontSize = 9F;
 			this.t_Grid1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Grid1.Name = "t_Grid1";
-			this.t_Grid1.Size = new System.Drawing.Size(334, 459);
+			this.t_Grid1.Size = new System.Drawing.Size(189, 372);
 			this.t_Grid1.TabIndex = 0;
 			this.t_Grid1.Text = "t_Grid1";
 			this.t_Grid1.VScrol = this.t_vScrol1;
@@ -72,12 +72,12 @@ namespace AE_RemapTria
 			// 
 			this.t_hScrol1.BackColor = System.Drawing.Color.Transparent;
 			this.t_hScrol1.Grid = this.t_Grid1;
-			this.t_hScrol1.Location = new System.Drawing.Point(94, 523);
-			this.t_hScrol1.Maximum = 26;
+			this.t_hScrol1.Location = new System.Drawing.Point(94, 436);
+			this.t_hScrol1.Maximum = 171;
 			this.t_hScrol1.MaximumSize = new System.Drawing.Size(65536, 20);
 			this.t_hScrol1.MinimumSize = new System.Drawing.Size(123, 20);
 			this.t_hScrol1.Name = "t_hScrol1";
-			this.t_hScrol1.Size = new System.Drawing.Size(334, 20);
+			this.t_hScrol1.Size = new System.Drawing.Size(189, 20);
 			this.t_hScrol1.TabIndex = 4;
 			this.t_hScrol1.Text = "t_hScrol1";
 			this.t_hScrol1.Value = 0;
@@ -86,12 +86,12 @@ namespace AE_RemapTria
 			// 
 			this.t_vScrol1.BackColor = System.Drawing.Color.Transparent;
 			this.t_vScrol1.Grid = this.t_Grid1;
-			this.t_vScrol1.Location = new System.Drawing.Point(432, 60);
-			this.t_vScrol1.Maximum = 693;
+			this.t_vScrol1.Location = new System.Drawing.Point(287, 60);
+			this.t_vScrol1.Maximum = 780;
 			this.t_vScrol1.MaximumSize = new System.Drawing.Size(20, 65536);
 			this.t_vScrol1.MinimumSize = new System.Drawing.Size(20, 123);
 			this.t_vScrol1.Name = "t_vScrol1";
-			this.t_vScrol1.Size = new System.Drawing.Size(20, 459);
+			this.t_vScrol1.Size = new System.Drawing.Size(20, 372);
 			this.t_vScrol1.TabIndex = 2;
 			this.t_vScrol1.Text = "t_vScrol1";
 			this.t_vScrol1.Value = 0;
@@ -131,7 +131,7 @@ namespace AE_RemapTria
 			this.t_Menu1.MyFontSize = 8F;
 			this.t_Menu1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Menu1.Name = "t_Menu1";
-			this.t_Menu1.Size = new System.Drawing.Size(452, 20);
+			this.t_Menu1.Size = new System.Drawing.Size(307, 20);
 			this.t_Menu1.TabIndex = 3;
 			// 
 			// t_Caption1
@@ -147,7 +147,7 @@ namespace AE_RemapTria
 			this.t_Caption1.MyFontSize = 9F;
 			this.t_Caption1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Caption1.Name = "t_Caption1";
-			this.t_Caption1.Size = new System.Drawing.Size(334, 32);
+			this.t_Caption1.Size = new System.Drawing.Size(189, 32);
 			this.t_Caption1.TabIndex = 5;
 			this.t_Caption1.Text = "t_Caption1";
 			// 
@@ -164,7 +164,7 @@ namespace AE_RemapTria
 			this.t_Frame1.MyFontSize = 9F;
 			this.t_Frame1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Frame1.Name = "t_Frame1";
-			this.t_Frame1.Size = new System.Drawing.Size(90, 459);
+			this.t_Frame1.Size = new System.Drawing.Size(90, 372);
 			this.t_Frame1.TabIndex = 6;
 			this.t_Frame1.Text = "t_Frame1";
 			// 
@@ -179,7 +179,7 @@ namespace AE_RemapTria
 			this.t_LabelInfo1.Grid = this.t_Grid1;
 			this.t_LabelInfo1.LeftBar = new System.Drawing.Size(0, 0);
 			this.t_LabelInfo1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_LabelInfo1.Location = new System.Drawing.Point(24, 523);
+			this.t_LabelInfo1.Location = new System.Drawing.Point(24, 436);
 			this.t_LabelInfo1.MyFontIndex = 5;
 			this.t_LabelInfo1.MyFonts = this.t_MyFonts1;
 			this.t_LabelInfo1.MyFontSize = 8F;
@@ -207,7 +207,7 @@ namespace AE_RemapTria
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(456, 547);
+			this.ClientSize = new System.Drawing.Size(311, 460);
 			this.Controls.Add(this.t_LabelInfo1);
 			this.Controls.Add(this.t_Frame1);
 			this.Controls.Add(this.t_Caption1);

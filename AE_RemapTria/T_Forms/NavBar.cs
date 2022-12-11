@@ -236,7 +236,7 @@ namespace AE_RemapTria
 		{
 			if(m_form != null)
 			{
-				((T_Form)m_form).Quit();
+				((TR_Form)m_form).Quit();
 			}
 			else
 			{

@@ -63,7 +63,8 @@ namespace AE_RemapTria
 				{
 					//　通常起動
 					ApplicationConfiguration.Initialize();
-					Form1 mf = new Form1();
+					//Form1 mf = new Form1();
+					FormTest mf = new FormTest();
 					mf.StartServer(MyAppId);
 					Application.Run(mf);
 					mf.StopServer();

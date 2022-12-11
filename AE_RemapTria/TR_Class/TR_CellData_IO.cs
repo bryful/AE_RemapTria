@@ -16,7 +16,7 @@ using System.Dynamic;
 
 namespace AE_RemapTria
 {
-	public partial class T_CellData
+	public partial class TR_CellData
 	{
 
 		// ******************************************************
@@ -212,27 +212,27 @@ namespace AE_RemapTria
 		}
 		public bool SaveToArdj(string p)
 		{
-			T_Ardj t_Ardj = new T_Ardj(this);
+			TR_Ardj t_Ardj = new TR_Ardj(this);
 			return t_Ardj.Save(p);
 		}
 		public string ToArdj()
 		{
-			T_Ardj t_Ardj = new T_Ardj(this);
+			TR_Ardj t_Ardj = new TR_Ardj(this);
 			return t_Ardj.ToArdj();
 		}
 		public bool LoadFromArdj(string p)
 		{
-			T_Ardj t_Ardj = new T_Ardj(this);
+			TR_Ardj t_Ardj = new TR_Ardj(this);
 			return t_Ardj.Load(p);
 		}
 		public bool LoadFromArd(string p)
 		{
-			T_ARD t_Ard = new T_ARD(this);
+			TR_ARD t_Ard = new TR_ARD(this);
 			return t_Ard.Load(p);
 		}
 		public bool LoadFromSTS(string p)
 		{
-			T_STS t_sts = new T_STS(this);
+			TR_STS t_sts = new TR_STS(this);
 			return t_sts.Load(p);
 		}
 		public bool Save(string p)

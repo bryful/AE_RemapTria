@@ -11,27 +11,129 @@ namespace AE_RemapTria
 #pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 
-	public partial class T_Form : Form
+	public partial class TR_Form : Form
 	{
+		public TR_CellData CellData = new TR_CellData();
+		public TR_Size Sizes = new TR_Size();
+		public TR_Colors Colors = new TR_Colors();
+		public T_Funcs Funcs = new T_Funcs();
+		public TR_Grid Grid = new TR_Grid();
+
+		public TR_Menu Menu = new TR_Menu();
+		public float MenuFontSize
+		{
+			get { return Menu.FontSize; }
+			set { Menu.FontSize = value;DrawAll(); }
+		}
+		public int MenuFontIndex
+		{
+			get { return Menu.FontIndex; }
+			set { Menu.FontIndex = value; DrawAll(); }
+		}
+		public TR_Input Input = new TR_Input();
+		private int m_Value = -1;
+		public int Value
+		{
+			get { return m_Value; }
+			set
+			{
+				if(m_Value != value)
+				{
+					m_Value = value;
+					Input.ChkOffScr();
+					this.Invalidate();
+				}
+			}
+		}
+		// ********************************************************
+		public void DrawAll()
+		{
+			if (Menu != null) Menu.ChkOffScr();
+			if (Input != null) Input.ChkOffScr();
+			this.Invalidate();
+		}
+		private T_MyFonts m_Fonts = new T_MyFonts();
+		/// <summary>
+		/// リソースフォント管理のコンポーネント
+		/// </summary>
+		[Category("_AE_Remap")]
+		public T_MyFonts MyFonts
+		{
+			get { return m_Fonts; }
+		}
+		private int m_FontIndex = 5;
+		[Category("_AE_Remap")]
+		public int FontIndex
+		{
+			get { return m_FontIndex; }
+			set
+			{
+				m_FontIndex = value;
+				if (m_FontIndex < 0) m_FontIndex = 0;
+				if (m_Fonts != null)
+				{
+					this.Font = m_Fonts.MyFont(m_FontIndex, this.Font.Size, this.Font.Style);
+					DrawAll();
+				}
+			}
+		}
+		[Category("_AE_Remap")]
+		public float FontSize
+		{
+			get { return this.Font.Size; }
+			set
+			{
+				SetFontSizeStyle(value, this.Font.Style);
+				DrawAll();
+			}
+		}
+		[Category("_AE_Remap")]
+		public FontStyle FontStyle
+		{
+			get { return this.Font.Style; }
+			set
+			{
+				SetFontSizeStyle(this.Font.Size, value);
+				DrawAll();
+
+			}
+		}
+		public void SetFontSizeStyle(float sz, FontStyle fs)
+		{
+			this.Font = m_Fonts.MyFont(m_FontIndex, sz, fs);
+		}
+		public Font MyFont(int idx,float sz, FontStyle fs)
+		{
+			return m_Fonts.MyFont(idx, sz, fs);
+		}
+		public StringFormat StringFormat = new StringFormat();
+		public  StringAlignment Alignment
+		{
+			get { return StringFormat.Alignment; }
+			set
+			{
+				StringFormat.Alignment = value;
+			}
+		}
+		public StringAlignment LineAlignment
+		{
+			get { return StringFormat.LineAlignment; }
+			set
+			{
+				StringFormat.LineAlignment = value;
+			}
+		}
 		// ********************************************************************
 		[Category("_AE_Remap")]
 		public bool IsMultExecute
 		{
 			get
 			{
-				bool ret = false;
-				if (m_grid != null)
-				{
-					ret = m_grid.IsMultExecute;
-				}
-				return ret;
+				return Grid.IsMultExecute;
 			}
 			set
 			{
-				if (m_grid != null)
-				{
-					m_grid.IsMultExecute = value;
-				}
+				Grid.IsMultExecute = value;
 			}
 		}       
 		// ********************************************************************
@@ -68,27 +170,16 @@ namespace AE_RemapTria
 			BottomRight,
 		}
 
-		private T_Grid? m_grid = null;
-		private T_Input? m_input = null;
-		public T_Grid GD = new T_Grid();
 		[Category("_AE_Remap")]
 		public string FileName 
 		{
 			get 
 			{
-				string ret = ""; 
-				if (m_grid != null)
-				{
-					ret = m_grid.FileName;
-				}
-				return ret;
+				return Grid.FileName;
 			}
 			set
 			{
-				if(m_grid!=null)
-				{
-					m_grid.FileName = value;
-				}
+				Grid.FileName = value;
 			}
 		}
 		//public static bool _execution = true;
@@ -102,8 +193,19 @@ namespace AE_RemapTria
 		private Bitmap[] kagi = new Bitmap[5];
 		// ********************************************************************
 		// ********************************************************************
-		public T_Form()
+		public TR_Form()
 		{
+			this.AutoScaleMode = AutoScaleMode.None;
+			this.Font = m_Fonts.MyFont(m_FontIndex, 9, this.Font.Style);
+
+			StringFormat.Alignment = StringAlignment.Near;
+			StringFormat.LineAlignment = StringAlignment.Center;
+
+			Grid.SetTRForm(this);
+			Menu.SetTRForm(this);
+			Input.SetTRForm(this);
+
+
 
 			kagi[0] = Properties.Resources.Kagi00;
 			kagi[1] = Properties.Resources.Kagi01;
@@ -121,21 +223,67 @@ namespace AE_RemapTria
 				true);
 			this.UpdateStyles();
 
-
 			this.KeyPreview = true;
 			this.AllowDrop = true;
+
 		}
 		public void Quit()
 		{
-			if(m_grid!=null)
-			{
-				m_grid.Quit();
-			}
-			else
-			{
-				Application.Exit();
-			}
+			Application.Exit();
 		}
+		// ************************************************************************
+		public bool InputAddKey(int v)
+		{
+			bool ret = false;
+			if ((v >= 0) || (v <= 9))
+			{
+				if (m_Value < 0) m_Value = 0;
+				m_Value = m_Value * 10 + v;
+				ret = true;
+				Input.ChkOffScr();
+				this.Invalidate();
+			}
+			else if (v < 0)
+			{
+				ret = InputClear();
+				Input.ChkOffScr();
+				this.Invalidate();
+			}
+			return ret;
+		}
+		// ************************************************************************
+		public bool InputClear()
+		{
+			bool ret = false;
+			if (m_Value >= 0)
+			{
+				m_Value = -1;
+				ret = true;
+				Input.ChkOffScr();
+				this.Invalidate();
+			}
+			return ret;
+		}
+		// ************************************************************************
+		public bool InputBS()
+		{
+			bool ret = false;
+			if (m_Value >= 10)
+			{
+				m_Value = m_Value / 10;
+				ret = true;
+				Input.ChkOffScr();
+				this.Invalidate();
+			}
+			else if ((m_Value >= 0) && (m_Value < 10))
+			{
+				m_Value = -1;
+				Input.ChkOffScr();
+				this.Invalidate();
+				ret = true;
+			}
+			return ret;
+		}       
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
@@ -159,18 +307,15 @@ namespace AE_RemapTria
 				{
 					ToCenter();
 				}
-				if (m_grid != null)
+				string bp = Path.Combine(pf.FileDirectory, "backup.ardj.json");
+				if (File.Exists(bp))
 				{
-					string bp = Path.Combine(pf.FileDirectory, "backup.ardj.json");
-					if (File.Exists(bp))
-					{
-						m_grid.OpenBackup(bp);
-					}
-					string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
-					if(m_grid.Funcs.Load(kp))
-					{
-						m_grid.KeyBaindFile = kp;
-					}
+					Grid.OpenBackup(bp);
+				}
+				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
+				if(Grid.Funcs.Load(kp))
+				{
+					Grid.KeyBaindFile = kp;
 				}
 				if(m_navBar!=null)
 				{
@@ -181,8 +326,10 @@ namespace AE_RemapTria
 					}
 				}
 			}
+			SetLocSize();
+
 			//
-			ChkGrid();
+			//ChkGrid();
 			Command(Environment.GetCommandLineArgs().Skip(1).ToArray(), PIPECALL.StartupExec);
 
 		}
@@ -192,13 +339,9 @@ namespace AE_RemapTria
 			if (IsMultExecute == false)
 			{
 				PrefFile pf = new PrefFile(this);
-				if (m_grid != null)
-				{
-					m_grid.SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
-					string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
-					m_grid.Funcs.Save(kp);
-
-				}
+				Grid.SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
+				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
+				Grid.Funcs.Save(kp);
 				if (m_navBar!=null)
 				{
 					pf.SetValue("IsFront", m_navBar.IsFront);
@@ -355,17 +498,16 @@ namespace AE_RemapTria
 				}
 				g.DrawImage(kagi[3], new Point(w0, h1));
 
-				if (m_grid != null)
-				{
-					Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
-					sb.Color = m_grid.Colors.TopBar;
-					g.FillRectangle(sb, r0);
-				}
+				Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
+				sb.Color = Grid.Colors.TopBar;
+				g.FillRectangle(sb, r0);
 
-				if (m_grid != null) p.Color = m_grid.Colors.LineDark;
+				p.Color = Grid.Colors.LineDark;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
 				g.DrawRectangle(p, r);
 
+				g.DrawImage(Menu.Offscr(), Menu.Location);
+				g.DrawImage(Input.Offscr(), Input.Location);
 			}
 			finally
 			{
@@ -378,7 +520,7 @@ namespace AE_RemapTria
 
 
 		// ********************************************************************
-
+		/*
 		[Category("_AE_Remap")]
 		public T_Grid Grid
 		{
@@ -389,17 +531,20 @@ namespace AE_RemapTria
 				ChkGrid();
 			}
 		}
+		*/
+		/*
 		private void ChkGrid()
 		{
 			if (m_grid != null)
 			{
 				SetMinMax();
 				SetLocSize();
-				m_grid.SetForm(this);
+				//m_grid.SetForm(this);
 				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
 			}
 
 		}
+		*/
 		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
 			SetMinMax();
@@ -407,22 +552,22 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void SetLocSize()
 		{
-			if (m_grid != null)
-			{
-				int leftW = m_grid.Sizes.FrameWidth + m_grid.Sizes.InterWidth;
-				int topW = m_grid.Sizes.MenuHeight+ m_grid.Sizes.InterHeight 
-					+ m_grid.Sizes.CaptionHeight + m_grid.Sizes.CaptionHeight2 + m_grid.Sizes.InterHeight;
-				Point p = new Point(leftW, topW);
-				if (m_grid.Location != p) m_grid.Location = p;
+			Menu.SetLocSize();
+			Input.SetLocSize();
 
-				int ww = leftW + m_grid.Sizes.InterWidth + T_Size.VScrolWidth + m_grid.Sizes.InterWidth;
-				int hh = topW + m_grid.Sizes.InterHeight + T_Size.HScrolHeight + m_grid.Sizes.InterHeight;
-				Size sz = new Size(
-					this.ClientSize.Width - ww,
-					this.ClientSize.Height - hh
-					);
-				if (m_grid.Size != sz) m_grid.Size = sz;
-			}
+			int leftW = Grid.Sizes.FrameWidth + Grid.Sizes.InterWidth;
+			int topW = Grid.Sizes.MenuHeight+ Grid.Sizes.InterHeight 
+				+ Grid.Sizes.CaptionHeight + Grid.Sizes.CaptionHeight2 + Grid.Sizes.InterHeight;
+			Point p = new Point(leftW, topW);
+			if (Grid.Location != p) Grid.Location = p;
+
+			int ww = leftW + Grid.Sizes.InterWidth + T_Size.VScrolWidth + Grid.Sizes.InterWidth;
+			int hh = topW + Grid.Sizes.InterHeight + T_Size.HScrolHeight + Grid.Sizes.InterHeight;
+			Size sz = new Size(
+				this.ClientSize.Width - ww,
+				this.ClientSize.Height - hh
+				);
+			if (Grid.Size != sz) Grid.Size = sz;
 
 
 		}
@@ -432,45 +577,20 @@ namespace AE_RemapTria
 			SetLocSize();
 		}
 		// ********************************************************************
-		[Category("_AE_Remap")]
-		public T_Input Input
-		{
-			get { return m_input; }
-			set
-			{
-				m_input = value;
-				ChkInput();
-			}
-		}
-		// ********************************************************************
-		public void ChkInput()
-		{
-			if(m_input == null) return;
-			if(m_grid!=null)
-			{
-				m_input.Location = m_grid.Sizes.InputLoc();
-				m_input.Size = m_grid.Sizes.InputSize();
-			}
-			else
-			{
-				m_input.Location = T_Size.InputLocDef;
-				m_input.Size = T_Size.InputSizeDef;
-			}
-		}
+
 		// ********************************************************************
 		protected override void OnResize(EventArgs e)
 		{
-			SetLocSize();
 			base.OnResize(e);
+			ChkSize();
 		}
 		// ********************************************************************
 		private void SetMinMax()
 		{
-			if (m_grid == null) return;
 
-			T_Size ts = m_grid.Sizes;
-			int cc = m_grid.CellData.CellCount;
-			int fc = m_grid.CellData.FrameCount;
+			TR_Size ts = Grid.Sizes;
+			int cc = CellData.CellCount;
+			int fc = CellData.FrameCount;
 
 			Size csz = this.ClientSize;
 			Size sz = this.Size;
@@ -503,25 +623,19 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			//this.Text = String.Format("{0}", keyData.ToString());
-			if (m_grid != null)
+			this.Text = String.Format("{0}", keyData.ToString());
+			FuncItem fi = Funcs.FindKeys(keyData);
+			if (fi != null)
 			{
-				FuncItem fi = m_grid.Funcs.FindKeys(keyData);
-				if (fi != null)
-				{
-					if (fi.Func()) this.Invalidate();
-					return true;
-				}
+				if (fi.Func()) this.Invalidate();
+				return true;
 			}
 			return base.ProcessDialogKey(keyData);
 		}
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
-			if(m_grid!=null)
-			{
-				int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
-				m_grid.Sizes.DispY -= v;
-			}
+			int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
+			Grid.Sizes.DispY -= v;
 			base.OnMouseWheel(e);
 		}
 		// ********************************************************************
@@ -605,25 +719,22 @@ namespace AE_RemapTria
 							}
 							break;
 						case "export":
-							if((m_grid!=null)&&(IsPipe== PIPECALL.PipeExec))
+							if((IsPipe== PIPECALL.PipeExec))
 							{
 								em = EXEC_MODE.EXPORT;
 							}
 							break;
 						case "import_layer":
-							if ((m_grid != null) && (IsPipe == PIPECALL.PipeExec))
+							if ((IsPipe == PIPECALL.PipeExec))
 							{
 								em = EXEC_MODE.IMPORT_LAYER;
 							}
 							break;
 						default:
-							if (m_grid != null)
+							FuncItem? fi = Grid.Funcs.FindFunc(tag);
+							if (fi != null)
 							{
-								FuncItem? fi = m_grid.Funcs.FindFunc(tag);
-								if (fi != null)
-								{
-									if (fi.Func != null) fi.Func();
-								}
+								if (fi.Func != null) fi.Func();
 							}
 							break;
 					}
@@ -633,15 +744,12 @@ namespace AE_RemapTria
 			switch(em)
 			{
 				case EXEC_MODE.EXPORT:
-					if (m_grid != null){
-						//MessageBox.Show(m_grid.ToArdj());
-						F_Pipe.Client(Program.MyCallBackId, m_grid.ToArdj()).Wait();
-					}
+					F_Pipe.Client(Program.MyCallBackId, Grid.ToArdj()).Wait();
 					break;
 				case EXEC_MODE.IMPORT_LAYER:
-					if ((m_grid != null)&&(args.Length > 1))
+					if ((args.Length > 1))
 					{
-						m_grid.Import_layer(args[1]);
+						Grid.Import_layer(args[1]);
 						//MessageBox.Show(args[1]);
 					}
 					break;
@@ -653,22 +761,19 @@ namespace AE_RemapTria
 					if (args1.Count > 0)
 					{
 						// パラメータが1個なら読み込み
-						if (m_grid != null)
+						for (int i = 0; i < args1.Count; i++)
 						{
-							for (int i = 0; i < args1.Count; i++)
+							if (args1[i].IsOption==false)
 							{
-								if (args1[i].IsOption==false)
+								string p = args1[i].Name;
+								if (File.Exists(p))
 								{
-									string p = args1[i].Name;
-									if (File.Exists(p))
+									if (Grid.Open(p) == true)
 									{
-										if (m_grid.Open(p) == true)
-										{
-											break;
-										}
+										break;
 									}
-
 								}
+
 							}
 						}
 					}
@@ -705,7 +810,7 @@ namespace AE_RemapTria
 								int idx = -1;
 								for(int i = 0; i < apcl.Count; i++)
 								{
-									if (apcl[i] is T_Form)
+									if (apcl[i] is TR_Form)
 									{
 										idx = i;
 										break;
@@ -714,7 +819,7 @@ namespace AE_RemapTria
 								if(idx >= 0)
 								{
                                     BRY.PipeData pd = new BRY.PipeData(read);
-									((T_Form)apcl[idx]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
+									((TR_Form)apcl[idx]).Command(pd.GetArgs(), pd.GetPIPECALL()); //取得した引数を送る
 								}
 							}
 
