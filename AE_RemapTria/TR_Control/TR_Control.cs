@@ -18,6 +18,7 @@ namespace AE_RemapTria
 
         protected TR_Form? m_form = null;
         protected Font? m_font = null;
+        public TR_Colors? Colors = null;
         protected int m_FontIndex = 5;
         public int FontIndex
         {
@@ -176,6 +177,7 @@ namespace AE_RemapTria
             m_form = fm;
             if (m_form != null)
             {
+                Colors = m_form.Colors;
                 m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
                 ChkOffScr();
             }

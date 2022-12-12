@@ -38,8 +38,8 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(InputBS, Keys.Back, "BS"));
 			lst.Add(new FuncItem(InputEnter, Keys.Enter, Keys.Return, "入力"));
 			lst.Add(new FuncItem(InputEmpty, Keys.Decimal, Keys.OemPeriod, "空セル"));
-			lst.Add(new FuncItem(InputInc, Keys.Add, "前の数値に1を足して入力"));
-			lst.Add(new FuncItem(InputDec, Keys.Subtract, "前の数値に1を引いて入力"));
+			lst.Add(new FuncItem(InputInc, Keys.Add|Keys.Oemplus , "前の数値に1を足して入力"));
+			lst.Add(new FuncItem(InputDec, Keys.Subtract | Keys.OemMinus, "前の数値に1を引いて入力"));
 			lst.Add(new FuncItem(SelMoveUp, Keys.Up, "選択範囲を上に"));
 			lst.Add(new FuncItem(SelMoveDown, Keys.Down, "選択範囲を下に"));
 			lst.Add(new FuncItem(SelMoveLeft, Keys.Left, "選択範囲を左に"));
@@ -159,15 +159,15 @@ namespace AE_RemapTria
 			MenuPlates = new TR_MenuPlate[3];
 
 			MenuPlates[0] = new TR_MenuPlate();
-			MenuPlates[0].SetForm(this);
+			MenuPlates[0].SetTRForm(this);
 			MenuPlates[0].AddSubMenuItems(0);
 
 			MenuPlates[1] = new TR_MenuPlate();
-			MenuPlates[1].SetForm(this);
+			MenuPlates[1].SetTRForm(this);
 			MenuPlates[1].AddSubMenuItems(1);
 
 			MenuPlates[2] = new TR_MenuPlate();
-			MenuPlates[2].SetForm(this);
+			MenuPlates[2].SetTRForm(this);
 			MenuPlates[2].AddSubMenuItems(2);
 
 		}
@@ -181,7 +181,7 @@ namespace AE_RemapTria
 		public bool SheetSettings()
 		{
 			TR_SheetSettingDialog dlg = new TR_SheetSettingDialog();
-			dlg.SetForm(this);
+			dlg.SetTRForm(this);
 			int ExFrame = CellData.UnEnabledFrameCount;
 			dlg.Frame = CellData.FrameCount;
 			dlg.Fps = CellData.FrameRate;

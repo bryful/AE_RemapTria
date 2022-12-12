@@ -1,6 +1,7 @@
 ﻿using BRY;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.IO.Compression;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
@@ -574,7 +575,22 @@ namespace AE_RemapTria
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
+			Point[] points = new Point[]
+			{
+				new Point(0, 10),
+				new Point(10, 10),
+				new Point(10, 0),
+				new Point(Width-11, 0),
+				new Point(Width-11, 10),
+				new Point(Width, 10),
+				new Point(Width, Height),
+				new Point(0, Height),
+			};
+			GraphicsPath path = new GraphicsPath();
+			path.AddPolygon(points);
+			this.Region = new Region(path);
 			ChkSize();
+			Refresh();
 		}
 		// ********************************************************************
 		private void SetMinMax()

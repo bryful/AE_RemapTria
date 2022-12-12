@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AE_RemapTria
 {
+	/*
 	public enum COLS
 	{
 		Base = 0,
@@ -36,6 +37,7 @@ namespace AE_RemapTria
 		MenuMojiNoActive,
 		Count
 	};
+	*/
 	public class T_Colors
 	{
 		public bool _eventFlag=true;

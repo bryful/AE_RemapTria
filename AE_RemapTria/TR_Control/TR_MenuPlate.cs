@@ -13,6 +13,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography.Xml;
 using SixLabors.Fonts;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Diagnostics;
 
 namespace AE_RemapTria
 {
@@ -21,8 +22,9 @@ namespace AE_RemapTria
 		 
 		private T_SubMenuItem[] m_Items = new T_SubMenuItem[0];
 		private TR_Menu? m_menu = null;
-		public override void SetForm(TR_Form fm)
+		public override void SetTRForm(TR_Form fm)
 		{
+			base.SetTRForm(fm);
 			m_form = fm;
 			if (m_form != null)
 			{
@@ -33,6 +35,7 @@ namespace AE_RemapTria
 				m_MyFontIndex = m_menu.FontIndex;
 				m_MyFontSize = m_menu.FontSize;
 				this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, this.Font.Style);
+
 			}
 		}
 
@@ -96,7 +99,7 @@ namespace AE_RemapTria
 		{
 
 			InitializeComponent();
-			MyFontSize = 7;
+			MyFontSize = 9;
 			MyFontIndex = 5;
 			//this.Font = MyFonts.MyFont(MyFontIndex, MyFontSize, this.Font.Style);
 
@@ -147,7 +150,7 @@ namespace AE_RemapTria
 				sf.LineAlignment = StringAlignment.Center;
 				sb.Color = m_CaptionForeColor;
 				g.DrawString(this.Text, this.Font, sb, r, sf);
-
+				Debug.WriteLine($"MP {this.Font.Name} : {this.Font.Size}");
 				// LeftSide
 				r = new Rectangle(0, m_MenuHeight, m_LeftSideWidth, this.Height - m_MenuHeight);
 				T_G.GradV(g, m_LeftSideColor1, m_LeftSideColor2, r);
@@ -311,11 +314,12 @@ namespace AE_RemapTria
 			{
 				m_IsClick = true;
 				this.Invalidate();
-				m_Items[m_SubIndex].Exec();
 				m_IsClick = false;
 				this.Invalidate();
+				int idx = m_SubIndex;
 				m_SubIndex = -1;
 				this.Hide();
+				m_Items[idx].Exec();
 			}
 		}
 		protected override void OnMouseUp(MouseEventArgs e)

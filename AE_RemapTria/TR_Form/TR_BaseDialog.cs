@@ -345,7 +345,7 @@ namespace AE_RemapTria
 		}
 		// *****************************************************************
 		
-		public virtual void SetForm(TR_Form fm)
+		public virtual void SetTRForm(TR_Form fm)
 		{
 			m_form = fm;
 			if (m_form != null)

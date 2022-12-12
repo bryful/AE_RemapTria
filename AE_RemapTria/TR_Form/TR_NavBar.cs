@@ -82,7 +82,7 @@ namespace AE_RemapTria
 			Size sz = new Size(m_form.Width, this.Height);
 			if (this.Size != sz) this.Size = sz;
 
-			Point p = new Point(m_form.Left, m_form.Top - this.Height);
+			Point p = new Point(m_form.Left, m_form.Top - this.Height+1);
 			if(this.Location!=p) this.Location = p;
 
 			_refFlag = true;
@@ -92,7 +92,7 @@ namespace AE_RemapTria
 			if (m_form == null) return;
 			if (_refFlag == false) return;
 			_refFlag = false;
-			Point p = new Point(this.Left, this.Top + this.Height);
+			Point p = new Point(this.Left, this.Top + this.Height-1);
 			if (m_form.Location != p) m_form.Location = p;
 
 			_refFlag = true;
@@ -181,11 +181,12 @@ namespace AE_RemapTria
 		}
 		protected override void OnResize(EventArgs e)
 		{
-			base.OnResize(e);
 			Point[] points = WPolygon(-1);
 			GraphicsPath path = new GraphicsPath();
 			path.AddPolygon(points);
 			this.Region = new Region(path);
+			this.Refresh();
+			base.OnResize(e);
 		}
 		// *****************************************************************
 		public void SetIsFront(bool b)
@@ -271,7 +272,7 @@ namespace AE_RemapTria
 			Color ol = Color.FromArgb(0x43, 0x62, 0xb2);
 			Color ol1 = Color.FromArgb(0x0e, 0x12, 0x42);
 			Color ol2 = Color.FromArgb(0x2a, 0x2d, 0x60);
-			Color bk = Color.FromArgb(0x34, 0x37, 0x6a);
+			Color MenuBack = Color.FromArgb(0x34, 0x37, 0x6a);
 			Color sdw = Color.FromArgb(0x18, 0x1a, 0x2f);
 			Graphics g = e.Graphics;
 			Pen p = new Pen(ol);
@@ -280,7 +281,7 @@ namespace AE_RemapTria
 			{
 				//背景
 				p.Width = 1;
-				g.Clear(bk);
+				g.Clear(MenuBack);
 
 				//左ボタン
 				int w = 12;
@@ -302,14 +303,32 @@ namespace AE_RemapTria
 				g.DrawRectangle(p, r);
 
 				//文字を描く
-				r = new Rectangle(70, 0, this.Width - 70, this.Height);
 				if(this.Text!="")
 				{
 					StringFormat sf = new StringFormat();
-					sf.Alignment = StringAlignment.Near;
+					sf.Alignment = StringAlignment.Center;
 					sf.LineAlignment = StringAlignment.Center;
 					sb.Color = moji;
+					SizeF sz = g.MeasureString(this.Text, this.Font, 1000, sf);
+					int ww = (int)sz.Width+5;
+					if (ww > this.Width - 90) ww = this.Width - 90;
+					r = new Rectangle(90, 0, ww, this.Height);
 					g.DrawString(this.Text, this.Font, sb, r, sf);
+					int www = this.Width - 90 - ww;
+					if(www>5)
+					{
+						p.Color = moji;
+						p.Width = 1;
+						int cy = r.Top + r.Height / 2;
+						int x0 = r.Right;
+						int x1 = this.Width - 75;
+						g.DrawLine(p, x0, cy, x1, cy);
+						g.DrawLine(p, x0, cy-7, x0, cy+7);
+						x0 = 80;
+						x1 = r.Left;
+						g.DrawLine(p, x0, cy, x1, cy);
+						g.DrawLine(p, x1, cy - 7, x1, cy + 7);
+					}
 
 				}
 
@@ -327,7 +346,7 @@ namespace AE_RemapTria
 				r = new Rectangle(40, 0, 30, this.Height);
 				sb.Color = sdw;
 				g.FillRectangle(sb, r);
-				r = new Rectangle(this.Width - 70, 0, 30, this.Height);
+				r = new Rectangle(this.Width - 60, 0, 20, this.Height);
 				g.FillRectangle(sb, r);
 
 				// 横の線

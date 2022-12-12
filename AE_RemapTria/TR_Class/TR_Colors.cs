@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace AE_RemapTria
 {
-	/*
 	public enum COLS
 	{
 		Base = 0,
@@ -32,12 +31,13 @@ namespace AE_RemapTria
 		TopBar,
 		
 		MenuBack,
+		MenuBackSelected,
 		MenuBackNoActive,
 		MenuMoji,
 		MenuMojiNoActive,
+		MenuWaku,
 		Count
 	};
-	*/
 	public class TR_Colors
 	{
 		public bool _eventFlag=true;
@@ -71,9 +71,11 @@ namespace AE_RemapTria
 			cols[(int)COLS.Gray] = Color.FromArgb( 20, 20, 50);
 			cols[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
 
-			cols[(int)COLS.MenuBack] = Color.FromArgb(75, 88, 156);
+			cols[(int)COLS.MenuBack] = Color.FromArgb(0x34, 0x37, 0x6a);
+			cols[(int)COLS.MenuBackSelected] = Color.FromArgb(0x54, 0x57, 0x8a);
 			cols[(int)COLS.MenuBackNoActive] = Color.FromArgb(75,81, 109);
-			cols[(int)COLS.MenuMoji] = Color.FromArgb(194, 202, 243);
+			cols[(int)COLS.MenuMoji] = Color.FromArgb(0x9f, 0xAd, 0xF4);
+			cols[(int)COLS.MenuWaku] = Color.FromArgb(0x43, 0x62, 0xb2);
 			cols[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
 
 		}
@@ -219,6 +221,11 @@ namespace AE_RemapTria
 			get { return cols[(int)COLS.MenuBack]; }
 			set { cols[(int)COLS.MenuBack] = value; OnColorChangedEvent(new EventArgs()); }
 		}
+		public Color MenuBackSelected
+		{
+			get { return cols[(int)COLS.MenuBackSelected]; }
+			set { cols[(int)COLS.MenuBackSelected] = value; OnColorChangedEvent(new EventArgs()); }
+		}
 		public Color MenuBackNoActive
 		{
 			get { return cols[(int)COLS.MenuBackNoActive]; }
@@ -228,6 +235,11 @@ namespace AE_RemapTria
 		{
 			get { return cols[(int)COLS.MenuMoji]; }
 			set { cols[(int)COLS.MenuMoji] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuWaku
+		{
+			get { return cols[(int)COLS.MenuWaku]; }
+			set { cols[(int)COLS.MenuWaku] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		public Color MenuMojiNoActive
 		{

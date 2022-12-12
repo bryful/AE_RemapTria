@@ -29,20 +29,19 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.T_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.SuspendLayout();
 			// 
 			// TR_MenuPlate
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(182, 251);
 			this.DoubleBuffered = true;
 			this.Edge = new System.Drawing.Rectangle(10, 5, 0, 0);
-			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ForeColor = System.Drawing.Color.White;
 			this.KagiWeight = 0;
-			this.MyFonts = this.T_MyFonts1;
+			this.MyFontSize = 8F;
 			this.Name = "TR_MenuPlate";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
@@ -88,7 +87,5 @@
 		}
 
 		#endregion
-
-		private T_MyFonts T_MyFonts1;
 	}
 }

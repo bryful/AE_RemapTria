@@ -40,7 +40,7 @@ namespace AE_RemapTria
         // *************************************************************************************************
         public TR_Menu()
         {
-            m_FontSize = 7;
+            m_FontSize = 9;
             m_Size = new Size(200, MenuHeight);
         }
 
@@ -62,6 +62,7 @@ namespace AE_RemapTria
             m_form = fm;
             if (m_form != null)
             {
+                Colors = m_form.Colors;
                 m_font = m_form.MyFont(m_FontIndex, m_FontSize,m_form.FontStyle);
                 ClearMenu();
                 m_form.MakeMenu();
@@ -143,10 +144,10 @@ namespace AE_RemapTria
         // ****************************************************************
         private int MenuWidthAll()
         {
-            int ret = 20;
+            int ret = 35;
             if (m_TopMenuItems.Length > 0)
             {
-                int xp = 20;
+                int xp = 35;
                 for (int i = 0; i < m_TopMenuItems.Length; i++)
                 {
                     ret += m_TopMenuItems[i].Width;
@@ -165,7 +166,7 @@ namespace AE_RemapTria
         public override void Draw(Graphics g)
         {
 			Debug.WriteLine("Menu");
-			if (m_form == null ) return;
+			if ((m_form == null )||(Colors==null)) return;
             SolidBrush sb = new SolidBrush(Color.Transparent);
             try
             {
@@ -189,7 +190,7 @@ namespace AE_RemapTria
                     sb.Color = m_form.Colors.MenuMojiNoActive;
                 }
 
-                Rectangle r = new Rectangle(4, 4, 12, 12);
+                Rectangle r = new Rectangle(24-5, 4, 12, 12);
                 Fill(g, sb, r);
                 ////
                 for (int i = 0; i < m_TopMenuItems.Length; i++)
@@ -202,21 +203,32 @@ namespace AE_RemapTria
 
 					if (m_mm==i)
                     {
-						sb.Color = Color.Black;
-						//sb.Color = m_form.Colors.Selection;
+						sb.Color = Colors.MenuBackSelected;
 						Fill(g, sb, r);
-                        sb.Color = m_form.Colors.Moji;
                     }
+					sb.Color = m_form.Colors.MenuMoji;
 
-                    m_form.StringFormat.Alignment = StringAlignment.Center;
+					m_form.StringFormat.Alignment = StringAlignment.Center;
                     DrawStr(g, m_TopMenuItems[i].Caption, sb, r);
-                }
-                
-                
-				Pen p = new Pen(m_form.Colors.Line);
-				DrawFrame(g,p, new Rectangle(0,0,m_Size.Width,m_Size.Height));
-            }
-            finally
+				}
+
+
+				Pen p = new Pen(m_form.Colors.MenuWaku);
+                p.Width = 2;
+                Point[] pp = new Point[]
+                {
+					new Point(11,1),
+					new Point(11,11),
+					new Point(1,11),
+                    new Point(1,Height-2),
+                    new Point(Width-2,Height-2),
+                    new Point(Width-2,11),
+					new Point(Width-13,11),
+					new Point(Width-13,1),
+				};
+                g.DrawLines(p, pp); 
+			}
+			finally
             {
                 sb.Dispose();
             }

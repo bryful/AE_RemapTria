@@ -167,12 +167,12 @@ namespace BRY
 
             if( (up & Keys.Shift)== Keys.Shift)
 			{
-                ret += "Shft";
+                ret += "Sft";
             }
 			if ((up & Keys.Control) == Keys.Control)
             {
                 if (ret != "") ret += "+";
-				ret += "Cntrl";
+				ret += "Ctrl";
 			}
 			if ((up & Keys.Alt) == Keys.Alt)
 			{
@@ -180,9 +180,27 @@ namespace BRY
 				ret += "Alt";
 			}
 			if (ret != "") ret += "+";
-            ret += lo.ToString();
+            switch (lo)
+            {
+                case Keys.Oem5:
+					ret += "\\";
+					break;
+				case Keys.OemPeriod:
+					ret += ">";
+					break;
+				case Keys.Oemcomma:
+					ret += "<";
+					break;
+				case Keys.Oemtilde:
+					ret += "@";
+					break;
+				default:
+					ret += lo.ToString();
+                    break;
+			}
 
-            return ret;
+
+			return ret;
 		}
 		// ********************************************************
 		static public void DrawKagi(
