@@ -33,17 +33,18 @@ namespace AE_RemapTria
 			// 
 			// TR_NavBar
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(373, 25);
+			this.ClientSize = new System.Drawing.Size(373, 27);
 			this.ControlBox = false;
 			this.DoubleBuffered = true;
+			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(40000, 25);
+			this.MaximumSize = new System.Drawing.Size(40000, 27);
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(10, 25);
+			this.MinimumSize = new System.Drawing.Size(10, 27);
+			this.MyFontSize = 8.25F;
 			this.Name = "TR_NavBar";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

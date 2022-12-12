@@ -96,7 +96,7 @@ namespace AE_RemapTria
 		{
 
 			InitializeComponent();
-			MyFontSize = 6;
+			MyFontSize = 7;
 			MyFontIndex = 5;
 			//this.Font = MyFonts.MyFont(MyFontIndex, MyFontSize, this.Font.Style);
 

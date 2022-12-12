@@ -628,6 +628,7 @@ namespace AE_RemapTria
 		{
 			int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
 			Grid.Sizes.DispY -= v;
+			DrawAll();
 			base.OnMouseWheel(e);
 		}
 		// ********************************************************************
