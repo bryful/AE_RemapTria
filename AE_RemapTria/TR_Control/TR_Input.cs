@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -65,6 +66,7 @@ namespace AE_RemapTria
 		//------------------------------------------
 		public override void Draw(Graphics g)
 		{
+			Debug.WriteLine("Input");
 			if (m_form == null) return;
 			SolidBrush sb = new SolidBrush(m_form.Colors.Moji);
 			Pen p = new Pen(m_form.Colors.InputLineA);

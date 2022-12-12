@@ -1,6 +1,7 @@
-﻿namespace AE_RemapTria
+﻿
+namespace AE_RemapTria
 {
-	partial class TR_MenuPlate
+	partial class TR_NavBar
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,29 +29,28 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.T_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.SuspendLayout();
 			// 
-			// TR_MenuPlate
+			// TR_NavBar
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(199, 262);
+			this.BackColor = System.Drawing.Color.Black;
+			this.ClientSize = new System.Drawing.Size(373, 25);
+			this.ControlBox = false;
 			this.DoubleBuffered = true;
-			this.Edge = new System.Drawing.Rectangle(10, 5, 0, 0);
-			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.ForeColor = System.Drawing.Color.White;
-			this.KagiWeight = 0;
-			this.MyFonts = this.T_MyFonts1;
-			this.Name = "TR_MenuPlate";
+			this.Margin = new System.Windows.Forms.Padding(4);
+			this.MaximizeBox = false;
+			this.MaximumSize = new System.Drawing.Size(40000, 25);
+			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(10, 25);
+			this.Name = "TR_NavBar";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.SideCenterWeight = 0;
 			this.SideCount = new int[] {
-        0,
-        0,
-        0};
+        4,
+        4,
+        1};
 			this.SideInter = new int[] {
         10,
         20,
@@ -63,12 +63,10 @@
         1,
         2,
         4};
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.TBCenterWeight = 0;
 			this.TBCount = new int[] {
-        0,
-        0,
-        0};
+        4,
+        4,
+        1};
 			this.TBInter = new int[] {
         10,
         20,
@@ -81,14 +79,11 @@
         1,
         2,
         4};
-			this.Text = "TR_MenuPlate";
-			this.TransparencyKey = System.Drawing.Color.Empty;
+			this.Text = "AE_Remapτρ?α";
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private T_MyFonts T_MyFonts1;
 	}
 }

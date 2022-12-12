@@ -11,29 +11,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.Xml;
+using SixLabors.Fonts;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AE_RemapTria
 {
-	public partial class TR_MenuPlate : T_BaseDialog
+	public partial class TR_MenuPlate : TR_BaseDialog
 	{
-		private T_MyFonts m_Fonts = new T_MyFonts();
 		 
 		private T_SubMenuItem[] m_Items = new T_SubMenuItem[0];
 		private TR_Menu? m_menu = null;
-		[Category("_AE_Remap")]
-		public TR_Menu? Menu
+		public override void SetForm(TR_Form fm)
 		{
-			get { return m_menu; }
-			set
+			m_form = fm;
+			if (m_form != null)
 			{
-				m_menu = value;
-				if(m_menu!=null)
-				{
-					MyFontIndex = 5;
-					MyFontSize = m_menu.FontSize;
-				}
+				m_grid = fm.Grid;
+				Colors = fm.Colors;
+				m_menu = fm.Menu;
+				this.MyFonts = m_form.MyFonts;
+				m_MyFontIndex = m_menu.FontIndex;
+				m_MyFontSize = m_menu.FontSize;
+				this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, this.Font.Style);
 			}
 		}
+
 		private int m_MenuHeight = 20;
 		[Category("_AE_Remap")]
 		public int MenuHeight
@@ -68,6 +70,7 @@ namespace AE_RemapTria
 		}
 		private int m_RowHeight = 16;
 		private int m_LeftSideWidth = 20;
+
 		private Color m_WakuColor = Color.FromArgb(100, 100, 200);
 		private Color m_LeftSideColor1 = Color.FromArgb(120, 120, 240);
 		private Color m_LeftSideColor2 = Color.FromArgb(60, 60, 140);
@@ -93,9 +96,9 @@ namespace AE_RemapTria
 		{
 
 			InitializeComponent();
-			MyFonts = m_Fonts;
-			MyFontSize = 8;
+			MyFontSize = 6;
 			MyFontIndex = 5;
+			//this.Font = MyFonts.MyFont(MyFontIndex, MyFontSize, this.Font.Style);
 
 			this.SetStyle(
 			ControlStyles.DoubleBuffer |
@@ -112,7 +115,7 @@ namespace AE_RemapTria
 		{
 			GraphicsPath path = new GraphicsPath();
 			path.AddRectangle(this.ClientRectangle);
-			path.AddRectangle(new Rectangle(m_MenuWidth+40,0,this.Width-m_MenuWidth-40,m_MenuHeight));
+			path.AddRectangle(new Rectangle(m_MenuWidth,0,this.Width-m_MenuWidth,m_MenuHeight));
 
 			this.Region = new Region(path);
 		}
@@ -136,7 +139,7 @@ namespace AE_RemapTria
 				
 				//Caption
 				r = new Rectangle(0, 0, m_MenuWidth+40, m_MenuHeight);
-				sb.Color = m_CaptionBackColor;
+				sb.Color = Color.Black;
 				g.FillRectangle(sb, r);
 				r = new Rectangle(0, 0, m_MenuWidth, m_MenuHeight);
 				StringFormat sf = new StringFormat();
@@ -228,29 +231,45 @@ namespace AE_RemapTria
 			}
 		}
 		// ********************************************************
-
-		public void SetSubMenuItems(int idx,TR_Menu menu)
+		public void QShow()
+		{
+			if (m_menu == null) return;
+			Rectangle r = m_menu.CaptionRect(m_Index);
+			this.Location = new Point(m_menu.GLoc.X + r.Left, m_menu.GLoc.Y);
+			this.Show();
+		}
+		public void AddSubMenuItems(int idx)
 		{
 			m_Items = new T_SubMenuItem[0];
-			T_SubMenuItem[] itms = menu.SubMenus(idx);
-			if (itms.Length <= 0) return;
-			Menu = menu;
-			m_Items = itms;
-			Rectangle r = menu.CaptionRect(idx);
+			if (m_menu == null) return;
+			m_Items  = m_menu.SubMenus(idx);
+			m_Index = idx;
+			Rectangle r = m_menu.CaptionRect(idx);
 			m_MenuWidth = r.Width;
 			m_MenuHeight = r.Height;
-			this.Location = new Point(menu.GLoc.X+r.Left,menu.GLoc.Y);
-			int h = m_MenuHeight + m_RowHeight * (m_Items.Length) + m_RowHeight;
-			this.Size = new Size(m_Width, h);
-			this.Text = menu.Caption(idx);
-			m_Index = idx;
-		}
+			this.Text = m_menu.Caption(idx);
+			if (m_Items.Length <= 0) return;
 
+			Bitmap bmp = new Bitmap(1000, m_RowHeight);
+			Graphics g = Graphics.FromImage(bmp);
+			StringFormat sf = new StringFormat();
+			int w = 0;
+			for(int i = 0; i < m_Items.Length; i++)
+			{
+				string s = m_Items[i].Caption + " " + m_Items[i].Shrtcut;
+				SizeF sz = g.MeasureString(s, this.Font, 1000, sf);
+				if (w < (int)sz.Width) w = (int)sz.Width;
+			}
+			bmp.Dispose();
+			int h = m_MenuHeight + m_RowHeight * (m_Items.Length) + m_RowHeight;
+			this.Size = new Size(w + 40, h);
+		}
 		protected override void OnDeactivate(EventArgs e)
 		{
 			if (m_IsClick == false)
 			{
-				this.DialogResult = DialogResult.Cancel;
+				m_SubIndex = -1;
+				this.Hide();
 			}
 			base.OnDeactivate(e);
 			//this.Close();
@@ -259,11 +278,9 @@ namespace AE_RemapTria
 		{
 			if (m_IsClick == false)
 			{
-				this.DialogResult = DialogResult.Cancel;
+				m_SubIndex = -1;
+				this.Hide();
 			}
-			//base.OnMouseLeave(e);
-			//m_SubIndex = -1;
-			//this.Close();
 		}
 		private bool m_IsClick = false;
 		private int getMP(MouseEventArgs e)
@@ -284,7 +301,7 @@ namespace AE_RemapTria
 		{
 			base.OnMouseMove(e);
 			m_SubIndex = getMP(e);
-			if(m_SubIndex >= 0) this.Invalidate();
+			this.Invalidate();
 		}
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
@@ -294,17 +311,20 @@ namespace AE_RemapTria
 			{
 				m_IsClick = true;
 				this.Invalidate();
+				m_Items[m_SubIndex].Exec();
+				m_IsClick = false;
+				this.Invalidate();
+				m_SubIndex = -1;
+				this.Hide();
 			}
 		}
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
-			if(m_IsClick)
-			{
-				this.DialogResult = DialogResult.OK;
-				//this.Close();
+			m_IsClick = false;
+			m_SubIndex = -1;
+			this.Hide();
 
-			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class FormTest
+	partial class TR_BaseDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,19 +30,18 @@
 		{
 			this.SuspendLayout();
 			// 
-			// FormTest
+			// TR_BaseDialog
 			// 
-			this.Alignment = System.Drawing.StringAlignment.Near;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.ClientSize = new System.Drawing.Size(452, 399);
-			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.FontSize = 5F;
-			this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
-			this.MenuFontSize = 9F;
-			this.Name = "FormTest";
-			this.Text = "FormTest000";
-			this.Value = 0;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Black;
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.ClientSize = new System.Drawing.Size(373, 175);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.Name = "TR_BaseDialog";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.Text = "T_Dialog";
+			this.TransparencyKey = System.Drawing.Color.White;
 			this.ResumeLayout(false);
 
 		}

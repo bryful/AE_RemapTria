@@ -16,7 +16,7 @@ using System.Windows.Forms;
 namespace AE_RemapTria
 {
 
-    public class T_PDF
+    public class TR_PDF
     {
         // **********************************************************************************************
         static double pt2mm(XUnit pt) { return (double)pt * 25.4 / 72; }
@@ -144,7 +144,7 @@ namespace AE_RemapTria
 
 
 		// **********************************************************************************************
-		static private void DrawCap(T_Grid m_grid, XGraphics g, XPen p, int page,int pageMax)
+		static private void DrawCap(TR_Grid m_grid, XGraphics g, XPen p, int page,int pageMax)
         {
             var lines = new List<XPoint>()
                     {
@@ -240,7 +240,7 @@ namespace AE_RemapTria
 
 		}
 		// **********************************************************************************************
-		static private void DrawSheetGrid(T_Grid m_grid, XGraphics g, XPen p, int page,int left)
+		static private void DrawSheetGrid(TR_Grid m_grid, XGraphics g, XPen p, int page,int left)
         {
             double x = 0;
             if(left==0)
@@ -415,7 +415,7 @@ namespace AE_RemapTria
 			g.DrawPolygon(p, lines.ToArray());
 		}
 		// **********************************************************************************************
-		static private void DrawGrid(T_Grid m_grid,XGraphics g, XPen p, int page)
+		static private void DrawGrid(TR_Grid m_grid,XGraphics g, XPen p, int page)
         {
             // メモ
             var lines = new List<XPoint>()
@@ -435,14 +435,14 @@ namespace AE_RemapTria
 
 		static private bool _loadFontResolver = false;
 		// **********************************************************************************************
-		static public bool ExportPDF(string filePath,T_Grid gd)
+		static public bool ExportPDF(string filePath,TR_Grid gd)
         {
 			if (_loadFontResolver == false)
 			{
 				GlobalFontSettings.FontResolver = new JapaneseFontResolver();
 				_loadFontResolver = true;
 			}
-			Ardj Ardj = T_Ardj.FromCellDataToArdj(gd.CellData);
+			Ardj Ardj = TR_Ardj.FromCellDataToArdj(gd.CellData);
 			bool ret = false;
             try
             {
@@ -480,7 +480,6 @@ namespace AE_RemapTria
 
 
     }
-	/*
     /// <summary>
     /// 日本語フォントのためのフォントリゾルバー
     /// </summary>
@@ -552,5 +551,4 @@ namespace AE_RemapTria
             }
         }
     }
-	*/
 }

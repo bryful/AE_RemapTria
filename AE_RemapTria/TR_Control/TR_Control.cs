@@ -62,18 +62,18 @@ namespace AE_RemapTria
         private Bitmap m_OffScr = new Bitmap(10, 10, PixelFormat.Format32bppArgb);
         public Bitmap Offscr() { return m_OffScr; }
         protected Size m_Size = new Size(100, 100);
-        protected Size m_MinimumSize = new Size(100, 100);
-        protected Size m_MaximumSize = new Size(100, 100);
+        //protected Size m_MinimumSize = new Size(100, 100);
+        //protected Size m_MaximumSize = new Size(100, 100);
         public Size Size
         {
             get { return m_Size; }
             set
             {
                 m_Size = value;
-                Size sz = ChkSize(m_Size);
-                if (m_Size != sz)
+                //Size sz = ChkSize(m_Size);
+                if (m_Size != value)
                 {
-                    m_Size = sz;
+                    m_Size = value;
                     ChkOffScr();
                     Invalidate();
                 }
@@ -82,6 +82,7 @@ namespace AE_RemapTria
 
         public int Width { get { return m_Size.Width; } }
         public int Height { get { return m_Size.Height; } }
+		/*
         public void SetMinMaxSize(Size n, Size m)
         {
             m_MinimumSize = n;
@@ -107,7 +108,7 @@ namespace AE_RemapTria
                 m_MaximumSize.Height = 0;
             }
         }
-        public Size ChkSize(Size sz)
+		public Size ChkSize(Size sz)
         {
             Size ret = new Size(sz.Width, sz.Height);
             if (m_MinimumSize.Width > 0)
@@ -140,6 +141,7 @@ namespace AE_RemapTria
             }
             return ret;
         }
+        */
         protected Point m_Location = new Point(0, 0);
         public Point Location
         {
@@ -199,8 +201,12 @@ namespace AE_RemapTria
         {
             if (m_form != null) m_form.Invalidate();
         }
-        // ************************************************************************
-        public virtual void Draw(Graphics g)
+		public void Refresh()
+		{
+			if (m_form != null) m_form.Refresh();
+		}
+		// ************************************************************************
+		public virtual void Draw(Graphics g)
         {
             if (m_form != null)
             {
@@ -369,6 +375,17 @@ namespace AE_RemapTria
             m_MUpPoint = new Point(x, y);
             return ret;
         }
-        // **********************************************************************
-    }
+		// **********************************************************************
+		protected virtual bool ChkMouseLeave(EventArgs e)
+        {
+			bool ret = false;
+			m_MDown = false;
+	        m_inMouse = false;
+			ChkOffScr();
+			Invalidate();
+
+			return ret;
+		}
+
+	}
 }

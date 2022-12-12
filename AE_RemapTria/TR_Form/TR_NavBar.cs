@@ -1,0 +1,366 @@
+﻿using BRY;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing.Drawing2D;
+namespace AE_RemapTria
+{
+	public partial class TR_NavBar : TR_BaseDialog
+	{
+		bool _refFlag = true;
+		[Category("_AE_Remap")]
+		public TR_Form? Form
+		{
+			get { return m_form; }
+			set
+			{
+				m_form = value;
+				if (m_form != null)
+				{
+					SetLocSize();
+					SetIsFront(m_IsFront);
+					m_form.LocationChanged += M_form_LocationChanged;
+					m_form.SizeChanged += M_form_LocationChanged;
+					m_form.TextChanged += M_form_TextChanged;
+				}
+			}
+		}
+
+		private void M_form_TextChanged(object? sender, EventArgs e)
+		{
+			if (m_form != null)
+			{
+				this.Text = m_form.Text;
+				this.Invalidate();
+			}
+		}
+
+		private void M_form_LocationChanged(object? sender, EventArgs e)
+		{
+			SetLocSize();
+		}
+
+		private bool m_IsFront = false;
+		[Category("_AE_Remap")]
+		public bool IsFront
+		{
+			get { return m_IsFront; }
+			set { SetIsFront(value); }
+		}
+
+		[Category("_AE_Remap")]
+		public string Caption
+		{
+			get { return this.Text; }
+		}
+
+		
+		public TR_NavBar()
+		{
+			this.Size = new Size(160, 20);
+			InitializeComponent();
+			IsFront = true;
+			if(DesignMode==true)
+			{
+				this.Visible = false;
+			}
+			this.TopMost = true;
+			this.SetStyle(
+				ControlStyles.DoubleBuffer |
+				ControlStyles.UserPaint |
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
+				true);
+			this.UpdateStyles();
+		}
+
+		// *****************************************************************
+		public void SetLocSize()
+		{
+			if (m_form == null) return;
+			if (_refFlag == false) return;
+			_refFlag = false;
+			Size sz = new Size(m_form.Width, this.Height);
+			if (this.Size != sz) this.Size = sz;
+
+			Point p = new Point(m_form.Left, m_form.Top - this.Height);
+			if(this.Location!=p) this.Location = p;
+
+			_refFlag = true;
+		}
+		public void SetLocToTRForm()
+		{
+			if (m_form == null) return;
+			if (_refFlag == false) return;
+			_refFlag = false;
+			Point p = new Point(this.Left, this.Top + this.Height);
+			if (m_form.Location != p) m_form.Location = p;
+
+			_refFlag = true;
+		}
+		private bool m_md = false;
+		private Point mousePoint;
+		private Point LocPoint;
+		private bool m_CB = false;
+		protected override void OnMouseEnter(EventArgs e)
+		{
+			Debug.WriteLine("Enter");
+			base.OnMouseEnter(e);
+		}
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			formActive();
+			Debug.WriteLine("Down");
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				if(e.X<40)
+				{
+					IsFront = !IsFront;
+				}else if(e.X >this.Width-30)
+				{
+					m_form.Quit();
+				}
+				else
+				{
+					m_md = true;
+					mousePoint = new Point(e.X, e.Y);
+					LocPoint = this.Location;
+				}
+			}
+		}
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			Debug.WriteLine("Move");
+			if (m_md)
+			{
+				if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+				{
+					Debug.WriteLine("Move");
+					int ax = e.X - mousePoint.X;
+					int ay = e.Y - mousePoint.Y;
+					Point n = new Point(this.Location.X + ax, this.Location.Y + ay);
+					if(this.Location != n)
+					{
+						if (_refFlag == false) return;
+						this.Location = n;
+						SetLocToTRForm();
+					}
+				}
+			}
+			else
+			{
+				if(e.X>this.Width-30)
+				{
+					m_CB = true;
+					this.Invalidate();
+				}
+				else
+				{
+					if(m_CB==true)
+					{
+						m_CB = false;
+						this.Invalidate();
+					}
+				}
+			}
+			base.OnMouseMove(e);
+		}
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			Debug.WriteLine("Up");
+			m_md = false;
+			base.OnMouseUp(e);
+		}
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			base.OnMouseLeave(e);
+			if (m_CB == true)
+			{
+				m_CB = false;
+				this.Invalidate();
+			}
+		}
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			Point[] points = WPolygon(-1);
+			GraphicsPath path = new GraphicsPath();
+			path.AddPolygon(points);
+			this.Region = new Region(path);
+		}
+		// *****************************************************************
+		public void SetIsFront(bool b)
+		{
+			if (m_form == null) return;
+			m_IsFront = b;
+			m_form.TopMost = b;
+			if (m_IsFront == false)
+			{
+				formActive();
+			}
+			this.Invalidate();
+		}
+		// *****************************************************************
+		private void formActive()
+		{
+			if (m_form == null) return;
+			m_form.ForegroundWindow();
+		}
+		// *****************************************************************
+		
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			if(m_form != null)
+			{
+				((TR_Form)m_form).Quit();
+			}
+			else
+			{
+				Application.Exit();
+			}
+
+		}
+		// *****************************************************************
+		private Point[] SR(Point[]p,Point c)
+		{
+			Point[] ret = new Point[p.Length];
+			if(p.Length>0)
+			{
+				for(int i=0; i<p.Length;i++)
+				{
+					ret[i] = new Point(0, 0);
+					if (p[i].X<=c.X)
+					{
+						ret[i].X = p[i].X+1;
+					}
+					else
+					{
+						ret[i].X = p[i].X - 1;
+					}
+					if (p[i].Y <= c.Y)
+					{
+						ret[i].Y = p[i].Y + 1;
+					}
+					else
+					{
+						ret[i].Y = p[i].Y - 1;
+					}
+
+				}
+			}
+			return ret;
+		}
+		// *****************************************************************
+		private Point[] WPolygon(int h=0)
+		{
+			Point[] ps = new Point[]
+				{
+				new Point(h,h),
+				new Point(this.Width-1-h,h),
+				new Point(this.Width-1-h,this.Height-2-h),
+				new Point(10+h,this.Height-2-h),
+				new Point(10+h,this.Height-2-10-h),
+				new Point(h,this.Height-2-10-h)
+				};
+			return ps;
+		}
+		// *****************************************************************
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			Color moji = Color.FromArgb(0x7f, 0x8d, 0xD4);
+			Color ol = Color.FromArgb(0x43, 0x62, 0xb2);
+			Color ol1 = Color.FromArgb(0x0e, 0x12, 0x42);
+			Color ol2 = Color.FromArgb(0x2a, 0x2d, 0x60);
+			Color bk = Color.FromArgb(0x34, 0x37, 0x6a);
+			Color sdw = Color.FromArgb(0x18, 0x1a, 0x2f);
+			Graphics g = e.Graphics;
+			Pen p = new Pen(ol);
+			SolidBrush sb = new SolidBrush(ol);
+			try
+			{
+				//背景
+				p.Width = 1;
+				g.Clear(bk);
+
+				//左ボタン
+				int w = 12;
+				Rectangle r = new Rectangle(20, (this.Height - w) / 2, w, w);
+				if (m_IsFront)
+				{
+					sb.Color = moji;
+				}
+				else
+				{
+					sb.Color = ol1;
+				}
+				g.FillRectangle(sb, r);
+				p.Color = ol2;
+				p.Width = 4;
+				g.DrawRectangle(p, r);
+				p.Color = moji;
+				p.Width = 2;
+				g.DrawRectangle(p, r);
+
+				//文字を描く
+				r = new Rectangle(70, 0, this.Width - 70, this.Height);
+				if(this.Text!="")
+				{
+					StringFormat sf = new StringFormat();
+					sf.Alignment = StringAlignment.Near;
+					sf.LineAlignment = StringAlignment.Center;
+					sb.Color = moji;
+					g.DrawString(this.Text, this.Font, sb, r, sf);
+
+				}
+
+
+				//外枠を描く
+				Point c = new Point(Width / 2, Height / 2);
+				p.Width = 1;
+				p.Color = ol1;
+				g.DrawPolygon(p, WPolygon(2));
+				p.Color = ol2;
+				g.DrawPolygon(p, WPolygon(3));
+				g.DrawPolygon(p, WPolygon(4));
+
+				// SDW
+				r = new Rectangle(40, 0, 30, this.Height);
+				sb.Color = sdw;
+				g.FillRectangle(sb, r);
+				r = new Rectangle(this.Width - 70, 0, 30, this.Height);
+				g.FillRectangle(sb, r);
+
+				// 横の線
+				p.Width = 6;
+				p.Color = ol2;
+				int xx = this.Width - 30;
+				g.DrawLine(p, xx, 2, xx, this.Height-4);
+				p.Width = 2;
+				p.Color = ol;
+				g.DrawLine(p, xx, 0, xx, this.Height);
+
+				p.Color = ol;
+				p.Width = 1;
+				g.DrawPolygon(p, WPolygon(0));
+				g.DrawPolygon(p, WPolygon(1));
+
+				int k = 12;
+				r = new Rectangle(this.Width - 20, (this.Height - k) / 2, k, k);
+				if (m_CB)
+				{
+					sb.Color = moji;
+				}
+				else
+				{
+					sb.Color = ol2;
+				}
+				g.FillRectangle(sb,r);
+
+			}
+			finally
+			{
+				p.Dispose();
+			}
+		}
+	}
+}

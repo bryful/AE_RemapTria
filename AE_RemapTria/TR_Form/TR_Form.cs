@@ -8,8 +8,6 @@ using System.Text;
 
 namespace AE_RemapTria
 {
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
 
 	public partial class TR_Form : Form
 	{
@@ -20,6 +18,8 @@ namespace AE_RemapTria
 		public TR_Grid Grid = new TR_Grid();
 
 		public TR_Menu Menu = new TR_Menu();
+		public TR_MenuPlate [] MenuPlates = new TR_MenuPlate[0];
+
 		public float MenuFontSize
 		{
 			get { return Menu.FontSize; }
@@ -50,6 +50,7 @@ namespace AE_RemapTria
 		{
 			if (Menu != null) Menu.ChkOffScr();
 			if (Input != null) Input.ChkOffScr();
+			if (Grid != null) Grid.ChkOffScr();
 			this.Invalidate();
 		}
 		private T_MyFonts m_Fonts = new T_MyFonts();
@@ -123,19 +124,35 @@ namespace AE_RemapTria
 				StringFormat.LineAlignment = value;
 			}
 		}
-		// ********************************************************************
-		[Category("_AE_Remap")]
-		public bool IsMultExecute
+		private bool m_IsJapanOS = true;
+		public bool IsJapanOS { get { return m_IsJapanOS; } }
+		public bool IsMultExecute = false;
+		private string m_FileName = "AE_Remapτρ?α";
+		public string FileName
 		{
-			get
-			{
-				return Grid.IsMultExecute;
-			}
+			get { return m_FileName; }
 			set
 			{
-				Grid.IsMultExecute = value;
+				m_FileName = value;
+				if (m_FileName != "")
+				{
+					string t = T_Def.GetName(m_FileName);
+					if (IsModif)
+					{
+						t += "*";
+					}
+					this.Text = t;
+				}
+				else
+				{
+					this.Text = "AE_Remapτρ?α";
+				}
 			}
-		}       
+		}
+		public string KeyBaindFile = "";
+		public const string KeyBaindName = "AE_Remap_key.json";
+		public bool IsModif = false;
+
 		// ********************************************************************
 		private F_Pipe m_Server = new F_Pipe();
 		public void StartServer(string pipename)
@@ -170,20 +187,10 @@ namespace AE_RemapTria
 			BottomRight,
 		}
 
-		[Category("_AE_Remap")]
-		public string FileName 
-		{
-			get 
-			{
-				return Grid.FileName;
-			}
-			set
-			{
-				Grid.FileName = value;
-			}
-		}
+
+		
 		//public static bool _execution = true;
-		NavBar m_navBar = new NavBar();
+		TR_NavBar m_navBar = new TR_NavBar();
 
 		private bool m_IsMouseBR = false;
 		private MDPos m_mdPos = MDPos.None;
@@ -195,17 +202,27 @@ namespace AE_RemapTria
 		// ********************************************************************
 		public TR_Form()
 		{
+			m_IsJapanOS = System.Globalization.CultureInfo.CurrentUICulture.Name == "ja-JP";
+
 			this.AutoScaleMode = AutoScaleMode.None;
 			this.Font = m_Fonts.MyFont(m_FontIndex, 9, this.Font.Style);
 
 			StringFormat.Alignment = StringAlignment.Near;
 			StringFormat.LineAlignment = StringAlignment.Center;
 
+			MakeFuncs();
 			Grid.SetTRForm(this);
 			Menu.SetTRForm(this);
 			Input.SetTRForm(this);
 
+			CellData.ValueChanged += CellData_ValueChangedEvent;
+			CellData.SelChanged += CellData_SelChangedEvent;
+			CellData.CountChanged += CellData_CountChanged;
 
+			//Sizes.ChangeGridSize += Sizes_ChangeGridSize;
+			//Sizes.ChangeDisp += Sizes_ChangeDisp;
+			//Sizes.ChangeDispMax += Sizes_ChangeDisp;
+			//Sizes.SetGrid(Grid);
 
 			kagi[0] = Properties.Resources.Kagi00;
 			kagi[1] = Properties.Resources.Kagi01;
@@ -227,63 +244,31 @@ namespace AE_RemapTria
 			this.AllowDrop = true;
 
 		}
-		public void Quit()
-		{
-			Application.Exit();
-		}
 		// ************************************************************************
-		public bool InputAddKey(int v)
+		private void CellData_CountChanged(object? sender, EventArgs e)
 		{
-			bool ret = false;
-			if ((v >= 0) || (v <= 9))
-			{
-				if (m_Value < 0) m_Value = 0;
-				m_Value = m_Value * 10 + v;
-				ret = true;
-				Input.ChkOffScr();
-				this.Invalidate();
-			}
-			else if (v < 0)
-			{
-				ret = InputClear();
-				Input.ChkOffScr();
-				this.Invalidate();
-			}
-			return ret;
+			//ChkMinMax();
+			//ChkHScrl();
+			//ChkVScrl();
 		}
-		// ************************************************************************
-		public bool InputClear()
+		private void Sizes_ChangeDisp(object? sender, EventArgs e)
 		{
-			bool ret = false;
-			if (m_Value >= 0)
-			{
-				m_Value = -1;
-				ret = true;
-				Input.ChkOffScr();
-				this.Invalidate();
-			}
-			return ret;
+			//Invalidate();
+			//if (m_Frame != null) m_Frame.Invalidate();
 		}
-		// ************************************************************************
-		public bool InputBS()
+		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
 		{
-			bool ret = false;
-			if (m_Value >= 10)
-			{
-				m_Value = m_Value / 10;
-				ret = true;
-				Input.ChkOffScr();
-				this.Invalidate();
-			}
-			else if ((m_Value >= 0) && (m_Value < 10))
-			{
-				m_Value = -1;
-				Input.ChkOffScr();
-				this.Invalidate();
-				ret = true;
-			}
-			return ret;
-		}       
+		}
+		// ************************************************************************************
+		private void CellData_SelChangedEvent(object? sender, EventArgs e)
+		{
+			//Invalidate();
+		}
+		// ************************************************************************************
+		private void CellData_ValueChangedEvent(object? sender, EventArgs e)
+		{
+			//Invalidate();
+		}
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
@@ -310,12 +295,12 @@ namespace AE_RemapTria
 				string bp = Path.Combine(pf.FileDirectory, "backup.ardj.json");
 				if (File.Exists(bp))
 				{
-					Grid.OpenBackup(bp);
+					OpenBackup(bp);
 				}
 				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
 				if(Grid.Funcs.Load(kp))
 				{
-					Grid.KeyBaindFile = kp;
+					KeyBaindFile = kp;
 				}
 				if(m_navBar!=null)
 				{
@@ -339,7 +324,7 @@ namespace AE_RemapTria
 			if (IsMultExecute == false)
 			{
 				PrefFile pf = new PrefFile(this);
-				Grid.SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
+				SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
 				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
 				Grid.Funcs.Save(kp);
 				if (m_navBar!=null)
@@ -357,8 +342,7 @@ namespace AE_RemapTria
 			if (DesignMode == false)
 			{
 				m_navBar.Form = this;
-				m_navBar.SizeSet();
-				m_navBar.LocSet();
+				m_navBar.SetLocSize();
 				m_navBar.Show();
 			}
 
@@ -375,7 +359,9 @@ namespace AE_RemapTria
 		{
 			if (m_mdPos != MDPos.None) return;
 
-			if (Menu.ChkMouseDown(e))
+			if (Grid.ChkMouseDown(e))
+			{ 
+			}else if (Menu.ChkMouseDown(e))
 			{
 
 			}
@@ -418,11 +404,11 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			if((e.X>this.Width-20)&& (e.Y > this.Height - 20))
+			if ((e.X > this.Width - 20) && (e.Y > this.Height - 20))
 			{
 				if (m_IsMouseBR == false)
 				{
-					m_IsMouseBR =true;
+					m_IsMouseBR = true;
 					this.Refresh();
 				}
 			}
@@ -435,7 +421,10 @@ namespace AE_RemapTria
 				}
 			}
 
-			if (Menu.ChkMouseMove(e))
+			if (Grid.ChkMouseMove(e)) 
+			{ 
+			}
+			else if (Menu.ChkMouseMove(e))
 			{
 
 			}
@@ -459,7 +448,11 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if(Menu.ChkMouseUp(e))
+			if (Grid.ChkMouseMove(e))
+			{
+
+			}
+			else if(Menu.ChkMouseUp(e))
 			{
 
 			}else if(m_mdPos!=MDPos.None)
@@ -480,8 +473,11 @@ namespace AE_RemapTria
 		}
 
 		// ********************************************************************
+		private bool IsPaintNow = false;
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			if(IsPaintNow) return;
+			IsPaintNow = true;
 			//base.OnPaint(e);
 			Graphics g = e.Graphics;
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -519,12 +515,14 @@ namespace AE_RemapTria
 
 				g.DrawImage(Menu.Offscr(), Menu.Location);
 				g.DrawImage(Input.Offscr(), Input.Location);
+				g.DrawImage(Grid.Offscr(), Grid.Location);
 			}
 			finally
 			{
 				p.Dispose();
 				sb.Dispose();
 			}
+			IsPaintNow = false;
 
 		}
 		// ********************************************************************
@@ -556,31 +554,14 @@ namespace AE_RemapTria
 
 		}
 		*/
-		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
-		{
-			SetMinMax();
-		}
+
 		// ********************************************************************
 		private void SetLocSize()
 		{
 			Menu.SetLocSize();
 			Input.SetLocSize();
-
-			int leftW = Grid.Sizes.FrameWidth + Grid.Sizes.InterWidth;
-			int topW = Grid.Sizes.MenuHeight+ Grid.Sizes.InterHeight 
-				+ Grid.Sizes.CaptionHeight + Grid.Sizes.CaptionHeight2 + Grid.Sizes.InterHeight;
-			Point p = new Point(leftW, topW);
-			if (Grid.Location != p) Grid.Location = p;
-
-			int ww = leftW + Grid.Sizes.InterWidth + T_Size.VScrolWidth + Grid.Sizes.InterWidth;
-			int hh = topW + Grid.Sizes.InterHeight + T_Size.HScrolHeight + Grid.Sizes.InterHeight;
-			Size sz = new Size(
-				this.ClientSize.Width - ww,
-				this.ClientSize.Height - hh
-				);
-			if (Grid.Size != sz) Grid.Size = sz;
-
-
+			Grid.SetLocSize();
+			Sizes.SizeSetting(Grid, CellData);
 		}
 		public void ChkSize()
 		{
@@ -655,19 +636,7 @@ namespace AE_RemapTria
 			F_W.SetForegroundWindow(Process.GetCurrentProcess().MainWindowHandle);
 		}
 		// ********************************************************************
-		public bool HeightMax()
-		{
-			bool ret = false;
-			Rectangle r = PrefFile.NowScreen(this.Bounds);
-			if(r.Width>100)
-			{
-				int h = r.Height - 25;
-				this.Location = new Point(this.Left, r.Top + 25);
-				this.Size = new Size(this.Width, h);
-				ret = true;
-			}
-			return ret;
-		}
+
 		// ********************************************************************
 		protected override void OnDragEnter(DragEventArgs drgevent)
 		{
@@ -755,12 +724,12 @@ namespace AE_RemapTria
 			switch(em)
 			{
 				case EXEC_MODE.EXPORT:
-					F_Pipe.Client(Program.MyCallBackId, Grid.ToArdj()).Wait();
+					F_Pipe.Client(Program.MyCallBackId, ToArdj()).Wait();
 					break;
 				case EXEC_MODE.IMPORT_LAYER:
 					if ((args.Length > 1))
 					{
-						Grid.Import_layer(args[1]);
+						Import_layer(args[1]);
 						//MessageBox.Show(args[1]);
 					}
 					break;
@@ -779,7 +748,7 @@ namespace AE_RemapTria
 								string p = args1[i].Name;
 								if (File.Exists(p))
 								{
-									if (Grid.Open(p) == true)
+									if (Open(p) == true)
 									{
 										break;
 									}
@@ -868,31 +837,7 @@ namespace AE_RemapTria
 			*/
 		}
 
-		private void Form1_MouseDown(object sender, MouseEventArgs e)
-		{
-			// senderは常にFormだが、eの座標は各コントロールを基準とした座標が入る為、
-			// スクリーン座標からクライアント座標を計算すること
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
 
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
-
-		private void Form1_MouseMove(object sender, MouseEventArgs e)
-		{
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
-
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
-
-		private void Form1_MouseUp(object sender, MouseEventArgs e)
-		{
-			Point pntScreen = Control.MousePosition;
-			Point pntForm = this.PointToClient(pntScreen);
-
-			this.Text = "X=" + pntForm.X + " Y=" + pntForm.Y;
-		}
 		/*
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
@@ -910,6 +855,4 @@ namespace AE_RemapTria
 	}
 
 }
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
 

@@ -179,9 +179,9 @@ namespace AE_RemapTria
 			set { m_MenuHeight = value; OnChangeGridSize(new EventArgs()); }
 		}
 		//---------------------------------------
-		public void SizeSetting(Size sz, TR_CellData cd)
+		public void SizeSetting(TR_Grid gd, TR_CellData cd)
 		{
-			m_DispSize = sz;
+			m_DispSize = gd.Size;
 			m_FrameCountTrue = cd.FrameCountTrue;
 			m_CellCount = cd.CellCount;
 

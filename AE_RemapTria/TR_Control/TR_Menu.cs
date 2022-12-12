@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace AE_RemapTria
             {
                 m_font = m_form.MyFont(m_FontIndex, m_FontSize,m_form.FontStyle);
                 ClearMenu();
-                m_form.Grid.MakeMenu();
+                m_form.MakeMenu();
                 MenuWidthAll();
                 SetLocSize();
             }
@@ -163,7 +164,8 @@ namespace AE_RemapTria
         // ****************************************************************
         public override void Draw(Graphics g)
         {
-            if (m_form == null ) return;
+			Debug.WriteLine("Menu");
+			if (m_form == null ) return;
             SolidBrush sb = new SolidBrush(Color.Transparent);
             try
             {
@@ -189,6 +191,7 @@ namespace AE_RemapTria
 
                 Rectangle r = new Rectangle(4, 4, 12, 12);
                 Fill(g, sb, r);
+                ////
                 for (int i = 0; i < m_TopMenuItems.Length; i++)
                 {
                     r = new Rectangle(
@@ -197,26 +200,19 @@ namespace AE_RemapTria
                         m_TopMenuItems[i].Width,
                         MenuHeight);
 
-                    if(m_mm==i)
+					if (m_mm==i)
                     {
-                        sb.Color = m_form.Colors.Selection;
-                        Fill(g, sb, r);
+						sb.Color = Color.Black;
+						//sb.Color = m_form.Colors.Selection;
+						Fill(g, sb, r);
                         sb.Color = m_form.Colors.Moji;
                     }
 
                     m_form.StringFormat.Alignment = StringAlignment.Center;
                     DrawStr(g, m_TopMenuItems[i].Caption, sb, r);
                 }
-                if (m_form.Text != "")
-                {
-                    int x = m_TopMenuItems[m_TopMenuItems.Length - 1].PosLeft + m_TopMenuItems[m_TopMenuItems.Length - 1].Width;
-                    int w = Width - x;
-                    r = new Rectangle(x, 0, w, m_Size.Height);
-                    m_form.StringFormat.Alignment = StringAlignment.Near;
-                    string s = " ]";
-                    if (m_form.Grid.IsModif) s = "* ]";
-                    DrawStr(g, "[ " + m_form.Text + s, sb, r);
-                }
+                
+                
 				Pen p = new Pen(m_form.Colors.Line);
 				DrawFrame(g,p, new Rectangle(0,0,m_Size.Width,m_Size.Height));
             }
@@ -240,43 +236,49 @@ namespace AE_RemapTria
         // ****************************************************************
 		private void MakeSubMenu()
         {
-			if (m_mm >= 0)
-			{
-				if (m_SubMenus[m_mm].Length > 0)
-				{
-					TR_MenuPlate dlg = new TR_MenuPlate();
-					dlg.SetSubMenuItems(m_mm, this);
-					if (dlg.ShowDialog() == DialogResult.OK)
-					{
-						m_SubMenus[dlg.Index][dlg.SubIndex].Exec();
-					}
-					dlg.Dispose();
-				}
-			}
+			
         }
         private int m_mm = -1;
         // **********************************************************************
-        private bool mmPos(int x)
+        private int mmPos(int x)
         {
-            bool ret = false;
-            int xx = -1;
+            int ret = -1;
             for (int i = 0; i < m_TopMenuItems.Length; i++)
             {
                 if (x > m_TopMenuItems[i].PosLeft && x < m_TopMenuItems[i].PosLeft + m_TopMenuItems[i].Width)
                 {
-                    xx = i;
+                    ret = i;
                     break;
                 }
-            }
-            if (m_MDown && xx >= 0)
-            {
-                m_mm = xx;
-                ret = true;
             }
 
             return ret;
         }
 
+		// **********************************************************************
+        public virtual void OnMenuDown(int idx)
+        {
+
+			if (idx >= 0)
+			{
+                if (m_form != null)
+                {
+                    m_form.MenuPlates[idx].QShow();
+                }
+			}
+		}
+		// **********************************************************************
+        public virtual void OnMenuEnter(int idx)
+		{
+            ChkOffScr();
+            Refresh();
+		}
+		// **********************************************************************
+		public virtual void OnMenuLeave()
+		{
+			ChkOffScr();
+			Invalidate();
+		}
 		// **********************************************************************
 		public override bool ChkMouseDown(MouseEventArgs e)
         {
@@ -284,29 +286,43 @@ namespace AE_RemapTria
 			base.ChkMouseDown(e);
             if (m_inMouse)
             {
-                if (mmPos(m_MDownPoint.X))
+                m_mm = mmPos(m_MDownPoint.X);
+				if (m_mm >=0)
                 {
-					MakeSubMenu();
+                    m_MDown = true;
+					OnMenuDown(m_mm);
                     ret = true;
                 }
             }
             return ret;
         }
-		// **********************************************************************
-		public override bool ChkMouseMove(MouseEventArgs e)
+        // **********************************************************************
+        private int m_MoveMM = -1;
+        public override bool ChkMouseMove(MouseEventArgs e)
         {
             bool ret = false;
+            bool inM = m_inMouse;
 			base.ChkMouseMove(e);
-            if(m_inMouse)
+
+			if (m_inMouse)
             {
-                int oldmm = m_mm;
-				if (mmPos(m_MMovePoint.X))
-				{
-                    if(m_mm!= oldmm)
-                    {
-                        ChkOffScr();
-                    }
+				m_mm = mmPos(m_MMovePoint.X);
+				if (m_mm!= m_MoveMM)
+                {
+					OnMenuEnter(m_mm);
+					m_MoveMM = m_mm;
+
 				}
+            }
+            else
+            {
+				m_mm = -1;
+				m_MoveMM = -1;
+				if (inM == true)
+                {
+				    m_MDown=false;
+					OnMenuLeave();
+                }
 			}
 			return ret;
         }
@@ -314,12 +330,20 @@ namespace AE_RemapTria
         {
             bool ret = false;
 			base.ChkMouseUp(e);
-			if (m_mm >= 0)
+			if (m_MDown)
             {
-                m_mm = -1;
-				ChkOffScr();
+                m_MDown = false;
+				m_mm = -1;
+                ChkOffScr();
+				Invalidate();
 			}
-            return ret;
+			return ret;
         }
-    }
+		protected override bool ChkMouseLeave(EventArgs e)
+		{
+			m_MDown = false;
+			m_mm = -1;
+			return base.ChkMouseLeave(e);
+		}
+	}
 }
