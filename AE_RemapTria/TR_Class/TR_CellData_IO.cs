@@ -35,7 +35,6 @@ namespace AE_RemapTria
 			if ((c >= 0) && (c < CellCount) && (f >= 0) && (f < FrameCountTrue))
 			{
 				m_cells[c].SetValue(f, v);
-				OnValueChanged(new EventArgs());
 			}
 		}
 		public int[][] ToArray(int c)
@@ -44,7 +43,7 @@ namespace AE_RemapTria
 		}
 		public int[][] ToArrayFromTarget()
 		{
-			return m_cells[Selection.Target].ToArray();
+			return m_cells[sel.Target].ToArray();
 		}
 		public void FromArray(int c,int[][] ary)
 		{
@@ -52,7 +51,7 @@ namespace AE_RemapTria
 		}
 		public void FromArray(int[][] ary)
 		{
-			m_cells[Selection.Target].FromArray(ary);
+			m_cells[sel.Target].FromArray(ary);
 		}
 		public void SetAllValues(int[][] v)
 		{
@@ -271,12 +270,12 @@ namespace AE_RemapTria
 			bool ret = false;
 			int f = FrameCountTrue;
 			string s = "";
-			for (int i= 0;i<Selection.Length;i++)
+			for (int i= 0;i<sel.Length;i++)
 			{
-				int idx = i+ Selection.Start;
+				int idx = i+ sel.Start;
 				if((idx>=0)&&(idx<f))
 				{
-					s+= m_cells[Selection.Target].Value(idx).ToString()+"\r\n";
+					s+= m_cells[sel.Target].Value(idx).ToString()+"\r\n";
 				}
 			}
 			if (s.Length > 0)
@@ -314,11 +313,11 @@ namespace AE_RemapTria
 						ints[i] = int.Parse(sa[i + 1]);
 					}
 					PushUndo(BackupSratus.SelectionChange);
-					Selection.Length = ints.Length;
+					sel.Length = ints.Length;
 					PushUndo(BackupSratus.NumberInput);
-					for (int i = 0; i < Selection.Length; i++)
+					for (int i = 0; i < sel.Length; i++)
 					{
-						m_cells[Selection.Target].SetValue(Selection.Start + i, ints[i]);
+						m_cells[sel.Target].SetValue(sel.Start + i, ints[i]);
 					}
 					ret = true;
 				}
@@ -376,7 +375,7 @@ namespace AE_RemapTria
 						list.Add(v);
 					}
 				}
-				m_cells[Selection.Target].FromArray(list.ToArray());
+				m_cells[sel.Target].FromArray(list.ToArray());
 				ret = true;
 			}
 			catch
@@ -430,13 +429,12 @@ namespace AE_RemapTria
 			m_cells[idx].Caption=cap;
 			_eventFlag = e;
 			_undoPushFlag = u;
-			OnCountChanged(new EventArgs());
 			return true;
 
 		}
 		public bool InsertCell(string cap)
 		{
-			return InsertCell(Selection.Target, cap);
+			return InsertCell(sel.Target, cap);
 		}
 		public bool RemoveCell(int c)
 		{
@@ -455,19 +453,18 @@ namespace AE_RemapTria
 				}
 			}
 			SetCellCount(CellCount-1);
-			if(Selection.Target >=CellCount)
+			if(sel.Target >=CellCount)
 			{
-				Selection.Target = CellCount - 1;
+				sel.Target = CellCount - 1;
 			}
 			_eventFlag = e;
 			_undoPushFlag = u;
-			OnCountChanged(new EventArgs());
 			return true;
 		}
 		public bool RemoveCell()
 		{
 			if (CellCount==1) return false;
-			return RemoveCell(Selection.Target);
+			return RemoveCell(sel.Target);
 		}
 		public bool InsertFrame(int start,int length)
 		{
@@ -494,12 +491,11 @@ namespace AE_RemapTria
 			_eventFlag = e;
 			_undoPushFlag = u;
 			CalcInfo();
-			OnCountChanged(new EventArgs());
 			return true;
 		}
 		public bool InsertFrame()
 		{
-			return InsertFrame(Selection.Start, Selection.Length);
+			return InsertFrame(sel.Start, sel.Length);
 		}
 		public bool RemoveFrame(int start, int length)
 		{
@@ -526,12 +522,11 @@ namespace AE_RemapTria
 			_eventFlag = e;
 			_undoPushFlag = u;
 			CalcInfo();
-			OnCountChanged(new EventArgs());
 			return true;
 		}
 		public bool RemoveFrame()
 		{
-			return RemoveFrame(Selection.Start, Selection.Length);
+			return RemoveFrame(sel.Start, sel.Length);
 		}
 	}
 

@@ -16,7 +16,7 @@ using PdfSharpCore.Drawing;
 
 namespace AE_RemapTria
 {
-	public partial class TR_Grid : TR_Control
+    public partial class TR_Grid : TR_Control
     {
 
 		public TR_CellData CellData;
@@ -26,7 +26,7 @@ namespace AE_RemapTria
 
         public TR_Grid()
         {
-			m_FontIndex = 0;
+			m_FontIndex = 5;
 			m_FontSize = 9;
 			
 			ChkOffScr();
@@ -59,13 +59,17 @@ namespace AE_RemapTria
 			Point p = new Point(leftW, topW);
 			if (m_Location != p)m_Location = p;
 
-			int ww = leftW + Sizes.InterWidth + T_Size.VScrolWidth + Sizes.InterWidth;
-			int hh = topW + Sizes.InterHeight + T_Size.HScrolHeight + Sizes.InterHeight;
+			int ww = leftW + Sizes.InterWidth + T_Size.VScrolWidth;
+			int hh = topW + Sizes.InterHeight + T_Size.HScrolHeight;
 			Size sz = new Size(
 				m_form.Width - ww,
 				m_form.Height - hh
 				);
-			if (m_Size != sz) m_Size = sz;
+			if (m_Size != sz)
+			{
+				m_Size = sz;
+				//Sizes.SizeSetting();
+			}
 			ChkOffScr();
 		}
 
@@ -233,7 +237,97 @@ namespace AE_RemapTria
 			IsDrawOffScr = false;
 
 		}
+		// *****************************************************
+		public void DrawOne(Graphics g ,int c)
+		{
+			if (IsDrawOffScr) return;
+			if (m_form == null) return;
+			IsDrawOffScr = true;
+			Pen p = new Pen(Color.Black);
+			SolidBrush sb = new SolidBrush(Color.White);
+			try
+			{
+				int c0 = Sizes.DispX / Sizes.CellWidth - 1;
+				if (c0 < 0) c0 = 0;
+				int c1 = (Sizes.DispX + this.Width) / Sizes.CellWidth + 1;
+				if (c1 >= CellData.CellCount) c1 = CellData.CellCount - 1;
+
+				int f0 = Sizes.DispY / Sizes.CellHeight - 1;
+				if (f0 < 0) f0 = 0;
+				int f1 = (Sizes.DispY + this.Height) / Sizes.CellHeight + 1;
+				if (f1 >= CellData.FrameCount) c1 = CellData.FrameCount - 1;
+
+				Rectangle r = Sizes.DispCell;
+				if((c>= r.Left)&&(c<=r.Right))
+				{
+					int x = c * Sizes.CellWidth - Sizes.DispX;
+					int x2 = x + Sizes.CellWidth - 1;
+					// 消去
+					sb.Color = Color.Transparent;
+					g.FillRectangle(sb, new Rectangle(x, 0, Sizes.CellWidth, m_Size.Height));
+
+					//偶数のセルを塗る
+					if (c == CellData.TargetIndex)
+					{
+						T_G.GradBGCurrent(g, new Rectangle(x, 0, Sizes.CellWidth, this.Height));
+					}
+					else if (c % 2 == 0)
+					{
+
+						T_G.GradBGEven(g, new Rectangle(x, 0, Sizes.CellWidth, this.Height));
+					}
+
+
+					for (int f = r.Top; f <= r.Bottom; f++)
+					{
+						DrawCell(g, sb, p, c, f);
+						//横線を描く
+						DrawFrameLine(g, p, f);
+					}
+					//縦線を描く
+					p.Width = 1;
+					p.Color = Colors.LineDark;
+					DrawVerLine(g, p, x2, 0, this.Height);
+					if (c == CellData.TargetIndex)
+					{
+						DrawVerLine(g, p, x2 - 1, 0, this.Height);
+						DrawVerLine(g, p, x, 0, this.Height);
+					}
+				}
+				p.Color = Colors.Line;
+				DrawFrame(g, p, new Rectangle(0, 0, Width, Height));
+			}
+			catch
+			{
+				Debug.WriteLine("Grid Print Error");
+			}
+			finally
+			{
+				p.Dispose();
+				sb.Dispose();
+			}
+
+			IsDrawOffScr = false;
+
+		}
+		public void ChkOffScrOne(int idx)
+		{
+			if (m_form != null)
+			{
+				Graphics g = Graphics.FromImage(m_OffScr);
+				g.SmoothingMode = SmoothingMode.AntiAlias;
+				DrawOne(g,idx);
+			}
+		}
+		public void ChkOffScrOne()
+		{
+			if (m_form != null)
+			{
+				ChkOffScrOne(m_form.Selection.Target);
+			}
+		}
 		private int m_mdFrame = -1;
+		private int m_mdCell = -1;
 		private int m_CopyFrame = -1;
 		private Point m_md = new Point(-1, -1);
 		private Point m_disp = new Point(-1, -1);
@@ -248,8 +342,8 @@ namespace AE_RemapTria
 				Point cp = Sizes.PosCell(m_MDownPoint.X, m_MDownPoint.Y);
 				if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
 				{
-					int y0 = CellData.Selection.Start;
-					int y1 = CellData.Selection.LastFrame;
+					int y0 = CellData.sel.Start;
+					int y1 = CellData.sel.LastFrame;
 					if (cp.Y <= y0)
 					{
 						y0 = cp.Y;
@@ -259,18 +353,19 @@ namespace AE_RemapTria
 						y1 = cp.Y;
 					}
 					CellData.PushUndo(BackupSratus.SelectionChange);
-					CellData.Selection.Set2Frame(y0, y1);
+					CellData.sel.Set2Frame(y0, y1);
 				}
 				else if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt)
 				{
 					CellData.PushUndo(BackupSratus.SelectionChange);
-					CellData.Selection.SelToEnd();
+					CellData.sel.SelToEnd();
 				}
 				else
 				{
 					m_mdFrame = cp.Y;
+					m_mdCell = cp.X;
 					CellData.PushUndo(BackupSratus.SelectionChange);
-					CellData.Selection.SetTargetStartLength(cp.X, cp.Y, 1);
+					CellData.sel.SetTargetStartLength(cp.X, cp.Y, 1);
 					if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 					{
 						m_CopyFrame = CellData.GetCellData(cp.X, cp.Y);
@@ -283,6 +378,8 @@ namespace AE_RemapTria
 
 				}
 				ChkOffScr();
+				if (m_form != null) m_form.Caption.ChkOffScr();
+				if (m_form!=null) m_form.Frame.ChkOffScr();
 				Invalidate();
 			}
 			return ret;
@@ -310,13 +407,14 @@ namespace AE_RemapTria
 						Sizes.DispY -= Sizes.CellHeight;
 					}
 					Point cp = Sizes.PosCell(m_MDownPoint.X, m_MDownPoint.Y);
-					CellData.Selection.Set2Frame(m_mdFrame, cp.Y);
+					CellData.sel.Set2Frame(m_mdFrame, cp.Y);
 					if (m_CopyFrame >= 0)
 					{
 						CellData.SetCellNum(m_CopyFrame, false);
 					}
 					CellData._undoPushFlag = b;
-					ChkOffScr();
+					ChkOffScrOne(m_mdCell);
+					if (m_form != null) m_form.Frame.ChkOffScr();
 					Invalidate();
 				}
 			}
@@ -330,7 +428,10 @@ namespace AE_RemapTria
 			if (m_mdFrame >= 0)
 			{
 				m_mdFrame = -1;
+				m_mdCell = -1;
 				ChkOffScr();
+				if (m_form != null) m_form.Frame.ChkOffScr();
+				if (m_form != null) m_form.Caption.ChkOffScr();
 				Invalidate();
 			}
 			m_md = new Point(-1, -1);
@@ -338,7 +439,7 @@ namespace AE_RemapTria
 			m_CopyFrame = -1;
 			return ret;
 		}
-		protected override bool ChkMouseLeave(EventArgs e)
+		public override bool ChkMouseLeave(EventArgs e)
 		{
 			if (m_mdFrame >= 0)
 			{

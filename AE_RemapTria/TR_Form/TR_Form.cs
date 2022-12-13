@@ -10,7 +10,7 @@ using System.Text;
 namespace AE_RemapTria
 {
 
-	public partial class TR_Form : Form
+    public partial class TR_Form : Form
 	{
 		public TR_CellData CellData = new TR_CellData();
 		public TR_Size Sizes = new TR_Size();
@@ -18,9 +18,14 @@ namespace AE_RemapTria
 		public T_Funcs Funcs = new T_Funcs();
 		public TR_Grid Grid = new TR_Grid();
 
+		public TR_Selection Selection = new TR_Selection();
+
 		public TR_Menu Menu = new TR_Menu();
 		public TR_MenuPlate [] MenuPlates = new TR_MenuPlate[0];
 
+		public TR_Frame Frame = new TR_Frame();
+		public TR_Caption Caption = new TR_Caption();
+		public TR_VScrol VScrol = new TR_VScrol();
 		public float MenuFontSize
 		{
 			get { return Menu.FontSize; }
@@ -51,7 +56,10 @@ namespace AE_RemapTria
 		{
 			if (Menu != null) Menu.ChkOffScr();
 			if (Input != null) Input.ChkOffScr();
+			if (Frame != null) Frame.ChkOffScr();
+			if (Caption != null) Caption.ChkOffScr();
 			if (Grid != null) Grid.ChkOffScr();
+			if (VScrol != null) VScrol.ChkOffScr();
 			this.Invalidate();
 		}
 		private T_MyFonts m_Fonts = new T_MyFonts();
@@ -212,18 +220,16 @@ namespace AE_RemapTria
 			StringFormat.LineAlignment = StringAlignment.Center;
 
 			MakeFuncs();
+			CellData.SetTRForm(this);
+			Selection.SetCellData(CellData);
 			Grid.SetTRForm(this);
+			Sizes.SetTRForm(this);
+
 			Menu.SetTRForm(this);
 			Input.SetTRForm(this);
-
-			CellData.ValueChanged += CellData_ValueChangedEvent;
-			CellData.SelChanged += CellData_SelChangedEvent;
-			CellData.CountChanged += CellData_CountChanged;
-
-			//Sizes.ChangeGridSize += Sizes_ChangeGridSize;
-			//Sizes.ChangeDisp += Sizes_ChangeDisp;
-			//Sizes.ChangeDispMax += Sizes_ChangeDisp;
-			//Sizes.SetGrid(Grid);
+			Frame.SetTRForm(this);
+			Caption.SetTRForm(this);
+			VScrol.SetTRForm(this);
 
 			kagi[0] = Properties.Resources.Kagi00;
 			kagi[1] = Properties.Resources.Kagi01;
@@ -245,31 +251,7 @@ namespace AE_RemapTria
 			this.AllowDrop = true;
 
 		}
-		// ************************************************************************
-		private void CellData_CountChanged(object? sender, EventArgs e)
-		{
-			//ChkMinMax();
-			//ChkHScrl();
-			//ChkVScrl();
-		}
-		private void Sizes_ChangeDisp(object? sender, EventArgs e)
-		{
-			//Invalidate();
-			//if (m_Frame != null) m_Frame.Invalidate();
-		}
-		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
-		{
-		}
-		// ************************************************************************************
-		private void CellData_SelChangedEvent(object? sender, EventArgs e)
-		{
-			//Invalidate();
-		}
-		// ************************************************************************************
-		private void CellData_ValueChangedEvent(object? sender, EventArgs e)
-		{
-			//Invalidate();
-		}
+
 		// ********************************************************************
 		protected override void OnLoad(EventArgs e)
 		{
@@ -365,6 +347,14 @@ namespace AE_RemapTria
 			}else if (Menu.ChkMouseDown(e))
 			{
 
+			
+			}else if (Frame.ChkMouseDown(e))
+			{
+
+			}
+			else if (Caption.ChkMouseDown(e))
+			{
+
 			}
 			else
 			{
@@ -456,7 +446,16 @@ namespace AE_RemapTria
 			else if(Menu.ChkMouseUp(e))
 			{
 
-			}else if(m_mdPos!=MDPos.None)
+			}
+			else if (Frame.ChkMouseUp(e))
+			{
+
+			}
+			else if (Caption.ChkMouseUp(e))
+			{
+
+			}
+			else if (m_mdPos!=MDPos.None)
 			{
 				m_mdPos = MDPos.None;
 			}
@@ -465,7 +464,10 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnDoubleClick(EventArgs e)
 		{
-			if (m_mdPos == MDPos.Header)
+			if(Caption.ChkDoubleClick(e))
+			{ 
+			}
+			else if (m_mdPos == MDPos.Header)
 			{
 				HeightMax();
 				m_mdPos=MDPos.None;	
@@ -473,6 +475,68 @@ namespace AE_RemapTria
 			base.OnDoubleClick(e);
 		}
 
+		// ********************************************************************
+		public Point[] Kagi(int pos)
+		{
+			Point[] ret = new Point[3];
+			int x = 0;
+			int y = 0;
+			switch (pos)
+			{
+				case 0:
+					x = 8;
+					y = 4 + Menu.MenuHeight + Sizes.InterHeight;
+					ret = new Point[]
+					{
+						new Point(x, y+12),
+						new Point(x, y),
+						new Point(x+12,y)
+					};
+					break;
+				case 1:
+					x = this.Width-8;
+					y = 4 + Menu.MenuHeight + Sizes.InterHeight;
+					ret = new Point[]
+					{
+						new Point(x-12, y),
+						new Point(x, y),
+						new Point(x,y+12)
+					};
+					break;
+				case 2:
+					x = this.Width - 8;
+					y = this.Height - 8;
+					ret = new Point[]
+					{
+						new Point(x, y-12),
+						new Point(x, y),
+						new Point(x-12,y)
+					};
+					break;
+				case 4:
+					x = this.Width - 8;
+					y = this.Height - 8;
+					ret = new Point[]
+					{
+						new Point(x, y-12),
+						new Point(x, y),
+						new Point(x-12,y),
+						new Point(x-12,y-12)
+					};
+					break;
+				case 3:
+					x = 8;
+					y = this.Height - 8;
+					ret = new Point[]
+					{
+						new Point(x, y-12),
+						new Point(x, y),
+						new Point(x+12,y)
+					};
+					break;
+			}
+			return ret;
+		}
 		// ********************************************************************
 		private bool IsPaintNow = false;
 		protected override void OnPaint(PaintEventArgs e)
@@ -488,23 +552,30 @@ namespace AE_RemapTria
 			{
 				//g.DrawImage(Properties.Resources.Back, new Rectangle(0, 0, this.Width, this.Height));
 				T_G.GradBG(g, this.ClientRectangle);
-				int w0 = 5;
+				int w0 = 3;
 				int w1 = this.Width - 20 - w0;
-				int h0 = 25;
-				int h1 = this.Height -20 -5;
+				int h0 = 23;
+				int h1 = this.Height -20 -3;
 
-				g.DrawImage(kagi[0], new Point(w0, h0));
-				g.DrawImage(kagi[1], new Point(w1, h0));
+				p.Color = Colors.LineB;
+				p.Width = 3;
+				g.DrawLines(p, Kagi(0));
+				g.DrawLines(p, Kagi(1));
+				g.DrawLines(p, Kagi(3));
+
 				if (m_IsMouseBR)
 				{
-					g.DrawImage(kagi[4], new Point(w1, h1));
+					sb.Color = Colors.Kagi;
+					g.FillPolygon(sb, Kagi(4));
+					p.Color = Colors.Line;
+					g.DrawLines(p, Kagi(2));
 
 				}
 				else
 				{
-					g.DrawImage(kagi[2], new Point(w1, h1));
+					p.Color = Colors.Line;
+					g.DrawLines(p, Kagi(2));
 				}
-				g.DrawImage(kagi[3], new Point(w0, h1));
 
 				Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
 				sb.Color = Grid.Colors.TopBar;
@@ -516,7 +587,10 @@ namespace AE_RemapTria
 
 				g.DrawImage(Menu.Offscr(), Menu.Location);
 				g.DrawImage(Input.Offscr(), Input.Location);
+				g.DrawImage(Frame.Offscr(), Frame.Location);
+				g.DrawImage(Caption.Offscr(), Caption.Location);
 				g.DrawImage(Grid.Offscr(), Grid.Location);
+				g.DrawImage(VScrol.Offscr(), VScrol.Location);
 			}
 			finally
 			{
@@ -527,42 +601,15 @@ namespace AE_RemapTria
 
 		}
 		// ********************************************************************
-
-
-		// ********************************************************************
-		/*
-		[Category("_AE_Remap")]
-		public T_Grid Grid
-		{
-			get { return m_grid; }
-			set
-			{
-				m_grid = value;
-				ChkGrid();
-			}
-		}
-		*/
-		/*
-		private void ChkGrid()
-		{
-			if (m_grid != null)
-			{
-				SetMinMax();
-				SetLocSize();
-				//m_grid.SetForm(this);
-				m_grid.Sizes.ChangeGridSize += Sizes_ChangeGridSize;
-			}
-
-		}
-		*/
-
-		// ********************************************************************
 		private void SetLocSize()
 		{
+			Grid.SetLocSize();
+			Sizes.SizeSetting();
 			Menu.SetLocSize();
 			Input.SetLocSize();
-			Grid.SetLocSize();
-			Sizes.SizeSetting(Grid, CellData);
+			Frame.SetLocSize();
+			Caption.SetLocSize();
+			VScrol.SetLocSize();
 		}
 		public void ChkSize()
 		{
@@ -596,7 +643,6 @@ namespace AE_RemapTria
 		private void SetMinMax()
 		{
 
-			TR_Size ts = Grid.Sizes;
 			int cc = CellData.CellCount;
 			int fc = CellData.FrameCount;
 
@@ -607,13 +653,37 @@ namespace AE_RemapTria
 
 
 			this.MinimumSize = new Size(
-				x +ts.FrameWidth+ ts.InterWidth+ts.CellWidth*6+ ts.InterWidth + T_Size.VScrolWidth,
-				y + 25 + ts.CaptionHeight2 
-					+ ts.CaptionHeight +ts.InterHeight + ts.CellHeight*6+ ts.InterHeight+ T_Size.HScrolHeight
+				x 
+				+ Sizes.FrameWidth
+				+ Sizes.InterWidth
+				+ Sizes.CellWidth*6
+				+ Sizes.InterWidth 
+				+ T_Size.VScrolWidth,
+				y 
+				+ Sizes.MenuHeight 
+				+ Sizes.CaptionHeight2 
+				+ Sizes.CaptionHeight 
+				+ Sizes.InterHeight 
+				+ Sizes.CellHeight*6
+				+ Sizes.InterHeight
+				+ T_Size.HScrolHeight
 				);
 			this.MaximumSize = new Size(
-				x + ts.FrameWidth + ts.InterWidth*3 + ts.CellWidth * cc + T_Size.VScrolWidth,
-				y + 25 + ts.CaptionHeight2 + ts.CaptionHeight + ts.CellHeight * fc + T_Size.HScrolHeight+T_Size.InterHeightDef
+				x
+				+ Sizes.FrameWidth
+				+ Sizes.InterWidth
+				+ Sizes.CellWidth * CellData.CellCount
+				+ Sizes.InterWidth
+				+ T_Size.VScrolWidth,
+				y
+				+ Sizes.MenuHeight
+				+ Sizes.CaptionHeight2
+				+ Sizes.CaptionHeight
+				+ Sizes.InterHeight
+				+ Sizes.CellHeight * CellData.FrameCountTrue
+				+ Sizes.InterHeight
+				+ T_Size.HScrolHeight
+				+ Sizes.InterHeight
 				);
 		}
 		// ********************************************************************
@@ -631,9 +701,11 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
+#if DEBUG
 			this.Text = String.Format("{0}", keyData.ToString());
-			FuncItem fi = Funcs.FindKeys(keyData);
-			if (fi != null)
+#endif
+			FuncItem? fi = Funcs.FindKeys(keyData);
+			if ((fi != null)&&(fi.Func!=null))
 			{
 				if (fi.Func()) this.Invalidate();
 				return true;

@@ -24,15 +24,20 @@ namespace AE_RemapTria
 		/// </summary>
 		public bool _eventFlag = true;
 
-		public event EventHandler? ValueChanged = null;
-		public event EventHandler? SelChanged = null;
-		public event EventHandler? CountChanged = null;
+		protected TR_Form m_form;
+		public TR_Selection sel;
+		public void SetTRForm(TR_Form fm)
+		{
+			m_form = fm;
+			if(m_form!=null)
+			{
+				sel = m_form.Selection;
+			}
+		}
 		// ******************************************************************************
-		private TR_Selection m_sel = new();
-		public TR_Selection Selection { get { return m_sel; } }
-		public bool IsTargetCell(int idx) { return  m_sel.IsTargerCell(idx); }
-		public bool IsSelectedFrame(int f) { return m_sel.IsSelectedFrame(f); }
-		public bool IsSelected(int c,int f) { return m_sel.IsSelected(c,f); }
+		public bool IsTargetCell(int idx) { return  sel.IsTargerCell(idx); }
+		public bool IsSelectedFrame(int f) { return sel.IsSelectedFrame(f); }
+		public bool IsSelected(int c,int f) { return sel.IsSelected(c,f); }
 		// ******************************************************************************
 		/// <summary>
 		/// 抜きセル用のフラグ配列
@@ -79,13 +84,13 @@ namespace AE_RemapTria
 		}
 		public string CaptionTarget()
 		{
-			return CaptionFromIndex(Selection.Target);
+			return CaptionFromIndex(sel.Target);
 		}
 		public void SetCaptionTarget(string s)
 		{
 			s = s.Trim();
 			if (s == "") return;
-			int c = Selection.Target;
+			int c = sel.Target;
 			if ((c >= 0) && (c < CellCount))
 			{
 				m_cells[c].Caption = s;
@@ -94,18 +99,17 @@ namespace AE_RemapTria
 		}
 		public int TargetIndex
 		{
-			get { return m_sel.Target; }
+			get { return sel.Target; }
 			set 
 			{
 				int v = value;
 				if (v < 0) v = 0;
 				else if (v >= CellCount) v = CellCount - 1;
 
-				if (m_sel.Target != v)
+				if (sel.Target != v)
 				{
 					PushUndo(BackupSratus.SelectionChange);
-					m_sel.Target = v;
-					OnSelChanged(new EventArgs());
+					sel.Target = v;
 				}
 			}
 		}
@@ -119,7 +123,6 @@ namespace AE_RemapTria
 				if(m_FrameRate != value)
 				{
 					m_FrameRate = value;
-					OnValueChanged(new EventArgs());
 				};  
 			}
 		}
@@ -155,7 +158,6 @@ namespace AE_RemapTria
 				{
 					m_StartKoma = 0;
 				}
-				OnValueChanged(new EventArgs());
 			}
 		}
 		private int m_OffSetFrame = 0;
@@ -165,7 +167,6 @@ namespace AE_RemapTria
 			set
 			{
 				m_OffSetFrame=value;
-				OnValueChanged(new EventArgs());
 			}
 		}
 
@@ -188,44 +189,10 @@ namespace AE_RemapTria
 		// ******************************************************
 		public TR_CellData()
 		{
-			_undoPushFlag = false;
-			m_sel.SetCellData(this);
 			InitSize(12, 72);
-			_undoPushFlag = true;
 		}
 
-		// ******************************************************
-		protected virtual void OnValueChanged(EventArgs e)
-		{
-			if (_eventFlag == false) return;
-			if (ValueChanged != null)
-			{
-				ValueChanged(this, e);
-			}
-		}
-		// ******************************************************
-		protected virtual void OnSelChanged(EventArgs e)
-		{
-			if (_eventFlag == false) return;
-			if (SelChanged != null)
-			{
-				SelChanged(this, e);
-			}
-		}
-		// ******************************************************
-		protected virtual void OnCountChanged(EventArgs e)
-		{
-			if (_eventFlag == false) return;
-			if (CountChanged != null)
-			{
-				CountChanged(this, e);
-			}
-		}
-		// ******************************************************
-		public void CallCountCahnged()
-		{
-			OnCountChanged(EventArgs.Empty);
-		}
+
 		// ******************************************************
 		public void InitSize(int cc,int fc)
 		{
@@ -255,7 +222,6 @@ namespace AE_RemapTria
 				}
 				m_FrameEnabled.SetFrameCountTrue(tfc);
 				CalcInfo();
-				OnCountChanged(new EventArgs());
 			}
 		}
 		// ******************************************************
@@ -276,7 +242,6 @@ namespace AE_RemapTria
 						m_cells[i] = new TR_CellLayer(fc, Char.ConvertFromUtf32('A'+i)); ;
 					}
 				}
-				OnCountChanged(new EventArgs());
 			}
 		}
 		// ******************************************************
@@ -290,18 +255,17 @@ namespace AE_RemapTria
 			SetFrameCount(f);
 			_eventFlag = b;
 			_undoPushFlag = b2;
-			OnValueChanged(new EventArgs());
 
 		}
 		// ******************************************************
 		public int[] EnableFrames()
 		{
 
-			return m_FrameEnabled.Values(Selection); 
+			return m_FrameEnabled.Values(sel); 
 		}
 		public void SetFrameEnabled(int[]bb)
 		{
-			m_FrameEnabled.SetValues(Selection, bb);
+			m_FrameEnabled.SetValues(sel, bb);
 		}
 		// ******************************************************
 		private void CalcInfo()
@@ -325,9 +289,9 @@ namespace AE_RemapTria
 		public bool ToggleFrameEnabled()
 		{
 			PushUndo(BackupSratus.FrameEnabled);
-			for (int i = 0; i < Selection.Length; i++)
+			for (int i = 0; i < sel.Length; i++)
 			{
-				int f = Selection.Start + i;
+				int f = sel.Start + i;
 				if ((f >= 0) && (f < m_FrameEnabled.FrameCountTrue))
 				{
 					m_FrameEnabled.SetEnable(f, !m_FrameEnabled.Enable(f));
@@ -335,16 +299,15 @@ namespace AE_RemapTria
 			}
 			m_FrameEnabled.CalcEnableFrame();
 			CalcInfo ();
-			OnCountChanged(new EventArgs());
 			return true;
 		}
 		// ******************************************************
 		public void SetFrameEnabled(bool b)
 		{
 			PushUndo(BackupSratus.FrameEnabled);
-			for (int i = 0; i < Selection.Length; i++)
+			for (int i = 0; i < sel.Length; i++)
 			{
-				int f = Selection.Start + i;
+				int f = sel.Start + i;
 				if ((f >= 0) && (f < m_FrameEnabled.FrameCountTrue))
 				{
 					m_FrameEnabled.SetEnable(f,b);
@@ -352,7 +315,6 @@ namespace AE_RemapTria
 			}
 			m_FrameEnabled.CalcEnableFrame();
 			CalcInfo();
-			OnCountChanged(new EventArgs());
 		}
 		// ******************************************************
 		public CellSatus GetCellStatus(int c, int f)
@@ -411,11 +373,10 @@ namespace AE_RemapTria
 			int cc = c;
 			if (cc < 0) cc = 0;
 			else if (cc >= m_cells.Length) cc = m_cells.Length-1;
-			if( cc != m_sel.Target)
+			if( cc != sel.Target)
 			{
 				PushUndo(BackupSratus.SelectionChange);
-				m_sel.SetTarget(cc);
-				OnSelChanged(new EventArgs());
+				sel.SetTarget(cc);
 			}
 		}
 		// ******************************************************
@@ -424,10 +385,10 @@ namespace AE_RemapTria
 			int ff = f;
 			if (ff < 0) ff = 0;
 			else if (ff >= m_cells[0].FrameCountTrue) ff = m_cells[0].FrameCountTrue;
-			if (ff != m_sel.Start)
+			if (ff != sel.Start)
 			{
 				PushUndo(BackupSratus.SelectionChange);
-				m_sel.SetStart(ff);
+				sel.SetStart(ff);
 				//OnSelChanged(new EventArgs());
 			}
 		}
@@ -438,7 +399,6 @@ namespace AE_RemapTria
 			m_FrameEnabled.Init();
 			for (int c = 0; c < m_cells.Length; c++) m_cells[c].Init();
 			CalcInfo();
-			OnValueChanged(new EventArgs());
 
 		}
 		// ******************************************************
@@ -448,7 +408,6 @@ namespace AE_RemapTria
 			{
 				m_cells[c].Init();
 				CalcInfo();
-				OnValueChanged(new EventArgs());
 			}
 
 		}
@@ -456,7 +415,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		public int[] GetCellNum()
 		{
-			return m_cells[Selection.Target].Values(Selection);
+			return m_cells[sel.Target].Values(sel);
 		}
 		// ******************************************************
 		/// <summary>
@@ -466,14 +425,13 @@ namespace AE_RemapTria
 		{
 			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 
-			int sv = m_sel.Start-1;
+			int sv = sel.Start-1;
 			if (sv < 0) sv = 0;
-			int v = m_cells[m_sel.Target].Value(sv);
+			int v = m_cells[sel.Target].Value(sv);
 			if ((sv == 0) && (v <= 0)) v = 1;
 
-			m_cells[Selection.Target].SetValues(Selection, v);
-			m_sel.MoveDown();
-			OnValueChanged(new EventArgs());
+			m_cells[sel.Target].SetValues(sel, v);
+			sel.MoveDown();
 
 		}
 		public void SetCellNumInc()
@@ -481,27 +439,25 @@ namespace AE_RemapTria
 			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
 			//int fc = m_data[0].Length;
 
-			int sv = m_sel.Start - 1;
+			int sv = sel.Start - 1;
 			if (sv < 0) sv = 0;
-			int v = m_cells[m_sel.Target].Value(sv);
+			int v = m_cells[sel.Target].Value(sv);
 			v += 1;
-			m_cells[Selection.Target].SetValues(Selection, v);
-			m_sel.MoveDown();
-			OnValueChanged(new EventArgs());
+			m_cells[sel.Target].SetValues(sel, v);
+			sel.MoveDown();
 
 		}
 
 		public void SetCellNumDec()
 		{
 			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
-			int sv = m_sel.Start - 1;
+			int sv = sel.Start - 1;
 			if (sv < 0) sv = 0;
-			int v = m_cells[m_sel.Target].Value(sv);
+			int v = m_cells[sel.Target].Value(sv);
 			v -= 1;
 			if (v < 0) v = 0;
-			m_cells[Selection.Target].SetValues(Selection, v);
-			m_sel.MoveDown();
-			OnValueChanged(new EventArgs());
+			m_cells[sel.Target].SetValues(sel, v);
+			sel.MoveDown();
 
 		}
 		// ******************************************************
@@ -513,12 +469,11 @@ namespace AE_RemapTria
 		{
 			if (v < 0) v = 0;
 			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
-			m_cells[Selection.Target].SetValues(Selection, v);
+			m_cells[sel.Target].SetValues(sel, v);
 			if (IsMove)
 			{
-				m_sel.MoveDown();
+				sel.MoveDown();
 			}
-			OnValueChanged(new EventArgs());
 
 		}
 		// ******************************************************
@@ -543,7 +498,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		public void SetCellNumBS()
 		{
-			if (Selection.MoveUp())
+			if (sel.MoveUp())
 			{
 				SetCellNumEmpty(false);
 			}
@@ -556,14 +511,13 @@ namespace AE_RemapTria
 		public void SetCellNum(int [] ints)
 		{
 			if(_undoPushFlag==true) PushUndo(BackupSratus.NumberInput);
-			int len = m_sel.Length;
+			int len = sel.Length;
 			if (len > ints.Length)
 			{
-				m_sel.Length = len;
+				sel.Length = len;
 				len = ints.Length;
 			}
-			m_cells[Selection.Target].SetValues(Selection, ints);
-			OnValueChanged(new EventArgs());
+			m_cells[sel.Target].SetValues(sel, ints);
 
 		}
 
@@ -571,15 +525,14 @@ namespace AE_RemapTria
 		public bool SelectionAdd(int v)
 		{
 			bool ret = false;
-			int len = m_sel.Length + v;
+			int len = sel.Length + v;
 			if(len>0)
 			{
-				if (m_sel.Start + len <= FrameCount)
+				if (sel.Start + len <= FrameCount)
 				{
 					PushUndo(BackupSratus.SelectionChange);
-					m_sel.Length = len;
+					sel.Length = len;
 					ret = true;
-					OnSelChanged(new EventArgs());
 				}
 
 			}
@@ -591,15 +544,15 @@ namespace AE_RemapTria
 			if (c < 0) c = 0;
 			else if (c >= CellCount) c = CellCount - 1;
 			PushUndo(BackupSratus.SelectionChange);
-			m_sel.Target = c;
-			m_sel.Start = 0;
-			m_sel.Length = FrameCount;
-			OnSelChanged(new EventArgs());
+			sel.Target = c;
+			sel.Start = 0;
+			sel.Length = FrameCount;
+			ret = true;
 			return ret;
 		}
 		public bool SelectionAll()
 		{
-			return SelectionAll(m_sel.Target);
+			return SelectionAll(sel.Target);
 		}
 		static private string NV(int v)
 		{
@@ -714,20 +667,20 @@ namespace AE_RemapTria
 		public bool CellLeftShift()
 		{
 			bool ret = false;
-			if((Selection.Target>0)&&(Selection.Target < CellCount))
+			if((sel.Target>0)&&(sel.Target < CellCount))
 			{
-				ret = SwapCell(Selection.Target-1, Selection.Target);
-				Selection.Target -= 1;
+				ret = SwapCell(sel.Target-1, sel.Target);
+				sel.Target -= 1;
 			}
 			return ret;
 		}
 		public bool CellRightShift()
 		{
 			bool ret = false;
-			if ((Selection.Target >=0) && (Selection.Target < CellCount - 1))
+			if ((sel.Target >=0) && (sel.Target < CellCount - 1))
 			{
-				ret = SwapCell(Selection.Target, Selection.Target+1);
-				Selection.Target += 1;
+				ret = SwapCell(sel.Target, sel.Target+1);
+				sel.Target += 1;
 			}
 			return ret;
 		}
@@ -735,7 +688,7 @@ namespace AE_RemapTria
 		{
 			if ((st==lt)||(koma<=0)) return false;
 			PushUndo(BackupSratus.NumberInput);
-			m_cells[Selection.Target].AutoInput(Selection, st,lt, koma);
+			m_cells[sel.Target].AutoInput(sel, st,lt, koma);
 			return true;
 		}
 	}

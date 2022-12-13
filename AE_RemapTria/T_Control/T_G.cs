@@ -635,9 +635,9 @@ namespace BRY
         {
 
             GradV(g, 
-                Color.FromArgb(16, 32, 64), 
-                Color.FromArgb(1, 2, 4), 
-                Color.FromArgb(11, 22, 44), 
+                Color.FromArgb(20, 40, 90), 
+                Color.FromArgb(5, 5, 20), 
+                Color.FromArgb(20, 40, 70), 
                 rct);
 
 		}

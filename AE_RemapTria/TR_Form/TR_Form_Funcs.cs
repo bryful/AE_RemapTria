@@ -212,7 +212,7 @@ namespace AE_RemapTria
 				CellData.FrameCount = dlg.Frame;
 				CellData.SheetName = dlg.SheetName;
 				FileName = T_Def.ChangeName(FileName, dlg.SheetName);
-				Sizes.CallOnChangeGridSize();
+				ChkSize();
 			}
 			dlg.Dispose();
 			return true;
@@ -247,16 +247,7 @@ namespace AE_RemapTria
 		public bool Undo()
 		{
 			BackupSratus bs = CellData.PopUndo();
-			if (bs== BackupSratus.All)
-			{
-				//ChkHScrl();
-				//ChkVScrl();
-				ChkSize();
-			}
-			else
-			{
-				Sizes.SizeSetting(Grid, CellData);
-			}
+			ChkSize();
 			DrawAll();
 			return true;
 		}
@@ -266,7 +257,9 @@ namespace AE_RemapTria
 			if((CellData.TargetIndex!=c)&&(c>=0)&&(c<CellData.CellCount))
 			{
 				CellData.SetTargetCell(c);
-				DrawAll();
+				Caption.ChkOffScr();
+				Grid.ChkOffScr();
+				Invalidate();
 				return true;
 			}
 			else
@@ -278,9 +271,11 @@ namespace AE_RemapTria
 		{
 			if ((f >= 0) && (f < CellData.FrameCount))
 			{
-				int bs = CellData.Selection.Start;
+				int bs = CellData.sel.Start;
 				CellData.SetSelStart(f);
-				DrawAll();
+				Frame.ChkOffScr();
+				Grid.ChkOffScr();
+				Invalidate();
 				return true;
 			}
 			else
@@ -297,8 +292,7 @@ namespace AE_RemapTria
 		{
 			IsModif = false;
 			CellData.ClearAll();
-			if(Grid!=null)Grid.ChkOffScr();
-			Invalidate();
+			DrawAll();
 			return true;
 		}
 		// ************************************************************************************
@@ -329,28 +323,26 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ************************************************************************************
-		public bool InputAddKey(int v)
-		{
-			bool ret = false;
-			if ((v >= 0) || (v <= 9))
-			{
-				if (m_Value < 0) m_Value = 0;
-				m_Value = m_Value * 10 + v;
-				ret = true;
-				DrawAll();
-			}
-			else if (v < 0)
-			{
-				ret = InputClear();
-				DrawAll();
-			}
-			return ret;
-		}
 		public bool Inputnum(int v)
 		{
 			bool ret = false;
 			IsModif = true;
-			ret = InputAddKey(v);
+			if ((v >= 0) || (v <= 9))
+			{
+				if (m_Value < 0) m_Value = 0;
+				m_Value = m_Value * 10 + v;
+				Input.ChkOffScr();
+				ret = true;
+			}
+			else if (v < 0)
+			{
+				ret = InputClear();
+			}
+			if (ret)
+			{
+				Invalidate();
+				IsModif = true;
+			}
 			return ret;
 		}
 		public bool Input0() { return Inputnum(0); }
@@ -374,16 +366,20 @@ namespace AE_RemapTria
 			if (m_Value >= 0)
 			{
 				m_Value = -1;
-				DrawAll();
+				Input.ChkOffScr();
 				ret = true;
 			}
 			else
 			{
 				CellData.SetCellNumEmpty(false);
-				DrawAll();
+				Grid.ChkOffScrOne();
 				ret = true;
 			}
-			IsModif = true;
+			if (ret)
+			{
+				Invalidate();
+				IsModif = true;
+			}
 			return ret;
 		}
 		// ************************************************************************
@@ -413,51 +409,74 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			CellData.SetCellNumEmpty(true);
-			DrawAll();
+			Frame.ChkOffScr();
+			Grid.ChkOffScrOne();
+			this.Invalidate();
 			IsModif = true;
 			return ret;
 		}
-		public void ChkSelectionV()
+		public bool ChkSelectionV()
 		{
-			int y0 = CellData.Selection.Start * Sizes.CellHeight;
-			int y1 = (CellData.Selection.Start + CellData.Selection.Length) * Sizes.CellHeight;
+			bool ret = false;
+			int y0 = CellData.sel.Start * Sizes.CellHeight;
+			int y1 = (CellData.sel.Start + CellData.sel.Length) * Sizes.CellHeight;
 
 			int t0 = y0 - Sizes.DispY;
 			int t1 = y1 - Sizes.DispY;
-			if (t0 >= this.Height)
+			if (t0 >= Grid.Height)
 			{
-				int v = (CellData.Selection.Start + CellData.Selection.Length + 1) * Sizes.CellHeight - this.Height;
-				if (v > Sizes.DispMax.Y - Sizes.CellHeight * 3) v = Sizes.DispMax.Y;
-				Sizes.DispY = v;
+				int v = (t0 - Grid.Height) + (y1 - y0);
+				v = Sizes.DispY + v;
+				if (v > Sizes.DispMax.Y) v = Sizes.DispMax.Y;
+				if(Sizes.DispY != v)
+				{
+					Sizes.DispY = v;
+					ret = true;
+				}
 			}
 			else if (t1 <= 0)
 			{
-				int v = (CellData.Selection.Start) * Sizes.CellHeight;
-				if (v < Sizes.CellHeight * 3) v = 0;
-				Sizes.DispY = v;
-			}
+				int v = Sizes.DispY - (-t0);
+				if (v < 0) v = 0;
+				if(Sizes.DispY != v)
+				{
+					Sizes.DispY = v;
+					ret = true;
 
+				}
+			}
+			return ret;
 		}
-		public void ChkSelectionH()
+		public bool ChkSelectionH()
 		{
-			int x0 = CellData.Selection.Target * Sizes.CellWidth;
+			bool ret = false;
+			int x0 = CellData.sel.Target * Sizes.CellWidth;
 			int x1 = x0 + Sizes.CellWidth;
 
 			int t0 = x0 - Sizes.DispX;
 			int t1 = x1 - Sizes.DispX;
-			if (t1 >= this.Width)
+			if (t1 >= Grid.Width)
 			{
-				int v = Sizes.CellWidth * (CellData.Selection.Target + 1) - this.Width;
-				if (v >= Sizes.DispMax.X - Sizes.CellWidth / 2) v = Sizes.DispMax.X;
-				Sizes.DispX = v;
+				int v = (t0 - Grid.Width) + Sizes.CellWidth;
+				v = Sizes.DispX + v;
+				if (v > Sizes.DispMax.X) v = Sizes.DispMax.X;
+				if (Sizes.DispX != v)
+				{
+					Sizes.DispX = v;
+					ret = true;
+				}
 			}
 			else if (t0 <= 0)
 			{
-				int v = CellData.Selection.Target * Sizes.CellWidth;
-				if (v < Sizes.CellHeight / 2) v = 0;
-				Sizes.DispX = v;
+				int v = Sizes.DispX - (-t0);
+				if (v < 0) v = 0;
+				if(Sizes.DispX != v)
+				{
+					Sizes.DispX = v;
+					ret = true;
+				}
 			}
-
+			return ret;
 		}
 		public bool InputEnter()
 		{
@@ -467,14 +486,22 @@ namespace AE_RemapTria
 				CellData.SetCellNum(m_Value);
 				InputClear();
 				ret = true;
-				ChkSelectionV();
+				if(ChkSelectionV()==false)
+				{
+					Frame.ChkOffScr();
+					Grid.ChkOffScrOne();
+					this.Invalidate();
+				}
+				else
+				{
+					DrawAll();
+				}
 			}
 			else
 			{
 				ret = InputSame();
 			}
 			IsModif = true;
-			this.Invalidate();
 
 			return ret;
 
@@ -482,27 +509,50 @@ namespace AE_RemapTria
 		public bool InputSame()
 		{
 			CellData.SetCellNumSame();
-			ChkSelectionV();
 			IsModif = true;
-			DrawAll();
+			if(ChkSelectionV()==false)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
+			else
+			{
+				DrawAll();
+			}
 
 			return true;
 		}
 		public bool InputInc()
 		{
 			CellData.SetCellNumInc();
-			ChkSelectionV();
 			IsModif = true;
-			DrawAll();
+			if (ChkSelectionV()==false)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
+			else
+			{
+				DrawAll();
+			}
 
 			return true;
 		}
 		public bool InputDec()
 		{
 			CellData.SetCellNumDec();
-			ChkSelectionV();
-			IsModif = true;
-			DrawAll();
+			if (ChkSelectionV() == false)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
+			else
+			{
+				DrawAll();
+			}
 
 			return true;
 		}
@@ -511,18 +561,34 @@ namespace AE_RemapTria
 		public bool SelMoveDown()
 		{
 			CellData.PushUndo(BackupSratus.SelectionChange);
-			bool ret = CellData.Selection.MoveDown();
-			ChkSelectionV();
-			DrawAll();
+			bool ret = CellData.sel.MoveDown();
+			if (ChkSelectionV() == false)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
+			else
+			{
+				DrawAll();
+			}
 			return ret;
 		}
 		// ************************************************************************************
 		public bool SelMoveUp()
 		{
 			CellData.PushUndo(BackupSratus.SelectionChange);
-			bool ret = CellData.Selection.MoveUp();
-			ChkSelectionV();
-			DrawAll();
+			bool ret = CellData.sel.MoveUp();
+			if (ChkSelectionV() == false)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
+			else
+			{
+				DrawAll();
+			}
 
 			return ret;
 		}
@@ -530,7 +596,7 @@ namespace AE_RemapTria
 		public bool SelMoveRight()
 		{
 			CellData.PushUndo(BackupSratus.SelectionChange);
-			bool b = CellData.Selection.MoveRight();
+			bool b = CellData.sel.MoveRight();
 			ChkSelectionH();
 			DrawAll();
 
@@ -539,7 +605,7 @@ namespace AE_RemapTria
 		public bool SelMoveLeft()
 		{
 			CellData.PushUndo(BackupSratus.SelectionChange);
-			bool b = CellData.Selection.MoveLeft();
+			bool b = CellData.sel.MoveLeft();
 			ChkSelectionH();
 			DrawAll();
 			return b;
@@ -597,27 +663,43 @@ namespace AE_RemapTria
 		public bool SelAdd()
 		{
 			bool ret = CellData.SelectionAdd(1);
-			if (ret) DrawAll();
+			if (ret)
+			{
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+			}
 			return ret;
 		}
 		public bool SelDec()
 		{
 			bool ret = false;
-			if (CellData.Selection.Length > 1)
+			if (CellData.sel.Length > 1)
 			{
 				ret = CellData.SelectionAdd(-1);
-				if (ret) DrawAll();
+				if (ret)
+				{
+					Frame.ChkOffScr();
+					Grid.ChkOffScrOne();
+					this.Invalidate();
+				}
 			}
 			return ret;
 		}
 		public bool SelectionAll()
 		{
 			bool ret = false;
-			if (CellData.Selection.Length < CellData.FrameCount)
+			if (CellData.sel.Length < CellData.FrameCount)
 			{
 				CellData.PushUndo(BackupSratus.SelectionChange);
 				ret = CellData.SelectionAll();
-				if (ret) DrawAll();
+				if (ret)
+				{
+					Frame.ChkOffScr();
+					Grid.ChkOffScrOne();
+					this.Invalidate();
+				}
+
 
 			}
 			return ret;
@@ -641,13 +723,16 @@ namespace AE_RemapTria
 		public bool SetSelectionLength(int v)
 		{
 			bool b = false;
-			if (CellData.Selection.Length != v)
+			if (CellData.sel.Length != v)
 			{
 				CellData.PushUndo(BackupSratus.SelectionChange);
-				CellData.Selection.Length = v;
+				CellData.sel.Length = v;
 				b = true;
 
-				DrawAll();
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+
 			}
 			return b;
 		}
@@ -655,12 +740,15 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 
-			int l2 = CellData.FrameCount - CellData.Selection.Start;
-			if(CellData.Selection.Length<l2)
+			int l2 = CellData.FrameCount - CellData.sel.Start;
+			if(CellData.sel.Length<l2)
 			{
-				CellData.Selection.SetLength(l2);
+				CellData.sel.SetLength(l2);
 				ret = true;
-				DrawAll();
+				Frame.ChkOffScr();
+				Grid.ChkOffScrOne();
+				this.Invalidate();
+
 			}
 			return ret;
 		}

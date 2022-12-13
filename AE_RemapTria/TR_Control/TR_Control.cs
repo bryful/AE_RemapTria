@@ -9,17 +9,18 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
+using static AE_RemapTria.NavBar;
 
 namespace AE_RemapTria
 {
     public class TR_Control
     {
-        public const int MenuHeight = 20;
+        public readonly int MenuHeight = 20;
 
         protected TR_Form? m_form = null;
         protected Font? m_font = null;
         public TR_Colors? Colors = null;
-        protected int m_FontIndex = 5;
+		protected int m_FontIndex = 5;
         public int FontIndex
         {
             get { return m_FontIndex; }
@@ -56,11 +57,11 @@ namespace AE_RemapTria
                 }
             }
         }
-        // ************************************************************************
+		// ************************************************************************
 
-        // ************************************************************************
-        // ************************************************************************
-        private Bitmap m_OffScr = new Bitmap(10, 10, PixelFormat.Format32bppArgb);
+		// ************************************************************************
+		// ************************************************************************
+		protected Bitmap m_OffScr = new Bitmap(10, 10, PixelFormat.Format32bppArgb);
         public Bitmap Offscr() { return m_OffScr; }
         protected Size m_Size = new Size(100, 100);
         //protected Size m_MinimumSize = new Size(100, 100);
@@ -378,7 +379,7 @@ namespace AE_RemapTria
             return ret;
         }
 		// **********************************************************************
-		protected virtual bool ChkMouseLeave(EventArgs e)
+		public virtual bool ChkMouseLeave(EventArgs e)
         {
 			bool ret = false;
 			m_MDown = false;
@@ -387,6 +388,15 @@ namespace AE_RemapTria
 			Invalidate();
 
 			return ret;
+		}
+		public virtual bool ChkDoubleClick(EventArgs e)
+        {
+			bool ret = false;
+			if (m_MDown)
+            {
+                ret = true;
+            }
+            return ret;
 		}
 
 	}

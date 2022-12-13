@@ -351,7 +351,7 @@ namespace AE_RemapTria
 			}
 			return ret;
         }
-		protected override bool ChkMouseLeave(EventArgs e)
+		public override bool ChkMouseLeave(EventArgs e)
 		{
 			m_MDown = false;
 			m_mm = -1;

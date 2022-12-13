@@ -249,7 +249,6 @@ namespace AE_RemapTria
 				cd.CellWithEnabled = aj.cellWithEnabled;
 			}
 			cd._eventFlag = b;
-			cd.CallCountCahnged();
 			return true;
 		}       
 		// ****************************************

@@ -36,15 +36,15 @@ namespace AE_RemapTria
 					enables = cd.EnableFrames();
 					break;
 				case BackupSratus.NumberInput:
-					this.sel = new TR_Selection(cd.Selection);
+					this.sel = new TR_Selection(sel);
 					data = new int[1][];
 					data[0] = cd.GetCellNum();
 					break;
 				case BackupSratus.SelectionChange:
-					this.sel = new TR_Selection(cd.Selection);
+					this.sel = new TR_Selection(sel);
 					break;
 				case BackupSratus.FrameEnabled:
-					this.sel = new TR_Selection(cd.Selection);
+					this.sel = new TR_Selection(sel);
 					this.enables = cd.EnableFrames();
 					break;
 			}
@@ -58,18 +58,18 @@ namespace AE_RemapTria
 				case BackupSratus.All:
 					cd.RestoreCellData(data);
 					cd.RestoreCaption(caps);
-					cd.Selection.Copy(sel);
+					cd.sel.Copy(sel);
 					cd.SetFrameEnabled(enables);
 					break;
 				case BackupSratus.NumberInput:
-					cd.Selection.Copy(sel);
+					cd.sel.Copy(sel);
 					cd.SetCellNum(data[0]);
 					break;
 				case BackupSratus.SelectionChange:
-					cd.Selection.Copy(sel);
+					cd.sel.Copy(sel);
 					break;
 				case BackupSratus.FrameEnabled:
-					cd.Selection.Copy(sel);
+					cd.sel.Copy(sel);
 					cd.SetFrameEnabled(enables);
 					break;
 			}
@@ -158,7 +158,6 @@ namespace AE_RemapTria
 			m_BackupCells.RemoveAt(idx);
 			_undoPushFlag = b;
 			_eventFlag = b2;
-			OnValueChanged(new EventArgs());
 			return ret;
 		}
 		// ******************************************************
