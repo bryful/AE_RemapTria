@@ -298,6 +298,8 @@ namespace BRY
 			return ret;
 
 		}
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetFocus(IntPtr hWnd);
 
 		static public void SetAEWindowAll(int p)
 		{

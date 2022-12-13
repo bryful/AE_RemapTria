@@ -26,6 +26,8 @@ namespace AE_RemapTria
 		public TR_Frame Frame = new TR_Frame();
 		public TR_Caption Caption = new TR_Caption();
 		public TR_VScrol VScrol = new TR_VScrol();
+
+		private Bitmap tria = Properties.Resources.τρία;
 		public float MenuFontSize
 		{
 			get { return Menu.FontSize; }
@@ -591,6 +593,7 @@ namespace AE_RemapTria
 				g.DrawImage(Caption.Offscr(), Caption.Location);
 				g.DrawImage(Grid.Offscr(), Grid.Location);
 				g.DrawImage(VScrol.Offscr(), VScrol.Location);
+				g.DrawImage(tria, 28, 32);
 			}
 			finally
 			{
@@ -699,11 +702,13 @@ namespace AE_RemapTria
 		// ********************************************************************
 
 		// ********************************************************************
+		private bool IsInputMode = false;
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
 #if DEBUG
 			this.Text = String.Format("{0}", keyData.ToString());
 #endif
+			if (IsInputMode == true) return base.ProcessDialogKey(keyData);
 			FuncItem? fi = Funcs.FindKeys(keyData);
 			if ((fi != null)&&(fi.Func!=null))
 			{

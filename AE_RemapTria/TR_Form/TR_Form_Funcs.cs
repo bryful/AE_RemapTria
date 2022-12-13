@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -12,7 +13,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement; 
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AE_RemapTria
 {
@@ -24,6 +25,7 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
+			lst.Add(new FuncItem(InputArea, Keys.Oem6, "入力"));
 			lst.Add(new FuncItem(Input0, Keys.D0, Keys.NumPad0, "入力エリアに0"));
 			lst.Add(new FuncItem(Input1, Keys.D1, Keys.NumPad1, "入力エリアに1"));
 			lst.Add(new FuncItem(Input2, Keys.D2, Keys.NumPad2, "入力エリアに2"));
@@ -322,6 +324,40 @@ namespace AE_RemapTria
 			DrawAll();
 			return true;
 		}
+		// ************************************************************************************
+		public bool InputArea()
+		{
+			bool ret = false;
+			InputBox box = new InputBox();
+			box.SetTRForm(this);
+			int x = Grid.Location.X + Selection.Target * Sizes.CellWidth - Sizes.DispX;
+			int y = Grid.Location.Y + Selection.Start * Sizes.CellHeight - Sizes.DispY;
+
+			box.Location = new Point(x, y);
+			box.ValueChanged += Box_ValueChanged;
+			this.Controls.Add(box);
+			F_W.SetFocus(box.Handle);
+			IsInputMode = true;
+			Debug.WriteLine("bb");
+			return true;
+		}
+
+		private void Box_ValueChanged(object sender, InputBox.ValueChangedEventArgs e)
+		{
+			InputBox box = (InputBox)sender;
+			
+			this.Controls.Remove(box);
+			box.Dispose();
+			int v = e.Value;
+			IsInputMode = false;
+			if (v >= 0)
+			{
+				m_Value = v;
+			}
+			InputEnter();
+			Debug.WriteLine("AA");
+		}
+
 		// ************************************************************************************
 		public bool Inputnum(int v)
 		{

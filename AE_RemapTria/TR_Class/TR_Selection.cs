@@ -173,8 +173,7 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			int st = m_start - m_length;
-			int ed = st + m_length - 1;
-			if(ed>=0)
+			if(st>=0)
 			{
 				m_start = st;
 				CalcTrue();
