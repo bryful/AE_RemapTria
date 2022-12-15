@@ -74,12 +74,12 @@
 			this.lbMain.FrameMargin = new System.Windows.Forms.Padding(4, 0, 0, 0);
 			this.lbMain.FrameWeight = new System.Windows.Forms.Padding(16, 0, 0, 1);
 			this.lbMain.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbMain.Location = new System.Drawing.Point(61, 23);
+			this.lbMain.Location = new System.Drawing.Point(73, 23);
 			this.lbMain.MyFontIndex = 5;
 			this.lbMain.MyFontSize = 14F;
 			this.lbMain.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbMain.Name = "lbMain";
-			this.lbMain.Size = new System.Drawing.Size(326, 23);
+			this.lbMain.Size = new System.Drawing.Size(306, 23);
 			this.lbMain.TabIndex = 1;
 			this.lbMain.TabStop = false;
 			this.lbMain.Text = "Sheet Settings";
