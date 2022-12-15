@@ -13,7 +13,7 @@ namespace AE_RemapTria
 	public partial class TR_SheetSettingDialog : TR_BaseDialog
 	{
 		private bool IsTBForcus = false;
-		private T_Button[] m_btns = new T_Button[13];
+		private TR_Button[] m_btns = new TR_Button[13];
 
 		public string SheetName
 		{
@@ -29,42 +29,19 @@ namespace AE_RemapTria
 		{
 			get
 			{
-				T_Fps fps = T_Fps.FPS24;
-				if (btn24fps.Checked)
-				{
-					fps = T_Fps.FPS24;
-				}else if (btn30fps.Checked)
-				{
-					fps = T_Fps.FPS30;
-				}
-				return fps;
+				return tR_Fps1.Fps;
 			}
 			set
 			{
-				if(value== T_Fps.FPS24)
-				{
-					btn24fps.Checked = true;
-					btn30fps.Checked = false;
-				}
-				else
-				{
-					btn24fps.Checked = false;
-					btn30fps.Checked = true;
-				}
+				tR_Fps1.Fps = value;
 				t_DurationBox1.Fps = value;
 			}
 		}
-		public int Frame
-		{
-			get { return t_DurationBox1.Frame; }
-			set
-			{
-				t_DurationBox1.Frame = value;
-			}
-		}
+		
 		public TR_SheetSettingDialog()
 		{
 			InitializeComponent();
+			/*
 			m_btns[0] = btn0;
 			m_btns[1] = btn1;
 			m_btns[2] = btn2;
@@ -78,6 +55,7 @@ namespace AE_RemapTria
 			m_btns[10] = btn10Sec;
 			m_btns[11] = btn11BS;
 			m_btns[12] = btn12CL;
+			*/
 			SetEventHandler(lbMain);
 			SetEventHandler(t_Zebra1);
 		}
@@ -86,26 +64,26 @@ namespace AE_RemapTria
 
 		private void btnLockFps_CheckedChanged(object sender, EventArgs e)
 		{
-			btn24fps.Enabled = btn30fps.Enabled = !btnLockFps.Checked;
+			//btn24fps.Enabled = btn30fps.Enabled = !btnLockFps.Checked;
 
 		}
 
 		private void btn24fps_CheckedChanged(object sender, EventArgs e)
 		{
 			if(sender==null) return;
-			T_Button tb = (T_Button)sender;
+			TR_Button tb = (TR_Button)sender;
 			if (tb == null) return;
 			if (tb.Id == 24)
 			{
-				btn30fps.Checked = !btn24fps.Checked;
+				//btn30fps.Checked = !btn24fps.Checked;
 
 			}
 			else if (tb.Id == 30)
 			{
-				btn24fps.Checked = !btn30fps.Checked;
+				//btn24fps.Checked = !btn30fps.Checked;
 			}
 			T_Fps fps = T_Fps.FPS24;
-			if (btn24fps.Checked) { fps = T_Fps.FPS24; } else { fps = T_Fps.FPS30; }
+			//if (btn24fps.Checked) { fps = T_Fps.FPS24; } else { fps = T_Fps.FPS30; }
 
 			Fps = fps;
 
@@ -116,7 +94,7 @@ namespace AE_RemapTria
 		}
 		private void btnOK_Click(object sender, EventArgs e)
 		{
-			if(Frame<12) return;
+			//if(Frame<12) return;
 			if (SheetName == "")
 			{
 				ShowErrDialog("シート名が記入されていません");
@@ -133,107 +111,34 @@ namespace AE_RemapTria
 		//private int m_mdkeyEX = -1;
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if((e.KeyData == Keys.Tab)|| (e.KeyData == Keys.Left) || (e.KeyData == Keys.Right))
-			{
-				if (IsTBForcus)
-				{
-					ActiveControl = btnOK;
-					IsTBForcus = false;
-				}
-				else
-				{
-					ActiveControl = tbSheetName;
-					IsTBForcus = true;
-				}
-				base.OnKeyDown(e);
-				return;
-			}
-			if ((IsTBForcus == false)||(e.KeyData == Keys.Enter)||(e.KeyData == Keys.Escape))
-			{
-				if (m_mdkey <= -5)
-				{
-					int v = t_DurationBox1.KeyToNum(e.KeyData);
-					if (v >= 0)
-					{
-						m_mdkey = v;
-						m_btns[v].IsMouseDown = true;
-						t_DurationBox1.InputKey(v);
-					}
-					else
-					{
-						if (e.KeyData == Keys.Enter)
-						{
-							if (Frame > 12)
-							{
-								btnOK.IsMouseDown = true;
-								m_mdkey = -1;
-								//DialogResult = DialogResult.OK;
-							}
-						}
-						else if (e.KeyData == Keys.Escape)
-						{
-							btnCancel.IsMouseDown = true;
-							m_mdkey = -2;
-							//DialogResult = DialogResult.Cancel;
-						}
-
-					}
-				}
-			}
+			
 			base.OnKeyDown(e);
 		}
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			if(m_mdkey>=-2)
-			{
-				if (m_mdkey >= 0)
-				{
-					m_btns[m_mdkey].IsMouseDown = false;
-				}else if(m_mdkey==-1)
-				{
-					if ((Frame >= 12) && (SheetName != ""))
-					{
-						DialogResult = DialogResult.OK;
-					}else if (SheetName=="")
-					{
-						ShowErrDialog("シート名が記入されていません");
-
-					}
-
-
-				}
-				else if(m_mdkey==-2)
-				{
-					DialogResult = DialogResult.Cancel;
-				}
-				m_mdkey = -5;
-			}
+			
 			base.OnKeyUp(e);
 		}
 
 
 		private void btn_MouseDown(object sender, MouseEventArgs e)
 		{
-			T_Button tb = (T_Button)sender;
-			if (tb != null)
-			{
-				t_DurationBox1.InputKey(tb.Id);
-			}
+			
 		}
 
 		private void t_DurationBox1_DurationChanged(object sender, EventArgs e)
 		{
-			lbDuration.Text = t_DurationBox1.Info;
+		
 		}
 
 		private void tbSheetName_Enter(object sender, EventArgs e)
 		{
-			IsTBForcus = true;
+			
 		}
 
 		private void tbSheetName_Leave(object sender, EventArgs e)
 		{
-			IsTBForcus = false;
+			
 		}
 	}
 }

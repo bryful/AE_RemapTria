@@ -1,5 +1,4 @@
-﻿using BRY;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +18,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AE_RemapTria
 {
-	public class DriveChangedArg : EventArgs
+    public class DriveChangedArg : EventArgs
 	{
 		public string Dir;
 		public DriveChangedArg(string v)
@@ -27,7 +26,7 @@ namespace AE_RemapTria
 			Dir = v;
 		}
 	}
-	public partial class T_DriveList : T_BaseControl
+	public partial class T_DriveList : TR_DialogControl
 	{
 		#region Event
 		public delegate void DriveChangedHandler(object sender, DriveChangedArg e);
@@ -324,6 +323,14 @@ namespace AE_RemapTria
 			//this.Size = new Size(200, 40);
 			this.ForeColor = Color.FromArgb(200, 200, 250);
 			InitializeComponent();
+			this.Size = new Size(100, 50);
+			this.SetStyle(
+	ControlStyles.DoubleBuffer |
+	ControlStyles.UserPaint |
+	ControlStyles.AllPaintingInWmPaint |
+	ControlStyles.SupportsTransparentBackColor,
+	true);
+			this.BackColor = Color.Transparent;
 			GetDrives();
 		}
 		// ***********************************************************************

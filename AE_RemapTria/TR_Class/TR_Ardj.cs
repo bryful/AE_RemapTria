@@ -17,7 +17,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace AE_RemapTria
 {
 
-	/*
 	public class Ardj
 	{
 		public string? header { get; set; }
@@ -138,7 +137,6 @@ namespace AE_RemapTria
 		}
 
 	}
-	*/
 	public class TR_Ardj
 	{
 		private TR_CellData? m_CellData = null;
@@ -313,7 +311,7 @@ namespace AE_RemapTria
 			return ardj;
 		}
 		// ****************************************
-		public bool ToCellData(Ardj ardj, ref T_CellData cd)
+		public bool ToCellData(Ardj ardj, ref TR_CellData cd)
 		{
 			bool ret = false;
 			if (ardj.header != T_Def.ARDJ_Header) return ret;

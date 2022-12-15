@@ -8,27 +8,12 @@ namespace AE_RemapTria
 {
 	public class TR_VScrol : TR_Control
 	{
-		public TR_Grid? Grid = null;
-		public TR_Size? Sizes = null;
 		// ************************************************************************
-		public TR_VScrol():base()
+		public TR_VScrol()//:base()
 		{
 			m_Size = new Size(20, 100);
-			ChkOffScr();
 		}
 		// ************************************************************************
-		public override void SetTRForm(TR_Form fm)
-		{
-			m_form = fm;
-			if (m_form != null)
-			{
-				Grid = m_form.Grid;
-				Colors = m_form.Colors;
-				Sizes = m_form.Sizes;
-				ChkOffScr();
-			}
-			Invalidate();
-		}
 		// ************************************************************************
 		public override void SetLocSize()
 		{
@@ -44,7 +29,7 @@ namespace AE_RemapTria
 				int h = m_form.Height
 					- y
 					- Sizes.InterHeight
-					- T_Size.HScrolHeight;
+					- TR_Size.HScrolHeight;
 				Size sz = new Size(w, h);
 				if(m_Size != sz) m_Size= sz;
 				ChkOffScr();

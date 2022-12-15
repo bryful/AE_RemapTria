@@ -30,12 +30,6 @@ namespace AE_RemapTria
 				ValueChanged(this, e);
 			}
 		}
-		private Bitmap ATop = Properties.Resources.HVS_Arrow_Top;
-		private Bitmap ATopD = Properties.Resources.HVS_Arrow_Top_down;
-		private Bitmap ABottom = Properties.Resources.HVS_Arrow_Bottom;
-		private Bitmap ABottomD = Properties.Resources.HVS_Arrow_Bottom_down;
-		private Bitmap CC = Properties.Resources.HVS_Cursol;
-		private Bitmap CCD = Properties.Resources.HVS_Cursol_down;
 
 		private int m_Value=0;
 		[Category("_AE_Remap")]
@@ -84,6 +78,12 @@ namespace AE_RemapTria
 				this.Invalidate();
 			}
 		}
+		Bitmap  ABottom = Properties.Resources.HVS_Arrow_Bottom;
+		Bitmap ABottomD = Properties.Resources.HVS_Arrow_Bottom_down;
+		Bitmap ATop = Properties.Resources.HVS_Arrow_Top;
+		Bitmap ATopD = Properties.Resources.HVS_Arrow_Top_down;
+		Bitmap CC = Properties.Resources.HVS_Cursol;
+		Bitmap CCD = Properties.Resources.HVS_Cursol_down;
 		private int m_VTrue = 0;
 		private int m_VTrueMax = 300;
 		public T_VScrBar()

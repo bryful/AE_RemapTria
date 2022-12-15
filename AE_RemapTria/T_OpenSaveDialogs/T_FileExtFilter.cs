@@ -58,7 +58,7 @@ namespace AE_RemapTria
 		}
 	}
 
-	public partial class T_FileExtFilter : T_BaseControl
+	public partial class T_FileExtFilter : TR_DialogControl
 	{
 		#region Event
 		public delegate void FilterChangedHandler(object sender, FilterChangedArg e);

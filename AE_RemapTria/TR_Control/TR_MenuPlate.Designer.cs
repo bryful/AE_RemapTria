@@ -38,7 +38,6 @@
 			this.ClientSize = new System.Drawing.Size(182, 251);
 			this.DoubleBuffered = true;
 			this.Edge = new System.Drawing.Rectangle(10, 5, 0, 0);
-			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ForeColor = System.Drawing.Color.White;
 			this.KagiWeight = 0;
 			this.MyFontSize = 8F;

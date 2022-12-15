@@ -21,18 +21,15 @@ namespace AE_RemapTria
 
 		public TR_Frame()
 		{
-			this.Size = new Size(T_Size.FrameWidthDef, T_Size.CellHeightDef * 24);
 			FontSize = 9;
-			SetLocSize();
+			FontIndex = 5;
 		}
 		// ************************************************************************
-		public override void SetTRForm(TR_Form fm)
+		public override void SetTRForm(TR_Form fm,bool isI=true)
 		{
-			m_form = fm;
+			base.SetTRForm(fm,false);
 			if (m_form != null)
 			{
-				Colors = m_form.Colors;
-				m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
 				ChkOffScr();
 			}
 			Invalidate();
@@ -79,8 +76,8 @@ namespace AE_RemapTria
 			if(m_Location != p) m_Location = p;
 
 
-			int ww = x + m_form.Sizes.InterWidth + T_Size.VScrolWidth;
-			int hh = y + m_form.Sizes.InterHeight + T_Size.HScrolHeight;
+			int ww = x + m_form.Sizes.InterWidth + TR_Size.VScrolWidth;
+			int hh = y + m_form.Sizes.InterHeight + TR_Size.HScrolHeight;
 			Size sz = new Size(
 				m_form.Width - ww,
 				m_form.Height - hh
@@ -115,17 +112,15 @@ namespace AE_RemapTria
  		public override bool ChkMouseDown(MouseEventArgs e)
 		{
 			bool ret = false;
-			base.ChkMouseDown(e);
+			ret = base.ChkMouseDown(e);
 			if (m_inMouse == false) return ret;
+			if ((m_form == null) || (Sizes == null)) return ret;
 			if (e.Button == MouseButtons.Left)
 			{
-				if (m_form != null)
-				{
-					int y = (m_MDownPoint.Y + m_form.Sizes.DispY)/ m_form.Sizes.CellHeight;
+				int y = (m_MDownPoint.Y + Sizes.DispY)/ Sizes.CellHeight;
 
-					m_form.SetCellStart(y);
-					ret = true;
-				}
+				m_form.SetCellStart(y);
+				ret = true;
 			}
 			return ret;
 		}

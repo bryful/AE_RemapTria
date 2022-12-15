@@ -64,7 +64,7 @@ namespace AE_RemapTria
 			if (sidx < 0) return;
 			FuncItem? f = Funcs.Items(sidx);
 			if (f == null) return;
-			T_Button btn = (T_Button)sender;
+			TR_Button btn = (TR_Button)sender;
 			int btnID = btn.Id;
 			if (btnID < 0) btnID = 0;
 			else if (btnID > 1) btnID = 1;

@@ -1,5 +1,4 @@
-﻿using BRY;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +17,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_BList : T_BaseControl
+    public partial class T_BList : TR_DialogControl
 	{
 		#region Event
 		public delegate void DirChangedHandler(object sender, DirChangedArg e);
@@ -187,7 +186,15 @@ namespace AE_RemapTria
 			this.ForeColor = Color.FromArgb(200, 200, 250);
 			this.Size = new Size(200, 100);
 			InitializeComponent();
-
+			this.Size = new Size(100, 50);
+			this.SetStyle(
+	ControlStyles.DoubleBuffer |
+	ControlStyles.UserPaint |
+	ControlStyles.AllPaintingInWmPaint |
+	ControlStyles.SupportsTransparentBackColor,
+	true);
+			this.UpdateStyles();
+			this.BackColor = Color.Transparent;
 			AddDir(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),"Desktop");
 			AddDir(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Doc");
 

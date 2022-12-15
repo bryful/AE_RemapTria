@@ -31,7 +31,7 @@ namespace AE_RemapTria
 			this.DialogResult = DialogResult.OK;
 		}
 
-		public void SetCelLData(T_CellData cd)
+		public void SetCelLData(TR_CellData cd)
 		{
 			ctTittle.ValueText = cd.TITLE;
 			ctSubTitle.ValueText = cd.SUB_TITLE;
@@ -44,7 +44,7 @@ namespace AE_RemapTria
 			ctCT.ValueText = cd.CREATE_TIME.ToString();
 			ctUT.ValueText = cd.UPDATE_TIME.ToString();
 		}
-		public void GetCellData(ref T_CellData cd)
+		public void GetCellData(ref TR_CellData cd)
 		{
 			cd.TITLE = ctTittle.ValueText;
 			cd.SUB_TITLE = ctSubTitle.ValueText;

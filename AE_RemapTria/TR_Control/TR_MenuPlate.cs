@@ -25,17 +25,9 @@ namespace AE_RemapTria
 		public override void SetTRForm(TR_Form fm)
 		{
 			base.SetTRForm(fm);
-			m_form = fm;
-			if (m_form != null)
+			if (Form != null)
 			{
-				m_grid = fm.Grid;
-				Colors = fm.Colors;
 				m_menu = fm.Menu;
-				this.MyFonts = m_form.MyFonts;
-				m_MyFontIndex = m_menu.FontIndex;
-				m_MyFontSize = m_menu.FontSize;
-				this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, this.Font.Style);
-
 			}
 		}
 
@@ -261,7 +253,8 @@ namespace AE_RemapTria
 			{
 				string s = m_Items[i].Caption + " " + m_Items[i].Shrtcut;
 				SizeF sz = g.MeasureString(s, this.Font, 1000, sf);
-				if (w < (int)sz.Width) w = (int)sz.Width;
+				int ww = (int)(sz.Width + 0.5) + 5;
+				if (w < ww) w = ww;
 			}
 			bmp.Dispose();
 			int h = m_MenuHeight + m_RowHeight * (m_Items.Length) + m_RowHeight;

@@ -1,5 +1,4 @@
-﻿using BRY;
-using PdfSharpCore.Drawing;
+﻿using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,17 +24,6 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
-			lst.Add(new FuncItem(InputArea, Keys.Oem6, "入力"));
-			lst.Add(new FuncItem(Input0, Keys.D0, Keys.NumPad0, "入力エリアに0"));
-			lst.Add(new FuncItem(Input1, Keys.D1, Keys.NumPad1, "入力エリアに1"));
-			lst.Add(new FuncItem(Input2, Keys.D2, Keys.NumPad2, "入力エリアに2"));
-			lst.Add(new FuncItem(Input3, Keys.D3, Keys.NumPad3, "入力エリアに3"));
-			lst.Add(new FuncItem(Input4, Keys.D4, Keys.NumPad4, "入力エリアに4"));
-			lst.Add(new FuncItem(Input5, Keys.D5, Keys.NumPad5, "入力エリアに5"));
-			lst.Add(new FuncItem(Input6, Keys.D6, Keys.NumPad6, "入力エリアに6"));
-			lst.Add(new FuncItem(Input7, Keys.D7, Keys.NumPad7, "入力エリアに7"));
-			lst.Add(new FuncItem(Input8, Keys.D8, Keys.NumPad8, "入力エリアに8"));
-			lst.Add(new FuncItem(Input9, Keys.D9, Keys.NumPad9, "入力エリアに9"));
 			lst.Add(new FuncItem(InputClear, Keys.Delete, "クリア"));
 			lst.Add(new FuncItem(InputBS, Keys.Back, "BS"));
 			lst.Add(new FuncItem(InputEnter, Keys.Enter, Keys.Return, "入力"));
@@ -119,9 +107,9 @@ namespace AE_RemapTria
 
 
 			Menu.ClearMenu();
-			Menu.AddTopMenu("AE_Remapτρ?α", 93);
-			Menu.AddTopMenu("Edit", 40);
-			Menu.AddTopMenu("Windw", 50);
+			Menu.AddTopMenu("File");
+			Menu.AddTopMenu("Edit");
+			Menu.AddTopMenu("Windw");
 
 			Menu.AddSubMenu(0, "SheetSettings");
 			Menu.AddSubMenu(0, "SeetInfoDialog");
@@ -185,7 +173,6 @@ namespace AE_RemapTria
 			TR_SheetSettingDialog dlg = new TR_SheetSettingDialog();
 			dlg.SetTRForm(this);
 			int ExFrame = CellData.UnEnabledFrameCount;
-			dlg.Frame = CellData.FrameCount;
 			dlg.Fps = CellData.FrameRate;
 			dlg.SheetName = CellData.SheetName;
 			string caution = "";
@@ -205,13 +192,13 @@ namespace AE_RemapTria
 			dlg.Caption = caution;
 			dlg.Location = new Point(
 				this.Left + 20,
-				this.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			if (dlg.ShowDialog(this) == DialogResult.OK)
 			{
 				CellData.PushUndo(BackupSratus.All);
 				CellData.FrameRate = dlg.Fps;
-				CellData.FrameCount = dlg.Frame;
+				//CellData.FrameCount = dlg.Frame;
 				CellData.SheetName = dlg.SheetName;
 				FileName = T_Def.ChangeName(FileName, dlg.SheetName);
 				ChkSize();
@@ -325,92 +312,18 @@ namespace AE_RemapTria
 			return true;
 		}
 		// ************************************************************************************
-		public bool InputArea()
-		{
-			bool ret = false;
-			InputBox box = new InputBox();
-			box.SetTRForm(this);
-			int x = Grid.Location.X + Selection.Target * Sizes.CellWidth - Sizes.DispX;
-			int y = Grid.Location.Y + Selection.Start * Sizes.CellHeight - Sizes.DispY;
-
-			box.Location = new Point(x, y);
-			box.ValueChanged += Box_ValueChanged;
-			this.Controls.Add(box);
-			F_W.SetFocus(box.Handle);
-			IsInputMode = true;
-			Debug.WriteLine("bb");
-			return true;
-		}
-
-		private void Box_ValueChanged(object sender, InputBox.ValueChangedEventArgs e)
-		{
-			InputBox box = (InputBox)sender;
-			
-			this.Controls.Remove(box);
-			box.Dispose();
-			int v = e.Value;
-			IsInputMode = false;
-			if (v >= 0)
-			{
-				m_Value = v;
-			}
-			InputEnter();
-			Debug.WriteLine("AA");
-		}
 
 		// ************************************************************************************
-		public bool Inputnum(int v)
-		{
-			bool ret = false;
-			IsModif = true;
-			if ((v >= 0) || (v <= 9))
-			{
-				if (m_Value < 0) m_Value = 0;
-				m_Value = m_Value * 10 + v;
-				Input.ChkOffScr();
-				ret = true;
-			}
-			else if (v < 0)
-			{
-				ret = InputClear();
-			}
-			if (ret)
-			{
-				Invalidate();
-				IsModif = true;
-			}
-			return ret;
-		}
-		public bool Input0() { return Inputnum(0); }
-		public bool Input1() { return Inputnum(1); }
-		public bool Input2() { return Inputnum(2); }
-		public bool Input3() { return Inputnum(3); }
-		public bool Input4() { return Inputnum(4); }
-		public bool Input5() { return Inputnum(5); }
-		public bool Input6() { return Inputnum(6); }
-		public bool Input7() { return Inputnum(7); }
-		public bool Input8() { return Inputnum(8); }
-		public bool Input9() { return Inputnum(9); }
-
-
-		// ************************************************************************
+	
 
 		// ************************************************************************
 		public bool InputClear()
 		{
 			bool ret = false;
-			if (m_Value >= 0)
-			{
-				m_Value = -1;
-				Input.ChkOffScr();
-				ret = true;
-			}
-			else
-			{
-				CellData.SetCellNumEmpty(false);
-				Grid.ChkOffScrOne();
-				ret = true;
-			}
+
+			CellData.SetCellNumEmpty(false);
+			Grid.ChkOffScrOne();
+			ret = true;
 			if (ret)
 			{
 				Invalidate();
@@ -422,21 +335,8 @@ namespace AE_RemapTria
 		public bool InputBS()
 		{
 			bool ret = false;
-			if (m_Value >= 10)
-			{
-				m_Value = m_Value / 10;
-				ret = true;
-			}
-			else if ((m_Value >= 0) && (m_Value < 10))
-			{
-				m_Value = -1;
-				ret = true;
-			}
-			else
-			{
-				CellData.SetCellNumBS();
-				ret = true;
-			}
+			CellData.SetCellNumBS();
+			ret = true;
 			IsModif = true;
 			DrawAll();
 			return ret;
@@ -517,20 +417,24 @@ namespace AE_RemapTria
 		public bool InputEnter()
 		{
 			bool ret = false;
-			if (m_Value >= 0)
+			if(IsInputMode)
 			{
-				CellData.SetCellNum(m_Value);
-				InputClear();
-				ret = true;
-				if(ChkSelectionV()==false)
+				int v = InputValue;
+				if (v >= 0)
 				{
-					Frame.ChkOffScr();
-					Grid.ChkOffScrOne();
-					this.Invalidate();
-				}
-				else
-				{
-					DrawAll();
+					CellData.SetCellNum(v);
+					SetIsInputMode(false);
+					ret = true;
+					if (ChkSelectionV() == false)
+					{
+						Frame.ChkOffScr();
+						Grid.ChkOffScrOne();
+						this.Invalidate();
+					}
+					else
+					{
+						DrawAll();
+					}
 				}
 			}
 			else

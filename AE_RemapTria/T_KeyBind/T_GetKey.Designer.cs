@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.SuspendLayout();
 			// 
 			// T_GetKey

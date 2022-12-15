@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
-using static AE_RemapTria.NavBar;
 
 namespace AE_RemapTria
 {
@@ -20,6 +19,11 @@ namespace AE_RemapTria
         protected TR_Form? m_form = null;
         protected Font? m_font = null;
         public TR_Colors? Colors = null;
+		public TR_Size? Sizes = null;
+        public TR_Grid? Grid = null;
+        public TR_CellData? CellData = null;
+        public T_Funcs? Funcs = null;
+
 		protected int m_FontIndex = 5;
         public int FontIndex
         {
@@ -170,19 +174,24 @@ namespace AE_RemapTria
         // ************************************************************************
         public TR_Control()
         {
+
             ChkOffScr();
         }
         // ************************************************************************
-        public virtual void SetTRForm(TR_Form fm)
+        public virtual void SetTRForm(TR_Form fm,bool IsInvalidate = true)
         {
             m_form = fm;
             if (m_form != null)
             {
+                Grid = m_form.Grid;
                 Colors = m_form.Colors;
+                Sizes = m_form.Sizes;
+                CellData = m_form.CellData;
+                Funcs = m_form.Funcs;
                 m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
-                ChkOffScr();
+                if(IsInvalidate) ChkOffScr();
             }
-            Invalidate();
+			if (IsInvalidate) Invalidate();
         }
         // ************************************************************************
         public void ChkOffScr()
@@ -350,6 +359,7 @@ namespace AE_RemapTria
             {
                 m_MDown = true;
                 m_MDownPoint = new Point(x, y);
+                ret = true;
             }
             return ret;
         }

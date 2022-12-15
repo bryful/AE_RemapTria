@@ -28,19 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.t_MyFonts1 = new AE_RemapTria.T_MyFonts(this.components);
 			this.nbStart = new AE_RemapTria.T_NumberBox();
-			this.lbStart = new AE_RemapTria.T_Label();
-			this.lbEnd = new AE_RemapTria.T_Label();
+			this.lbStart = new AE_RemapTria.TR_Label();
+			this.lbEnd = new AE_RemapTria.TR_Label();
 			this.nbLast = new AE_RemapTria.T_NumberBox();
-			this.tbKoma = new AE_RemapTria.T_Label();
+			this.tbKoma = new AE_RemapTria.TR_Label();
 			this.nbKoma = new AE_RemapTria.T_NumberBox();
-			this.btnCancel = new AE_RemapTria.T_Button();
-			this.btnOK = new AE_RemapTria.T_Button();
-			this.t_Zebra1 = new AE_RemapTria.T_Zebra();
-			this.t_Zebra2 = new AE_RemapTria.T_Zebra();
-			this.lbCaption = new AE_RemapTria.T_Label();
+			this.btnCancel = new AE_RemapTria.TR_Button();
+			this.btnOK = new AE_RemapTria.TR_Button();
+			this.t_Zebra1 = new AE_RemapTria.TR_Zebra();
+			this.t_Zebra2 = new AE_RemapTria.TR_Zebra();
+			this.lbCaption = new AE_RemapTria.TR_Label();
 			this.t_ColorPlate1 = new AE_RemapTria.T_ColorPlate();
 			this.t_ColorPlate2 = new AE_RemapTria.T_ColorPlate();
 			((System.ComponentModel.ISupportInitialize)(this.nbStart)).BeginInit();
@@ -56,7 +54,7 @@
 			this.nbStart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
 			this.nbStart.Location = new System.Drawing.Point(178, 76);
 			this.nbStart.MyFontIndex = 5;
-			this.nbStart.MyFonts = this.t_MyFonts1;
+			this.nbStart.MyFonts = null;
 			this.nbStart.MyFontSize = 12F;
 			this.nbStart.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbStart.Name = "nbStart";
@@ -66,46 +64,44 @@
 			// lbStart
 			// 
 			this.lbStart.Alignment = System.Drawing.StringAlignment.Near;
+			this.lbStart.Back = System.Drawing.Color.Transparent;
 			this.lbStart.BackColor = System.Drawing.Color.Transparent;
-			this.lbStart.BottomBar = new System.Drawing.Size(0, 0);
-			this.lbStart.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbStart.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbStart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.lbStart.LeftBar = new System.Drawing.Size(14, 14);
+			this.lbStart.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.lbStart.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.lbStart.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.lbStart.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbStart.Location = new System.Drawing.Point(34, 76);
 			this.lbStart.MyFontIndex = 5;
-			this.lbStart.MyFonts = this.t_MyFonts1;
 			this.lbStart.MyFontSize = 10F;
 			this.lbStart.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbStart.Name = "lbStart";
-			this.lbStart.RightBar = new System.Drawing.Size(0, 0);
 			this.lbStart.Size = new System.Drawing.Size(138, 32);
 			this.lbStart.TabIndex = 3;
 			this.lbStart.TabStop = false;
 			this.lbStart.Text = "StartNumber";
-			this.lbStart.TopBar = new System.Drawing.Size(200, 2);
 			// 
 			// lbEnd
 			// 
 			this.lbEnd.Alignment = System.Drawing.StringAlignment.Near;
+			this.lbEnd.Back = System.Drawing.Color.Transparent;
 			this.lbEnd.BackColor = System.Drawing.Color.Transparent;
-			this.lbEnd.BottomBar = new System.Drawing.Size(0, 0);
-			this.lbEnd.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbEnd.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbEnd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.lbEnd.LeftBar = new System.Drawing.Size(14, 14);
+			this.lbEnd.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.lbEnd.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.lbEnd.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.lbEnd.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbEnd.Location = new System.Drawing.Point(34, 113);
 			this.lbEnd.MyFontIndex = 5;
-			this.lbEnd.MyFonts = this.t_MyFonts1;
 			this.lbEnd.MyFontSize = 10F;
 			this.lbEnd.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbEnd.Name = "lbEnd";
-			this.lbEnd.RightBar = new System.Drawing.Size(0, 0);
 			this.lbEnd.Size = new System.Drawing.Size(138, 32);
 			this.lbEnd.TabIndex = 4;
 			this.lbEnd.TabStop = false;
 			this.lbEnd.Text = "LastNumber";
-			this.lbEnd.TopBar = new System.Drawing.Size(0, 0);
 			// 
 			// nbLast
 			// 
@@ -115,7 +111,7 @@
 			this.nbLast.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
 			this.nbLast.Location = new System.Drawing.Point(178, 113);
 			this.nbLast.MyFontIndex = 5;
-			this.nbLast.MyFonts = this.t_MyFonts1;
+			this.nbLast.MyFonts = null;
 			this.nbLast.MyFontSize = 12F;
 			this.nbLast.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbLast.Name = "nbLast";
@@ -125,24 +121,23 @@
 			// tbKoma
 			// 
 			this.tbKoma.Alignment = System.Drawing.StringAlignment.Near;
+			this.tbKoma.Back = System.Drawing.Color.Transparent;
 			this.tbKoma.BackColor = System.Drawing.Color.Transparent;
-			this.tbKoma.BottomBar = new System.Drawing.Size(200, 2);
-			this.tbKoma.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.tbKoma.Font = new System.Drawing.Font("Yu Gothic UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbKoma.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.tbKoma.LeftBar = new System.Drawing.Size(14, 14);
+			this.tbKoma.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.tbKoma.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.tbKoma.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.tbKoma.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.tbKoma.Location = new System.Drawing.Point(34, 150);
 			this.tbKoma.MyFontIndex = 5;
-			this.tbKoma.MyFonts = this.t_MyFonts1;
 			this.tbKoma.MyFontSize = 10F;
 			this.tbKoma.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbKoma.Name = "tbKoma";
-			this.tbKoma.RightBar = new System.Drawing.Size(0, 0);
 			this.tbKoma.Size = new System.Drawing.Size(138, 32);
 			this.tbKoma.TabIndex = 5;
 			this.tbKoma.TabStop = false;
 			this.tbKoma.Text = "Koma";
-			this.tbKoma.TopBar = new System.Drawing.Size(0, 0);
 			// 
 			// nbKoma
 			// 
@@ -152,7 +147,7 @@
 			this.nbKoma.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
 			this.nbKoma.Location = new System.Drawing.Point(178, 150);
 			this.nbKoma.MyFontIndex = 5;
-			this.nbKoma.MyFonts = this.t_MyFonts1;
+			this.nbKoma.MyFonts = null;
 			this.nbKoma.MyFontSize = 12F;
 			this.nbKoma.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbKoma.Name = "nbKoma";
@@ -162,120 +157,140 @@
 			// btnCancel
 			// 
 			this.btnCancel.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnCancel.Back = System.Drawing.Color.Transparent;
 			this.btnCancel.BackColor = System.Drawing.Color.Transparent;
-			this.btnCancel.BottomBar = 3;
 			this.btnCancel.Checked = false;
 			this.btnCancel.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnCancel.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnCancel.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnCancel.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btnCancel.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnCancel.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.btnCancel.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.btnCancel.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.btnCancel.Id = 0;
 			this.btnCancel.IsCheckMode = false;
 			this.btnCancel.IsDrawFrame = true;
 			this.btnCancel.IsMouseDown = false;
-			this.btnCancel.LeftBar = 10;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btnCancel.Location = new System.Drawing.Point(34, 213);
 			this.btnCancel.MyFontIndex = 5;
-			this.btnCancel.MyFonts = this.t_MyFonts1;
 			this.btnCancel.MyFontSize = 9F;
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.RightBar = 0;
 			this.btnCancel.Size = new System.Drawing.Size(110, 31);
 			this.btnCancel.TabIndex = 10;
 			this.btnCancel.Text = "Cancel";
-			this.btnCancel.TopBar = 0;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// btnOK
 			// 
 			this.btnOK.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnOK.Back = System.Drawing.Color.Transparent;
 			this.btnOK.BackColor = System.Drawing.Color.Transparent;
-			this.btnOK.BottomBar = 3;
 			this.btnOK.Checked = false;
 			this.btnOK.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnOK.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnOK.Color_line = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.btnOK.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.btnOK.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnOK.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.btnOK.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.btnOK.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.btnOK.Id = 0;
 			this.btnOK.IsCheckMode = false;
 			this.btnOK.IsDrawFrame = true;
 			this.btnOK.IsMouseDown = false;
-			this.btnOK.LeftBar = 0;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.btnOK.Location = new System.Drawing.Point(158, 213);
 			this.btnOK.MyFontIndex = 5;
-			this.btnOK.MyFonts = this.t_MyFonts1;
 			this.btnOK.MyFontSize = 9F;
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
-			this.btnOK.RightBar = 10;
 			this.btnOK.Size = new System.Drawing.Size(110, 31);
 			this.btnOK.TabIndex = 11;
 			this.btnOK.Text = "OK";
-			this.btnOK.TopBar = 0;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// t_Zebra1
 			// 
+			this.t_Zebra1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Zebra1.Back = System.Drawing.Color.Transparent;
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Zebra1.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Zebra1.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.t_Zebra1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Zebra1.Location = new System.Drawing.Point(34, 187);
+			this.t_Zebra1.MyFontIndex = 5;
+			this.t_Zebra1.MyFontSize = 5F;
+			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(234, 20);
 			this.t_Zebra1.TabIndex = 9;
 			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
-			this.t_Zebra1.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKBLUE;
+			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
+			this.t_Zebra1.ZebraRot = 45F;
+			this.t_Zebra1.ZebraWidth = 25F;
 			// 
 			// t_Zebra2
 			// 
+			this.t_Zebra2.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Zebra2.Back = System.Drawing.Color.Transparent;
 			this.t_Zebra2.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Zebra2.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Zebra2.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.t_Zebra2.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Zebra2.Location = new System.Drawing.Point(34, 43);
+			this.t_Zebra2.MyFontIndex = 5;
+			this.t_Zebra2.MyFontSize = 5F;
+			this.t_Zebra2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra2.Name = "t_Zebra2";
 			this.t_Zebra2.Size = new System.Drawing.Size(234, 28);
 			this.t_Zebra2.TabIndex = 2;
 			this.t_Zebra2.TabStop = false;
 			this.t_Zebra2.Text = "t_Zebra2";
-			this.t_Zebra2.ZebraIndex = AE_RemapTria.ZEBRA_TYPE.DARKBLUE;
+			this.t_Zebra2.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
+			this.t_Zebra2.ZebraRot = 45F;
+			this.t_Zebra2.ZebraWidth = 25F;
 			// 
 			// lbCaption
 			// 
 			this.lbCaption.Alignment = System.Drawing.StringAlignment.Near;
+			this.lbCaption.Back = System.Drawing.Color.Transparent;
 			this.lbCaption.BackColor = System.Drawing.Color.Transparent;
-			this.lbCaption.BottomBar = new System.Drawing.Size(400, 2);
 			this.lbCaption.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
-			this.lbCaption.LeftBar = new System.Drawing.Size(14, 14);
+			this.lbCaption.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.lbCaption.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.lbCaption.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.lbCaption.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbCaption.Location = new System.Drawing.Point(35, 15);
 			this.lbCaption.MyFontIndex = 5;
-			this.lbCaption.MyFonts = this.t_MyFonts1;
 			this.lbCaption.MyFontSize = 12F;
 			this.lbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbCaption.Name = "lbCaption";
-			this.lbCaption.RightBar = new System.Drawing.Size(4, 14);
 			this.lbCaption.Size = new System.Drawing.Size(233, 24);
 			this.lbCaption.TabIndex = 1;
 			this.lbCaption.TabStop = false;
 			this.lbCaption.Text = "Auto Input";
-			this.lbCaption.TopBar = new System.Drawing.Size(0, 0);
 			// 
 			// t_ColorPlate1
 			// 
 			this.t_ColorPlate1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_ColorPlate1.Back = System.Drawing.Color.Transparent;
 			this.t_ColorPlate1.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate1.ColorPlate = AE_RemapTria.ColorPlate.KagiBR;
 			this.t_ColorPlate1.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_ColorPlate1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_ColorPlate1.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_ColorPlate1.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.t_ColorPlate1.KagiHWeight = 2;
 			this.t_ColorPlate1.KagiVWeight = 2;
 			this.t_ColorPlate1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_ColorPlate1.Location = new System.Drawing.Point(34, 182);
 			this.t_ColorPlate1.MyFontIndex = 5;
-			this.t_ColorPlate1.MyFonts = null;
 			this.t_ColorPlate1.MyFontSize = 12F;
 			this.t_ColorPlate1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_ColorPlate1.Name = "t_ColorPlate1";
@@ -288,16 +303,19 @@
 			// t_ColorPlate2
 			// 
 			this.t_ColorPlate2.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_ColorPlate2.Back = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.ColorPlate = AE_RemapTria.ColorPlate.KagiTL;
 			this.t_ColorPlate2.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_ColorPlate2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_ColorPlate2.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_ColorPlate2.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.t_ColorPlate2.KagiHWeight = 2;
 			this.t_ColorPlate2.KagiVWeight = 2;
 			this.t_ColorPlate2.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_ColorPlate2.Location = new System.Drawing.Point(27, 12);
 			this.t_ColorPlate2.MyFontIndex = 5;
-			this.t_ColorPlate2.MyFonts = null;
 			this.t_ColorPlate2.MyFontSize = 12F;
 			this.t_ColorPlate2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_ColorPlate2.Name = "t_ColorPlate2";
@@ -329,7 +347,6 @@
 			this.KagiHeight = 20;
 			this.KagiWeight = 3;
 			this.KeyPreview = true;
-			this.MyFonts = this.t_MyFonts1;
 			this.MyFontSize = 12F;
 			this.Name = "T_AutoInputDialog";
 			this.SideCount = new int[] {
@@ -378,16 +395,16 @@
 
 		private T_MyFonts t_MyFonts1;
 		private T_NumberBox nbStart;
-		private T_Label lbStart;
-		private T_Label lbEnd;
+		private TR_Label lbStart;
+		private TR_Label lbEnd;
 		private T_NumberBox nbLast;
-		private T_Label tbKoma;
+		private TR_Label tbKoma;
 		private T_NumberBox nbKoma;
-		private T_Button btnCancel;
-		private T_Button btnOK;
-		private T_Zebra t_Zebra1;
-		private T_Zebra t_Zebra2;
-		private T_Label lbCaption;
+		private TR_Button btnCancel;
+		private TR_Button btnOK;
+		private TR_Zebra t_Zebra1;
+		private TR_Zebra t_Zebra2;
+		private TR_Label lbCaption;
 		private T_ColorPlate t_ColorPlate1;
 		private T_ColorPlate t_ColorPlate2;
 	}

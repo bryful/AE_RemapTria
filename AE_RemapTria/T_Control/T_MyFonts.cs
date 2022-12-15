@@ -1,5 +1,4 @@
-﻿using AE_RemapTria.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +16,7 @@ namespace AE_RemapTria
 	/// <summary>
 	/// リソースにあるフォントを管理するクラス
 	/// </summary>
-	public partial class T_MyFonts :Component
+	public partial class T_MyFonts
 	{
 		[System.Runtime.InteropServices.DllImport("gdi32.dll")]
 		public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [System.Runtime.InteropServices.In] ref uint pcFonts);
@@ -40,15 +39,17 @@ namespace AE_RemapTria
 		// *****************************************************
 		public T_MyFonts()
 		{
-			InitializeComponent(); 
+			//InitializeComponent(); 
 			MyFontsInit(true);
 		}
+		/*
 		public T_MyFonts(IContainer container)
 		{
 			container.Add(this);
 
 			InitializeComponent();
-		}       
+		} 
+		*/
 		// *****************************************************
 		/// <summary>
 		///　リソースフォントを読み込む

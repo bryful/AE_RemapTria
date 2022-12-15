@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PdfSharpCore.Drawing;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace AE_RemapTria
 {
@@ -28,28 +30,7 @@ namespace AE_RemapTria
 		// ******************************************************
 		#region Font
 		private T_MyFonts? m_MyFonts = null;
-		/// <summary>
-		/// リソースフォント管理のコンポーネント
-		/// </summary>
-		[Category("_AE_Remap")]
-		public T_MyFonts? MyFonts
-		{
-			get { return m_MyFonts; }
-			set
-			{
-				m_MyFonts = value;
-				if (m_MyFonts != null)
-				{
-					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
-					btnAdd.MyFonts = m_MyFonts;
-					btnDell.MyFonts = m_MyFonts;
-					btnUp.MyFonts = m_MyFonts;
-					btnDown.MyFonts = m_MyFonts;
-					BList.MyFonts = m_MyFonts;
-
-				}
-			}
-		}
+		private Font? m_font = null;
 		private int m_MyFontIndex = 5;
 		[Category("_AE_Remap")]
 		public int MyFontIndex
@@ -71,20 +52,6 @@ namespace AE_RemapTria
 			}
 		}
 		[Category("_AE_Remap")]
-		public float MyFontSize
-		{
-			get { return this.Font.Size; }
-			set
-			{
-				SetFontSizeStyle(value, this.Font.Style);
-				btnAdd.MyFontSize = value;
-				btnDell.MyFontSize = value;
-				btnUp.MyFontSize = value;
-				btnDown.MyFontSize = value;
-				BList.MyFontSize = value;
-			}
-		}
-		[Category("_AE_Remap")]
 		public FontStyle MyFontStyle
 		{
 			get { return this.Font.Style; }
@@ -96,6 +63,25 @@ namespace AE_RemapTria
 				btnUp.MyFontStyle = value;
 				btnDown.MyFontStyle = value;
 				BList.MyFontStyle = value;
+			}
+		}
+		private float m_MyFontSize = 9;
+		[Category("_AE_Remap")]
+		public float MyFontSize
+		{
+			get { return m_MyFontSize; }
+			set
+			{
+				m_MyFontSize = value;
+				if (m_MyFonts != null)
+				{
+					this.Font = m_MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, this.Font.Style);
+					btnAdd.MyFontSize = m_MyFontSize;
+					btnDell.MyFontSize = m_MyFontSize;
+					btnUp.MyFontSize = m_MyFontSize;
+					btnDown.MyFontSize = m_MyFontSize;
+					BList.MyFontSize = m_MyFontSize;
+				}
 			}
 		}
 		public void SetFontSizeStyle(float sz, FontStyle fs)
@@ -242,6 +228,38 @@ namespace AE_RemapTria
 			BList.FromJsonObject(jo);
 		}
 		// ***********************************************************************
+		protected TR_Form? m_form = null;
+		protected TR_BaseDialog? m_dialog = null;
+		protected TR_Colors? Colors = null;
+		protected TR_Size? Sizes = null;
+		protected TR_Grid? Grid = null;
+		protected TR_CellData? CellData = null;
+		public void SetTRDialog(TR_BaseDialog? bd)
+		{
+			m_dialog = bd;
+			if (m_dialog != null)
+			{
+				m_form = m_dialog.Form;
+				m_MyFonts = m_dialog.MyFonts;
+				if (m_form != null)
+				{
+					Grid = m_form.Grid;
+					Colors = m_form.Colors;
+					Sizes = m_form.Sizes;
+					CellData = m_form.CellData;
+					m_MyFonts = m_form.MyFonts;
 
+				}
+				if (m_MyFonts != null)
+				{
+					m_font = 
+					this.Font = m_MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, this.Font.Style);
+				}
+				btnEdit.SetTRDialog(bd);
+				btnDell.SetTRDialog(bd);
+				btnUp.SetTRDialog(bd);
+				btnDown.SetTRDialog(bd);
+			}
+		}
 	}
 }

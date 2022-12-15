@@ -25,7 +25,7 @@ namespace AE_RemapTria
 			Dir = v;
 		}
 	}
-	public partial class T_FList : T_BaseControl
+	public partial class T_FList : TR_DialogControl
 	{
 		#region Event
 		public delegate void DirChangedHandler(object sender, DirChangedArg e);
@@ -183,9 +183,9 @@ namespace AE_RemapTria
 				}
 			}
 		}
-		private T_Label? m_DirectoryLabel = null;
+		private TR_Label? m_DirectoryLabel = null;
 		[Category("_AE_Remap")]
-		public T_Label? DirectoryLabel
+		public TR_Label? DirectoryLabel
 		{
 			get { return m_DirectoryLabel; }
 			set
@@ -193,9 +193,9 @@ namespace AE_RemapTria
 				m_DirectoryLabel = value;
 			}
 		}
-		private T_TextBox? m_FileTextBox = null;
+		private TR_TextBox? m_FileTextBox = null;
 		[Category("_AE_Remap")]
-		public T_TextBox? FileTextBox
+		public TR_TextBox? FileTextBox
 		{
 			get { return m_FileTextBox; }
 			set
@@ -210,9 +210,9 @@ namespace AE_RemapTria
 			this.Invalidate();
 		}
 
-		private T_Button? m_ToRootBtn = null;
+		private TR_Button? m_ToRootBtn = null;
 		[Category("_AE_Remap")]
-		public T_Button? ToRootBtn
+		public TR_Button? ToRootBtn
 		{
 			get { return m_ToRootBtn; }
 			set
@@ -229,9 +229,9 @@ namespace AE_RemapTria
 		{
 			ToRoot();
 		}
-		private T_Button? m_ToParentBtn = null;
+		private TR_Button? m_ToParentBtn = null;
 		[Category("_AE_Remap")]
-		public T_Button? ToParentBtn
+		public TR_Button? ToParentBtn
 		{
 			get { return m_ToParentBtn; }
 			set

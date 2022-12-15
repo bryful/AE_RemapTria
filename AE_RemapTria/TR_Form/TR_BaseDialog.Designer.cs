@@ -32,11 +32,12 @@
 			// 
 			// TR_BaseDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(373, 175);
+			this.ClientSize = new System.Drawing.Size(435, 269);
+			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "TR_BaseDialog";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -47,5 +48,6 @@
 		}
 
 		#endregion
+
 	}
 }

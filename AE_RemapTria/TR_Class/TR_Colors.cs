@@ -36,48 +36,69 @@ namespace AE_RemapTria
 		MenuMoji,
 		MenuMojiNoActive,
 		MenuWaku,
-		Count
+		Transparent
 	};
 	public class TR_Colors
 	{
 		public bool _eventFlag=true;
 		public event EventHandler? ColorChangedEvent;
 
-		private Color[] cols = new Color[(int)COLS.Count];
+		private Color[] cols = new Color[(int)COLS.Transparent];
+		static private Color[] STColors = new Color[0];
 		// *****************************************************************************
 		public TR_Colors()
 		{
-			cols[(int)COLS.Base] = Color.Transparent;
-			cols[(int)COLS.Line] = Color.FromArgb( 100, 200, 255);
-			cols[(int)COLS.LineDark] = Color.FromArgb( 100, 150, 200);
-			cols[(int)COLS.LineB] = Color.FromArgb( 75, 120, 180);
-			cols[(int)COLS.Frame] = Color.FromArgb( 0, 30, 50);
-			cols[(int)COLS.Caption] = Color.FromArgb( 25, 45, 50);
-			cols[(int)COLS.Caption2] = Color.FromArgb( 10, 10, 20);
+			cols= InitColors();
+		}
+		static public Color[] InitColors()
+		{
+			Color[] ret = new Color[(int)COLS.Transparent];
+			ret[(int)COLS.Base] = Color.Transparent;
+			ret[(int)COLS.Line] = Color.FromArgb(100, 200, 255);
+			ret[(int)COLS.LineDark] = Color.FromArgb(100, 150, 200);
+			ret[(int)COLS.LineB] = Color.FromArgb(75, 120, 180);
+			ret[(int)COLS.Frame] = Color.FromArgb(0, 30, 50);
+			ret[(int)COLS.Caption] = Color.FromArgb(25, 45, 50);
+			ret[(int)COLS.Caption2] = Color.FromArgb(10, 10, 20);
 
-			cols[(int)COLS.Input] = Color.FromArgb( 0, 0, 0);
-			cols[(int)COLS.InputLine] = Color.FromArgb( 55, 100, 125);
-			cols[(int)COLS.InputLineA] = Color.FromArgb( 110, 200, 250);
-			cols[(int)COLS.Kagi] = Color.FromArgb( 30, 150, 250);
+			ret[(int)COLS.Input] = Color.FromArgb(0, 0, 0);
+			ret[(int)COLS.InputLine] = Color.FromArgb(55, 100, 125);
+			ret[(int)COLS.InputLineA] = Color.FromArgb(110, 200, 250);
+			ret[(int)COLS.Kagi] = Color.FromArgb(30, 150, 250);
 
-			cols[(int)COLS.CellEven] = Color.FromArgb( 30, 30, 60);
-			cols[(int)COLS.CellA_sdw] = Color.Transparent;
-			cols[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
-			cols[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
-			cols[(int)COLS.Selection] = Color.FromArgb(50, 100, 180);
-			cols[(int)COLS.SelectionCaption] = Color.FromArgb( 0, 75, 128);
-			cols[(int)COLS.Moji] = Color.FromArgb( 120, 220, 250);
-			cols[(int)COLS.GrayMoji] = Color.FromArgb( 80, 80, 150);
-			cols[(int)COLS.Gray] = Color.FromArgb( 20, 20, 50);
-			cols[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
+			ret[(int)COLS.CellEven] = Color.FromArgb(30, 30, 60);
+			ret[(int)COLS.CellA_sdw] = Color.Transparent;
+			ret[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
+			ret[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
+			ret[(int)COLS.Selection] = Color.FromArgb(50, 100, 180);
+			ret[(int)COLS.SelectionCaption] = Color.FromArgb(0, 75, 128);
+			ret[(int)COLS.Moji] = Color.FromArgb(120, 220, 250);
+			ret[(int)COLS.GrayMoji] = Color.FromArgb(80, 80, 150);
+			ret[(int)COLS.Gray] = Color.FromArgb(20, 20, 50);
+			ret[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
 
-			cols[(int)COLS.MenuBack] = Color.FromArgb(0x34, 0x37, 0x6a);
-			cols[(int)COLS.MenuBackSelected] = Color.FromArgb(0x54, 0x57, 0x8a);
-			cols[(int)COLS.MenuBackNoActive] = Color.FromArgb(75,81, 109);
-			cols[(int)COLS.MenuMoji] = Color.FromArgb(0x9f, 0xAd, 0xF4);
-			cols[(int)COLS.MenuWaku] = Color.FromArgb(0x43, 0x62, 0xb2);
-			cols[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
+			ret[(int)COLS.MenuBack] = Color.FromArgb(0x34, 0x37, 0x6a);
+			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(0x54, 0x57, 0x8a);
+			ret[(int)COLS.MenuBackNoActive] = Color.FromArgb(75, 81, 109);
+			ret[(int)COLS.MenuMoji] = Color.FromArgb(0x9f, 0xAd, 0xF4);
+			ret[(int)COLS.MenuWaku] = Color.FromArgb(0x43, 0x62, 0xb2);
+			ret[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
 
+			return ret;
+		}
+		//---------------------------------------
+		static public Color GetColor(COLS c)
+		{
+			Color ret = Color.White;
+			if(STColors.Length<= (int)COLS.Transparent)
+			{
+				STColors = InitColors();
+			}
+			if(((int)c >=0)&&((int)c < (int)COLS.Transparent))
+			{
+				ret = STColors[(int)c];
+			}
+			return ret;
 		}
 		//---------------------------------------
 		protected virtual void OnColorChangedEvent(EventArgs e)

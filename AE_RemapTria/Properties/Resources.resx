@@ -118,78 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="01_ScrolArrow_H" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolArrow_H.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolArrow_H_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolArrow_H_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconA_HL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconA_HL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconA_HL_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconA_HL_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconA_HR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconA_HR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconA_HR_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconA_HR_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconB_HL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconB_HL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconB_HL_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconB_HL_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconB_HR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconB_HR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconB_HR_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconB_HR_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconC_H1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconC_H1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="01_ScrolIconC_H2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\01_ScrolIconC_H2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolArrow_V" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolArrow_V.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolArrow_V_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolArrow_V_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconA_VB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconA_VB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconA_VB_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconA_VB_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconA_VT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconA_VT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconA_VT_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconA_VT_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconB_VB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconB_VB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconB_VB_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconB_VB_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconB_VT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconB_VT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconB_VT_dn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconB_VT_dn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconC_V1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconC_V1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="02_ScrolIconC_V2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\02_ScrolIconC_V2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="CellArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CellArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -214,56 +142,8 @@
   <data name="HVS_Cursol_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HVS_Cursol_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Kagi00" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Kagi00.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Kagi01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Kagi01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Kagi02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Kagi02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Kagi02_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Kagi02_D.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Kagi03" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Kagi03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Myrica" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Myrica.TTC;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MyricaM" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MyricaM.TTC;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="SourceHanCodeJP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceHanCodeJP.ttc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Zebra_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_darkblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_darkblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_darkgray" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_darkgray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_darkred" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_darkred.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_darkyellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_darkyellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_skyblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_skyblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zebra_yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zebra_yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="τρία" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\τρία.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

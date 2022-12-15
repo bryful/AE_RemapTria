@@ -19,8 +19,8 @@ namespace AE_RemapTria
 	public partial class T_BaseDialog : Form
 	{
 		#region Contol
-		private T_Form? m_Form = null;
-		private T_Grid? m_grid = null;
+		private TR_Form? m_Form = null;
+		private TR_Grid? m_grid = null;
 		#endregion
 		#region Font
 		private T_MyFonts? m_MyFonts = null;
@@ -334,13 +334,13 @@ namespace AE_RemapTria
 		}
 		// *****************************************************************
 		
-		public void SetForm(T_Form fm)
+		public void SetForm(TR_Form fm)
 		{
 			m_Form = fm;
 			if (m_Form != null)
 			{
 				m_grid = fm.Grid;
-				this.MyFonts =m_grid.MyFonts;
+				this.MyFonts = fm.MyFonts;
 			}
 		}
 		#region Mouse Event

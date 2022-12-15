@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using BRY;
 namespace AE_RemapTria
 {
-	public partial class T_Scale : T_BaseControl
+	public partial class T_Scale : TR_DialogControl
 	{
 		private DrawSCalePrm m_sp = new DrawSCalePrm();
 		[Category("_AE_Remap")]

@@ -10,7 +10,7 @@ using System.Text;
 namespace AE_RemapTria
 {
 
-    public partial class TR_Form : Form
+	public partial class TR_Form : Form
 	{
 		public TR_CellData CellData = new TR_CellData();
 		public TR_Size Sizes = new TR_Size();
@@ -26,8 +26,10 @@ namespace AE_RemapTria
 		public TR_Frame Frame = new TR_Frame();
 		public TR_Caption Caption = new TR_Caption();
 		public TR_VScrol VScrol = new TR_VScrol();
+		public TR_HScrol HScrol = new TR_HScrol();
 
 		private Bitmap tria = Properties.Resources.τρία;
+		// ---------------------------------------------------------
 		public float MenuFontSize
 		{
 			get { return Menu.FontSize; }
@@ -38,37 +40,47 @@ namespace AE_RemapTria
 			get { return Menu.FontIndex; }
 			set { Menu.FontIndex = value; DrawAll(); }
 		}
-		public TR_Input Input = new TR_Input();
-		private int m_Value = -1;
-		public int Value
+
+		private string m_InputStr = "";
+		public string InputStr
 		{
-			get { return m_Value; }
-			set
+			get { return this.m_InputStr; }
+		}
+		public int InputValue
+		{
+			get
 			{
-				if(m_Value != value)
+				int ret = -1;
+				if( int.TryParse(m_InputStr,out ret)==false)
 				{
-					m_Value = value;
-					Input.ChkOffScr();
-					this.Invalidate();
+					ret = -1;
 				}
+				return ret;
 			}
 		}
+		public bool AddValueStr(int v)
+		{
+			bool ret = false;
+			if ((v < 0) || (v > 9)) return ret;
+			if ((m_InputStr == "") && (v == 0)) return ret;
+			if (m_InputStr.Length >= 3) return ret;
+			m_InputStr += v.ToString();
+			ret = true;
+			return ret;
+		}
+
 		// ********************************************************
 		public void DrawAll()
 		{
 			if (Menu != null) Menu.ChkOffScr();
-			if (Input != null) Input.ChkOffScr();
 			if (Frame != null) Frame.ChkOffScr();
 			if (Caption != null) Caption.ChkOffScr();
 			if (Grid != null) Grid.ChkOffScr();
 			if (VScrol != null) VScrol.ChkOffScr();
+			if (HScrol != null) HScrol.ChkOffScr();
 			this.Invalidate();
 		}
 		private T_MyFonts m_Fonts = new T_MyFonts();
-		/// <summary>
-		/// リソースフォント管理のコンポーネント
-		/// </summary>
-		[Category("_AE_Remap")]
 		public T_MyFonts MyFonts
 		{
 			get { return m_Fonts; }
@@ -208,7 +220,7 @@ namespace AE_RemapTria
 		private Point m_MD = new Point(0, 0);
 		private Size m_MDS = new Size(0, 0);
 
-		private Bitmap[] kagi = new Bitmap[5];
+		//private Bitmap[] kagi = new Bitmap[5];
 		// ********************************************************************
 		// ********************************************************************
 		public TR_Form()
@@ -227,17 +239,12 @@ namespace AE_RemapTria
 			Grid.SetTRForm(this);
 			Sizes.SetTRForm(this);
 
-			Menu.SetTRForm(this);
-			Input.SetTRForm(this);
 			Frame.SetTRForm(this);
 			Caption.SetTRForm(this);
 			VScrol.SetTRForm(this);
+			HScrol.SetTRForm(this);
+			Menu.SetTRForm(this);
 
-			kagi[0] = Properties.Resources.Kagi00;
-			kagi[1] = Properties.Resources.Kagi01;
-			kagi[2] = Properties.Resources.Kagi02;
-			kagi[3] = Properties.Resources.Kagi03;
-			kagi[4] = Properties.Resources.Kagi02_D;
 
 			InitializeComponent();
 			NavBarSetup();
@@ -282,8 +289,8 @@ namespace AE_RemapTria
 				{
 					OpenBackup(bp);
 				}
-				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
-				if(Grid.Funcs.Load(kp))
+				string kp = Path.Combine(pf.FileDirectory, TR_Form.KeyBaindName);
+				if(Funcs.Load(kp))
 				{
 					KeyBaindFile = kp;
 				}
@@ -310,8 +317,8 @@ namespace AE_RemapTria
 			{
 				PrefFile pf = new PrefFile(this);
 				SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
-				string kp = Path.Combine(pf.FileDirectory, T_Grid.KeyBaindName);
-				Grid.Funcs.Save(kp);
+				string kp = Path.Combine(pf.FileDirectory, KeyBaindName);
+				Funcs.Save(kp);
 				if (m_navBar!=null)
 				{
 					pf.SetValue("IsFront", m_navBar.IsFront);
@@ -342,6 +349,10 @@ namespace AE_RemapTria
 		// ********************************************************************
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			if(IsInputMode)
+			{
+				SetIsInputMode(false);
+			}
 			if (m_mdPos != MDPos.None) return;
 
 			if (Grid.ChkMouseDown(e))
@@ -355,6 +366,14 @@ namespace AE_RemapTria
 
 			}
 			else if (Caption.ChkMouseDown(e))
+			{
+
+			}
+			else if (VScrol.ChkMouseDown(e))
+			{
+
+			}
+			else if (HScrol.ChkMouseDown(e))
 			{
 
 			}
@@ -421,6 +440,14 @@ namespace AE_RemapTria
 			{
 
 			}
+			else if (VScrol.ChkMouseMove(e))
+			{
+
+			}
+			else if (HScrol.ChkMouseMove(e))
+			{
+
+			}
 			else if (m_mdPos != MDPos.None)
 			{
 				int ax = e.X - m_MD.X;
@@ -454,6 +481,14 @@ namespace AE_RemapTria
 
 			}
 			else if (Caption.ChkMouseUp(e))
+			{
+
+			}
+			else if (VScrol.ChkMouseUp(e))
+			{
+
+			}
+			else if (HScrol.ChkMouseUp(e))
 			{
 
 			}
@@ -556,7 +591,7 @@ namespace AE_RemapTria
 				T_G.GradBG(g, this.ClientRectangle);
 				int w0 = 3;
 				int w1 = this.Width - 20 - w0;
-				int h0 = 23;
+				//int h0 = 23;
 				int h1 = this.Height -20 -3;
 
 				p.Color = Colors.LineB;
@@ -580,20 +615,35 @@ namespace AE_RemapTria
 				}
 
 				Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
-				sb.Color = Grid.Colors.TopBar;
+				sb.Color = Colors.TopBar;
 				g.FillRectangle(sb, r0);
 
-				p.Color = Grid.Colors.LineDark;
+				p.Color = Colors.LineDark;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
 				g.DrawRectangle(p, r);
 
 				g.DrawImage(Menu.Offscr(), Menu.Location);
-				g.DrawImage(Input.Offscr(), Input.Location);
 				g.DrawImage(Frame.Offscr(), Frame.Location);
 				g.DrawImage(Caption.Offscr(), Caption.Location);
 				g.DrawImage(Grid.Offscr(), Grid.Location);
 				g.DrawImage(VScrol.Offscr(), VScrol.Location);
-				g.DrawImage(tria, 28, 32);
+				g.DrawImage(HScrol.Offscr(), HScrol.Location);
+				g.DrawImage(tria, Sizes.FrameWidth2, 40);
+
+				if(IsInputMode)
+				{
+					int x = Grid.Location.X + Selection.Target * Sizes.CellWidth - Sizes.DispX;
+					int y = Grid.Location.Y + Selection.Start * Sizes.CellHeight - Sizes.DispY;
+					Rectangle rr = new Rectangle(x, y+2, Sizes.CellWidth, Sizes.CellHeight-4);
+					sb.Color = Color.FromArgb(5, 5, 10);
+					g.FillRectangle(sb, rr);
+					StringFormat.Alignment = StringAlignment.Center;
+					StringFormat.LineAlignment = StringAlignment.Center;
+					sb.Color = Colors.Moji;
+					g.DrawString(m_InputStr,
+						MyFont(Grid.FontIndex,Grid.FontSize,FontStyle.Regular), 
+						sb, rr, StringFormat);
+				}
 			}
 			finally
 			{
@@ -609,10 +659,10 @@ namespace AE_RemapTria
 			Grid.SetLocSize();
 			Sizes.SizeSetting();
 			Menu.SetLocSize();
-			Input.SetLocSize();
 			Frame.SetLocSize();
 			Caption.SetLocSize();
 			VScrol.SetLocSize();
+			HScrol.SetLocSize();
 		}
 		public void ChkSize()
 		{
@@ -661,7 +711,7 @@ namespace AE_RemapTria
 				+ Sizes.InterWidth
 				+ Sizes.CellWidth*6
 				+ Sizes.InterWidth 
-				+ T_Size.VScrolWidth,
+				+ TR_Size.VScrolWidth,
 				y 
 				+ Sizes.MenuHeight 
 				+ Sizes.CaptionHeight2 
@@ -669,7 +719,7 @@ namespace AE_RemapTria
 				+ Sizes.InterHeight 
 				+ Sizes.CellHeight*6
 				+ Sizes.InterHeight
-				+ T_Size.HScrolHeight
+				+ TR_Size.HScrolHeight
 				);
 			this.MaximumSize = new Size(
 				x
@@ -677,7 +727,7 @@ namespace AE_RemapTria
 				+ Sizes.InterWidth
 				+ Sizes.CellWidth * CellData.CellCount
 				+ Sizes.InterWidth
-				+ T_Size.VScrolWidth,
+				+ TR_Size.VScrolWidth,
 				y
 				+ Sizes.MenuHeight
 				+ Sizes.CaptionHeight2
@@ -685,7 +735,7 @@ namespace AE_RemapTria
 				+ Sizes.InterHeight
 				+ Sizes.CellHeight * CellData.FrameCountTrue
 				+ Sizes.InterHeight
-				+ T_Size.HScrolHeight
+				+ TR_Size.HScrolHeight
 				+ Sizes.InterHeight
 				);
 		}
@@ -700,7 +750,38 @@ namespace AE_RemapTria
 		// ********************************************************************
 
 		// ********************************************************************
-
+		public void SetIsInputMode(bool b)
+		{
+			if(IsInputMode != b)
+			{
+				IsInputMode = b;
+				m_InputStr = "";
+				this.Invalidate();
+			}
+		}
+		// ********************************************************************
+		private int IsNumberKey(Keys k)
+		{
+			int ret = -1;
+			if((k>=Keys.D0)&&(k<=Keys.D9))
+			{
+				ret = (int)k - (int)Keys.D0;
+			}else if ((k >= Keys.NumPad0) && (k <= Keys.NumPad9))
+			{
+				ret = (int)k - (int)Keys.NumPad0;
+			}else if ((k == Keys.Enter)|| (k == Keys.Return))
+			{
+				ret = 10;
+			}else if(k==Keys.Back)
+			{
+				ret = 11;
+			}
+			else if (k == Keys.Delete)
+			{
+				ret = 12;
+			}
+			return ret;
+		}
 		// ********************************************************************
 		private bool IsInputMode = false;
 		protected override bool ProcessDialogKey(Keys keyData)
@@ -708,7 +789,72 @@ namespace AE_RemapTria
 #if DEBUG
 			this.Text = String.Format("{0}", keyData.ToString());
 #endif
+			int num = IsNumberKey(keyData);
+			if (num >= 0)
+			{
+				if (IsInputMode)
+				{
+					if ((num >= 0) && (num <= 9))
+					{
+						AddValueStr(num);
+						this.Invalidate(true);
+						return true;
+					}
+					else if (num == 10)
+					{
+						//enter
+						InputEnter();
+						return true;
+					}
+					else if (num == 11)
+					{
+						//Back
+						if(m_InputStr=="")
+						{
+							SetIsInputMode(false);
+						}
+						else
+						{
+							m_InputStr=m_InputStr.Substring(0, m_InputStr.Length-1);
+						}
+						this.Invalidate();
+						return true;
+					}
+					else if (num == 12)
+					{
+						//Delete
+						if (m_InputStr == "")
+						{
+							SetIsInputMode(false);
+						}
+						else
+						{
+							m_InputStr = "";
+						}
+						this.Invalidate();
+						return true;
+					}
+				}
+				else if ((num >= 1) && (num <= 9))
+				{
+					SetIsInputMode(true);
+					AddValueStr(num);
+					this.Invalidate(true);
+					return true;
+				}
+			}
+			else
+			{
+				if (IsInputMode)
+				{
+					SetIsInputMode(false);
+					return true;
+				}
+			}
+
+
 			if (IsInputMode == true) return base.ProcessDialogKey(keyData);
+
 			FuncItem? fi = Funcs.FindKeys(keyData);
 			if ((fi != null)&&(fi.Func!=null))
 			{
@@ -720,7 +866,7 @@ namespace AE_RemapTria
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
-			Grid.Sizes.DispY -= v;
+			Sizes.DispY -= v;
 			DrawAll();
 			base.OnMouseWheel(e);
 		}

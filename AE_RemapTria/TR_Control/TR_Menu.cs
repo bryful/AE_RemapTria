@@ -1,4 +1,5 @@
-﻿using PdfSharpCore.Drawing;
+﻿using BRY;
+using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,114 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace AE_RemapTria
 {
-    public class TR_Menu : TR_Control
+	// ***********************************************************************************
+	public class T_TopMenuItem
+	{
+		public string Caption { get; set; }
+		public int Width { get; set; }
+		public int Height { get; set; }
+		public int PosLeft { get; set; }
+		public int PosRight { get { return PosLeft + Width; } }
+		public Rectangle Rect
+		{
+			get
+			{
+				return new Rectangle(PosLeft, 0, Width, Height);
+			}
+		}
+		public T_TopMenuItem(string cap, int w = 100, int h = 20)
+		{
+			Caption = cap;
+			Width = w;
+			Height = h;
+
+		}
+	}
+	public class T_SubMenuItem
+	{
+		private int m_Id = -1;
+		public int Id { get { return m_Id; } }
+		public string EngName
+		{
+			get
+			{
+				if (m_funcItem != null)
+				{
+					return m_funcItem.EngName;
+				}
+				else
+				{
+					return "";
+				}
+
+			}
+		}
+		public string Caption
+		{
+			get
+			{
+				if (m_funcItem != null)
+				{
+					return m_funcItem.Caption;
+				}
+				else
+				{
+					return "";
+				}
+
+			}
+		}
+		public Keys Key
+		{
+			get
+			{
+				if (m_funcItem != null)
+				{
+					return m_funcItem.KeysFirst;
+				}
+				else
+				{
+					return Keys.None;
+				}
+			}
+		}
+		public string Shrtcut
+		{
+			get
+			{
+				string ret = "";
+				if (m_funcItem != null)
+				{
+					Keys k = m_funcItem.KeysFirst;
+					if (k != Keys.None)
+					{
+						ret = T_G.KeyInfo(k);
+					}
+				}
+				return ret;
+			}
+
+		}
+		private FuncItem? m_funcItem;
+		public T_SubMenuItem(FuncItem? fnc, int id)
+		{
+			m_funcItem = fnc;
+			m_Id = id;
+		}
+		public bool Exec()
+		{
+			if (m_funcItem.Func != null)
+			{
+				return m_funcItem.Func();
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	// ***********************************************************************************
+	public class TR_Menu : TR_Control
     {
         private T_TopMenuItem[] m_TopMenuItems = new T_TopMenuItem[0];
         private T_SubMenuItem[][] m_SubMenus = new T_SubMenuItem[0][];
@@ -38,9 +146,10 @@ namespace AE_RemapTria
             return m_SubMenus[idx];
         }
         // *************************************************************************************************
-        public TR_Menu()
-        {
+        public TR_Menu() //: base()
+		{
             m_FontSize = 9;
+            m_FontIndex = 5;
             m_Size = new Size(200, MenuHeight);
         }
 
@@ -57,13 +166,11 @@ namespace AE_RemapTria
         }
 
         // *************************************************************************************************
-        public override void SetTRForm(TR_Form fm)
+        public override void SetTRForm(TR_Form fm,bool IsI = true)
         {
-            m_form = fm;
+            base.SetTRForm(fm,false);
             if (m_form != null)
             {
-                Colors = m_form.Colors;
-                m_font = m_form.MyFont(m_FontIndex, m_FontSize,m_form.FontStyle);
                 ClearMenu();
                 m_form.MakeMenu();
                 MenuWidthAll();
@@ -90,12 +197,23 @@ namespace AE_RemapTria
         }
         // *************************************************************************************************
         // ****************************************************************
-        public void AddTopMenu(string cap, int w)
+        public void AddTopMenu(string cap)
         {
             Array.Resize(ref m_TopMenuItems, m_TopMenuItems.Length + 1);
             Array.Resize(ref m_SubMenus, m_SubMenus.Length + 1);
 
-            int cnt = m_TopMenuItems.Length - 1;
+            int w = 50;
+            if ((Sizes != null)&&(m_font!=null)&&(m_form!=null))
+            {
+				Bitmap bmp = new Bitmap(1000, MenuHeight);
+                Graphics g = Graphics.FromImage(bmp);
+                SizeF sz = g.MeasureString(cap, m_font, 1000, m_form.StringFormat);
+                Debug.WriteLine($"Menu:{sz.Width},{sz.Height}");
+                w = (int)(sz.Width+0.5);
+				w += 10;
+				bmp.Dispose();
+            }
+			int cnt = m_TopMenuItems.Length - 1;
             m_TopMenuItems[cnt] = new T_TopMenuItem(cap, w, MenuHeight);
             MenuWidthAll();
         }
@@ -112,9 +230,10 @@ namespace AE_RemapTria
         public void AddSubMenu(int idx, string EngN)
         {
             if (m_form == null) return;
-            if (m_form.Grid == null) return;
+            if (Grid == null) return;
+			if (Funcs == null) return;
 
-            FuncItem? ft = m_form.Grid.Funcs.FindFunc(EngN);
+			FuncItem? ft = Funcs.FindFunc(EngN);
             if (ft == null) return;
             if (m_SubMenus[idx] == null) m_SubMenus[idx] = new T_SubMenuItem[0];
             Array.Resize(ref m_SubMenus[idx], m_SubMenus[idx].Length + 1);
@@ -295,7 +414,7 @@ namespace AE_RemapTria
 		public override bool ChkMouseDown(MouseEventArgs e)
         {
 			bool ret = false;
-			base.ChkMouseDown(e);
+			ret = base.ChkMouseDown(e);
             if (m_inMouse)
             {
                 m_mm = mmPos(m_MDownPoint.X);
@@ -304,6 +423,10 @@ namespace AE_RemapTria
                     m_MDown = true;
 					OnMenuDown(m_mm);
                     ret = true;
+                }
+                else
+                {
+                    ret = false;
                 }
             }
             return ret;

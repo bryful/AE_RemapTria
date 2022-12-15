@@ -19,24 +19,14 @@ namespace AE_RemapTria
 	public partial class TR_BaseDialog : Form
 	{
 		#region Contol
-		protected TR_Form? m_form = null;
-		protected TR_Grid? m_grid = null;
-		protected TR_Colors? Colors = null;
+		public TR_Form? Form = null;
+		public TR_Grid? Grid = null;
+		public TR_CellData?  CellData = null;
+		public TR_Size?  Sizes = null;
+		public TR_Colors? Colors = null;
 		#endregion
 		#region Font
-		private T_MyFonts? m_MyFonts = null;
-		[Category("_AE_Remap")]
-		public T_MyFonts? MyFonts
-		{
-			get { return m_MyFonts; }
-			set
-			{
-				if (value != null)
-				{
-					SetMyFont(value);
-				}
-			}
-		}
+		public T_MyFonts MyFonts = new T_MyFonts();
 		protected int m_MyFontIndex = 5;
 		[Category("_AE_Remap")]
 		public int MyFontIndex
@@ -48,13 +38,28 @@ namespace AE_RemapTria
 				if (m_MyFontIndex < 0) m_MyFontIndex = 0;
 				if (this.MyFonts != null)
 				{
-					this.Font = m_MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, m_MyFontStyle);
+					this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, m_MyFontStyle);
+					SetFontIndex(value);
 				}
 				else
 				{
 					this.Font = new Font(this.Font.Name, m_MyFontSize, m_MyFontStyle);
 				}
 			}
+		}
+		public void SetFontIndex(int idx)
+		{
+			if(this.Controls.Count>0)
+			{
+				foreach(Control c in this.Controls)
+				{
+					if( c is TR_DialogControl)
+					{
+						((TR_DialogControl)c).MyFontIndex = idx;
+					}
+				}
+			}
+
 		}
 		protected float m_MyFontSize = 8;
 		[Category("_AE_Remap")]
@@ -84,7 +89,7 @@ namespace AE_RemapTria
 			m_MyFontStyle = fs;
 			if (this.MyFonts != null)
 			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, sz, fs);
+				this.Font = MyFonts.MyFont(m_MyFontIndex, sz, fs);
 			}
 			else
 			{
@@ -92,15 +97,7 @@ namespace AE_RemapTria
 			}
 		}
 		// ************************************************************************
-		public void SetMyFont(T_MyFonts mf)
-		{
-			m_MyFonts = mf;
-			if (m_MyFonts != null)
-			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, m_MyFontStyle);
-
-			}
-		}       
+		  
 		// ************************************************************************
 		private StringFormat m_format = new StringFormat();
 		[Category("_AE_Remap")]
@@ -289,6 +286,7 @@ namespace AE_RemapTria
 		// ************************************************************************
 		public TR_BaseDialog()
 		{
+			AutoScaleMode = AutoScaleMode.None;
 			InitializeComponent();
 			Init();
 		}
@@ -309,8 +307,8 @@ namespace AE_RemapTria
 			this.SetStyle(
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint,
-				//ControlStyles.SupportsTransparentBackColor,
+				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.SupportsTransparentBackColor,
 				true);
 			//this.BackColor = Color.Transparent;
 			//this.TransparencyKey = Color.Transparent;
@@ -319,16 +317,21 @@ namespace AE_RemapTria
 			LineAlignment = StringAlignment.Center;
 			this.FormBorderStyle = FormBorderStyle.None;
 			this.TopMost = true;
-
-
+			this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, m_MyFontStyle);
+			SetTRFormToControl();
 		}
 		protected override void InitLayout()
 		{
-			if (m_MyFonts != null)
+			if (MyFonts != null)
 			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+				this.Font = MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
 			}
 			base.InitLayout();
+		}
+		protected override void OnControlAdded(ControlEventArgs e)
+		{
+			base.OnControlAdded(e);
+			SetTRFormToControl();
 		}
 		// ****************************************************************
 		public void ToCenter()
@@ -344,17 +347,51 @@ namespace AE_RemapTria
 			base.OnLoad(e);
 		}
 		// *****************************************************************
-		
+		public virtual void SetTRFormToControl()
+		{
+			if(this.Controls.Count>0)
+			{
+				foreach(Control c in this.Controls)
+				{
+					if( c is TR_DialogControl)
+					{
+						try
+						{
+							((TR_DialogControl)c).SetTRDialog(this);
+						}
+						catch
+						{
+
+						}
+					}else if (c is T_BListBox)
+					{
+						try
+						{
+							((T_BListBox)c).SetTRDialog(this);
+						}
+						catch
+						{
+
+						}
+					}
+				}
+			}
+		}
+
+
 		public virtual void SetTRForm(TR_Form fm)
 		{
-			m_form = fm;
-			if (m_form != null)
+			Form = fm;
+			if (Form != null)
 			{
-				m_grid = fm.Grid;
+				Grid = fm.Grid;
 				Colors = fm.Colors;
-				this.MyFonts =m_form.MyFonts;
-				this.Font = m_form.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
+				Sizes = fm.Sizes;
+				CellData = fm.CellData;
+				//MyFonts =Form.MyFonts;
+				
 			}
+			this.Font = MyFonts.MyFont(m_MyFontIndex, m_MyFontSize, m_MyFontStyle);
 		}
 		#region Mouse Event
 		protected override void OnDoubleClick(EventArgs e)

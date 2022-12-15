@@ -19,7 +19,7 @@ namespace AE_RemapTria
 		Fill,
 		FillDot,
 	}
-	public partial class T_ColorPlate : T_BaseControl
+	public partial class T_ColorPlate : TR_DialogControl
 	{
 		private ColorPlate m_ColorPlate = ColorPlate.Fill;
 		[Category("_AE_Remap")]

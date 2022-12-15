@@ -38,7 +38,6 @@ namespace AE_RemapTria
 			this.ClientSize = new System.Drawing.Size(373, 27);
 			this.ControlBox = false;
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(40000, 27);

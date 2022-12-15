@@ -19,30 +19,17 @@ namespace AE_RemapTria
     public partial class TR_Grid : TR_Control
     {
 
-		public TR_CellData CellData;
-		public TR_Size Sizes;
-		public TR_Colors Colors;
-		public T_Funcs Funcs;
-
-        public TR_Grid()
-        {
+        public TR_Grid() //: base()
+		{
 			m_FontIndex = 5;
 			m_FontSize = 9;
-			
-			ChkOffScr();
 		}
         // *************************************************************************************************
-        public override void SetTRForm(TR_Form fm)
+        public override void SetTRForm(TR_Form fm,bool isI=true)
         {
-            m_form = fm;
+			base.SetTRForm(fm,false);
             if (m_form != null)
             {
-				m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
-				
-				CellData = m_form.CellData;
-				Colors = m_form.Colors;
-				Sizes = m_form.Sizes;
-				Funcs = m_form.Funcs;
                 SetLocSize();
 				ChkOffScr();
 			}
@@ -59,8 +46,8 @@ namespace AE_RemapTria
 			Point p = new Point(leftW, topW);
 			if (m_Location != p)m_Location = p;
 
-			int ww = leftW + Sizes.InterWidth + T_Size.VScrolWidth;
-			int hh = topW + Sizes.InterHeight + T_Size.HScrolHeight;
+			int ww = leftW + Sizes.InterWidth + TR_Size.VScrolWidth;
+			int hh = topW + Sizes.InterHeight + TR_Size.HScrolHeight;
 			Size sz = new Size(
 				m_form.Width - ww,
 				m_form.Height - hh
@@ -387,8 +374,9 @@ namespace AE_RemapTria
 		public override bool ChkMouseMove(MouseEventArgs e)
 		{
 			bool ret = false;
-			base.ChkMouseDown(e);
+			ret = base.ChkMouseDown(e);
 			if (m_inMouse == false) return ret;
+			if((CellData==null)||(Sizes==null)) return ret;
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
 				if (m_mdFrame >= 0)

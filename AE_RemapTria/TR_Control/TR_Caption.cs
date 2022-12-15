@@ -22,15 +22,14 @@ namespace AE_RemapTria
 		public TR_Caption()
 		{
 			m_FontSize = 9;
+			m_FontIndex = 5;
 		}
 		// ***********************************************
-		public override void SetTRForm(TR_Form fm)
+		public override void SetTRForm(TR_Form fm,bool isI=true)
 		{
-			m_form = fm;
+			base.SetTRForm(fm,false);
 			if (m_form != null)
 			{
-				Colors = m_form.Colors;
-				m_font = m_form.MyFont(m_FontIndex, m_FontSize, m_form.FontStyle);
 				SetLocSize();
 				ChkOffScr();
 			}
@@ -48,7 +47,7 @@ namespace AE_RemapTria
 				- m_form.Sizes.FrameWidth
 				- m_form.Sizes.InterWidth
 				- m_form.Sizes.InterWidth
-				- T_Size.VScrolWidth;
+				- TR_Size.VScrolWidth;
 			int h = m_form.Sizes.CaptionHeight
 				+ m_form.Sizes.CaptionHeight2;
 			Size sz = new Size(w,h);
@@ -130,7 +129,7 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if (m_form == null) return false;
-			base.ChkMouseDown(e);
+			ret = base.ChkMouseDown(e);
 			if (m_inMouse == false) return ret;
 
 			int t = (m_MDownPoint.X + m_form.Sizes.Disp.X) / m_form.Sizes.CellWidth;

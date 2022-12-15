@@ -10,26 +10,26 @@ namespace AE_RemapTria
 		[Category("_AE_Remap")]
 		public TR_Form? Form
 		{
-			get { return m_form; }
+			get { return base.Form; }
 			set
 			{
-				m_form = value;
-				if (m_form != null)
+				base.Form = value;
+				if (base.Form != null)
 				{
 					SetLocSize();
 					SetIsFront(m_IsFront);
-					m_form.LocationChanged += M_form_LocationChanged;
-					m_form.SizeChanged += M_form_LocationChanged;
-					m_form.TextChanged += M_form_TextChanged;
+					base.Form.LocationChanged += M_form_LocationChanged;
+					base.Form.SizeChanged += M_form_LocationChanged;
+					base.Form.TextChanged += M_form_TextChanged;
 				}
 			}
 		}
 
 		private void M_form_TextChanged(object? sender, EventArgs e)
 		{
-			if (m_form != null)
+			if (base.Form != null)
 			{
-				this.Text = m_form.Text;
+				this.Text = base.Form.Text;
 				this.Invalidate();
 			}
 		}
@@ -76,24 +76,24 @@ namespace AE_RemapTria
 		// *****************************************************************
 		public void SetLocSize()
 		{
-			if (m_form == null) return;
+			if (base.Form == null) return;
 			if (_refFlag == false) return;
 			_refFlag = false;
-			Size sz = new Size(m_form.Width, this.Height);
+			Size sz = new Size(base.Form.Width, this.Height);
 			if (this.Size != sz) this.Size = sz;
 
-			Point p = new Point(m_form.Left, m_form.Top - this.Height+1);
+			Point p = new Point(base.Form.Left, base.Form.Top - this.Height+1);
 			if(this.Location!=p) this.Location = p;
 
 			_refFlag = true;
 		}
 		public void SetLocToTRForm()
 		{
-			if (m_form == null) return;
+			if (base.Form == null) return;
 			if (_refFlag == false) return;
 			_refFlag = false;
 			Point p = new Point(this.Left, this.Top + this.Height-1);
-			if (m_form.Location != p) m_form.Location = p;
+			if (base.Form.Location != p) base.Form.Location = p;
 
 			_refFlag = true;
 		}
@@ -117,7 +117,7 @@ namespace AE_RemapTria
 					IsFront = !IsFront;
 				}else if(e.X >this.Width-30)
 				{
-					m_form.Quit();
+					base.Form.Quit();
 				}
 				else
 				{
@@ -191,9 +191,9 @@ namespace AE_RemapTria
 		// *****************************************************************
 		public void SetIsFront(bool b)
 		{
-			if (m_form == null) return;
+			if (base.Form == null) return;
 			m_IsFront = b;
-			m_form.TopMost = b;
+			base.Form.TopMost = b;
 			if (m_IsFront == false)
 			{
 				formActive();
@@ -203,17 +203,17 @@ namespace AE_RemapTria
 		// *****************************************************************
 		private void formActive()
 		{
-			if (m_form == null) return;
-			m_form.ForegroundWindow();
+			if (base.Form == null) return;
+			base.Form.ForegroundWindow();
 		}
 		// *****************************************************************
 		
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			if(m_form != null)
+			if(base.Form != null)
 			{
-				((TR_Form)m_form).Quit();
+				((TR_Form)base.Form).Quit();
 			}
 			else
 			{

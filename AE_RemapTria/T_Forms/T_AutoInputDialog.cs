@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_AutoInputDialog : T_BaseDialog
+	public partial class T_AutoInputDialog : TR_BaseDialog
 	{
 		public int Start
 		{

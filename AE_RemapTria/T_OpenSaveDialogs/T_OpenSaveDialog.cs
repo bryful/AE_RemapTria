@@ -11,11 +11,9 @@ using System.Text.Json.Nodes;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using BRY;
 namespace AE_RemapTria
 {
-	public partial class T_OpenSaveDialog : T_BaseDialog
+    public partial class T_OpenSaveDialog : T_BaseDialog
 	{
 		[Category("_AE_Remap")]
 		public string Caption
@@ -165,7 +163,7 @@ namespace AE_RemapTria
 
 		private void tbFileName_TextChanged(object sender, EventArgs e)
 		{
-			T_TextBox rd = (T_TextBox)sender;
+			TR_TextBox rd = (TR_TextBox)sender;
 			btnOK.Enabled = (rd.Text != "");
 		}
 		protected override void OnClosed(EventArgs e)

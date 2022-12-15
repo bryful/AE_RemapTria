@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_KeysPanel : T_BaseControl
+	public partial class T_KeysPanel : TR_DialogControl
 	{
 		private Color m_BorderColor= Color.FromArgb(100, 100, 180);
 		public Color BorderColor

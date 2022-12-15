@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace AE_RemapTria
 {
-	/*
 	public enum BackupSratus
 	{
 		None,
@@ -15,7 +14,6 @@ namespace AE_RemapTria
 		FrameEnabled,
 		All
 	}
-	*/
 	public class BackupCellData2
 	{
 		public TR_Selection sel = new TR_Selection();
