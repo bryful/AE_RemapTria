@@ -69,12 +69,14 @@ namespace AE_RemapTria
 			m_Label.BackColor = Color.Transparent;
 			m_Label.GotFocus += M_Label_GotFocus;
 			this.SetStyle(
-				ControlStyles.DoubleBuffer |
-				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint|
-				ControlStyles.SupportsTransparentBackColor,
-				true);
-			//this.BackColor = Color.Black;
+	ControlStyles.Selectable |
+	ControlStyles.UserMouse |
+	ControlStyles.DoubleBuffer |
+	ControlStyles.UserPaint |
+	ControlStyles.AllPaintingInWmPaint |
+	ControlStyles.SupportsTransparentBackColor,
+	true);
+			this.BackColor = Color.Transparent;
 			this.UpdateStyles();
 			this.BackColor = Color.Transparent;
 		}

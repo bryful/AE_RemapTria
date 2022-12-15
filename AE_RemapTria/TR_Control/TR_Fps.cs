@@ -71,6 +71,7 @@ namespace AE_RemapTria
 					sb.Color = m_FrameColor;
 					g.FillRectangle(sb, r);
 				}
+
 				int x = m_cbWidth + 5;
 				int w = Width - (m_cbWidth + 5);
 
@@ -110,11 +111,6 @@ namespace AE_RemapTria
 					sb.Color = EnabledColor(ForeColor, m_Enabled);
 				}
 				DrawStr(g, "30fps", sb, r);
-				if(this.Focused)
-				{
-					p.Color = Color.FromArgb(75, 75, 100);
-					DrawFrame(g, p, 1);
-				}
 			}
 			finally
 			{

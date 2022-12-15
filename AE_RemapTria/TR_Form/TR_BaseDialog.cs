@@ -549,6 +549,7 @@ namespace AE_RemapTria
 
 				p.Color = m_FrameColor;
 				DrawFrame(g, p);
+
 			}
 			finally
 			{

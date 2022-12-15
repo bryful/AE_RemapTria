@@ -23,11 +23,22 @@ namespace AE_RemapTria
 			this.ForeColor = Color.FromArgb(255, 120, 220, 250);
 			this.BackColor = Color.FromArgb( 6, 11, 25);
 			InitializeComponent();
+			this.SetStyle(
+	ControlStyles.Selectable |
+	ControlStyles.UserMouse |
+	ControlStyles.DoubleBuffer |
+	ControlStyles.UserPaint |
+	ControlStyles.AllPaintingInWmPaint |
+	ControlStyles.SupportsTransparentBackColor,
+	true);
+			this.BackColor = Color.Transparent;
+			this.UpdateStyles();
 		}
 		protected override void OnPaint(PaintEventArgs pe)
 		{
 			Graphics g = pe.Graphics;
 			SolidBrush sb = new SolidBrush(this.BackColor);
+			Pen p = new Pen(Color.FromArgb(50,50,75));
 
 			try
 			{
@@ -38,15 +49,23 @@ namespace AE_RemapTria
 				g.DrawString(this.Text, this.Font, sb, rct, m_sf);
 				sb.Color = m_FrameColor;
 				DrawPadding(g, sb);
+
+				if(this.Focused)
+				{
+					DrawFrame(g, p, 1);
+				}
+
 			}
 			finally
 			{
 				sb.Dispose();
+				p.Dispose();
 			}
 		}
+		private bool m_IsEdit = false;
 		public void SetEdit()
 		{
-			if (m_TextBox != null) return;
+			if (m_IsEdit) return;
 			m_TextBox = new TextBox();
 			m_TextBox.Name = "a";
 			m_TextBox.AutoSize = false;
@@ -55,68 +74,103 @@ namespace AE_RemapTria
 			m_TextBox.Size = new Size(Width,Height );
 			m_TextBox.Text = this.Text;
 			m_TextBox.LostFocus += M_TextBox_LostFocus;
-			m_TextBox.PreviewKeyDown += M_TextBox_PreviewKeyDown; ;
+			m_TextBox.KeyDown += M_TextBox_KeyDown;
+			m_TextBox.KeyPress += M_TextBox_KeyPress;
+
 			m_TextBox.Font = this.Font;
-			m_TextBox.ForeColor = this.ForeColor;
-			m_TextBox.BackColor = Color.FromArgb(10, 10, 25);
+			m_TextBox.ForeColor = Color.Black;
+			m_TextBox.BackColor = Color.FromArgb(220, 220,220);
+			m_TextBox.SelectionStart = m_TextBox.Text.Length;
 			this.Controls.Add(m_TextBox);
-			F_W.SetFocus(m_TextBox.Handle);
+			m_IsEdit=true;
+			m_TextBox.Focus();
 		}
 
-		private void M_TextBox_PreviewKeyDown(object? sender, PreviewKeyDownEventArgs e)
+		private void M_TextBox_KeyPress(object? sender, KeyPressEventArgs e)
 		{
-			if (e.KeyCode == Keys.Enter)
+			if (e.KeyChar == (char)Keys.Enter)
 			{
 				if (ChkEdit())
 				{
 					EndEdit();
 				}
-				e.IsInputKey = false;
+				e.Handled = true;
+			}else if (e.KeyChar == (char)Keys.Escape)
+			{
+				ChkEdit();
+				EndEdit();
+				e.Handled = true;
 			}
 		}
 
 		private void M_TextBox_KeyDown(object? sender, KeyEventArgs e)
 		{
-			
+			if (e.KeyCode == Keys.Delete)
+			{
+				if(m_TextBox!=null) m_TextBox.Text = "";
+			}
 		}
+
+
 
 		public void EndEdit()
 		{
-			if (m_TextBox == null) return;
+			if (m_IsEdit == false) return;
+			m_IsEdit = false;
 			this.Controls.Remove(m_TextBox);
-			m_TextBox = null;
 		}
 		public bool ChkEdit()
 		{
 			bool ret = false;
-			if (m_TextBox == null) return ret;
-			string s = m_TextBox.Text.Trim();
-			if (this.Text != s)
+			if (m_IsEdit == false) return false;
+			if (m_TextBox != null)
 			{
-				this.Text = s;
-				ret = true;
+				string s = m_TextBox.Text.Trim();
+				if (this.Text != s)
+				{
+					this.Text = s;
+				}
 			}
+			ret = true;
 			return ret;
 		}
 
 		private void M_TextBox_LostFocus(object? sender, EventArgs e)
 		{
-			ChkEdit();
-			EndEdit();
+			if (m_IsEdit)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+			this.Invalidate();
 		}
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if(m_TextBox == null)
+			if (m_IsEdit == false)
 			{
 				SetEdit();
 				return;
 			}
 			base.OnMouseDown(e);
 		}
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			base.OnKeyDown(e);
+			if((this.Focused)&&(m_IsEdit == false))
+			{
+				SetEdit();
+			}
+		}
 		protected override void OnGotFocus(EventArgs e)
 		{
 			base.OnGotFocus(e);
-			SetEdit();
+			this.Invalidate();
 		}
+		protected override void OnLostFocus(EventArgs e)
+		{
+			base.OnLostFocus(e);
+			this.Invalidate();
+		}
+
 	}
 }

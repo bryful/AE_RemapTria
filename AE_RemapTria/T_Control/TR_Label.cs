@@ -15,6 +15,7 @@ namespace AE_RemapTria
 
 		public TR_Label()
 		{
+			TabStop = false;
 			this.Size = new Size(100, 24);
 			this.ForeColor = Color.FromArgb(255, 150, 150, 200);
 			MyFontSize = 8;

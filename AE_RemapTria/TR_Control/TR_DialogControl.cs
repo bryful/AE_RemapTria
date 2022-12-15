@@ -187,8 +187,8 @@ namespace AE_RemapTria
 		{
 
 			this.SetStyle(
-				ControlStyles.Selectable |
-				ControlStyles.UserMouse |
+				//ControlStyles.Selectable |
+				//ControlStyles.UserMouse |
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
 				ControlStyles.AllPaintingInWmPaint|

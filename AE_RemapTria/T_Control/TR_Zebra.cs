@@ -55,16 +55,9 @@ namespace AE_RemapTria
 
 		public TR_Zebra()
 		{
+			TabStop = false;
 			InitializeComponent();
 			this.Size = new Size(100, 50);
-			this.SetStyle(
-	ControlStyles.DoubleBuffer |
-	ControlStyles.UserPaint |
-	ControlStyles.AllPaintingInWmPaint |
-	ControlStyles.SupportsTransparentBackColor,
-	true);
-			this.BackColor = Color.Transparent;
-			this.UpdateStyles();
 		}
 
 		protected override void OnPaint(PaintEventArgs pe)

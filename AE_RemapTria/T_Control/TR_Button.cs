@@ -99,13 +99,14 @@ namespace AE_RemapTria
             ForeColor = Color.FromArgb(255, 200, 200, 250);
 			this.SetStyle(
 				ControlStyles.Selectable |
-				ControlStyles.UserMouse | 
+				ControlStyles.UserMouse |
 				ControlStyles.DoubleBuffer |
 				ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint|
+				ControlStyles.AllPaintingInWmPaint |
 				ControlStyles.SupportsTransparentBackColor,
 				true);
-			BackColor = Color.Transparent;
+			this.BackColor = Color.Transparent;
+			this.UpdateStyles();
 		}
         // *********************************************************
         protected override void OnPaint(PaintEventArgs pe)
