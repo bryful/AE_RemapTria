@@ -9,7 +9,13 @@ namespace AE_RemapExceed
 	public class FloatEdit : TextBox
 	{
 		public event EventHandler ValueChanged;
-
+		protected virtual void OnValueChanged(EventArgs e)
+		{
+			if (ValueChanged != null)
+			{
+				ValueChanged(this, e);
+			}
+		}
 		//----------------------------
 		public float Value
 		{
@@ -48,13 +54,7 @@ namespace AE_RemapExceed
 			base.OnKeyPress(e);
 		}
 		//----------------------------
-		protected virtual void OnValueChanged(EventArgs e)
-		{
-			if (ValueChanged != null)
-			{
-				ValueChanged(this, e);
-			}
-		}
+	
 
 	}
 }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_SheetInfoDialog : T_BaseDialog
+	public partial class TR_SheetInfoDialog : TR_BaseDialog
 	{
-		public T_SheetInfoDialog()
+		public TR_SheetInfoDialog()
 		{
 			InitializeComponent();
 			SetEventHandler(t_Zebra1);

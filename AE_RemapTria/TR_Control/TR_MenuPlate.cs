@@ -72,7 +72,7 @@ namespace AE_RemapTria
 		private Color m_CaptionBackColor = Color.FromArgb(95, 108, 176);
 		private Color m_CaptionForeColor = Color.FromArgb(194, 202, 243);
 		private Color m_MojiColor = Color.FromArgb(194, 202, 243);
-		private Color m_SelectedColor = Color.FromArgb(25, 25, 100);
+		private Color m_SelectedColor = Color.FromArgb(50, 50, 100);
 		private Color m_ClickColor = Color.FromArgb(100,100, 200);
 
 		private int m_Index = -1;
@@ -136,6 +136,7 @@ namespace AE_RemapTria
 				r = new Rectangle(0, 0, m_MenuWidth+40, m_MenuHeight);
 				sb.Color = Color.Black;
 				g.FillRectangle(sb, r);
+
 				r = new Rectangle(0, 0, m_MenuWidth, m_MenuHeight);
 				StringFormat sf = new StringFormat();
 				sf.Alignment = StringAlignment.Center;
@@ -155,7 +156,7 @@ namespace AE_RemapTria
 						sb.Color = m_MojiColor;
 						if ((m_Items[i]==null)||(m_Items[i].Caption==""))
 						{
-							sb.Color = m_MojiColor;
+							sb.Color = m_SelectedColor;
 							int ls = 1;
 							r = new Rectangle(
 								m_LeftSideWidth, 
@@ -185,15 +186,12 @@ namespace AE_RemapTria
 								}
 								g.FillRectangle(sb, r);
 							}
-							sb.Color = m_MojiColor;
 							// 横のドット
-							if (m_SubIndex != i)
-							{
-								r = new Rectangle(
-									m_LeftSideWidth + ds / 2,
-									m_RowHeight * i + (m_RowHeight - ds) / 2 + m_MenuHeight + m_RowHeight / 2,
-									ds, ds);
-							}
+							r = new Rectangle(
+								m_LeftSideWidth + ds / 2,
+								m_RowHeight * i + (m_RowHeight - ds) / 2 + m_MenuHeight + m_RowHeight / 2,
+								ds, ds);
+							sb.Color = m_MojiColor;
 							g.FillRectangle(sb, r);
 
 							r = new Rectangle(

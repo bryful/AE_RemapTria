@@ -37,7 +37,7 @@
 			this.btn30fps = new AE_RemapTria.TR_Button();
 			this.btn24fps = new AE_RemapTria.TR_Button();
 			this.btnLockFps = new AE_RemapTria.TR_Button();
-			this.t_DurationBox1 = new AE_RemapTria.T_DurationBox();
+			this.t_DurationBox1 = new AE_RemapTria.TR_DurationBox();
 			this.btn1 = new AE_RemapTria.TR_Button();
 			this.btn2 = new AE_RemapTria.TR_Button();
 			this.btn3 = new AE_RemapTria.TR_Button();
@@ -590,8 +590,6 @@
 			this.tbSheetName.Size = new System.Drawing.Size(221, 26);
 			this.tbSheetName.TabIndex = 26;
 			this.tbSheetName.Text = "dfsdf";
-			this.tbSheetName.Enter += new System.EventHandler(this.tbSheetName_Enter);
-			this.tbSheetName.Leave += new System.EventHandler(this.tbSheetName_Leave);
 			// 
 			// t_Zebra1
 			// 
@@ -697,7 +695,7 @@
 		private TR_Button btn30fps;
 		private TR_Button btn24fps;
 		private TR_Button btnLockFps;
-		private T_DurationBox t_DurationBox1;
+		private TR_DurationBox t_DurationBox1;
 		private TR_Button btn1;
 		private TR_Button btn2;
 		private TR_Button btn3;

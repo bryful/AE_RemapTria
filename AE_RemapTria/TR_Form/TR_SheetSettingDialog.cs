@@ -12,9 +12,6 @@ namespace AE_RemapTria
 {
 	public partial class TR_SheetSettingDialog : TR_BaseDialog
 	{
-		private bool IsTBForcus = false;
-		private TR_Button[] m_btns = new TR_Button[13];
-
 		public string SheetName
 		{
 			get { return tbSheetName.Text; }
@@ -25,120 +22,153 @@ namespace AE_RemapTria
 			get { return lbStatus.Text; }
 			set { lbStatus.Text = value; }
 		}
-		public T_Fps Fps
+		public int FrameCount
 		{
-			get
-			{
-				return tR_Fps1.Fps;
-			}
+			get { return DurationBox1.FrameCount; }
 			set
 			{
-				tR_Fps1.Fps = value;
-				t_DurationBox1.Fps = value;
+				DurationBox1.FrameCount = value;
 			}
 		}
-		
 		public TR_SheetSettingDialog()
 		{
 			InitializeComponent();
-			/*
-			m_btns[0] = btn0;
-			m_btns[1] = btn1;
-			m_btns[2] = btn2;
-			m_btns[3] = btn3;
-			m_btns[4] = btn4;
-			m_btns[5] = btn5;
-			m_btns[6] = btn6;
-			m_btns[7] = btn7;
-			m_btns[8] = btn8;
-			m_btns[9] = btn9;
-			m_btns[10] = btn10Sec;
-			m_btns[11] = btn11BS;
-			m_btns[12] = btn12CL;
-			*/
 			SetEventHandler(lbMain);
+			SetEventHandler(lbName);
+			SetEventHandler(lbStatus);
+			SetEventHandler(lbDuration);
+			//SetEventHandler(t_Label1);
+			SetEventHandler(t_Label2);
 			SetEventHandler(t_Zebra1);
-		}
 
-
-
-		private void btnLockFps_CheckedChanged(object sender, EventArgs e)
-		{
-			//btn24fps.Enabled = btn30fps.Enabled = !btnLockFps.Checked;
+			tbSheetName.EditFinished += TbSheetName_EditFinished;
 
 		}
 
-		private void btn24fps_CheckedChanged(object sender, EventArgs e)
+		private void TbSheetName_EditFinished(object? sender, EventArgs e)
 		{
-			if(sender==null) return;
-			TR_Button tb = (TR_Button)sender;
-			if (tb == null) return;
-			if (tb.Id == 24)
+			if(tbSheetName.Text!="")
 			{
-				//btn30fps.Checked = !btn24fps.Checked;
-
+				btnOK.Focus();
 			}
-			else if (tb.Id == 30)
+		}
+		private void BtnOK_Click(object sender, EventArgs e)
+		{
+			EndDialog();
+		}
+		private void EndDialog()
+		{
+			if (FrameCount < 12)
 			{
-				//btn24fps.Checked = !btn30fps.Checked;
+				FrameCount = 12;
+				return;
 			}
-			T_Fps fps = T_Fps.FPS24;
-			//if (btn24fps.Checked) { fps = T_Fps.FPS24; } else { fps = T_Fps.FPS30; }
-
-			Fps = fps;
-
-		}
-		private void ShowErrDialog(string s)
-		{
-			MessageBox.Show(s, "Error");
-		}
-		private void btnOK_Click(object sender, EventArgs e)
-		{
-			//if(Frame<12) return;
-			if (SheetName == "")
+			if (tbSheetName.Text == "")
 			{
-				ShowErrDialog("シート名が記入されていません");
+				tbSheetName.Focus();
+				tbSheetName.SetEdit();
 				return;
 			}
 			this.DialogResult = DialogResult.OK;
 		}
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			KP v = KP.None;
+			
+			if((tbSheetName.IsEdit)||(DurationBox1.IsEdit))
+			{
+				base.OnKeyDown(e);
+				return;
+			}else 
+			if((btnOK.Focused)&&(e.KeyData==Keys.Enter))
+			{
+				EndDialog();
+				return;
+			}else if ((btnCancel.Focused) && (e.KeyData == Keys.Enter))
+			{
+				this.DialogResult = DialogResult.Cancel;
+			}else if (e.KeyData == Keys.Escape)
+			{
+				this.DialogResult = DialogResult.Cancel;
+			}
+			switch (e.KeyData)
+			{
+				case Keys.D0:
+				case Keys.NumPad0:
+					v = KP.key0;
+					break;
+				case Keys.D1:
+				case Keys.NumPad1:
+					v = KP.key1;
+					break;
+				case Keys.D2:
+				case Keys.NumPad2:
+					v = KP.key2;
+					break;
+				case Keys.D3:
+				case Keys.NumPad3:
+					v = KP.key3;
+					break;
+				case Keys.D4:
+				case Keys.NumPad4:
+					v = KP.key4;
+					break;
+				case Keys.D5:
+				case Keys.NumPad5:
+					v = KP.key5;
+					break;
+				case Keys.D6:
+				case Keys.NumPad6:
+					v = KP.key6;
+					break;
+				case Keys.D7:
+				case Keys.NumPad7:
+					v = KP.key7;
+					break;
+				case Keys.D8:
+				case Keys.NumPad8:
+					v = KP.key8;
+					break;
+				case Keys.D9:
+				case Keys.NumPad9:
+					v = KP.key9;
+					break;
+				case Keys.Back:
+					v = KP.keyBS;
+					break;
+				case Keys.Delete:
+					v = KP.keyCLS;
+					break;
+				case Keys.Add:
+				case Keys.Oemplus:
+				case Keys.Decimal:
+					v = KP.keySEC;
+					break;
+			}
+			if(v!= KP.None)
+			{
+				tR_KeyPad1.SetMDPos(v);
+				tR_KeyPad1.Refresh();
+				tR_KeyPad1.SetMDPos(KP.None);
+				tR_KeyPad1.Refresh();
+				tR_KeyPad1.SetDBox(v);
+			}
+			else
+			{
+				base.OnKeyDown(e);
+			}
 
-		private void btnCancel_Click(object sender, EventArgs e)
+		}
+
+		private void BtnCancel_Click(object sender, EventArgs e)
 		{
 			this.DialogResult = DialogResult.Cancel;
 		}
-		private int m_mdkey = -5;
-		//private int m_mdkeyEX = -1;
-		protected override void OnKeyDown(KeyEventArgs e)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			
-			base.OnKeyDown(e);
-		}
-		protected override void OnKeyUp(KeyEventArgs e)
-		{
-			
-			base.OnKeyUp(e);
-		}
-
-
-		private void btn_MouseDown(object sender, MouseEventArgs e)
-		{
-			
-		}
-
-		private void t_DurationBox1_DurationChanged(object sender, EventArgs e)
-		{
-		
-		}
-
-		private void tbSheetName_Enter(object sender, EventArgs e)
-		{
-			
-		}
-
-		private void tbSheetName_Leave(object sender, EventArgs e)
-		{
-			
+			base.OnMouseDown(e);
+			tbSheetName.StopEdit();
+			DurationBox1.StopEdit();
 		}
 	}
 }

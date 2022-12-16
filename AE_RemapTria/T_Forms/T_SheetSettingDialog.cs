@@ -152,15 +152,6 @@ namespace AE_RemapTria
 		{
 			lbDuration.Text = t_DurationBox1.Info;
 		}
-
-		private void tbSheetName_Enter(object sender, EventArgs e)
-		{
-			IsTBForcus = true;
-		}
-
-		private void tbSheetName_Leave(object sender, EventArgs e)
-		{
-			IsTBForcus = false;
-		}
+	
 	}
 }

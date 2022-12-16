@@ -175,7 +175,10 @@ namespace AE_RemapTria
                 m_form.MakeMenu();
                 MenuWidthAll();
                 SetLocSize();
-            }
+                m_form.Activated += M_form_Activated;
+                m_form.Deactivate += M_form_Deactivate;
+
+			}
             Invalidate();
         }
 

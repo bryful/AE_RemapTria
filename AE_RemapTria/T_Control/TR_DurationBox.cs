@@ -12,8 +12,15 @@ using System.Threading.Tasks;
 namespace AE_RemapTria
 {
 
-	public class T_DurationBox : TR_DialogControl
+	public class TR_DurationBox : TR_DialogControl
 	{
+		private bool m_CanReturnEdit = true;
+		[Category("_AE_Remap")]
+		public bool CanReturnEdit
+		{
+			get { return m_CanReturnEdit; }
+			set { m_CanReturnEdit = value; }
+		}
 		private StringFormat m_sf = new StringFormat();
 
 		private string m_ValueStr = "12+3";
@@ -21,13 +28,23 @@ namespace AE_RemapTria
 		{
 			if((v>=0) && (v<=9))
 			{
+				if(m_TextBox!=null)
+				{
+					ChkEdit();
+					EndEdit();
+				}
 				m_ValueStr += $"{v}";
 				this.Invalidate();
 			}
 		}
 		public void AddSec()
 		{
-			if(m_ValueStr=="")
+			if (m_TextBox != null)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+			if (m_ValueStr=="")
 			{
 				m_ValueStr = "0+";
 			}else if (m_ValueStr.IndexOf("+")>=0)
@@ -42,13 +59,31 @@ namespace AE_RemapTria
 		}
 		public void BS()
 		{
-			if(m_ValueStr!="")
+			if (m_TextBox != null)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+			if (m_ValueStr!="")
 			{
 				m_ValueStr = m_ValueStr.Substring(0, m_ValueStr.Length - 1);
 				this.Invalidate();
 			}
 		}
-		public int FrameValue
+		public void CLS()
+		{
+			if (m_TextBox != null)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+			if (m_ValueStr != "")
+			{
+				m_ValueStr = "";
+				this.Invalidate();
+			}
+		}
+		public int FrameCount
 		{
 			get
 			{
@@ -80,14 +115,15 @@ namespace AE_RemapTria
 				int sec = value / (int)m_Fps;
 				int koma = value % (int)m_Fps;
 				m_ValueStr = $"{sec}+{koma}";
+				this.Invalidate();
 			}
 		}
 		public double Duration
 		{
-			get{return (double)FrameValue /(double)m_Fps;}
+			get{return (double)FrameCount /(double)m_Fps;}
 			set
 			{
-				FrameValue = (int)(value * (double)m_Fps + 0.5);
+				FrameCount = (int)(value * (double)m_Fps + 0.5);
 			}
 		}
 
@@ -102,15 +138,9 @@ namespace AE_RemapTria
 			{
 				if(m_Fps!=value)
 				{
-
-
-
+					double d = Duration;
 					m_Fps = value;
-					
-
-
-
-					this.Invalidate();
+					Duration = d;
 				}
 			}
 		}
@@ -123,7 +153,7 @@ namespace AE_RemapTria
 				return m_ValueStr;
 			}
 		}
-		public T_DurationBox()
+		public TR_DurationBox()
 		{
 			this.Size = new Size(150, 30);
 			m_MyFontSize = 12;
@@ -145,7 +175,7 @@ namespace AE_RemapTria
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 			SolidBrush sb = new SolidBrush(this.BackColor);
-			Pen p = new Pen(Color.FromArgb(50, 50, 75));
+			Pen p = new Pen(Color.Gray);
 			try
 			{
 				Rectangle r = new Rectangle(0,0,this.Width,this.Height);
@@ -153,9 +183,15 @@ namespace AE_RemapTria
 
 				sb.Color = this.ForeColor;
 				if(m_ValueStr!="")DrawStr(g, m_ValueStr, sb, r);
+				sb.Color = m_FrameColor;
+				DrawPadding(g, sb);
+
 				if (this.Focused)
 				{
+					p.DashStyle = DashStyle.Dot;
+					p.Color = Color.Gray;
 					DrawFrame(g, p, 1);
+					p.DashStyle = DashStyle.Solid;
 				}
 			}
 			finally
@@ -166,6 +202,7 @@ namespace AE_RemapTria
 		}
 		// *************************************************************
 		private bool m_IsEdit = false;
+		public bool IsEdit { get { return m_IsEdit; } }
 		public void SetEdit()
 		{
 			if (m_IsEdit) return;
@@ -176,12 +213,11 @@ namespace AE_RemapTria
 			m_TextBox.BorderStyle = BorderStyle.None;
 			m_TextBox.Size = new Size(Width, Height);
 			m_TextBox.Text = m_ValueStr;
-			m_TextBox.TextAlign = HorizontalAlignment.Right;
+			m_TextBox.TextAlign = HorizontalAlignment.Left;
 			m_TextBox.SelectionStart = m_TextBox.Text.Length;
 			m_TextBox.LostFocus += M_TextBox_LostFocus;
 			m_TextBox.KeyPress += M_TextBox_KeyPress;
 			m_TextBox.KeyDown += M_TextBox_KeyDown;
-
 			m_TextBox.Font = this.Font;
 			m_TextBox.ForeColor = Color.Black;
 			m_TextBox.BackColor = Color.FromArgb(240,240,240);
@@ -254,7 +290,11 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if (m_IsEdit == false) return false;
-			if (m_TextBox == null) return ret;
+			if (m_TextBox == null)
+			{
+				m_IsEdit = false;
+				return ret;
+			}
 			string s = m_TextBox.Text.Trim();
 			string [] sa = s.Split("+");
 			s = "";
@@ -298,7 +338,7 @@ namespace AE_RemapTria
 		}
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (m_TextBox == null)
+			if (m_IsEdit==false)
 			{
 				SetEdit();
 				return;
@@ -308,7 +348,7 @@ namespace AE_RemapTria
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			base.OnKeyDown(e);
-			if ((this.Focused) && (m_IsEdit == false))
+			if ((this.Focused) && (m_IsEdit == false) && (e.KeyData == Keys.Enter)&&(m_CanReturnEdit))
 			{
 				SetEdit();
 			}
@@ -322,6 +362,15 @@ namespace AE_RemapTria
 		{
 			base.OnLostFocus(e);
 			this.Invalidate();
+		}
+		public void StopEdit()
+		{
+			if (m_IsEdit)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+
 		}
 
 	}

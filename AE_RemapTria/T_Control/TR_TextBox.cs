@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -14,6 +15,22 @@ namespace AE_RemapTria
 {
 	public partial class TR_TextBox : TR_DialogControl
 	{
+		public event EventHandler? EditFinished = null;
+		protected virtual void OnEditFinished(EventArgs e)
+		{
+			if (EditFinished != null)
+			{
+				EditFinished(this, e);
+			}
+		}
+		private bool m_CanReturnEdit = true;
+		[Category("_AE_Remap")]
+		public bool CanReturnEdit
+		{
+			get { return m_CanReturnEdit; }	
+			set { m_CanReturnEdit = value; }
+		}
+
 		private StringFormat m_sf = new StringFormat();
 		private TextBox? m_TextBox = null;
 		public TR_TextBox()
@@ -50,10 +67,14 @@ namespace AE_RemapTria
 				sb.Color = m_FrameColor;
 				DrawPadding(g, sb);
 
-				if(this.Focused)
+				if (this.Focused)
 				{
+					p.DashStyle = DashStyle.Dot;
+					p.Color = Color.Gray;
 					DrawFrame(g, p, 1);
+					p.DashStyle = DashStyle.Solid;
 				}
+
 
 			}
 			finally
@@ -63,6 +84,7 @@ namespace AE_RemapTria
 			}
 		}
 		private bool m_IsEdit = false;
+		public bool IsEdit { get { return m_IsEdit; } }
 		public void SetEdit()
 		{
 			if (m_IsEdit) return;
@@ -118,6 +140,7 @@ namespace AE_RemapTria
 			if (m_IsEdit == false) return;
 			m_IsEdit = false;
 			this.Controls.Remove(m_TextBox);
+			OnEditFinished(new EventArgs());
 		}
 		public bool ChkEdit()
 		{
@@ -156,7 +179,7 @@ namespace AE_RemapTria
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			base.OnKeyDown(e);
-			if((this.Focused)&&(m_IsEdit == false))
+			if((this.Focused)&&(m_IsEdit == false)&&(e.KeyData==Keys.Enter)&&(m_CanReturnEdit))
 			{
 				SetEdit();
 			}
@@ -171,6 +194,13 @@ namespace AE_RemapTria
 			base.OnLostFocus(e);
 			this.Invalidate();
 		}
-
+		public void StopEdit()
+		{
+			if(m_IsEdit==true)
+			{
+				ChkEdit();
+				EndEdit();
+			}
+		}
 	}
 }

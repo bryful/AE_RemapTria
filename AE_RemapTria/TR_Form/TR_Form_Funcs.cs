@@ -173,8 +173,8 @@ namespace AE_RemapTria
 			TR_SheetSettingDialog dlg = new TR_SheetSettingDialog();
 			dlg.SetTRForm(this);
 			int ExFrame = CellData.UnEnabledFrameCount;
-			dlg.Fps = CellData.FrameRate;
 			dlg.SheetName = CellData.SheetName;
+			dlg.FrameCount = CellData.FrameCount;
 			string caution = "";
 			if(ExFrame > 0)
 			{
@@ -197,8 +197,7 @@ namespace AE_RemapTria
 			if (dlg.ShowDialog(this) == DialogResult.OK)
 			{
 				CellData.PushUndo(BackupSratus.All);
-				CellData.FrameRate = dlg.Fps;
-				//CellData.FrameCount = dlg.Frame;
+				CellData.FrameCount = dlg.FrameCount;
 				CellData.SheetName = dlg.SheetName;
 				FileName = T_Def.ChangeName(FileName, dlg.SheetName);
 				ChkSize();

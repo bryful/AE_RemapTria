@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_SheetInfoDialog
+	partial class TR_SheetInfoDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -52,11 +52,12 @@
 			this.ctTittle.Caption = "TITLE";
 			this.ctTittle.CaptionWidth = 140;
 			this.ctTittle.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctTittle.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctTittle.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctTittle.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctTittle.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctTittle.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctTittle.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.ctTittle.Location = new System.Drawing.Point(40, 44);
+			this.ctTittle.Location = new System.Drawing.Point(40, 46);
 			this.ctTittle.MyFontIndex = 5;
 			this.ctTittle.MyFontSize = 10F;
 			this.ctTittle.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -74,9 +75,10 @@
 			this.ctSubTitle.Caption = "SUB_TITLE";
 			this.ctSubTitle.CaptionWidth = 140;
 			this.ctSubTitle.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctSubTitle.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctSubTitle.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctSubTitle.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctSubTitle.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctSubTitle.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctSubTitle.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctSubTitle.Location = new System.Drawing.Point(40, 77);
 			this.ctSubTitle.MyFontIndex = 5;
@@ -96,9 +98,10 @@
 			this.ctOpus.Caption = "OPUS";
 			this.ctOpus.CaptionWidth = 140;
 			this.ctOpus.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctOpus.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctOpus.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctOpus.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctOpus.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctOpus.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctOpus.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctOpus.Location = new System.Drawing.Point(40, 110);
 			this.ctOpus.MyFontIndex = 5;
@@ -118,9 +121,10 @@
 			this.ctScecne.Caption = "SCECNE";
 			this.ctScecne.CaptionWidth = 140;
 			this.ctScecne.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctScecne.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctScecne.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctScecne.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctScecne.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctScecne.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctScecne.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctScecne.Location = new System.Drawing.Point(40, 143);
 			this.ctScecne.MyFontIndex = 5;
@@ -140,9 +144,10 @@
 			this.ctCut.Caption = "CUT";
 			this.ctCut.CaptionWidth = 140;
 			this.ctCut.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctCut.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctCut.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctCut.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctCut.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctCut.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctCut.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctCut.Location = new System.Drawing.Point(40, 176);
 			this.ctCut.MyFontIndex = 5;
@@ -162,9 +167,10 @@
 			this.ctCampany.Caption = "CAMPANY_NAME";
 			this.ctCampany.CaptionWidth = 140;
 			this.ctCampany.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctCampany.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctCampany.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctCampany.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctCampany.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctCampany.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctCampany.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctCampany.Location = new System.Drawing.Point(40, 209);
 			this.ctCampany.MyFontIndex = 5;
@@ -184,9 +190,10 @@
 			this.ctCU.Caption = "CREATE_USER";
 			this.ctCU.CaptionWidth = 130;
 			this.ctCU.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctCU.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctCU.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctCU.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctCU.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctCU.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctCU.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctCU.Location = new System.Drawing.Point(375, 44);
 			this.ctCU.MyFontIndex = 5;
@@ -194,7 +201,7 @@
 			this.ctCU.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctCU.Name = "ctCU";
 			this.ctCU.Size = new System.Drawing.Size(350, 25);
-			this.ctCU.TabIndex = 7;
+			this.ctCU.TabIndex = 11;
 			this.ctCU.Text = "t_CaptionTextBox6";
 			this.ctCU.ValueText = "";
 			// 
@@ -206,9 +213,10 @@
 			this.ctUU.Caption = "UPDATE_USER";
 			this.ctUU.CaptionWidth = 130;
 			this.ctUU.EditBackColor = System.Drawing.Color.Transparent;
+			this.ctUU.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctUU.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctUU.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctUU.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctUU.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctUU.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctUU.Location = new System.Drawing.Point(375, 77);
 			this.ctUU.MyFontIndex = 5;
@@ -216,7 +224,7 @@
 			this.ctUU.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctUU.Name = "ctUU";
 			this.ctUU.Size = new System.Drawing.Size(350, 25);
-			this.ctUU.TabIndex = 8;
+			this.ctUU.TabIndex = 12;
 			this.ctUU.Text = "t_CaptionTextBox7";
 			this.ctUU.ValueText = "";
 			// 
@@ -229,9 +237,10 @@
 			this.ctCT.CaptionWidth = 130;
 			this.ctCT.EditBackColor = System.Drawing.Color.Transparent;
 			this.ctCT.Enabled = false;
+			this.ctCT.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctCT.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctCT.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctCT.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctCT.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctCT.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctCT.Location = new System.Drawing.Point(375, 110);
 			this.ctCT.MyFontIndex = 5;
@@ -239,7 +248,7 @@
 			this.ctCT.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctCT.Name = "ctCT";
 			this.ctCT.Size = new System.Drawing.Size(350, 25);
-			this.ctCT.TabIndex = 9;
+			this.ctCT.TabIndex = 0;
 			this.ctCT.Text = "t_CaptionTextBox8";
 			this.ctCT.ValueText = "";
 			// 
@@ -252,9 +261,10 @@
 			this.ctUT.CaptionWidth = 130;
 			this.ctUT.EditBackColor = System.Drawing.Color.Transparent;
 			this.ctUT.Enabled = false;
+			this.ctUT.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ctUT.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.ctUT.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.ctUT.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.ctUT.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.ctUT.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.ctUT.Location = new System.Drawing.Point(375, 143);
 			this.ctUT.MyFontIndex = 5;
@@ -262,7 +272,7 @@
 			this.ctUT.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctUT.Name = "ctUT";
 			this.ctUT.Size = new System.Drawing.Size(350, 25);
-			this.ctUT.TabIndex = 10;
+			this.ctUT.TabIndex = 1;
 			this.ctUT.Text = "t_CaptionTextBox9";
 			this.ctUT.ValueText = "";
 			// 
@@ -274,10 +284,12 @@
 			this.btnCANCEL.Checked = false;
 			this.btnCANCEL.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnCANCEL.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnCANCEL.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnCANCEL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnCANCEL.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.btnCANCEL.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.btnCANCEL.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.btnCANCEL.Group = 0;
 			this.btnCANCEL.Id = 0;
 			this.btnCANCEL.IsCheckMode = false;
 			this.btnCANCEL.IsDrawFrame = true;
@@ -289,7 +301,7 @@
 			this.btnCANCEL.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCANCEL.Name = "btnCANCEL";
 			this.btnCANCEL.Size = new System.Drawing.Size(120, 36);
-			this.btnCANCEL.TabIndex = 11;
+			this.btnCANCEL.TabIndex = 2;
 			this.btnCANCEL.Text = "Cancel";
 			this.btnCANCEL.Click += new System.EventHandler(this.btnCANCEL_Click);
 			// 
@@ -301,10 +313,12 @@
 			this.btnOK.Checked = false;
 			this.btnOK.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnOK.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnOK.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
 			this.btnOK.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.btnOK.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.btnOK.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.btnOK.Group = 0;
 			this.btnOK.Id = 0;
 			this.btnOK.IsCheckMode = false;
 			this.btnOK.IsDrawFrame = true;
@@ -316,7 +330,7 @@
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(130, 36);
-			this.btnOK.TabIndex = 12;
+			this.btnOK.TabIndex = 3;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -325,6 +339,7 @@
 			this.t_Zebra1.Alignment = System.Drawing.StringAlignment.Far;
 			this.t_Zebra1.Back = System.Drawing.Color.Transparent;
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Zebra1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_Zebra1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.t_Zebra1.FrameWeight = new System.Windows.Forms.Padding(0);
@@ -335,11 +350,12 @@
 			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(688, 20);
-			this.t_Zebra1.TabIndex = 13;
+			this.t_Zebra1.TabIndex = 0;
+			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra2";
-			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(0)))));
+			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
 			this.t_Zebra1.ZebraRot = 45F;
-			this.t_Zebra1.ZebraWidth = 25F;
+			this.t_Zebra1.ZebraWidth = 15F;
 			// 
 			// t_ColorPlate2
 			// 
@@ -347,6 +363,7 @@
 			this.t_ColorPlate2.Back = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
 			this.t_ColorPlate2.ColorPlate = AE_RemapTria.ColorPlate.KagiBR;
+			this.t_ColorPlate2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_ColorPlate2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_ColorPlate2.FrameMargin = new System.Windows.Forms.Padding(0);
@@ -361,7 +378,7 @@
 			this.t_ColorPlate2.Name = "t_ColorPlate2";
 			this.t_ColorPlate2.Opacity = 64;
 			this.t_ColorPlate2.Size = new System.Drawing.Size(361, 139);
-			this.t_ColorPlate2.TabIndex = 15;
+			this.t_ColorPlate2.TabIndex = 13;
 			this.t_ColorPlate2.Text = "t_ColorPlate2";
 			// 
 			// T_SheetInfoDialog
@@ -389,6 +406,7 @@
 			this.KagiWeight = 2;
 			this.KagiWidth = 50;
 			this.KeyPreview = true;
+			this.MyFontSize = 9F;
 			this.Name = "T_SheetInfoDialog";
 			this.SideCenterLength = 12;
 			this.SideCenterWeight = 2;
