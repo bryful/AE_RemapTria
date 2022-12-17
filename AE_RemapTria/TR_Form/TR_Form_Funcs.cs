@@ -93,13 +93,11 @@ namespace AE_RemapTria
 		#endregion
 		#region Menu
 		// ************************************************************************************
-		/*
 		public void UpdateMenu()
 		{
-			if (m_Menu == null) return;
-			m_Menu.UpdateMenu();
+			if (Menu == null) return;
+			Menu.UpdateMenu();
 		}
-		*/
 		// ************************************************************************************
 		public void MakeMenu()
 		{
@@ -236,6 +234,8 @@ namespace AE_RemapTria
 		{
 			BackupSratus bs = CellData.PopUndo();
 			ChkSize();
+			ChkSelectionH();
+			ChkSelectionV();
 			DrawAll();
 			return true;
 		}
@@ -279,6 +279,7 @@ namespace AE_RemapTria
 		public bool ClearAll()
 		{
 			IsModif = false;
+			CellData.PushUndo(BackupSratus.All);
 			CellData.ClearAll();
 			DrawAll();
 			return true;
@@ -288,7 +289,7 @@ namespace AE_RemapTria
 		{
 			IsModif = true;
 			bool ret = CellData.ToggleFrameEnabled();
-			if(ret)
+			if (ret)
 			{
 				DrawAll();
 			}
@@ -499,7 +500,6 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		public bool SelMoveDown()
 		{
-			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool ret = CellData.sel.MoveDown();
 			if (ChkSelectionV() == false)
 			{
@@ -516,7 +516,6 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		public bool SelMoveUp()
 		{
-			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool ret = CellData.sel.MoveUp();
 			if (ChkSelectionV() == false)
 			{
@@ -534,7 +533,6 @@ namespace AE_RemapTria
 		// ************************************************************************************
 		public bool SelMoveRight()
 		{
-			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool b = CellData.sel.MoveRight();
 			ChkSelectionH();
 			DrawAll();
@@ -543,7 +541,6 @@ namespace AE_RemapTria
 		}
 		public bool SelMoveLeft()
 		{
-			CellData.PushUndo(BackupSratus.SelectionChange);
 			bool b = CellData.sel.MoveLeft();
 			ChkSelectionH();
 			DrawAll();
@@ -660,7 +657,6 @@ namespace AE_RemapTria
 			bool ret = false;
 			if (CellData.sel.Length < CellData.FrameCount)
 			{
-				CellData.PushUndo(BackupSratus.SelectionChange);
 				ret = CellData.SelectionAll();
 				if (ret)
 				{
@@ -694,7 +690,6 @@ namespace AE_RemapTria
 			bool b = false;
 			if (CellData.sel.Length != v)
 			{
-				CellData.PushUndo(BackupSratus.SelectionChange);
 				CellData.sel.Length = v;
 				b = true;
 
@@ -918,6 +913,7 @@ namespace AE_RemapTria
 		public bool CellRemove()
 		{
 			IsModif = true;
+			CellData.PushUndo(BackupSratus.All);
 			bool ret = CellData.RemoveCell();
 			if (ret) DrawAll();
 			return ret;
@@ -939,7 +935,8 @@ namespace AE_RemapTria
 			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
-				ret =CellData.InsertCell(dlg.ValueText);
+				CellData.PushUndo(BackupSratus.All);
+				ret = CellData.InsertCell(dlg.ValueText);
 				IsModif = true;
 				this.Invalidate();
 			}
@@ -950,6 +947,7 @@ namespace AE_RemapTria
 		public bool FrameInsert()
 		{
 			IsModif = true;
+			CellData.PushUndo(BackupSratus.All);
 			bool ret = CellData.InsertFrame();
 			if (ret) DrawAll();
 			return ret;
@@ -957,6 +955,7 @@ namespace AE_RemapTria
 		public bool FrameRemove()
 		{
 			IsModif = true;
+			CellData.PushUndo(BackupSratus.All);
 			bool ret = CellData.RemoveFrame();
 			if (ret) DrawAll();
 			return ret;
@@ -981,6 +980,7 @@ namespace AE_RemapTria
 		}
 		public bool Paste()
 		{
+			CellData.PushUndo(BackupSratus.All);
 			bool ret = CellData.Paste();
 			if (ret)
 			{
@@ -1090,6 +1090,7 @@ namespace AE_RemapTria
 			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
+				CellData.PushUndo(BackupSratus.All);
 				CellData.SetCaptionTarget(dlg.ValueText);
 				Caption.ChkOffScr();
 				this.Invalidate();
@@ -1152,6 +1153,7 @@ namespace AE_RemapTria
 				m_AutoinputStert = dlg.Start;
 				m_AutoinputLast = dlg.Last;
 				m_AutoinputKoam = dlg.Koma;
+				CellData.PushUndo(BackupSratus.All);
 				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
 				IsModif = true;
 				Grid.ChkOffScr();

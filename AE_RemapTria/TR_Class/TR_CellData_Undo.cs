@@ -10,11 +10,10 @@ namespace AE_RemapTria
 	{
 		None,
 		NumberInput,
-		SelectionChange,
 		FrameEnabled,
 		All
 	}
-	public class BackupCellData2
+	public class BackupCellData
 	{
 		public TR_Selection sel = new TR_Selection();
 		public int[][] data = new int[0][];
@@ -22,27 +21,24 @@ namespace AE_RemapTria
 		public int[] enables = new int[0];
 		public Point Disp = new Point(0, 0);
 		public BackupSratus stat = BackupSratus.None;
-		public BackupCellData2(TR_CellData cd, BackupSratus bs)
+		public BackupCellData(TR_CellData cd,TR_Selection ss, BackupSratus bs)
 		{
 			stat = bs;
 			switch (bs)
 			{
 				case BackupSratus.All:
-					this.sel = new TR_Selection(sel);
+					this.sel = new TR_Selection(ss);
 					data = cd.BackupCellData();
 					caps = cd.BackupCaption();
 					enables = cd.EnableFrames();
 					break;
 				case BackupSratus.NumberInput:
-					this.sel = new TR_Selection(sel);
+					this.sel = new TR_Selection(ss);
 					data = new int[1][];
 					data[0] = cd.GetCellNum();
 					break;
-				case BackupSratus.SelectionChange:
-					this.sel = new TR_Selection(sel);
-					break;
 				case BackupSratus.FrameEnabled:
-					this.sel = new TR_Selection(sel);
+					this.sel = new TR_Selection(ss);
 					this.enables = cd.EnableFrames();
 					break;
 			}
@@ -63,9 +59,6 @@ namespace AE_RemapTria
 					cd.sel.Copy(sel);
 					cd.SetCellNum(data[0]);
 					break;
-				case BackupSratus.SelectionChange:
-					cd.sel.Copy(sel);
-					break;
 				case BackupSratus.FrameEnabled:
 					cd.sel.Copy(sel);
 					cd.SetFrameEnabled(enables);
@@ -77,7 +70,7 @@ namespace AE_RemapTria
 	partial class TR_CellData
 	{
 		public bool _undoPushFlag = true;
-		private List<BackupCellData2> m_BackupCells = new List<BackupCellData2>();
+		private List<BackupCellData> m_BackupCells = new List<BackupCellData>();
 		// *************************************
 		public int[][] BackupCellData()
 		{
@@ -132,7 +125,7 @@ namespace AE_RemapTria
 		public void PushUndo(BackupSratus bs)
 		{
 			if (_undoPushFlag == false) return;
-			m_BackupCells.Add(new BackupCellData2(this, bs));
+			m_BackupCells.Add(new BackupCellData(this,m_form.Selection, bs));
 			if (m_BackupCells.Count > 4000)
 			{
 				m_BackupCells.RemoveAt(0);

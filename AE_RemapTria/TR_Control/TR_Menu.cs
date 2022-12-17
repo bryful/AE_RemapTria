@@ -210,7 +210,6 @@ namespace AE_RemapTria
 				Bitmap bmp = new Bitmap(1000, MenuHeight);
                 Graphics g = Graphics.FromImage(bmp);
                 SizeF sz = g.MeasureString(cap, m_font, 1000, m_form.StringFormat);
-                Debug.WriteLine($"Menu:{sz.Width},{sz.Height}");
                 w = (int)(sz.Width+0.5);
 				w += 10;
 				bmp.Dispose();
@@ -281,7 +280,10 @@ namespace AE_RemapTria
         }
         // ****************************************************************
         // ******************************************************************
+        public void UpdateMenu()
+        {
 
+        }
 
         // ****************************************************************
         public override void Draw(Graphics g)

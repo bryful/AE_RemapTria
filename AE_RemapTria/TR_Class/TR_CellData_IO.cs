@@ -312,9 +312,7 @@ namespace AE_RemapTria
 					{
 						ints[i] = int.Parse(sa[i + 1]);
 					}
-					PushUndo(BackupSratus.SelectionChange);
 					sel.Length = ints.Length;
-					PushUndo(BackupSratus.NumberInput);
 					for (int i = 0; i < sel.Length; i++)
 					{
 						m_cells[sel.Target].SetValue(sel.Start + i, ints[i]);

@@ -108,7 +108,6 @@ namespace AE_RemapTria
 
 				if (sel.Target != v)
 				{
-					PushUndo(BackupSratus.SelectionChange);
 					sel.Target = v;
 				}
 			}
@@ -375,7 +374,6 @@ namespace AE_RemapTria
 			else if (cc >= m_cells.Length) cc = m_cells.Length-1;
 			if( cc != sel.Target)
 			{
-				PushUndo(BackupSratus.SelectionChange);
 				sel.SetTarget(cc);
 			}
 		}
@@ -387,7 +385,6 @@ namespace AE_RemapTria
 			else if (ff >= m_cells[0].FrameCountTrue) ff = m_cells[0].FrameCountTrue;
 			if (ff != sel.Start)
 			{
-				PushUndo(BackupSratus.SelectionChange);
 				sel.SetStart(ff);
 				//OnSelChanged(new EventArgs());
 			}
@@ -423,7 +420,7 @@ namespace AE_RemapTria
 		/// </summary>
 		public void SetCellNumSame()
 		{
-			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
+			PushUndo(BackupSratus.NumberInput);
 
 			int sv = sel.Start-1;
 			if (sv < 0) sv = 0;
@@ -436,7 +433,7 @@ namespace AE_RemapTria
 		}
 		public void SetCellNumInc()
 		{
-			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
+			PushUndo(BackupSratus.NumberInput);
 			//int fc = m_data[0].Length;
 
 			int sv = sel.Start - 1;
@@ -450,7 +447,7 @@ namespace AE_RemapTria
 
 		public void SetCellNumDec()
 		{
-			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
+			PushUndo(BackupSratus.NumberInput);
 			int sv = sel.Start - 1;
 			if (sv < 0) sv = 0;
 			int v = m_cells[sel.Target].Value(sv);
@@ -468,7 +465,7 @@ namespace AE_RemapTria
 		public void SetCellNum(int v,bool IsMove =true)
 		{
 			if (v < 0) v = 0;
-			if (_undoPushFlag == true) PushUndo(BackupSratus.NumberInput);
+			PushUndo(BackupSratus.NumberInput);
 			m_cells[sel.Target].SetValues(sel, v);
 			if (IsMove)
 			{
@@ -510,7 +507,7 @@ namespace AE_RemapTria
 		/// <param name="ints"></param>
 		public void SetCellNum(int [] ints)
 		{
-			if(_undoPushFlag==true) PushUndo(BackupSratus.NumberInput);
+			PushUndo(BackupSratus.NumberInput);
 			int len = sel.Length;
 			if (len > ints.Length)
 			{
@@ -530,7 +527,6 @@ namespace AE_RemapTria
 			{
 				if (sel.Start + len <= FrameCount)
 				{
-					PushUndo(BackupSratus.SelectionChange);
 					sel.Length = len;
 					ret = true;
 				}
@@ -543,7 +539,6 @@ namespace AE_RemapTria
 			bool ret = false;
 			if (c < 0) c = 0;
 			else if (c >= CellCount) c = CellCount - 1;
-			PushUndo(BackupSratus.SelectionChange);
 			sel.Target = c;
 			sel.Start = 0;
 			sel.Length = FrameCount;

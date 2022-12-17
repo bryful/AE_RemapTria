@@ -338,19 +338,16 @@ namespace AE_RemapTria
 					{
 						y1 = cp.Y;
 					}
-					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.sel.Set2Frame(y0, y1);
 				}
 				else if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt)
 				{
-					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.sel.SelToEnd();
 				}
 				else
 				{
 					m_mdFrame = cp.Y;
 					m_mdCell = cp.X;
-					CellData.PushUndo(BackupSratus.SelectionChange);
 					CellData.sel.SetTargetStartLength(cp.X, cp.Y, 1);
 					if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
 					{
