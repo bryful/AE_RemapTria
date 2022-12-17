@@ -1,5 +1,4 @@
-﻿using BRY;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +16,7 @@ using System.Diagnostics;
 
 namespace AE_RemapTria
 {
-	public partial class TR_MenuPlate : TR_BaseDialog
+    public partial class TR_MenuPlate : TR_BaseDialog
 	{
 		 
 		private T_SubMenuItem[] m_Items = new T_SubMenuItem[0];

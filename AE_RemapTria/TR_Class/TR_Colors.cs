@@ -64,7 +64,7 @@ namespace AE_RemapTria
 			ret[(int)COLS.Input] = Color.FromArgb(0, 0, 0);
 			ret[(int)COLS.InputLine] = Color.FromArgb(55, 100, 125);
 			ret[(int)COLS.InputLineA] = Color.FromArgb(110, 200, 250);
-			ret[(int)COLS.Kagi] = Color.FromArgb(30, 150, 250);
+			ret[(int)COLS.Kagi] = Color.FromArgb(30, 150, 200);
 
 			ret[(int)COLS.CellEven] = Color.FromArgb(30, 30, 60);
 			ret[(int)COLS.CellA_sdw] = Color.Transparent;

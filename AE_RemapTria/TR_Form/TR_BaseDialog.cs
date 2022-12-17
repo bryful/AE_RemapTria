@@ -10,13 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AE_RemapTria;
-
 using BRY;
 
 namespace AE_RemapTria
 {
-	public partial class TR_BaseDialog : Form
+    public partial class TR_BaseDialog : Form
 	{
 		#region Contol
 		public TR_Form? Form = null;
@@ -26,7 +24,7 @@ namespace AE_RemapTria
 		public TR_Colors? Colors = null;
 		#endregion
 		#region Font
-		public T_MyFonts MyFonts = new T_MyFonts();
+		public TR_MyFonts MyFonts = new TR_MyFonts();
 		protected int m_MyFontIndex = 5;
 		[Category("_AE_Remap")]
 		public int MyFontIndex

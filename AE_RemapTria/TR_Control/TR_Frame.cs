@@ -12,12 +12,12 @@ using System.Windows.Forms;
 using BRY;
 namespace AE_RemapTria
 {
-	public class TR_Frame :TR_Control
+	public class TR_Frame : TR_Control
 	{
 
-		private Rectangle Dot1 = new Rectangle(5, 5, 12, 10);
-		private Rectangle Dot2 = new Rectangle(5, 8, 8, 4);
-		private Rectangle Dot3 = new Rectangle(5, 9, 4, 2);
+		//private Rectangle Dot1 = new Rectangle(5, 5, 12, 10);
+		//private Rectangle Dot2 = new Rectangle(5, 8, 8, 4);
+		//private Rectangle Dot3 = new Rectangle(5, 9, 4, 2);
 
 		public TR_Frame()
 		{
@@ -25,9 +25,9 @@ namespace AE_RemapTria
 			FontIndex = 5;
 		}
 		// ************************************************************************
-		public override void SetTRForm(TR_Form fm,bool isI=true)
+		public override void SetTRForm(TR_Form fm, bool isI = true)
 		{
-			base.SetTRForm(fm,false);
+			base.SetTRForm(fm, false);
 			if (m_form != null)
 			{
 				ChkOffScr();
@@ -35,45 +35,15 @@ namespace AE_RemapTria
 			Invalidate();
 		}
 
-
-		private void CellData_CountChanged(object? sender, EventArgs e)
-		{
-			ChkDot();
-			this.Invalidate();
-		}
-
-		private void Sizes_ChangeDisp(object? sender, EventArgs e)
-		{
-			this.Invalidate();
-		}
-
-
-		//--------------------------------------------
-		private void ChangedEvent(object? sender, EventArgs e)
-		{
-			this.Invalidate();
-		}
-
-		private void Sizes_ChangeDispMax(object? sender, EventArgs e)
-		{
-			ChkDot();
-			this.Invalidate();
-		}
-
-		private void Sizes_ChangeGridSize(object? sender, EventArgs e)
-		{
-			ChkDot();
-			this.Invalidate();
-		}
 		// ********************************************************************
 		public override void SetLocSize()
 		{
-			if(m_form==null) return;
+			if (m_form == null) return;
 			int x = 0;
 			int y = m_form.Sizes.MenuHeight + m_form.Sizes.InterHeight
 				+ m_form.Sizes.CaptionHeight + m_form.Sizes.CaptionHeight2 + m_form.Sizes.InterHeight;
 			Point p = new Point(x, y);
-			if(m_Location != p) m_Location = p;
+			if (m_Location != p) m_Location = p;
 
 
 			int ww = x + m_form.Sizes.InterWidth + TR_Size.VScrolWidth;
@@ -85,7 +55,7 @@ namespace AE_RemapTria
 			if (m_Size != sz) m_Size = sz;
 			ChkOffScr();
 		}
-
+		/*
 		private void ChkDot()
 		{
 			if (m_form != null)
@@ -108,8 +78,9 @@ namespace AE_RemapTria
 				Dot3 = new Rectangle(l, t, w, h);
 			}
 		}
+		*/
 
- 		public override bool ChkMouseDown(MouseEventArgs e)
+		public override bool ChkMouseDown(MouseEventArgs e)
 		{
 			bool ret = false;
 			ret = base.ChkMouseDown(e);
@@ -117,11 +88,57 @@ namespace AE_RemapTria
 			if ((m_form == null) || (Sizes == null)) return ret;
 			if (e.Button == MouseButtons.Left)
 			{
-				int y = (m_MDownPoint.Y + Sizes.DispY)/ Sizes.CellHeight;
+				int y = (m_MDownPoint.Y + Sizes.DispY) / Sizes.CellHeight;
 
 				m_form.SetCellStart(y);
 				ret = true;
 			}
+			return ret;
+		}
+		//-------------------------------------------------
+		private PointF[] DotSecV(int y)
+		{
+			int x = Sizes.FrameWidth2 - 16;
+			PointF[] ret = new PointF[]
+			{
+				new PointF(x,y-5),
+				new PointF(x+12,y-5),
+				new PointF(x+12,y+5),
+				new PointF(x,y+5)
+			};
+			return ret;
+		}
+		private PointF[] DotHSecV(int y)
+		{
+			int x = Sizes.FrameWidth2 - 14;
+			PointF[] ret = new PointF[]
+			{
+				new PointF(x,y-5),
+				new PointF(x+10,y),
+				new PointF(x,y+5),
+			};
+			return ret;
+		}
+		private PointF[] DotHHSecV(int y)
+		{
+			int x = Sizes.FrameWidth2 - 10;
+			PointF[] ret = new PointF[]
+			{
+				new PointF(x,y-4),
+				new PointF(x+8,y),
+				new PointF(x,y+4),
+			};
+			return ret;
+		}
+		private PointF[] DotHHHSecV(int y)
+		{
+			int x = Sizes.FrameWidth2 - 5;
+			PointF[] ret = new PointF[]
+			{
+				new PointF(x,y-2),
+				new PointF(x+4,y),
+				new PointF(x,y+2),
+			};
 			return ret;
 		}
 		//-------------------------------------------------
@@ -176,9 +193,7 @@ namespace AE_RemapTria
 			}
 			if (f % SecBar == 0)
 			{
-				Rectangle r = new Rectangle(Dot1.Location, Dot1.Size);
-				r.Y += y;
-				Fill(g, sb, r);
+				g.FillPolygon(sb, DotSecV(y));
 				p.Color = m_form.Colors.Line;
 				DrawHorLine(g, p, rct.Left, rct.Right, y +1);
 				DrawHorLine(g, p, rct.Left, rct.Right, y);
@@ -186,9 +201,7 @@ namespace AE_RemapTria
 			}
 			else if (f % HSecBar == 0)
 			{
-				Rectangle r = new Rectangle(Dot2.Location, Dot2.Size);
-				r.Y += y;
-				Fill(g, sb, r);
+				g.FillPolygon(sb, DotHSecV(y));
 				p.Color = m_form.Colors.Line;
 				DrawHorLine(g, p, rct.Left, rct.Right, y );
 				DrawHorLine(g, p, rct.Left, rct.Right, y-1);
@@ -196,17 +209,16 @@ namespace AE_RemapTria
 			}
 			else
 			{
-				Rectangle r = new Rectangle(Dot3.Location, Dot3.Size);
-				r.Y += y;
-				Fill(g, sb, r);
 				if (f % HHSecBar == 0)
 				{
+					g.FillPolygon(sb, DotHHSecV(y));
 					p.Color = m_form.Colors.LineDark;
 					int y2 = y - 1;
 					DrawHorLine(g, p, rct.Left, rct.Right, y2);
 				}
 				else
 				{
+					g.FillPolygon(sb, DotHHHSecV(y));
 					p.Color = m_form.Colors.LineB;
 					DrawHorLine(g, p, m_form.Sizes.FrameWidth2, rct.Right - 1, y);
 

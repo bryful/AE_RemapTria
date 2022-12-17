@@ -1,5 +1,4 @@
-﻿using BRY;
-using PdfSharpCore.Drawing;
+﻿using PdfSharpCore.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +11,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace AE_RemapTria
 {
-	// ***********************************************************************************
-	public class T_TopMenuItem
+    // ***********************************************************************************
+    public class T_TopMenuItem
 	{
 		public string Caption { get; set; }
 		public int Width { get; set; }

@@ -71,6 +71,10 @@ namespace AE_RemapTria
 				ControlStyles.SupportsTransparentBackColor,
 				true);
 			this.UpdateStyles();
+			if(DesignMode==true)
+			{
+				this.Visible = false;
+			}
 		}
 
 		// *****************************************************************
@@ -198,6 +202,7 @@ namespace AE_RemapTria
 			{
 				formActive();
 			}
+			this.TopMost = true;
 			this.Invalidate();
 		}
 		// *****************************************************************
@@ -379,6 +384,23 @@ namespace AE_RemapTria
 			finally
 			{
 				p.Dispose();
+			}
+		}
+		private bool GetDesignMode(Control control)
+		{
+			if (control == null) return false;
+
+			bool mode = control.Site == null ? false : control.Site.DesignMode;
+
+			return mode | GetDesignMode(control.Parent);
+		}
+
+		// 本来のDesignModeを上書き
+		public new bool DesignMode
+		{
+			get
+			{
+				return GetDesignMode(this);
 			}
 		}
 	}

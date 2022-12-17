@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace AE_RemapTria
 {
-    public partial class T_OpenSaveDialog : T_BaseDialog
+    public partial class T_OpenSaveDialog : TR_BaseDialog
 	{
 		[Category("_AE_Remap")]
 		public string Caption

@@ -9,11 +9,9 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using BRY;
-
 namespace AE_RemapTria
 {
-	public class FilterChangedArg : EventArgs
+    public class FilterChangedArg : EventArgs
 	{
 		public string[] Filter;
 		public FilterChangedArg(string[] v)

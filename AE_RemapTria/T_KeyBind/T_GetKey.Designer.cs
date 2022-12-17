@@ -1,6 +1,8 @@
-﻿namespace AE_RemapTria
+﻿
+
+namespace AE_RemapTria
 {
-	partial class T_GetKey
+    partial class T_GetKey
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -85,6 +87,6 @@
 
 		#endregion
 
-		private T_MyFonts t_MyFonts1;
+		private TR_MyFonts t_MyFonts1;
 	}
 }

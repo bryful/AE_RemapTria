@@ -1,6 +1,7 @@
-﻿namespace AE_RemapTria
+﻿
+namespace AE_RemapTria
 {
-	partial class TR_SheetSettingDialog
+    partial class TR_SheetSettingDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -52,12 +53,12 @@
 			this.lbMain.FrameMargin = new System.Windows.Forms.Padding(4, 0, 0, 0);
 			this.lbMain.FrameWeight = new System.Windows.Forms.Padding(16, 0, 0, 1);
 			this.lbMain.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbMain.Location = new System.Drawing.Point(69, 21);
+			this.lbMain.Location = new System.Drawing.Point(69, 12);
 			this.lbMain.MyFontIndex = 5;
 			this.lbMain.MyFontSize = 12F;
 			this.lbMain.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbMain.Name = "lbMain";
-			this.lbMain.Size = new System.Drawing.Size(315, 23);
+			this.lbMain.Size = new System.Drawing.Size(346, 23);
 			this.lbMain.TabIndex = 1;
 			this.lbMain.TabStop = false;
 			this.lbMain.Text = "Sheet Settings";
@@ -71,9 +72,9 @@
 			this.t_Label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.t_Label2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.t_Label2.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.t_Label2.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
+			this.t_Label2.FrameWeight = new System.Windows.Forms.Padding(8, 0, 0, 0);
 			this.t_Label2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label2.Location = new System.Drawing.Point(79, 87);
+			this.t_Label2.Location = new System.Drawing.Point(79, 80);
 			this.t_Label2.MyFontIndex = 5;
 			this.t_Label2.MyFontSize = 10F;
 			this.t_Label2.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -92,9 +93,9 @@
 			this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbStatus.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.lbStatus.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.lbStatus.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
+			this.lbStatus.FrameWeight = new System.Windows.Forms.Padding(8, 0, 0, 0);
 			this.lbStatus.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbStatus.Location = new System.Drawing.Point(79, 136);
+			this.lbStatus.Location = new System.Drawing.Point(79, 122);
 			this.lbStatus.MyFontIndex = 5;
 			this.lbStatus.MyFontSize = 10F;
 			this.lbStatus.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -115,12 +116,12 @@
 			this.lbDuration.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.lbDuration.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.lbDuration.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbDuration.Location = new System.Drawing.Point(79, 114);
+			this.lbDuration.Location = new System.Drawing.Point(79, 104);
 			this.lbDuration.MyFontIndex = 5;
 			this.lbDuration.MyFontSize = 8F;
 			this.lbDuration.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbDuration.Name = "lbDuration";
-			this.lbDuration.Size = new System.Drawing.Size(187, 12);
+			this.lbDuration.Size = new System.Drawing.Size(218, 12);
 			this.lbDuration.TabIndex = 9;
 			this.lbDuration.TabStop = false;
 			// 
@@ -133,9 +134,9 @@
 			this.lbName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbName.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.lbName.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.lbName.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
+			this.lbName.FrameWeight = new System.Windows.Forms.Padding(8, 0, 0, 0);
 			this.lbName.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.lbName.Location = new System.Drawing.Point(79, 52);
+			this.lbName.Location = new System.Drawing.Point(79, 41);
 			this.lbName.MyFontIndex = 5;
 			this.lbName.MyFontSize = 8F;
 			this.lbName.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -157,12 +158,12 @@
 			this.tbSheetName.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.tbSheetName.FrameWeight = new System.Windows.Forms.Padding(0, 0, 0, 1);
 			this.tbSheetName.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.tbSheetName.Location = new System.Drawing.Point(179, 52);
+			this.tbSheetName.Location = new System.Drawing.Point(179, 41);
 			this.tbSheetName.MyFontIndex = 5;
 			this.tbSheetName.MyFontSize = 10F;
 			this.tbSheetName.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbSheetName.Name = "tbSheetName";
-			this.tbSheetName.Size = new System.Drawing.Size(197, 20);
+			this.tbSheetName.Size = new System.Drawing.Size(236, 20);
 			this.tbSheetName.TabIndex = 3;
 			// 
 			// t_Zebra1
@@ -175,12 +176,12 @@
 			this.t_Zebra1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.t_Zebra1.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.t_Zebra1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Zebra1.Location = new System.Drawing.Point(29, 18);
+			this.t_Zebra1.Location = new System.Drawing.Point(29, 12);
 			this.t_Zebra1.MyFontIndex = 5;
 			this.t_Zebra1.MyFontSize = 5F;
 			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
-			this.t_Zebra1.Size = new System.Drawing.Size(33, 175);
+			this.t_Zebra1.Size = new System.Drawing.Size(33, 157);
 			this.t_Zebra1.TabIndex = 0;
 			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
@@ -207,7 +208,7 @@
 			this.btnOK.IsDrawFrame = true;
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(272, 168);
+			this.btnOK.Location = new System.Drawing.Point(197, 148);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFontSize = 9F;
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -232,12 +233,12 @@
 			this.DurationBox1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.DurationBox1.FrameWeight = new System.Windows.Forms.Padding(0, 0, 0, 1);
 			this.DurationBox1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.DurationBox1.Location = new System.Drawing.Point(179, 87);
+			this.DurationBox1.Location = new System.Drawing.Point(179, 78);
 			this.DurationBox1.MyFontIndex = 5;
 			this.DurationBox1.MyFontSize = 12F;
 			this.DurationBox1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.DurationBox1.Name = "DurationBox1";
-			this.DurationBox1.Size = new System.Drawing.Size(94, 20);
+			this.DurationBox1.Size = new System.Drawing.Size(118, 20);
 			this.DurationBox1.TabIndex = 7;
 			this.DurationBox1.TabStop = false;
 			this.DurationBox1.Text = "t_DurationBox1";
@@ -255,14 +256,14 @@
 			this.tR_KeyPad1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.tR_KeyPad1.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.tR_KeyPad1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.tR_KeyPad1.Location = new System.Drawing.Point(272, 78);
-			this.tR_KeyPad1.MaximumSize = new System.Drawing.Size(112, 84);
-			this.tR_KeyPad1.MinimumSize = new System.Drawing.Size(112, 84);
+			this.tR_KeyPad1.Location = new System.Drawing.Point(303, 67);
+			this.tR_KeyPad1.MaximumSize = new System.Drawing.Size(60000, 60000);
+			this.tR_KeyPad1.MinimumSize = new System.Drawing.Size(112, 112);
 			this.tR_KeyPad1.MyFontIndex = 5;
 			this.tR_KeyPad1.MyFontSize = 8F;
 			this.tR_KeyPad1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tR_KeyPad1.Name = "tR_KeyPad1";
-			this.tR_KeyPad1.Size = new System.Drawing.Size(112, 84);
+			this.tR_KeyPad1.Size = new System.Drawing.Size(112, 115);
 			this.tR_KeyPad1.TabIndex = 11;
 			this.tR_KeyPad1.TabStop = false;
 			this.tR_KeyPad1.Text = "tR_KeyPad1";
@@ -286,7 +287,7 @@
 			this.btnCancel.IsDrawFrame = true;
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(166, 168);
+			this.btnCancel.Location = new System.Drawing.Point(79, 148);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFontSize = 9F;
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -298,9 +299,8 @@
 			// 
 			// TR_SheetSettingDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(424, 209);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.ClientSize = new System.Drawing.Size(443, 185);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.tR_KeyPad1);
 			this.Controls.Add(this.DurationBox1);
@@ -363,7 +363,7 @@
 		}
 
 		#endregion
-		private T_MyFonts t_MyFonts1;
+		private TR_MyFonts t_MyFonts1;
 		private TR_Label lbMain;
 		private TR_Label t_Label2;
 		private TR_Label lbStatus;

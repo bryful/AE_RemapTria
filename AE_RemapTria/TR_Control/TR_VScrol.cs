@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,27 +109,6 @@ namespace AE_RemapTria
 					p.Color = m_form.Colors.Line;
 					g.DrawLines(p, Cursor(v));
 				}
-				/*
-			Rectangle r = new Rectangle(0, 0, ArrowW, 5);
-			g.FillRectangle(sb,r);
-			r = new Rectangle(0,Height-6, ArrowW, 5);
-			g.FillRectangle(sb, r);
-			PointF [] ps = new PointF[]
-			{
-				new PointF(0, 20),
-				new PointF(ArrowW/2, 10),
-				new PointF(ArrowW, 20),
-			};
-			p.Width = 2;
-			g.DrawLines(p, ps);
-			ps = new PointF[]
-			{
-				new PointF(0, Height -20),
-				new PointF(ArrowW/2, Height-10),
-				new PointF(ArrowW, Height - 20),
-			};
-			g.DrawLines(p, ps);
-			*/
 			}
 			finally
 			{
@@ -136,6 +116,110 @@ namespace AE_RemapTria
 				sb.Dispose();
 			}
 
+		}
+		// ****************************************************************
+		private enum MDPosType
+		{
+			None = -1,
+			Top,
+			PageUp,
+			Cursol,
+			PageDown,
+			End,
+		};
+		private MDPosType m_MDPos = MDPosType.None;
+		
+		private MDPosType GetMDPos(int y)
+		{
+			MDPosType ret = MDPosType.None;
+			if (y <= 10)
+			{
+				ret = MDPosType.Top;
+			}else if(this.Height-10<= y)
+			{
+				ret = MDPosType.End;
+			}
+			else
+			{
+				int v = DispYTo();
+				if ((y >= v - 10) && (y <= v + 10))
+				{
+					ret = MDPosType.Cursol;
+				}else if (y<v-10)
+				{
+					ret = MDPosType.PageUp;
+				}
+				else
+				{
+					ret = MDPosType.PageDown;
+				}
+			}
+
+			return ret;
+		}
+		int m_mdp = -1;
+		int m_dispy = -1;
+		// ****************************************************************
+		public override bool ChkMouseDown(MouseEventArgs e)
+		{
+			bool ret = false;
+			ret = base.ChkMouseDown(e);
+			if (m_inMouse == false) return ret;
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if (e.Button == MouseButtons.Left)
+			{
+				m_MDPos = GetMDPos(m_MDownPoint.Y);
+				if(m_MDPos == MDPosType.Cursol)
+				{
+					m_mdp = m_MDownPoint.Y;
+					m_dispy = Sizes.DispY;
+				}
+				ret = true;
+			}
+			return ret;
+		}
+		public override bool ChkMouseMove(MouseEventArgs e)
+		{
+			bool ret = false;
+			Debug.WriteLine($"MouseMove");
+			ret =  base.ChkMouseMove(e);
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if(m_MDPos== MDPosType.Cursol)
+			{
+				int ay = m_MMovePoint.Y - m_mdp;
+				ay = ay * m_form.Sizes.DispMax.Y / (Height - 20);
+				Debug.WriteLine($"{ay}:{m_MMovePoint.Y}");
+				Sizes.DispY = m_dispy + ay;
+				m_form.DrawAll();
+				m_form.Refresh();
+				ret = true;
+			}
+			return ret;
+		}
+		public override bool ChkMouseUp(MouseEventArgs e)
+		{
+			bool ret = false;
+			ret = base.ChkMouseUp(e);
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if (m_MDPos == MDPosType.None) return ret;
+			switch(m_MDPos)
+			{
+				case MDPosType.Top:
+					m_form.Home();
+					break;
+				case MDPosType.End:
+					m_form.End();
+					break;
+				case MDPosType.PageUp:
+					m_form.PageUp();
+					break;
+				case MDPosType.PageDown:
+					m_form.PageDown();
+					break;
+			}
+			m_MDPos = MDPosType.None;
+			ret = true;
+			return ret;
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using BRY;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_GetKey : T_BaseDialog
+    public partial class T_GetKey : TR_BaseDialog
 	{
 		private T_KeyBindDialog? _BindDialog=null;
 

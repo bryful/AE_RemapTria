@@ -1,5 +1,4 @@
-﻿using BRY;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +11,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class T_KeyBindDialog : T_BaseDialog
+    public partial class T_KeyBindDialog : TR_BaseDialog
 	{
 		public T_Funcs Funcs = new T_Funcs();
 		public T_KeyBindDialog()
@@ -30,14 +29,14 @@ namespace AE_RemapTria
 
 		public string[] Names
 		{
-			get { return t_ListBox1.Names; }
-			set { t_ListBox1.Names = value; }
+			get { return t_FuncList1.Names; }
+			set { t_FuncList1.Names = value; }
 		}
 		public void SetFuncs(T_Funcs fs)
 		{
 			Funcs.CopyFrom(fs);
-			t_ListBox1.Names = fs.Names;
-			//t_FuncList1.SetFuncs(fs);
+			t_FuncList1.Names = fs.Names;
+			t_FuncList1.SetFuncs(fs);
 		}
 		private void btnOK_Click(object sender, EventArgs e)
 		{
@@ -60,7 +59,7 @@ namespace AE_RemapTria
 
 		private void btnGetKey1_Click(object sender, EventArgs e)
 		{
-			int sidx = t_ListBox1.SelectedIndex;
+			int sidx = t_FuncList1.SelectedIndex;
 			if (sidx < 0) return;
 			FuncItem? f = Funcs.Items(sidx);
 			if (f == null) return;
@@ -91,9 +90,9 @@ namespace AE_RemapTria
 
 		private void t_ListBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (t_ListBox1.SelectedIndex > -1)
+			if (t_FuncList1.SelectedIndex > -1)
 			{
-				FuncItem f = Funcs.Items(t_ListBox1.SelectedIndex);
+				FuncItem f = Funcs.Items(t_FuncList1.SelectedIndex);
 				tbJap.Text = f.JapName;
 				if (f.KeyArray.Length >= 1)
 				{
@@ -116,7 +115,7 @@ namespace AE_RemapTria
 
 		private void tbJap_TextChanged(object sender, EventArgs e)
 		{
-			int idx = t_ListBox1.SelectedIndex;
+			int idx = t_FuncList1.SelectedIndex;
 			if (( idx>= 0)&&(Funcs.Count>0))
 			{
 				Funcs.SetJapName(idx, tbJap.Text);

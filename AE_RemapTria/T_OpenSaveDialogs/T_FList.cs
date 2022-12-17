@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public enum FListType
+    public enum FListType
 	{
 		Dir,
 		File

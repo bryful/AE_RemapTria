@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BRY;
 using PdfSharpCore.Drawing;
 
 namespace AE_RemapTria

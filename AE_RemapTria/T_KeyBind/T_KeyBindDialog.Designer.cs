@@ -1,6 +1,7 @@
-﻿namespace AE_RemapTria
+﻿
+namespace AE_RemapTria
 {
-	partial class T_KeyBindDialog
+    partial class T_KeyBindDialog
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,8 +29,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.t_ListBox1 = new AE_RemapTria.T_ListBox();
 			this.tbJap = new AE_RemapTria.TR_TextBox();
 			this.btnOK = new AE_RemapTria.TR_Button();
 			this.btnCancel = new AE_RemapTria.TR_Button();
@@ -41,40 +40,21 @@
 			this.t_Zebra1 = new AE_RemapTria.TR_Zebra();
 			this.t_Zebra2 = new AE_RemapTria.TR_Zebra();
 			this.t_Label1 = new AE_RemapTria.TR_Label();
+			this.t_FuncList1 = new AE_RemapTria.T_FuncList();
 			this.SuspendLayout();
-			// 
-			// t_ListBox1
-			// 
-			this.t_ListBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(30)))));
-			this.t_ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.t_ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.t_ListBox1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_ListBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.t_ListBox1.FormattingEnabled = true;
-			this.t_ListBox1.ItemHeight = 19;
-			this.t_ListBox1.Items.AddRange(new object[] {
-            "",
-            "",
-            ""});
-			this.t_ListBox1.Location = new System.Drawing.Point(66, 41);
-			this.t_ListBox1.MyFontIndex = 5;
-			this.t_ListBox1.MyFonts = this.t_MyFonts1;
-			this.t_ListBox1.MyFontSize = 10F;
-			this.t_ListBox1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_ListBox1.Name = "t_ListBox1";
-			this.t_ListBox1.Names = new string[] {
-        "",
-        "",
-        ""};
-			this.t_ListBox1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
-			this.t_ListBox1.Size = new System.Drawing.Size(222, 344);
-			this.t_ListBox1.TabIndex = 0;
-			this.t_ListBox1.SelectedIndexChanged += new System.EventHandler(this.t_ListBox1_SelectedIndexChanged);
 			// 
 			// tbJap
 			// 
+			this.tbJap.Alignment = System.Drawing.StringAlignment.Near;
+			this.tbJap.Back = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
 			this.tbJap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(30)))));
+			this.tbJap.CanReturnEdit = true;
+			this.tbJap.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tbJap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
+			this.tbJap.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.tbJap.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.tbJap.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.tbJap.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.tbJap.Location = new System.Drawing.Point(295, 66);
 			this.tbJap.MyFontIndex = 5;
 			this.tbJap.MyFontSize = 10F;
@@ -87,11 +67,17 @@
 			// btnOK
 			// 
 			this.btnOK.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnOK.Back = System.Drawing.Color.Transparent;
 			this.btnOK.BackColor = System.Drawing.Color.Transparent;
 			this.btnOK.Checked = false;
 			this.btnOK.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnOK.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnOK.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnOK.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(140)))));
+			this.btnOK.FrameMargin = new System.Windows.Forms.Padding(0, 0, 3, 3);
+			this.btnOK.FrameWeight = new System.Windows.Forms.Padding(0, 0, 6, 2);
+			this.btnOK.Group = 0;
 			this.btnOK.Id = 0;
 			this.btnOK.IsCheckMode = false;
 			this.btnOK.IsDrawFrame = true;
@@ -110,11 +96,17 @@
 			// btnCancel
 			// 
 			this.btnCancel.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnCancel.Back = System.Drawing.Color.Transparent;
 			this.btnCancel.BackColor = System.Drawing.Color.Transparent;
 			this.btnCancel.Checked = false;
 			this.btnCancel.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnCancel.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnCancel.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnCancel.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(140)))));
+			this.btnCancel.FrameMargin = new System.Windows.Forms.Padding(0, 3, 3, 0);
+			this.btnCancel.FrameWeight = new System.Windows.Forms.Padding(0, 2, 6, 0);
+			this.btnCancel.Group = 0;
 			this.btnCancel.Id = 0;
 			this.btnCancel.IsCheckMode = false;
 			this.btnCancel.IsDrawFrame = true;
@@ -133,8 +125,13 @@
 			// t_Label2
 			// 
 			this.t_Label2.Alignment = System.Drawing.StringAlignment.Near;
+			this.t_Label2.Back = System.Drawing.Color.Transparent;
 			this.t_Label2.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Label2.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Label2.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.t_Label2.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Label2.Location = new System.Drawing.Point(295, 41);
 			this.t_Label2.MyFontIndex = 5;
@@ -143,16 +140,23 @@
 			this.t_Label2.Name = "t_Label2";
 			this.t_Label2.Size = new System.Drawing.Size(173, 24);
 			this.t_Label2.TabIndex = 8;
+			this.t_Label2.TabStop = false;
 			this.t_Label2.Text = "Jananese";
 			// 
 			// btnGetKey1
 			// 
 			this.btnGetKey1.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnGetKey1.Back = System.Drawing.Color.Transparent;
 			this.btnGetKey1.BackColor = System.Drawing.Color.Transparent;
 			this.btnGetKey1.Checked = false;
 			this.btnGetKey1.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnGetKey1.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnGetKey1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnGetKey1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnGetKey1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
+			this.btnGetKey1.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.btnGetKey1.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.btnGetKey1.Group = 0;
 			this.btnGetKey1.Id = 0;
 			this.btnGetKey1.IsCheckMode = false;
 			this.btnGetKey1.IsDrawFrame = true;
@@ -171,11 +175,17 @@
 			// btnGetKey2
 			// 
 			this.btnGetKey2.Alignment = System.Drawing.StringAlignment.Center;
+			this.btnGetKey2.Back = System.Drawing.Color.Transparent;
 			this.btnGetKey2.BackColor = System.Drawing.Color.Transparent;
 			this.btnGetKey2.Checked = false;
 			this.btnGetKey2.Color_Down = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(255)))));
 			this.btnGetKey2.Color_Enter = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.btnGetKey2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.btnGetKey2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(250)))));
+			this.btnGetKey2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
+			this.btnGetKey2.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.btnGetKey2.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.btnGetKey2.Group = 0;
 			this.btnGetKey2.Id = 1;
 			this.btnGetKey2.IsCheckMode = false;
 			this.btnGetKey2.IsDrawFrame = true;
@@ -194,8 +204,13 @@
 			// lbCaution
 			// 
 			this.lbCaution.Alignment = System.Drawing.StringAlignment.Near;
+			this.lbCaution.Back = System.Drawing.Color.Transparent;
 			this.lbCaution.BackColor = System.Drawing.Color.Transparent;
+			this.lbCaution.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbCaution.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.lbCaution.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.lbCaution.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.lbCaution.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.lbCaution.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbCaution.Location = new System.Drawing.Point(294, 230);
 			this.lbCaution.MyFontIndex = 5;
@@ -204,14 +219,20 @@
 			this.lbCaution.Name = "lbCaution";
 			this.lbCaution.Size = new System.Drawing.Size(159, 24);
 			this.lbCaution.TabIndex = 11;
+			this.lbCaution.TabStop = false;
 			this.lbCaution.Text = "Please,Push Key. MouseClick Exit";
 			this.lbCaution.Visible = false;
 			// 
 			// t_Label3
 			// 
 			this.t_Label3.Alignment = System.Drawing.StringAlignment.Near;
+			this.t_Label3.Back = System.Drawing.Color.Transparent;
 			this.t_Label3.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label3.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label3.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Label3.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Label3.FrameWeight = new System.Windows.Forms.Padding(10, 0, 0, 0);
 			this.t_Label3.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Label3.Location = new System.Drawing.Point(294, 118);
 			this.t_Label3.MyFontIndex = 5;
@@ -220,46 +241,114 @@
 			this.t_Label3.Name = "t_Label3";
 			this.t_Label3.Size = new System.Drawing.Size(159, 24);
 			this.t_Label3.TabIndex = 12;
+			this.t_Label3.TabStop = false;
 			this.t_Label3.Text = "Short cut key";
 			// 
 			// t_Zebra1
 			// 
+			this.t_Zebra1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Zebra1.Back = System.Drawing.Color.Transparent;
 			this.t_Zebra1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Zebra1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Zebra1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Zebra1.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Zebra1.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.t_Zebra1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.t_Zebra1.Location = new System.Drawing.Point(294, 260);
+			this.t_Zebra1.MyFontIndex = 5;
+			this.t_Zebra1.MyFontSize = 5F;
+			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(160, 45);
 			this.t_Zebra1.TabIndex = 13;
+			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
+			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(90)))));
+			this.t_Zebra1.ZebraRot = 45F;
+			this.t_Zebra1.ZebraWidth = 25F;
 			// 
 			// t_Zebra2
 			// 
+			this.t_Zebra2.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_Zebra2.Back = System.Drawing.Color.Transparent;
 			this.t_Zebra2.BackColor = System.Drawing.Color.Transparent;
-			this.t_Zebra2.Location = new System.Drawing.Point(33, 41);
+			this.t_Zebra2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_Zebra2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Zebra2.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_Zebra2.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.t_Zebra2.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_Zebra2.Location = new System.Drawing.Point(33, 14);
+			this.t_Zebra2.MyFontIndex = 5;
+			this.t_Zebra2.MyFontSize = 5F;
+			this.t_Zebra2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra2.Name = "t_Zebra2";
-			this.t_Zebra2.Size = new System.Drawing.Size(27, 344);
+			this.t_Zebra2.Size = new System.Drawing.Size(27, 371);
 			this.t_Zebra2.TabIndex = 14;
+			this.t_Zebra2.TabStop = false;
 			this.t_Zebra2.Text = "t_Zebra2";
+			this.t_Zebra2.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(140)))));
+			this.t_Zebra2.ZebraRot = 45F;
+			this.t_Zebra2.ZebraWidth = 15F;
 			// 
 			// t_Label1
 			// 
 			this.t_Label1.Alignment = System.Drawing.StringAlignment.Near;
+			this.t_Label1.Back = System.Drawing.Color.Transparent;
 			this.t_Label1.BackColor = System.Drawing.Color.Transparent;
+			this.t_Label1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.t_Label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
+			this.t_Label1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_Label1.FrameMargin = new System.Windows.Forms.Padding(6, 0, 0, 0);
+			this.t_Label1.FrameWeight = new System.Windows.Forms.Padding(18, 0, 0, 1);
 			this.t_Label1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_Label1.Location = new System.Drawing.Point(43, 14);
+			this.t_Label1.Location = new System.Drawing.Point(66, 14);
 			this.t_Label1.MyFontIndex = 5;
-			this.t_Label1.MyFontSize = 10F;
+			this.t_Label1.MyFontSize = 12F;
 			this.t_Label1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Label1.Name = "t_Label1";
-			this.t_Label1.Size = new System.Drawing.Size(411, 24);
+			this.t_Label1.Size = new System.Drawing.Size(388, 24);
 			this.t_Label1.TabIndex = 15;
+			this.t_Label1.TabStop = false;
 			this.t_Label1.Text = "Keybind  Settings";
+			// 
+			// t_FuncList1
+			// 
+			this.t_FuncList1.Alignment = System.Drawing.StringAlignment.Far;
+			this.t_FuncList1.Back = System.Drawing.Color.Transparent;
+			this.t_FuncList1.BackColor = System.Drawing.Color.Transparent;
+			this.t_FuncList1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.t_FuncList1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.t_FuncList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.t_FuncList1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
+			this.t_FuncList1.FormattingEnabled = false;
+			this.t_FuncList1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+			this.t_FuncList1.FrameMargin = new System.Windows.Forms.Padding(0);
+			this.t_FuncList1.FrameWeight = new System.Windows.Forms.Padding(0);
+			this.t_FuncList1.ItemHeight = 19;
+			this.t_FuncList1.LineAlignment = System.Drawing.StringAlignment.Center;
+			this.t_FuncList1.Location = new System.Drawing.Point(66, 41);
+			this.t_FuncList1.Margin = new System.Windows.Forms.Padding(0);
+			this.t_FuncList1.MyFontIndex = 5;
+			this.t_FuncList1.MyFontSize = 8F;
+			this.t_FuncList1.MyFontStyle = System.Drawing.FontStyle.Regular;
+			this.t_FuncList1.Name = "t_FuncList1";
+			this.t_FuncList1.Names = new string[] {
+        "",
+        "",
+        "",
+        ""};
+			this.t_FuncList1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(100)))));
+			this.t_FuncList1.SelectedIndex = -1;
+			this.t_FuncList1.Size = new System.Drawing.Size(222, 344);
+			this.t_FuncList1.TabIndex = 16;
+			this.t_FuncList1.Text = "t_FuncList1";
+			this.t_FuncList1.SelectedIndexChanged += new System.EventHandler(this.t_ListBox1_SelectedIndexChanged);
 			// 
 			// T_KeyBindDialog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(496, 406);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.ClientSize = new System.Drawing.Size(492, 411);
+			this.Controls.Add(this.t_FuncList1);
 			this.Controls.Add(this.t_Label1);
 			this.Controls.Add(this.t_Zebra2);
 			this.Controls.Add(this.t_Zebra1);
@@ -271,13 +360,11 @@
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.tbJap);
-			this.Controls.Add(this.t_ListBox1);
 			this.Edge = new System.Drawing.Rectangle(10, 10, 10, 10);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 20;
 			this.KagiWeight = 2;
 			this.KeyPreview = true;
-			this.MyFonts = this.t_MyFonts1;
 			this.MyFontSize = 10F;
 			this.Name = "T_KeyBindDialog";
 			this.SideCount = new int[] {
@@ -317,14 +404,11 @@
 			this.Text = "T_KeyBindDialog";
 			this.TransparencyKey = System.Drawing.Color.DarkGray;
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private T_MyFonts t_MyFonts1;
-		private T_ListBox t_ListBox1;
 		private TR_TextBox tbJap;
 		private TR_Button btnOK;
 		private TR_Button btnCancel;
@@ -335,7 +419,7 @@
 		private TR_Label t_Label3;
 		private TR_Zebra t_Zebra1;
 		private TR_Zebra t_Zebra2;
-		//private TextBox textBox1;
 		private TR_Label t_Label1;
+		private T_FuncList t_FuncList1;
 	}
 }

@@ -14,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace AE_RemapTria
 {
-	public partial class T_BListBox : UserControl
+    public partial class T_BListBox : UserControl
 	{
 		// ******************************************************
 		[Category("_AE_Remap")]
@@ -29,7 +29,7 @@ namespace AE_RemapTria
 
 		// ******************************************************
 		#region Font
-		private T_MyFonts? m_MyFonts = null;
+		private TR_MyFonts? m_MyFonts = null;
 		private Font? m_font = null;
 		private int m_MyFontIndex = 5;
 		[Category("_AE_Remap")]
@@ -173,7 +173,7 @@ namespace AE_RemapTria
 		{
 			if(Flist==null) return;
 
-			T_NameDialog dlg = new T_NameDialog();
+			TR_NameDialog dlg = new TR_NameDialog();
 			dlg.CanSameName = true;
 			dlg.Caption = "Add Directory";
 			dlg.ToCenter();
@@ -191,7 +191,7 @@ namespace AE_RemapTria
 		public void EditCaption()
 		{
 			if (BList.SelectedIndex < 0) return;
-			T_NameDialog dlg = new T_NameDialog();
+			TR_NameDialog dlg = new TR_NameDialog();
 			dlg.CanSameName = false;
 			dlg.Caption = "Edit Caption";
 			dlg.ToCenter();

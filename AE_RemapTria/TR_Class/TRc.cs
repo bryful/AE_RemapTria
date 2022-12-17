@@ -55,7 +55,7 @@ namespace AE_RemapTria
             }
 			if (p.Bottom > 0)
 			{
-				r2 = new Rectangle(r.Left, r.Bottom- p.Bottom, r.Width, p.Bottom);
+				r2 = new Rectangle(r.Left, r.Bottom- p.Bottom-1, r.Width, p.Bottom);
 				g.FillRectangle(sb, r2);
 			}
             int h = r.Height - p.Top - p.Bottom;

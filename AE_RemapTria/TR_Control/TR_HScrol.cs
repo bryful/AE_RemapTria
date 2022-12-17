@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,6 +114,110 @@ namespace AE_RemapTria
 				sb.Dispose();
 			}
 
+		}
+		private enum MDPosType
+		{
+			None = -1,
+			LeftMax,
+			Left,
+			Cursol,
+			Right,
+			RightMax,
+		};
+		private MDPosType m_MDPos = MDPosType.None;
+
+		private MDPosType GetMDPos(int x)
+		{
+			MDPosType ret = MDPosType.None;
+			if (x <= 10)
+			{
+				ret = MDPosType.LeftMax;
+			}
+			else if (this.Width - 10 <= x)
+			{
+				ret = MDPosType.RightMax;
+			}
+			else
+			{
+				int v = DispXTo();
+				if ((x >= v - 10) && (x <= v + 10))
+				{
+					ret = MDPosType.Cursol;
+				}
+				else if (x < v - 10)
+				{
+					ret = MDPosType.Left;
+				}
+				else
+				{
+					ret = MDPosType.Right;
+				}
+			}
+
+			return ret;
+		}
+		int m_mdp = -1;
+		int m_dispx = -1;
+		// ****************************************************************
+		public override bool ChkMouseDown(MouseEventArgs e)
+		{
+			bool ret = false;
+			ret = base.ChkMouseDown(e);
+			if (m_inMouse == false) return ret;
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if (e.Button == MouseButtons.Left)
+			{
+				m_MDPos = GetMDPos(m_MDownPoint.X);
+				if (m_MDPos == MDPosType.Cursol)
+				{
+					m_mdp = m_MDownPoint.X;
+					m_dispx = Sizes.DispX;
+				}
+				ret = true;
+			}
+			return ret;
+		}
+		public override bool ChkMouseMove(MouseEventArgs e)
+		{
+			bool ret = false;
+			Debug.WriteLine($"MouseMove");
+			ret = base.ChkMouseMove(e);
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if (m_MDPos == MDPosType.Cursol)
+			{
+				int ax = m_MMovePoint.X - m_mdp;
+				ax = ax * m_form.Sizes.DispMax.X / (Width - 20);
+				Sizes.DispX = m_dispx + ax;
+				m_form.DrawAll();
+				m_form.Refresh();
+				ret= true;
+			}
+			return ret;
+		}
+		public override bool ChkMouseUp(MouseEventArgs e)
+		{
+			bool ret = false;
+			ret = base.ChkMouseUp(e);
+			if ((m_form == null) || (Sizes == null)) return ret;
+			if (m_MDPos == MDPosType.None) return ret;
+			switch (m_MDPos)
+			{
+				case MDPosType.LeftMax:
+					m_form.PageLeftMax();
+					break;
+				case MDPosType.RightMax:
+					m_form.PageRightMax();
+					break;
+				case MDPosType.Left:
+					m_form.PageLeft();
+					break;
+				case MDPosType.Right:
+					m_form.PageRight();
+					break;
+			}
+			m_MDPos = MDPosType.None;
+			ret = true;
+			return ret;
 		}
 	}
 }

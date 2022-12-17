@@ -575,6 +575,36 @@ namespace AE_RemapTria
 			DrawAll();
 			return true;
 		}
+		public bool PageLeft()
+		{
+			Sizes.DispX -= Sizes.CellWidth*4;
+			DrawAll();
+			return true;
+		}
+		public bool PageLeftMax()
+		{
+			if(Sizes.DispX !=0)
+			{
+				Sizes.DispX = 0;
+				DrawAll();
+			}
+			return true;
+		}
+		public bool PageRight()
+		{
+			Sizes.DispX += Sizes.CellWidth * 4;
+			DrawAll();
+			return true;
+		}
+		public bool PageRightMax()
+		{
+			if (Sizes.DispX != Sizes.DispMax.X)
+			{
+				Sizes.DispX = Sizes.DispMax.X;
+				DrawAll();
+			}
+			return true;
+		}
 		public bool DispUp()
 		{
 			Sizes.DispY -= Sizes.CellHeight;
@@ -878,8 +908,6 @@ namespace AE_RemapTria
 			{
 				FileName = p;
 				CellData.SheetName = T_Def.GetNameNoExt(p);
-				//ChkHScrl();
-				//ChkVScrl();
 				ChkSize();
 				IsModif = false;
 				DrawAll();
@@ -897,32 +925,26 @@ namespace AE_RemapTria
 		public bool CellInsert()
 		{
 			bool ret = false;
-			/*
-			if (m_form == null) return false;
-			m_form.ForegroundWindow();
-			T_NameDialog dlg = new T_NameDialog();
-			dlg.SetForm(m_form);
+			ForegroundWindow();
+			TR_NameDialog dlg = new TR_NameDialog();
+			dlg.SetTRForm(this);
 			dlg.Caption = "Insert Cell";
 			dlg.ValueText = "";
 			dlg.Location = new Point(
-				m_Form.Left + 20,
-				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret =CellData.InsertCell(dlg.ValueText);
 				IsModif = true;
 				this.Invalidate();
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			this.TopMost = b;
 			dlg.Dispose();
-			*/
 			return ret;
 		}
 		public bool FrameInsert()
@@ -1032,93 +1054,76 @@ namespace AE_RemapTria
 		public bool SeetInfoDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_form == null) return false;
-			m_form.ForegroundWindow();
-			T_SheetInfoDialog dlg = new T_SheetInfoDialog();
-			dlg.SetForm(m_form);
+			ForegroundWindow();
+			TR_SheetInfoDialog dlg = new TR_SheetInfoDialog();
+			dlg.SetTRForm(this);
 			dlg.Location = new Point(
-				m_form.Left + 20,
-				m_form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_form != null)
-			{
-				b = m_form.TopMost;
-				m_form.TopMost = false;
-			}
-			dlg.SetCelLData(CellData);
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				IsModif = true;
 				dlg.GetCellData(ref CellData);
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
-			*/
+			this.TopMost = b;
 			return ret;
 		}
 		public bool CaptionDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_form == null) return false;
-			m_form.ForegroundWindow();
-			T_NameDialog dlg = new T_NameDialog();
-			dlg.SetForm(m_form);
+			ForegroundWindow();
+			TR_NameDialog dlg = new TR_NameDialog();
+			dlg.SetTRForm(this);
 			dlg.Caption = "Cell Caption: "+ CellData.CaptionTarget();
 			dlg.ValueText = CellData.CaptionTarget();
 			dlg.Location = new Point(
-				m_form.Left + 20,
-				m_form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_form != null)
-			{
-				b = m_form.TopMost;
-				m_form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				CellData.SetCaptionTarget(dlg.ValueText);
-				if (m_form != null) m_form.Invalidate();
+				Caption.ChkOffScr();
+				this.Invalidate();
 				IsModif = true;
 				ret = true;
 			}
-			if (m_form != null) m_form.TopMost = b;
+			this.TopMost = b;
 			dlg.Dispose();
-			*/
 			return ret;
 		}
 		public bool OffsetFrameDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_Form == null) return false;
-			m_Form.ForegroundWindow();
-			T_OffsetFrameDialog dlg = new T_OffsetFrameDialog();
-			dlg.SetForm(m_Form);
+			ForegroundWindow();
+			TR_OffsetFrameDialog dlg = new TR_OffsetFrameDialog();
+			dlg.SetTRForm(this);
 			dlg.Value = CellData.OffSetFrame;
 			dlg.Location = new Point(
-				m_Form.Left + 20,
-				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				CellData.OffSetFrame = dlg.Value;
-				if (m_Form != null) m_Form.Invalidate();
+				Frame.ChkOffScr();
+				this.Invalidate();
 				IsModif = true;
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			this.TopMost = b;
 			dlg.Dispose();
-			*/
 			return ret;
 		}
 		private int m_AutoinputStert = 1;
@@ -1128,25 +1133,20 @@ namespace AE_RemapTria
 		public bool AutoInputDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_Form == null) return false;
-			m_Form.ForegroundWindow();
-			T_AutoInputDialog dlg = new T_AutoInputDialog();
-			dlg.SetForm(m_Form);
+			ForegroundWindow();
+			TR_AutoInputDialog dlg = new TR_AutoInputDialog();
+			dlg.SetTRForm(this);
 			dlg.Start = m_AutoinputStert;
 			dlg.Last = m_AutoinputLast;
 			dlg.Koma = m_AutoinputKoam;
 
 			dlg.Location = new Point(
-				m_Form.Left + 20,
-				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				m_AutoinputStert = dlg.Start;
@@ -1154,45 +1154,40 @@ namespace AE_RemapTria
 				m_AutoinputKoam = dlg.Koma;
 				CellData.AutoInput(m_AutoinputStert, m_AutoinputLast, m_AutoinputKoam);
 				IsModif = true;
+				Grid.ChkOffScr();
 				this.Invalidate();
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			this.TopMost = b;
 			dlg.Dispose();
-			*/
+			
 			return ret;
 		}
 		public bool AboutDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_Form == null) return false;
-			m_Form.ForegroundWindow();
-			T_AboutDialog dlg = new T_AboutDialog();
+			this.ForegroundWindow();
+			TR_AboutDialog dlg = new TR_AboutDialog();
 			string s =  Application.ExecutablePath;
 			DateTime dt = File.GetLastWriteTimeUtc(s);
 			//DateTime dt = F_W.GetBuildDateTime(s);
 
 			dt = dt + new TimeSpan(9, 0, 0);
 			dlg.Info = "build:" +dt.ToString() ;
-			dlg.SetForm(m_Form);
+			dlg.SetTRForm(this);
 			dlg.Location = new Point(
-				m_Form.Left + 20,
-				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			this.TopMost = b;
 			dlg.Dispose();
-			*/
 			return ret;
 		}
 		public bool KeyBindDialog()
@@ -1228,28 +1223,22 @@ namespace AE_RemapTria
 		public bool OpenSaveDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_Form == null) return false;
-			m_Form.ForegroundWindow();
+			this.ForegroundWindow();
 			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
 			//dlg.SetFuncs(Funcs);
-			dlg.SetForm(m_Form);
+			dlg.SetTRForm(this);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			dlg.ToCenter();
 			//dlg.ImportDrive();
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			this.TopMost = b;
 			//dlg.ExportDrive();
 			dlg.Dispose();
-			*/
 			return ret;
 		}
 		//-------------------------------------------------

@@ -8,9 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AE_RemapTria
 {
-	public partial class T_FuncList : ListBox
+    public partial class T_FuncList : TR_ListBox
 	{
 		public T_Funcs Funcs = new T_Funcs();
 		public void SetFuncs(T_Funcs f)
@@ -19,128 +20,15 @@ namespace AE_RemapTria
 			this.Items.Clear();
 			this.Items.AddRange(f.Names);
 		}
-		private Color m_SelectedColor = Color.FromArgb(50, 50, 100);
-		public Color SelectedColor
-		{
-			get { return m_SelectedColor; }
-			set { m_SelectedColor = value; this.Invalidate(); }
-		}
 		private T_Funcs t_Funcs = new T_Funcs();
-		private T_MyFonts? m_MyFonts = null;
-		public T_MyFonts? MyFonts
-		{
-			get { return m_MyFonts; }
-			set
-			{
-				m_MyFonts = value;
-				if (m_MyFonts != null)
-				{
-					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
-					this.Invalidate();
-				}
-			}
-		}
-		private int m_MyFontIndex = 5;
-		public int MyFontIndex
-		{
-			get { return m_MyFontIndex; }
-			set
-			{
-				m_MyFontIndex = value;
-				if (m_MyFontIndex < 0) m_MyFontIndex = 0;
-				if (m_MyFonts != null)
-				{
-					this.Font = m_MyFonts.MyFont(m_MyFontIndex, this.Font.Size, this.Font.Style);
-					this.Invalidate();
-				}
-			}
-		}
-		public float MyFontSize
-		{
-			get { return this.Font.Size; }
-			set
-			{
-				SetFontSizeStyle(value, this.Font.Style);
-			}
-		}
-		public FontStyle MyFontStyle
-		{
-			get { return this.Font.Style; }
-			set
-			{
-				SetFontSizeStyle(this.Font.Size, value);
-			}
-		}
-		public void SetFontSizeStyle(float sz, FontStyle fs)
-		{
-			if (m_MyFonts != null)
-			{
-				this.Font = m_MyFonts.MyFont(m_MyFontIndex, sz, fs);
-			}
-			else
-			{
-				this.Font = new Font(this.Font.FontFamily, sz, fs);
-			}
-			this.Invalidate();
-		}
 		public T_FuncList()
 		{
 			//this.BorderStyle = BorderStyle.FixedSingle;
-			InitializeComponent();
-			Init();
-			this.DrawMode = DrawMode.OwnerDrawFixed;
-			this.DrawItem += new DrawItemEventHandler(DrawItems);
+			this.Size = new Size(100, 100);
 			this.ForeColor = Color.FromArgb(255, 120, 220, 250);
-			this.BackColor = Color.FromArgb(10, 10, 30);
+			this.BackColor = Color.Transparent;
+			InitializeComponent();
 
-		}
-		public void Init()
-		{
-
-			
-			this.SetStyle(
-				ControlStyles.DoubleBuffer |
-				//ControlStyles.UserPaint |
-				ControlStyles.AllPaintingInWmPaint |
-				ControlStyles.SupportsTransparentBackColor,
-				true);
-			this.UpdateStyles();
-			
-
-		}
-		private void DrawItems(object sender, System.Windows.Forms.DrawItemEventArgs e)
-		{
-			SolidBrush sb = new SolidBrush(this.BackColor);
-
-			try
-			{
-				e.DrawBackground();
-				//sb.Color = Color.Transparent;
-				//e.Graphics.FillRectangle(sb, e.Bounds);
-				
-				if ((e.Index > -1)&&(this.Items.Count>0))
-				{
-
-					if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-					{
-						sb.Color = m_SelectedColor;
-						e.Graphics.FillRectangle(sb, e.Bounds);
-					}
-
-					//文字列の取得
-					string txt =  this.Items[e.Index].ToString();
-					//文字列の描画
-					sb.Color = this.ForeColor;
-					e.Graphics.DrawString(txt, e.Font, sb, e.Bounds);
-
-				}
-
-			}
-			finally
-			{
-				sb.Dispose();
-			}
-			//背景を描画する
 		}
 
 		public string[] Names
@@ -152,7 +40,7 @@ namespace AE_RemapTria
 				{
 					for(int i = 0; i < this.Items.Count; i++)
 					{
-						string s = Items[i].ToString();
+						string s = this.Items[i].ToString();
 						if (s != null) s = "";
 						ret[i] = s;
 					}

@@ -10,7 +10,7 @@ using System.Text;
 namespace AE_RemapTria
 {
 
-	public partial class TR_Form : Form
+    public partial class TR_Form : Form
 	{
 		public TR_CellData CellData = new TR_CellData();
 		public TR_Size Sizes = new TR_Size();
@@ -80,8 +80,8 @@ namespace AE_RemapTria
 			if (HScrol != null) HScrol.ChkOffScr();
 			this.Invalidate();
 		}
-		private T_MyFonts m_Fonts = new T_MyFonts();
-		public T_MyFonts MyFonts
+		private TR_MyFonts m_Fonts = new TR_MyFonts();
+		public TR_MyFonts MyFonts
 		{
 			get { return m_Fonts; }
 		}
@@ -331,10 +331,11 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void NavBarSetup()
 		{
+			m_navBar.Form = this;
+			m_navBar.SetLocSize();
+
 			if (DesignMode == false)
 			{
-				m_navBar.Form = this;
-				m_navBar.SetLocSize();
 				m_navBar.Show();
 			}
 
@@ -628,7 +629,8 @@ namespace AE_RemapTria
 				g.DrawImage(Grid.Offscr(), Grid.Location);
 				g.DrawImage(VScrol.Offscr(), VScrol.Location);
 				g.DrawImage(HScrol.Offscr(), HScrol.Location);
-				g.DrawImage(tria, Sizes.FrameWidth2, 40);
+				g.DrawImage(tria, 0,
+					Menu.MenuHeight+Sizes.InterHeight);
 
 				if(IsInputMode)
 				{
@@ -1076,7 +1078,6 @@ namespace AE_RemapTria
 			}
 			*/
 		}
-
 
 		/*
 		protected override void OnFormClosing(FormClosingEventArgs e)

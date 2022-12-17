@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_BListBox
+    partial class T_BListBox
 	{
 		/// <summary> 
 		/// 必要なデザイナー変数です。

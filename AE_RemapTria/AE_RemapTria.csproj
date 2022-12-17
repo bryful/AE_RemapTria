@@ -102,14 +102,6 @@
     <Compile Remove="sampleCode\TS\TS_Position.cs" />
     <Compile Remove="sampleCode\TS\TS_Selection.cs" />
     <Compile Remove="sampleCode\TS\TS_VScrol.cs" />
-    <Compile Remove="T_Control\T_Frame.cs" />
-    <Compile Remove="T_Control\T_Grid.cs" />
-    <Compile Remove="T_Control\T_Grid_paint.cs" />
-    <Compile Remove="T_Control\T_HScrol.cs" />
-    <Compile Remove="T_Control\T_Input.cs" />
-    <Compile Remove="T_Forms\NavBar.cs" />
-    <Compile Remove="T_Forms\T_Form.cs" />
-    <Compile Remove="T_Forms\T_Form.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
