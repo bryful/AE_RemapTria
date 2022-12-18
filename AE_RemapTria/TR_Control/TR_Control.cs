@@ -222,7 +222,7 @@ namespace AE_RemapTria
         {
             if (m_form != null)
             {
-                Pen p = new Pen(m_form.Colors.Line);
+                Pen p = new Pen(m_form.Colors.GLine);
                 DrawFrame(g, p, new Rectangle(0, 0, Width, Height));
                 p.Dispose();
             }

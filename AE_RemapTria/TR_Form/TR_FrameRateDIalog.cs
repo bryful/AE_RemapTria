@@ -11,14 +11,14 @@ using System.Windows.Forms;
 
 namespace AE_RemapTria
 {
-	public partial class TR_FrameRateDIalog : TR_BaseDialog
+	public partial class TR_FrameRateDialog : TR_BaseDialog
 	{
 		public T_Fps Fps
 		{
 			get { return tR_Fps1.Fps; }
 			set { tR_Fps1.Fps = value; }
 		}
-		public TR_FrameRateDIalog()
+		public TR_FrameRateDialog()
 		{
 			InitializeComponent();
 			SetEventHandler(tR_Label1);

@@ -43,8 +43,8 @@ namespace AE_RemapTria
         public const int CellHeightDef = 16;
         public const int FrameWidthDef = 90;
         public const int FrameWidth2Def = 20;
-        public const int CaptionHeightDef = 16;
-        public const int CaptionHeight2Def = 16;
+        public const int CaptionHeightDef = 20;
+        public const int CaptionHeight2Def = 12;
         public const int InterWidthDef = 4;
         public const int InterHeightDef = 4;
         public const int MenuHeightDef = 20;

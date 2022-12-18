@@ -9,27 +9,18 @@ namespace AE_RemapTria
 	public enum COLS
 	{
 		Base = 0,
-		Line,
-		LineDark,
-		LineB,
-		Frame,
-		Caption,
-		Caption2,
-		Input,
-		InputLine,
-		InputLineA,
-		CellEven,
-		CellA_sdw,
-		CellB,
-		CellB_sdw,
+		GLine,
+		GLineInside,
+		GLineSame,
+		GLineHor,
 		Selection,
-		SelectionCaption,
 		Moji,
 		Kagi,
-		GrayMoji,
-		Gray,
-		TopBar,
+		UnEnabledMoji,
+		UnEnabled,
 		
+		FrameDot,
+
 		MenuBack,
 		MenuBackSelected,
 		MenuBackNoActive,
@@ -39,8 +30,13 @@ namespace AE_RemapTria
 		MenuWaku1,
 		MenuWaku2,
 		MenuSdw,
+
+		BGGrad0,
+		BGGrad1,
+		BGGrad2,
 		Transparent
 	};
+
 	public class TR_Colors
 	{
 		public bool _eventFlag=true;
@@ -55,38 +51,78 @@ namespace AE_RemapTria
 			return Enum.GetNames(typeof(COLS));
 		}
 		private Color[] cols = new Color[(int)COLS.Transparent];
+		private Color[] colsBackup = new Color[(int)COLS.Transparent];
 		static private Color[] STColors = new Color[0];
 		// *****************************************************************************
 		public TR_Colors()
 		{
 			cols= InitColors();
 		}
+		// *****************************************************************************
+		public string ToCSharp()
+		{
+			string ret = "";
+			for (int i = 0; i < (int)COLS.Transparent; i++)
+			{
+				if (cols[i].A==255)
+				{
+					ret += $"ret[(int)COLS.{COLSName((COLS)i)}] = Color.FromArgb({cols[i].R},{cols[i].G},{cols[i].B});\r\n";
+
+				}
+				else
+				{
+					ret += $"ret[(int)COLS.{COLSName((COLS)i)}] = Color.FromArgb({cols[i].A},{cols[i].R},{cols[i].G},{cols[i].B});\r\n";
+				}
+			}
+			return ret;
+		}
+		public void CopyToCSharp()
+		{
+			Clipboard.SetText(ToCSharp());
+		}
+		// *****************************************************************************
+			public void Push()
+		{
+			for(int i=0;i<(int)COLS.Transparent;i++)
+			{
+				colsBackup[i] = Color.FromArgb(
+					cols[i].A,
+					cols[i].R,
+					cols[i].G,
+					cols[i].B
+					);
+				;
+			}
+		}
+		public void Pop()
+		{
+			for (int i = 0; i < (int)COLS.Transparent; i++)
+			{
+				cols[i] = Color.FromArgb(
+					colsBackup[i].A,
+					colsBackup[i].R,
+					colsBackup[i].G,
+					colsBackup[i].B
+					);
+				;
+			}
+		}
 		static public Color[] InitColors()
 		{
 			Color[] ret = new Color[(int)COLS.Transparent];
 			ret[(int)COLS.Base] = Color.Transparent;
-			ret[(int)COLS.Line] = Color.FromArgb(100, 200, 255);
-			ret[(int)COLS.LineDark] = Color.FromArgb(100, 150, 200);
-			ret[(int)COLS.LineB] = Color.FromArgb(75, 120, 180);
-			ret[(int)COLS.Frame] = Color.FromArgb(0, 30, 50);
-			ret[(int)COLS.Caption] = Color.FromArgb(25, 45, 50);
-			ret[(int)COLS.Caption2] = Color.FromArgb(10, 10, 20);
-
-			ret[(int)COLS.Input] = Color.FromArgb(0, 0, 0);
-			ret[(int)COLS.InputLine] = Color.FromArgb(55, 100, 125);
-			ret[(int)COLS.InputLineA] = Color.FromArgb(110, 200, 250);
+			ret[(int)COLS.GLine] = Color.FromArgb(100, 200, 255);
+			ret[(int)COLS.GLineInside] = Color.FromArgb(100, 150, 200);
+			ret[(int)COLS.GLineSame] = Color.FromArgb(60, 110, 160);
+			ret[(int)COLS.GLineHor] = Color.FromArgb(70, 120, 170);
 			ret[(int)COLS.Kagi] = Color.FromArgb(30, 150, 200);
 
-			ret[(int)COLS.CellEven] = Color.FromArgb(30, 30, 60);
-			ret[(int)COLS.CellA_sdw] = Color.Transparent;
-			ret[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
-			ret[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
-			ret[(int)COLS.Selection] = Color.FromArgb(75, 75, 150);
-			ret[(int)COLS.SelectionCaption] = Color.FromArgb(0, 75, 128);
+			ret[(int)COLS.Selection] = Color.FromArgb(70, 70, 140);
 			ret[(int)COLS.Moji] = Color.FromArgb(120, 220, 250);
-			ret[(int)COLS.GrayMoji] = Color.FromArgb(80, 80, 150);
-			ret[(int)COLS.Gray] = Color.FromArgb(20, 20, 50);
-			ret[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
+			ret[(int)COLS.UnEnabledMoji] = Color.FromArgb(80, 80, 150);
+			ret[(int)COLS.UnEnabled] = Color.FromArgb(20, 20, 50);
+
+			ret[(int)COLS.FrameDot] = Color.FromArgb(40, 160, 220);
 
 			ret[(int)COLS.MenuBack] = Color.FromArgb(52, 55, 106);
 			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(82, 85, 136);
@@ -97,6 +133,10 @@ namespace AE_RemapTria
 			ret[(int)COLS.MenuWaku2] = Color.FromArgb(0x2a, 0x2d, 0x60);
 			ret[(int)COLS.MenuSdw] = Color.FromArgb(0x18, 0x1a, 0x2f);
 			ret[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
+
+			ret[(int)COLS.BGGrad0] = Color.FromArgb(20, 40, 90);
+			ret[(int)COLS.BGGrad1] = Color.FromArgb(5, 5, 20);
+			ret[(int)COLS.BGGrad2] = Color.FromArgb(20, 40, 70);
 
 			return ret;
 		}
@@ -132,6 +172,13 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		public void Set(COLS c,Color col)
+		{
+			if (((int)c >= 0) && ((int)c < (int)COLS.Transparent))
+			{
+				cols[(int)c] = col;
+			}
+		}
 		//---------------------------------------
 		public Color Base
 		{
@@ -139,59 +186,34 @@ namespace AE_RemapTria
 			set { cols[(int)COLS.Base] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color Line
+		public Color GLine
 		{
-			get { return cols[(int)COLS.Line]; }
-			set { cols[(int)COLS.Line] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.GLine]; }
+			set { cols[(int)COLS.GLine] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color LineDark
+		public Color GLineInSide
 		{
-			get { return cols[(int)COLS.LineDark]; }
-			set { cols[(int)COLS.LineDark] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.GLineInside]; }
+			set { cols[(int)COLS.GLineInside] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color LineB
+		public Color GLineSame
 		{
-			get { return cols[(int)COLS.LineB]; }
-			set { cols[(int)COLS.LineB] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.GLineSame]; }
+			set { cols[(int)COLS.GLineSame] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color Frame
+		public Color GLineHor
 		{
-			get { return cols[(int)COLS.Frame]; }
-			set { cols[(int)COLS.Frame] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-
-		//---------------------------------------
-		public Color Caption
-		{
-			get { return cols[(int)COLS.Caption]; }
-			set { cols[(int)COLS.Caption] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.GLineHor]; }
+			set { cols[(int)COLS.GLineHor] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color Caption2
+		public Color FrameDot
 		{
-			get { return cols[(int)COLS.Caption2]; }
-			set { cols[(int)COLS.Caption2] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color Input
-		{
-			get { return cols[(int)COLS.Input]; }
-			set { cols[(int)COLS.Input] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color InputLine
-		{
-			get { return cols[(int)COLS.InputLine]; }
-			set { cols[(int)COLS.InputLine] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color InputLineA
-		{
-			get { return cols[(int)COLS.InputLineA]; }
-			set { cols[(int)COLS.InputLineA] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.FrameDot]; }
+			set { cols[(int)COLS.FrameDot] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
 		public Color Kagi
@@ -199,42 +221,14 @@ namespace AE_RemapTria
 			get { return cols[(int)COLS.Kagi]; }
 			set { cols[(int)COLS.Kagi] = value; OnColorChangedEvent(new EventArgs()); }
 		}
-		//---------------------------------------
-		public Color CellEven
-		{
-			get { return cols[(int)COLS.CellEven]; }
-			set { cols[(int)COLS.CellEven] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color CellA_sdw
-		{
-			get { return cols[(int)COLS.CellA_sdw]; }
-			set { cols[(int)COLS.CellA_sdw] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color CellB
-		{
-			get { return cols[(int)COLS.CellB]; }
-			set { cols[(int)COLS.CellB] = value; OnColorChangedEvent(new EventArgs()); }
-		}
-		//---------------------------------------
-		public Color CellB_sdw
-		{
-			get { return cols[(int)COLS.CellB_sdw]; }
-			set { cols[(int)COLS.CellB_sdw] = value; OnColorChangedEvent(new EventArgs()); }
-		}
+		
 		//---------------------------------------
 		public Color Selection
 		{
 			get { return cols[(int)COLS.Selection]; }
 			set { cols[(int)COLS.Selection] = value; OnColorChangedEvent(new EventArgs()); }
 		}
-		//---------------------------------------
-		public Color SelectionCaption
-		{
-			get { return cols[(int)COLS.SelectionCaption]; }
-			set { cols[(int)COLS.SelectionCaption] = value; OnColorChangedEvent(new EventArgs()); }
-		}
+
 		//---------------------------------------
 		public Color Moji
 		{
@@ -242,23 +236,18 @@ namespace AE_RemapTria
 			set { cols[(int)COLS.Moji] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color GrayMoji
+		public Color UnEnabledMoji
 		{
-			get { return cols[(int)COLS.GrayMoji]; }
-			set { cols[(int)COLS.GrayMoji] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.UnEnabledMoji]; }
+			set { cols[(int)COLS.UnEnabledMoji] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 		//---------------------------------------
-		public Color Gray
+		public Color UnEnabled
 		{
-			get { return cols[(int)COLS.Gray]; }
-			set { cols[(int)COLS.Gray] = value; OnColorChangedEvent(new EventArgs()); }
+			get { return cols[(int)COLS.UnEnabled]; }
+			set { cols[(int)COLS.UnEnabled] = value; OnColorChangedEvent(new EventArgs()); }
 		}
-		//---------------------------------------
-		public Color TopBar
-		{
-			get { return cols[(int)COLS.TopBar]; }
-			set { cols[(int)COLS.TopBar] = value; OnColorChangedEvent(new EventArgs()); }
-		}
+
 		//---------------------------------------
 		public Color MenuBack
 		{
@@ -304,6 +293,21 @@ namespace AE_RemapTria
 		{
 			get { return cols[(int)COLS.MenuSdw]; }
 			set { cols[(int)COLS.MenuSdw] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color BGGrad0
+		{
+			get { return cols[(int)COLS.BGGrad0]; }
+			set { cols[(int)COLS.BGGrad0] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color BGGrad1
+		{
+			get { return cols[(int)COLS.BGGrad1]; }
+			set { cols[(int)COLS.BGGrad1] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color BGGrad2
+		{
+			get { return cols[(int)COLS.BGGrad2]; }
+			set { cols[(int)COLS.BGGrad2] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 	}
 }

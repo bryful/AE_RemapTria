@@ -88,6 +88,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF Export"));
 			lst.Add(new FuncItem(ShowCMGrid,  Keys.OemBackslash, "Show M Menu"));
 			lst.Add(new FuncItem(FrameRateDialog, Keys.Control | Keys.Y, "Fps変更"));
+			lst.Add(new FuncItem(ColorSettingDialog, Keys.Control | Keys.F12, "色変更"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -1381,7 +1382,7 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			ForegroundWindow();
-			TR_FrameRateDIalog dlg = new TR_FrameRateDIalog();
+			TR_FrameRateDialog dlg = new TR_FrameRateDialog();
 			dlg.SetTRForm(this);
 			dlg.Location = new Point(
 				this.Left + 20,
@@ -1403,6 +1404,33 @@ namespace AE_RemapTria
 				}
 
 				ret = true;
+			}
+			TopMost = b;
+			dlg.Dispose();
+
+			return ret;
+		}
+		public bool ColorSettingDialog()
+		{
+			bool ret = false;
+			ForegroundWindow();
+			TR_ColorSettingsDialog dlg = new TR_ColorSettingsDialog();
+			dlg.SetTRForm(this);
+			dlg.Location = new Point(
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			b = this.TopMost;
+			this.TopMost = false;
+			Colors.Push();
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				ret = true;
+			}
+			else
+			{
+				Colors.Pop();
 			}
 			TopMost = b;
 			dlg.Dispose();

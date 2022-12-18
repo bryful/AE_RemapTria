@@ -57,13 +57,14 @@ namespace AE_RemapTria
 			this.Size = new Size(250, 200);
 			InitializeComponent();
 
-			for(int i=(int)COLS.Line;i< (int)COLS.Transparent;i++)
+			for(int i=(int)COLS.GLine;i< (int)COLS.Transparent;i++)
 			{
 				TR_EditColor m = new TR_EditColor();
 				m.Location = new Point(0, (i-1) * 25);
-				m.Size = new Size(this.Width, 25);
+				m.Size = new Size(this.Width - scrl.Width, 25); ;
 				m.TargetCOLS = (COLS)i;
 				m.SetTRDialog(m_dialog);
+				m.ValueChanged += M_ValueChanged;
 				m_Items.Add(m);
 				this.Controls.Add(m);
 			}
@@ -72,6 +73,10 @@ namespace AE_RemapTria
 			this.Controls.Add(scrl);
 			ChkSize();
 			scrl.ValueChanged += Scrl_ValueChanged;
+		}
+
+		private void M_ValueChanged(object? sender, EventArgs e)
+		{
 		}
 
 		private void Scrl_ValueChanged(object? sender, EventArgs e)
@@ -89,7 +94,14 @@ namespace AE_RemapTria
 		}
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			base.OnPaint(pe);
+			Graphics g = pe.Graphics;
+			//base.OnPaint(pe);
+			SolidBrush sb = new SolidBrush(Color.Transparent);
+			Pen p = new Pen(Color.Gray); 
+			g.FillRectangle(sb,this.ClientRectangle);
+			DrawFrame(g, p, this.ClientRectangle);
+			sb.Dispose();
+			p.Dispose();
 		}
 		protected override void OnResize(EventArgs e)
 		{
@@ -107,11 +119,22 @@ namespace AE_RemapTria
 		}
 		public void ChkScrol()
 		{
+			this.SuspendLayout();
 			for (int i = 0; i < m_Items.Count; i++)
 			{
 				m_Items[i].Location = new Point(0, i * 25 - scrl.Value);
 				m_Items[i].Size = new Size(this.Width - 20, 25);
 			}
+			this.ResumeLayout();
+		}
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			int v = e.Delta * SystemInformation.MouseWheelScrollLines / 15;
+			int vv = scrl.Value - v;
+			if (vv < scrl.Minimum) vv = scrl.Minimum;
+			else if (vv > scrl.Maximum) vv = scrl.Maximum;
+			if(scrl.Value != vv) scrl.Value = vv;
+			base.OnMouseWheel(e);
 		}
 	}
 }

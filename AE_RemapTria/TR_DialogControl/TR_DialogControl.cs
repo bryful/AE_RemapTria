@@ -217,7 +217,7 @@ namespace AE_RemapTria
 			LineAlignment = StringAlignment.Center;
 			m_FontSize_Bak = this.Font.Size;
 			m_FontStyle_Bak = this.Font.Style;
-			m_FrameColor = TR_Colors.GetColor(COLS.Line);
+			m_FrameColor = TR_Colors.GetColor(COLS.GLine);
 		}
 		// ************************************************************************
 		public void PushFontStatus()

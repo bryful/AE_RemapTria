@@ -76,7 +76,7 @@ namespace AE_RemapTria
 			}
 			else if (IsUnEnabled)
 			{
-				sb.Color = Colors.Gray;
+				sb.Color = Colors.UnEnabled;
 				g.FillRectangle(sb, r);
 			}
 
@@ -85,18 +85,18 @@ namespace AE_RemapTria
 			switch (cs.Status)
 			{
 				case CellType.Normal:
-					if (IsUnEnabled) sb.Color = Colors.GrayMoji;
+					if (IsUnEnabled) sb.Color = Colors.UnEnabledMoji;
 					else sb.Color = Colors.Moji;
 					m_form.Alignment = StringAlignment.Center;
 					DrawStr(g, CellData.GetCellData(c, f).ToString(), sb, r);
 					break;
 				case CellType.SameAsBefore:
-					if (IsUnEnabled) p.Color = Colors.GrayMoji;
-					else p.Color = Colors.LineDark;
+					if (IsUnEnabled) p.Color = Colors.UnEnabledMoji;
+					else p.Color = Colors.GLineSame;
 					DrawVerLine(g, p, r.Left + r.Width / 2, r.Top + 2, r.Bottom - 2);
 					break;
 				case CellType.EmptyStart:
-					if (IsUnEnabled) p.Color = Colors.GrayMoji;
+					if (IsUnEnabled) p.Color = Colors.UnEnabledMoji;
 					else p.Color = Colors.Moji;
 					DrawBatsu(g, p, r);
 					break;
@@ -126,13 +126,13 @@ namespace AE_RemapTria
 			}
 			if (f % Sec == 0)
 			{
-				p.Color = Colors.Line;
+				p.Color = Colors.GLine;
 				DrawHorLine(g, p, 0, this.Width, y);
 				DrawHorLine(g, p, 0, this.Width, y + 1);
 			}
 			else if (f % HSec == 0)
 			{
-				p.Color = Colors.Line;
+				p.Color = Colors.GLine;
 				DrawHorLine(g, p, 0, this.Width, y);
 
 			}
@@ -140,12 +140,13 @@ namespace AE_RemapTria
 			{
 				if (f % HHSec == 0)
 				{
-					p.Color = Colors.Line;
+					p.Color = Colors.GLineHor;
 					DrawHorLine(g, p, 0, this.Width, y);
+					DrawHorLine(g, p, 0, this.Width, y+1);
 				}
 				else
 				{
-					p.Color = Colors.LineB;
+					p.Color = Colors.GLineHor;
 					DrawHorLine(g, p, 0, this.Width, y);
 				}
 			}
@@ -153,7 +154,6 @@ namespace AE_RemapTria
 		private bool IsDrawOffScr = false;
 		public override void Draw(Graphics g)
 		{
-			Debug.WriteLine("Grid");
 			if (IsDrawOffScr) return;
 			if (m_form == null) return;
 			IsDrawOffScr = true;
@@ -161,7 +161,6 @@ namespace AE_RemapTria
 			SolidBrush sb = new SolidBrush(Color.White);
 			try
 			{
-				//T_G.GradBG(g, this.ClientRectangle);
 				int c0 = Sizes.DispX / Sizes.CellWidth - 1;
 				if (c0 < 0) c0 = 0;
 				int c1 = (Sizes.DispX + this.Width) / Sizes.CellWidth + 1;
@@ -199,7 +198,7 @@ namespace AE_RemapTria
 					}
 					//縦線を描く
 					p.Width = 1;
-					p.Color = Colors.LineDark;
+					p.Color = Colors.GLineInSide;
 					DrawVerLine(g, p, x2, 0, this.Height);
 					if (c == CellData.TargetIndex)
 					{
@@ -207,7 +206,7 @@ namespace AE_RemapTria
 						DrawVerLine(g, p, x, 0, this.Height);
 					}
 				}
-				p.Color = Colors.Line;
+				p.Color = Colors.GLine;
 				DrawFrame(g, p, new Rectangle(0, 0, Width, Height));
 			}
 			catch
@@ -272,7 +271,7 @@ namespace AE_RemapTria
 					}
 					//縦線を描く
 					p.Width = 1;
-					p.Color = Colors.LineDark;
+					p.Color = Colors.GLineInSide;
 					DrawVerLine(g, p, x2, 0, this.Height);
 					if (c == CellData.TargetIndex)
 					{
@@ -280,7 +279,7 @@ namespace AE_RemapTria
 						DrawVerLine(g, p, x, 0, this.Height);
 					}
 				}
-				p.Color = Colors.Line;
+				p.Color = Colors.GLine;
 				DrawFrame(g, p, new Rectangle(0, 0, Width, Height));
 			}
 			catch

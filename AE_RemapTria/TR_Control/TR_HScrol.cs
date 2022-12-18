@@ -81,8 +81,8 @@ namespace AE_RemapTria
 		public override void Draw(Graphics g)
 		{
 			if (m_form == null) return;
-			Pen p = new Pen(m_form.Colors.Line);
-			SolidBrush sb = new SolidBrush(m_form.Colors.Line);
+			Pen p = new Pen(m_form.Colors.GLine);
+			SolidBrush sb = new SolidBrush(m_form.Colors.GLine);
 			try
 			{
 				g.Clear(Color.Transparent);
@@ -94,7 +94,7 @@ namespace AE_RemapTria
 				if (v > 0)
 				{
 					p.Width = 1;
-					p.Color = m_form.Colors.LineB;
+					p.Color = m_form.Colors.GLineHor;
 					g.DrawLine(p, 10, 7, Width - 11, 7);
 					g.DrawLine(p, 10, 1, 10, 14);
 					g.DrawLine(p, Width - 11, 1, Width - 11, 14);
@@ -104,7 +104,7 @@ namespace AE_RemapTria
 					g.FillRectangle(sb, rr);
 					g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 					p.Width = 3;
-					p.Color = m_form.Colors.Line;
+					p.Color = m_form.Colors.GLine;
 					g.DrawLines(p, Cursor(v));
 				}
 			}

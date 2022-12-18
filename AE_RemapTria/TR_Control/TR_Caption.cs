@@ -100,17 +100,17 @@ namespace AE_RemapTria
 				m_form.Sizes.CaptionHeight2);
 			if (m_form.CellData.IsTargetCell(l) == true)
 			{
-				sb.Color = m_form.Colors.SelectionCaption;
+				sb.Color = m_form.Colors.Selection;
 				Fill(g, sb, r);
-				sb.Color = m_form.Colors.Line;
+				sb.Color = m_form.Colors.GLine;
 				g.FillPolygon(sb, Arrow(r2));
 			}
 			else
 			{
-				sb.Color = m_form.Colors.LineB;
+				sb.Color = m_form.Colors.GLineHor;
 				g.FillPolygon(sb, ArrowS(r2));
 			}
-			p.Color = m_form.Colors.LineDark;
+			p.Color = m_form.Colors.GLineInSide;
 			DrawVerLine(g, p, 
 				x, 
 				m_form.Sizes.CaptionHeight2, 
@@ -121,7 +121,7 @@ namespace AE_RemapTria
 		public override void Draw(Graphics g)
 		{
 			if (m_form == null) return;
-			Pen p = new Pen(m_form.Colors.Line);
+			Pen p = new Pen(m_form.Colors.GLine);
 			SolidBrush sb = new SolidBrush(Color.Transparent);
 			try
 			{
@@ -135,7 +135,7 @@ namespace AE_RemapTria
 				{
 					DrawCaption(g, sb, p, i);
 				}
-				p.Color = m_form.Colors.Line;
+				p.Color = m_form.Colors.GLine;
 				int y0 = m_form.Sizes.CaptionHeight2;
 				int y1 = m_form.Sizes.CaptionHeight2 + m_form.Sizes.CaptionHeight - 1;
 				DrawVerLine(g, p, 0, y0, y1);

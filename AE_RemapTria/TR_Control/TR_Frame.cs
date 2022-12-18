@@ -139,24 +139,20 @@ namespace AE_RemapTria
 				Fill(g, sb, rct);
 			}else if (isNoEnabled)
 			{
-				sb.Color = m_form.Colors.Gray;
+				sb.Color = m_form.Colors.UnEnabled;
 				Fill(g, sb, rct);
 			}
 			//フレーム番号を描く
-			if(isNoEnabled) sb.Color = m_form.Colors.GrayMoji;
+			if(isNoEnabled) sb.Color = m_form.Colors.UnEnabledMoji;
 			else sb.Color = m_form.Colors.Moji;
 			Rectangle rct2 = new Rectangle(rct.X, rct.Y, rct.Width - 1, rct.Height);
 			m_form.Alignment = StringAlignment.Far;
 			DrawStr(g, m_form.CellData.FrameStr(f), sb, rct2);
 
-			// 下の横線を描く
-			//p.Color = m_grid.Colors.LineB;
-			//p.Width = 1;
-			//DrawHorLine(g, p, m_grid.Sizes.FrameWidth2, rct.Right - 1, y);
 
 			p.Width = 1;
 
-			sb.Color = m_form.Colors.Kagi;
+			sb.Color = m_form.Colors.FrameDot;
 			int SecBar = 24;
 			int HSecBar = 12;
 			int HHSecBar = 6;
@@ -176,17 +172,15 @@ namespace AE_RemapTria
 			if (f % SecBar == 0)
 			{
 				g.FillPolygon(sb, DotSecV(y));
-				p.Color = m_form.Colors.Line;
+				p.Color = m_form.Colors.GLine;
 				DrawHorLine(g, p, rct.Left, rct.Right, y +1);
 				DrawHorLine(g, p, rct.Left, rct.Right, y);
-				DrawHorLine(g, p, rct.Left, rct.Right, y-1);
 			}
 			else if (f % HSecBar == 0)
 			{
 				g.FillPolygon(sb, DotHSecV(y));
-				p.Color = m_form.Colors.Line;
+				p.Color = m_form.Colors.GLine;
 				DrawHorLine(g, p, rct.Left, rct.Right, y );
-				DrawHorLine(g, p, rct.Left, rct.Right, y-1);
 
 			}
 			else
@@ -194,14 +188,15 @@ namespace AE_RemapTria
 				if (f % HHSecBar == 0)
 				{
 					g.FillPolygon(sb, DotHHSecV(y));
-					p.Color = m_form.Colors.LineDark;
+					p.Color = m_form.Colors.GLineHor;
 					int y2 = y - 1;
 					DrawHorLine(g, p, rct.Left, rct.Right, y2);
+					DrawHorLine(g, p, rct.Left, rct.Right, y2+1);
 				}
 				else
 				{
 					g.FillPolygon(sb, DotHHHSecV(y));
-					p.Color = m_form.Colors.LineB;
+					p.Color = m_form.Colors.GLineHor;
 					DrawHorLine(g, p, m_form.Sizes.FrameWidth2, rct.Right - 1, y);
 
 				}
@@ -232,7 +227,7 @@ namespace AE_RemapTria
 						DrawFrame(g, sb, p, i, rct);
 					}
 					rct.Height = this.Height;
-					p.Color = m_form.Colors.Line;
+					p.Color = m_form.Colors.GLine;
 					DrawFrame(g, p, rct);
 				}
 			}

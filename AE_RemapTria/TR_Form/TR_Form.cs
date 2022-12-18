@@ -590,7 +590,7 @@ namespace AE_RemapTria
 				//int h0 = 23;
 				int h1 = this.Height -20 -3;
 
-				p.Color = Colors.LineB;
+				p.Color = Colors.GLineHor;
 				p.Width = 3;
 				g.DrawLines(p, Kagi(0));
 				g.DrawLines(p, Kagi(1));
@@ -600,19 +600,15 @@ namespace AE_RemapTria
 				{
 					sb.Color = Colors.Kagi;
 					g.FillPolygon(sb, Kagi(4));
-					p.Color = Colors.Line;
+					p.Color = Colors.GLine;
 					g.DrawLines(p, Kagi(2));
 
 				}
 				else
 				{
-					p.Color = Colors.Line;
+					p.Color = Colors.GLine;
 					g.DrawLines(p, Kagi(2));
 				}
-
-				Rectangle r0 = new Rectangle(0, 0, this.Width, 20);
-				sb.Color = Colors.TopBar;
-				g.FillRectangle(sb, r0);
 
 				p.Color = Colors.MenuWaku;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);

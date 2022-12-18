@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class TR_FrameRateDIalog
+	partial class TR_FrameRateDialog
 	{
 		/// <summary>
 		/// Required designer variable.
