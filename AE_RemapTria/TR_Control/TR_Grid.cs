@@ -364,6 +364,17 @@ namespace AE_RemapTria
 				if (m_form != null) m_form.Caption.ChkOffScr();
 				if (m_form!=null) m_form.Frame.ChkOffScr();
 				Invalidate();
+			}else if((e.Button & MouseButtons.Right) == MouseButtons.Right)
+			{
+				if (m_form != null)
+				{
+					ContextMenuStrip m = m_form.MakeCMGrid();
+					Point p = Cursor.Position;
+
+					m.Show(p);
+					ret = true;
+				}
+
 			}
 			return ret;
 		}

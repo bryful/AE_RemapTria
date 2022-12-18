@@ -35,11 +35,12 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.ClientSize = new System.Drawing.Size(399, 521);
+			this.FileName = "Untitle";
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.FontSize = 5F;
 			this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
 			this.Name = "Form1";
-			this.Text = "FormTest000";
+			this.Text = "Untitle";
 			this.TopMost = true;
 			this.ResumeLayout(false);
 

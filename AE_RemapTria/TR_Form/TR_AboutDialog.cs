@@ -33,22 +33,37 @@ namespace AE_RemapTria
 			foreach(Control c in this.Controls)
 			{
 				c.MouseClick += C_MouseClick;
+				c.MouseDown += C_MouseDown;
 			}
+		}
+
+		private void C_MouseDown(object? sender, MouseEventArgs e)
+		{
+			this.DialogResult = DialogResult.OK;
+			Close();
 		}
 
 		private void C_MouseClick(object? sender, MouseEventArgs e)
 		{
 			this.DialogResult = DialogResult.OK;
+			Close();
 		}
 
 		protected override void OnKeyPress(KeyPressEventArgs e)
 		{
 			this.DialogResult = DialogResult.OK;
+			Close();
 		}
 		protected override void OnDoubleClick(EventArgs e)
 		{
 			this.DialogResult = DialogResult.OK;
 			//base.OnDoubleClick(e);
+			Close();
+		}
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			this.DialogResult = DialogResult.OK;
+			Close();
 		}
 	}
 }

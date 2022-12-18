@@ -37,7 +37,6 @@ namespace AE_RemapTria
 			SetEventHandler(lbName);
 			SetEventHandler(lbStatus);
 			SetEventHandler(lbDuration);
-			//SetEventHandler(t_Label1);
 			SetEventHandler(t_Label2);
 			SetEventHandler(t_Zebra1);
 

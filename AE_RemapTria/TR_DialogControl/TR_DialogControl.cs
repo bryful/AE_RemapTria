@@ -12,7 +12,7 @@ namespace AE_RemapTria
 		protected TR_Grid? Grid = null;
 		protected TR_CellData? CellData = null;
 		protected TR_MyFonts? m_MyFonts = null;
-		public void SetTRDialog(TR_BaseDialog? bd)
+		public virtual void SetTRDialog(TR_BaseDialog? bd)
 		{
 			m_dialog = bd;
 			if (m_dialog != null)
@@ -160,6 +160,21 @@ namespace AE_RemapTria
 					- m_FrameMargin.Left - m_FrameMargin.Right,
 					Height - m_FrameWeight.Top - m_FrameWeight.Bottom
 					- m_FrameMargin.Top - m_FrameMargin.Bottom
+					);
+				return rct;
+			}
+		}
+		public Rectangle DrawAreaIn
+		{
+			get
+			{
+				Rectangle rct = new Rectangle(
+					m_FrameWeight.Left + m_FrameMargin.Left+2,
+					m_FrameWeight.Top + m_FrameMargin.Top+2,
+					Width - m_FrameWeight.Left - m_FrameWeight.Right
+					- m_FrameMargin.Left - m_FrameMargin.Right-4,
+					Height - m_FrameWeight.Top - m_FrameWeight.Bottom
+					- m_FrameMargin.Top - m_FrameMargin.Bottom-4
 					);
 				return rct;
 			}

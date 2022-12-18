@@ -84,6 +84,7 @@ namespace AE_RemapTria
 			{
 				btn.Text = Funcs.Items(sidx).KeyArray[btnID].ToString();
 			}
+			btn.SetMouseEnterFlag(false);
 			dlg.Dispose();
 			lbCaution.Visible = false;
 		}
@@ -93,7 +94,9 @@ namespace AE_RemapTria
 			if (t_FuncList1.SelectedIndex > -1)
 			{
 				FuncItem f = Funcs.Items(t_FuncList1.SelectedIndex);
+				_RefFlag = true;
 				tbJap.Text = f.JapName;
+				_RefFlag = false;
 				if (f.KeyArray.Length >= 1)
 				{
 					btnGetKey1.Text = T_G.KeyInfo(f.KeyArray[0]);
@@ -113,8 +116,10 @@ namespace AE_RemapTria
 			}
 		}
 
+		private bool _RefFlag = false;
 		private void tbJap_TextChanged(object sender, EventArgs e)
 		{
+			if (_RefFlag) return;
 			int idx = t_FuncList1.SelectedIndex;
 			if (( idx>= 0)&&(Funcs.Count>0))
 			{

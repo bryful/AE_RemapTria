@@ -16,8 +16,6 @@ namespace AE_RemapTria
 {
 	public class TR_Caption :TR_Control
 	{
-		private Bitmap CellArrow = Properties.Resources.CellArrow;
-		private Bitmap CellArrowNone = Properties.Resources.CellArrowNone;
 		// ***********************************************
 		public TR_Caption()
 		{
@@ -54,7 +52,33 @@ namespace AE_RemapTria
 			if (m_Size != sz) m_Size = sz;
 			ChkOffScr();
 		}
-   
+
+		//-------------------------------------------------
+		private PointF [] Arrow(Rectangle r)
+		{
+			float cx = r.X + (float)r.Width / 2;
+			PointF [] ret = new PointF[]
+			{
+				new PointF(cx-5,r.Bottom-10),
+				new PointF(cx,r.Bottom-4),
+				new PointF(cx+5,r.Bottom-10)
+			};
+			return ret;
+
+		}
+		//-------------------------------------------------
+		private PointF[] ArrowS(Rectangle r)
+		{
+			float cx = r.X + (float)r.Width / 2;
+			PointF[] ret = new PointF[]
+			{
+				new PointF(cx-3,r.Bottom-6),
+				new PointF(cx,r.Bottom-2),
+				new PointF(cx+3,r.Bottom-6)
+			};
+			return ret;
+
+		}
 		//-------------------------------------------------
 		private void DrawCaption(Graphics g, SolidBrush sb, Pen p, int l)
 		{
@@ -63,25 +87,28 @@ namespace AE_RemapTria
 			int x = l * m_form.Sizes.CellWidth - m_form.Sizes.Disp.X;
 
 			Rectangle r;
+			Rectangle r2;
 			r = new Rectangle(
 				x, 
 				m_form.Sizes.CaptionHeight2, 
 				m_form.Sizes.CellWidth, 
 				m_form.Sizes.CaptionHeight);
-
+			r2 = new Rectangle(
+				x,
+				0,
+				m_form.Sizes.CellWidth,
+				m_form.Sizes.CaptionHeight2);
 			if (m_form.CellData.IsTargetCell(l) == true)
 			{
 				sb.Color = m_form.Colors.SelectionCaption;
 				Fill(g, sb, r);
-				g.DrawImage(
-					CellArrow, 
-					new Point(x + m_form.Sizes.CellWidth / 2 - 7, m_form.Sizes.CaptionHeight2-12));
+				sb.Color = m_form.Colors.Line;
+				g.FillPolygon(sb, Arrow(r2));
 			}
 			else
 			{
-				g.DrawImage(
-					CellArrowNone, 
-					new Point(x + m_form.Sizes.CellWidth / 2 - 6, m_form.Sizes.CaptionHeight2 - 12));
+				sb.Color = m_form.Colors.LineB;
+				g.FillPolygon(sb, ArrowS(r2));
 			}
 			p.Color = m_form.Colors.LineDark;
 			DrawVerLine(g, p, 
@@ -134,6 +161,18 @@ namespace AE_RemapTria
 
 			int t = (m_MDownPoint.X + m_form.Sizes.Disp.X) / m_form.Sizes.CellWidth;
 			m_form.SetCellTarget(t);
+			if((e.Button & MouseButtons.Right) == MouseButtons.Right)
+			{
+				if (m_form != null)
+				{
+					ContextMenuStrip m = m_form.MakeCMGrid();
+					Point p = Cursor.Position;
+
+					m.Show(p);
+					ret = true;
+				}
+
+			}
 			return ret;
 		}
 		// *****************************************************************************

@@ -28,8 +28,8 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(InputBS, Keys.Back, "BS"));
 			lst.Add(new FuncItem(InputEnter, Keys.Enter, Keys.Return, "入力"));
 			lst.Add(new FuncItem(InputEmpty, Keys.Decimal, Keys.OemPeriod, "空セル"));
-			lst.Add(new FuncItem(InputInc, Keys.Add|Keys.Oemplus , "前の数値に1を足して入力"));
-			lst.Add(new FuncItem(InputDec, Keys.Subtract | Keys.OemMinus, "前の数値に1を引いて入力"));
+			lst.Add(new FuncItem(InputInc, Keys.Add,Keys.Oemplus , "前の数値に1を足して入力"));
+			lst.Add(new FuncItem(InputDec, Keys.Subtract , Keys.OemMinus, "前の数値に1を引いて入力"));
 			lst.Add(new FuncItem(SelMoveUp, Keys.Up, "選択範囲を上に"));
 			lst.Add(new FuncItem(SelMoveDown, Keys.Down, "選択範囲を下に"));
 			lst.Add(new FuncItem(SelMoveLeft, Keys.Left, "選択範囲を左に"));
@@ -45,7 +45,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(Home, Keys.Home, "先頭へ"));
 			lst.Add(new FuncItem(End, Keys.End, "最後へ"));
 
-			lst.Add(new FuncItem(ToggleFrameEnabled, Keys.Control | Keys.Oemtilde));
+			lst.Add(new FuncItem(ToggleFrameEnabled, Keys.Control | Keys.Oemtilde,"抜きコマ切り替え"));
 			lst.Add(new FuncItem(FrameEnabledOFF, Keys.Control | Keys.Oem5));
 			lst.Add(new FuncItem(FrameEnabledON, Keys.Control | Keys.Oem7));
 			lst.Add(new FuncItem(HeightMax, Keys.Control | Keys.Oem5, "上下に広げる"));
@@ -73,8 +73,8 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
 			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
 			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
-			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left));
-			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right));
+			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left, "セルを左へ"));
+			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right, "セルを右へ"));
 			lst.Add(new FuncItem(CellInsert, Keys.Alt | Keys.I,"セル挿入"));
 			lst.Add(new FuncItem(CellRemove, Keys.Alt | Keys.R,"セル削除"));
 			lst.Add(new FuncItem(FrameInsert, Keys.Alt |Keys.Shift| Keys.I,"フレーム挿入"));
@@ -84,9 +84,10 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
 			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
 			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
-			//lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
-			lst.Add(new FuncItem(OpenSaveDialog, Keys.Control | Keys.T, "FileDialogのテスト"));
-			//lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF Export"));
+			lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
+			lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF Export"));
+			lst.Add(new FuncItem(ShowCMGrid,  Keys.OemBackslash, "Show M Menu"));
+			lst.Add(new FuncItem(FrameRateDialog, Keys.Control | Keys.Y, "Fps変更"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -96,7 +97,7 @@ namespace AE_RemapTria
 		public void UpdateMenu()
 		{
 			if (Menu == null) return;
-			Menu.UpdateMenu();
+			Menu.UpdateMenu();//未完成
 		}
 		// ************************************************************************************
 		public void MakeMenu()
@@ -110,12 +111,14 @@ namespace AE_RemapTria
 			Menu.AddTopMenu("Windw");
 
 			Menu.AddSubMenu(0, "SheetSettings");
-			Menu.AddSubMenu(0, "SeetInfoDialog");
 			Menu.AddSubMenu(0, "OffsetFrameDialog");
 			Menu.AddSubMenuSepa(0);
 			Menu.AddSubMenu(0, "Open");
 			Menu.AddSubMenu(0, "Save");
 			Menu.AddSubMenu(0, "SaveAs");
+			Menu.AddSubMenuSepa(0);
+			Menu.AddSubMenu(0, "FrameRateDialog");
+			Menu.AddSubMenu(0, "SeetInfoDialog");
 			Menu.AddSubMenuSepa(0);
 			Menu.AddSubMenu(0, "WritePDF");
 			Menu.AddSubMenu(0, "Quit");
@@ -160,7 +163,128 @@ namespace AE_RemapTria
 
 		}
 		#endregion
+		private ToolStripMenuItem? MakeTSMI(FuncType ft)
+		{
+			ToolStripMenuItem? ret = null;
+			FuncItem? f = Funcs.FindFunc(ft.Method.Name);
+			if(f!=null)
+			{
+				ret = new ToolStripMenuItem();
+				ret.Name= ft.Method.Name+"_CMenu";
+				if ((m_IsJapanOS)&&(f.JapName!=""))
+				{
+					ret.Text = f.JapName;
+				}
+				else
+				{
+					ret.Text = f.EngName;
+				}
+				ret.ShortcutKeys = f.KeysFirst;
+				ret.Tag = (object?)f.Func;
+				ret.Click += M_Click;
+			}
+			return ret;
+		}
 
+		private void M_Click(object? sender, EventArgs e)
+		{
+			if(sender is  ToolStripMenuItem)
+			{
+				ToolStripMenuItem? mm = (ToolStripMenuItem?)sender;
+				if((mm != null)&&(mm.Tag is FuncType))
+				{
+					((FuncType)mm.Tag)();
+				}
+
+			}
+
+		}
+
+		public ContextMenuStrip MakeCMGrid()
+		{
+			ContextMenuStrip ret = new ContextMenuStrip();
+			ToolStripMenuItem? c0 = MakeTSMI(SelectionAll);
+			if (c0 != null) ret.Items.Add(c0);
+			ToolStripMenuItem? c1 = MakeTSMI(SelectionToEnd);
+			if (c1 != null) ret.Items.Add(c1);
+
+			ret.Items.Add(new ToolStripSeparator());
+			ToolStripMenuItem? m0 = MakeTSMI(CaptionDialog);
+			if (m0 != null) ret.Items.Add(m0);
+			ret.Items.Add(new ToolStripSeparator());
+			ToolStripMenuItem? m3 = MakeTSMI(CellLeftShift);
+			if (m3 != null) ret.Items.Add(m3);
+			ToolStripMenuItem? m4 = MakeTSMI(CellRightShift);
+			if (m4 != null) ret.Items.Add(m4);
+			ToolStripMenuItem? m000 = MakeTSMI(CellInsert);
+			if (m000 != null) ret.Items.Add(m000);
+			ToolStripMenuItem? m00 = MakeTSMI(CellRemove);
+			if (m00 != null) ret.Items.Add(m00);
+			ret.Items.Add(new ToolStripSeparator());
+			ToolStripMenuItem? m9 = MakeTSMI(ToggleFrameEnabled);
+			if (m9 != null) ret.Items.Add(m9);
+			ret.Items.Add(new ToolStripSeparator());
+			ToolStripMenuItem? m1 = MakeTSMI(FrameInsert);
+			if (m1 != null) ret.Items.Add(m1);
+			ToolStripMenuItem? m2 = MakeTSMI(FrameRemove);
+			if (m2 != null) ret.Items.Add(m2);
+			return ret;
+		}
+		public ContextMenuStrip MakeCMFrame()
+		{
+			ContextMenuStrip ret = new ContextMenuStrip();
+			ToolStripMenuItem[] m= new ToolStripMenuItem[4];
+			m[0] = new ToolStripMenuItem();
+			m[0].Name = "Frame";
+			m[0].Text = "Frame";
+			m[0].Tag = (object)T_FrameDisp.frame; ;
+			m[0].Click += TR_Form_Click;
+			ret.Items.Add(m[0]);
+			m[1] = new ToolStripMenuItem();
+			m[1].Name = "pageFrame";
+			m[1].Text = "pageFrame";
+			m[1].Tag = (object)T_FrameDisp.pageFrame; ;
+			m[1].Click += TR_Form_Click;
+			ret.Items.Add(m[1]);
+			m[2] = new ToolStripMenuItem();
+			m[2].Name = "pageSecFrame";
+			m[2].Text = "pageSecFrame";
+			m[2].Tag = (object)T_FrameDisp.pageSecFrame; ;
+			m[2].Click += TR_Form_Click;
+			ret.Items.Add(m[2]);
+			m[3] = new ToolStripMenuItem();
+			m[3].Name = "SecFrame";
+			m[3].Text = "SecFrame";
+			m[3].Tag = (object)T_FrameDisp.SecFrame; ;
+			m[3].Click += TR_Form_Click;
+			ret.Items.Add(m[3]);
+			m[(int)CellData.FrameDisp].Checked= true;
+			return ret;
+		}
+
+		private void TR_Form_Click(object? sender, EventArgs e)
+		{
+			ToolStripMenuItem? m = (ToolStripMenuItem?)sender;
+			if(m == null) return;
+			if ((m.Tag!=null)&&(m.Tag is T_FrameDisp))
+			{
+				CellData.SetFrameDisp((T_FrameDisp)m.Tag);
+				Frame.ChkOffScr();
+				this.Invalidate();
+			}
+		}
+
+		public bool ShowCMGrid()
+		{
+			ContextMenuStrip m = MakeCMGrid();
+
+			int x = Selection.Target * Sizes.CellWidth - Sizes.DispX;
+			int y = Selection.Start * Sizes.CellHeight - Sizes.DispY;
+			x += this.Left;
+			y += this.Top;
+			m.Show(new Point(x,y));
+			return true;
+		}
 		// ************************************************************************************
 		/// <summary>
 		/// シート設定ダイアログの表示
@@ -777,22 +901,23 @@ namespace AE_RemapTria
 		{
 			bool ret = false;
 			if (IsMultExecute) return ret;
-			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "*.ardj.json|*.ardj.json|*.ardj|*.ardj|*.json|*.json|*.*|*.*";
 			if (p != "")
 			{
-				dlg.FullName = p;
+				dlg.InitialDirectory= Path.GetDirectoryName(p);
+				dlg.FileName = Path.GetFileName(p);
 			}
-			dlg.Caption = "Save to File";
+			dlg.Title = "Save to File";
 			bool b = false;
 			b = this.TopMost;
 			this.TopMost = false;
 			this.ForegroundWindow();
-			dlg.ToCenter();
-			if (dlg.ShowDialog() == DialogResult.OK)
+			if (dlg.ShowDialog(this) == DialogResult.OK)
 			{
 				if (Save(dlg.FileName))
 				{
-					FileName = dlg.FullName;
+					FileName = dlg.FileName;
 					ret = true;
 				}
 				else
@@ -874,20 +999,21 @@ namespace AE_RemapTria
 		public bool Open()
 		{
 			bool ret = false;
-			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "*.ardj.json|*.ardj.json|*.ardj|*.ardj|*.json|*.json|*.*|*.*";
 			if (FileName != "")
 			{
-				dlg.FullName = FileName;
+				dlg.InitialDirectory = Path.GetDirectoryName(FileName);
+				dlg.FileName = Path.GetFileName(FileName);
 			}
-			dlg.Caption = "Open from file";
+			dlg.Title = "Open from file";
 			bool b = false;
 			b = this.TopMost;
 			this.TopMost =false;
 			this.ForegroundWindow();
-			dlg.ToCenter();
-			if (dlg.ShowDialog() == DialogResult.OK)
+			if (dlg.ShowDialog(this) == DialogResult.OK)
 			{
-				ret = (Open(dlg.FullName));
+				ret = (Open(dlg.FileName));
 			}
 			this.TopMost = b;
 			dlg.Dispose();
@@ -1071,6 +1197,8 @@ namespace AE_RemapTria
 				ret = true;
 			}
 			this.TopMost = b;
+			Menu.ChkOffScr();
+			this.Invalidate();
 			return ret;
 		}
 		public bool CaptionDialog()
@@ -1125,6 +1253,8 @@ namespace AE_RemapTria
 			}
 			this.TopMost = b;
 			dlg.Dispose();
+			Menu.ChkOffScr();
+			this.Invalidate();
 			return ret;
 		}
 		private int m_AutoinputStert = 1;
@@ -1162,7 +1292,9 @@ namespace AE_RemapTria
 			}
 			this.TopMost = b;
 			dlg.Dispose();
-			
+			Menu.ChkOffScr();
+			this.Invalidate();
+
 			return ret;
 		}
 		public bool AboutDialog()
@@ -1190,57 +1322,34 @@ namespace AE_RemapTria
 			}
 			this.TopMost = b;
 			dlg.Dispose();
+			Menu.ChkOffScr();
+			this.Invalidate();
 			return ret;
 		}
 		public bool KeyBindDialog()
 		{
 			bool ret = false;
-			/*
-			if (m_Form == null) return false;
-			m_Form.ForegroundWindow();
+			
+			ForegroundWindow();
 			T_KeyBindDialog dlg = new T_KeyBindDialog();
 			dlg.SetFuncs(Funcs);
-			dlg.SetForm(m_Form);
+			dlg.SetTRForm(this);
 			dlg.Location = new Point(
-				m_Form.Left + 20,
-				m_Form.Top + T_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
 				);
 			bool b = false;
-			if (m_Form != null)
-			{
-				b = m_Form.TopMost;
-				m_Form.TopMost = false;
-			}
+			b = this.TopMost;
+			this.TopMost = false;
 			if (dlg.ShowDialog() == DialogResult.OK)
 			{
 				Funcs.CopyFrom(dlg.Funcs);
 				MakeMenu();
 				ret = true;
 			}
-			if (m_Form != null) m_Form.TopMost = b;
+			TopMost = b;
 			dlg.Dispose();
-			*/
-			return ret;
-		}
-		public bool OpenSaveDialog()
-		{
-			bool ret = false;
-			this.ForegroundWindow();
-			T_OpenSaveDialog dlg = new T_OpenSaveDialog();
-			//dlg.SetFuncs(Funcs);
-			dlg.SetTRForm(this);
-			bool b = false;
-			b = this.TopMost;
-			this.TopMost = false;
-			dlg.ToCenter();
-			//dlg.ImportDrive();
-			if (dlg.ShowDialog() == DialogResult.OK)
-			{
-				ret = true;
-			}
-			this.TopMost = b;
-			//dlg.ExportDrive();
-			dlg.Dispose();
+			
 			return ret;
 		}
 		//-------------------------------------------------
@@ -1267,6 +1376,39 @@ namespace AE_RemapTria
 			dlg.Dispose();
 			return ret;
 		}
+		//-------------------------------------------------
+		public bool FrameRateDialog()
+		{
+			bool ret = false;
+			ForegroundWindow();
+			TR_FrameRateDIalog dlg = new TR_FrameRateDIalog();
+			dlg.SetTRForm(this);
+			dlg.Location = new Point(
+				this.Left + 20,
+				this.Top + TR_Size.MenuHeightDef + Sizes.CaptionHeight + Sizes.CaptionHeight2
+				);
+			bool b = false;
+			b = this.TopMost;
+			this.TopMost = false;
+			dlg.Fps = CellData.FrameRate;
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				if(CellData.FrameRate!=dlg.Fps)
+				{
+					IsModif = false;
+					CellData.PushUndo(BackupSratus.All);
+					CellData.ClearAll();
+					CellData.FrameRate= dlg.Fps;
+					DrawAll();
+				}
 
+				ret = true;
+			}
+			TopMost = b;
+			dlg.Dispose();
+
+			return ret;
+		}
+		//-------------------------------------------------
 	}
 }

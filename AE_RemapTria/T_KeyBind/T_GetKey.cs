@@ -98,7 +98,7 @@ namespace AE_RemapTria
 		}
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);
+			//base.OnPaint(e);
 			Graphics g = e.Graphics;
 			SolidBrush sb = new SolidBrush(this.ForeColor);
 			Pen p = new Pen(this.ForeColor,2);

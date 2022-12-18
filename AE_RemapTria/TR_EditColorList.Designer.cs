@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_FileExtFilter
+	partial class TR_EditColorList
 	{
 		/// <summary>
 		/// 必要なデザイナー変数です。

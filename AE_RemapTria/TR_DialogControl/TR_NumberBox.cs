@@ -65,6 +65,7 @@ namespace AE_RemapTria
 		}
 		private Color m_BtnColor = Color.FromArgb(75, 75, 100);
 		private Color m_BtnColorHi = Color.FromArgb(110,110, 170);
+		private Color m_FoucusColor = Color.FromArgb(75, 75, 100);
 		private int m_BtnWidth = 20;
 		public TR_NumberBox()
 		{
@@ -138,6 +139,14 @@ namespace AE_RemapTria
 
 				sb.Color = EnabledColor(m_FrameColor, this.Focused);
 				TRc.DrawFrame(g,sb,r, m_FrameWeight);
+				if(this.Focused)
+				{
+					p.Width = 1;
+					p.Color = m_FoucusColor;
+					p.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+					g.DrawRectangle(p, DrawAreaIn);
+
+				}
 			}
 			finally
 			{

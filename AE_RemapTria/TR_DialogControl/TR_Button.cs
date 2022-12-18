@@ -136,13 +136,13 @@ namespace AE_RemapTria
                     sb.Color = EnabledColor(m_Color_Down, Enabled);
                     Fill(g, sb, r);
                 }
-                else if (m_MouseEnter || this.Focused)
+                else if (m_MouseEnter)
                 {
                     sb.Color = EnabledColor(m_Color_Enter, Enabled);
                     Fill(g, sb, r);
                 }
 
-                if (m_Checked && m_IsCheckMode)
+				if (m_Checked && m_IsCheckMode)
                 {
                     sb.Color = Color.Black;
                 }
@@ -160,7 +160,16 @@ namespace AE_RemapTria
                 }
                 sb.Color = EnabledColor(m_FrameColor, Enabled);
                 DrawPadding(g, sb);
-            }
+				if (this.Focused)
+				{
+					r = new Rectangle(rct.Left + 2, rct.Top + 2, rct.Width - 4, rct.Height - 4);
+					p.Width = 1;
+					p.DashStyle = DashStyle.Dash;
+					g.DrawRectangle(p, r);
+					p.DashStyle = DashStyle.Solid;
+
+				}
+			}
             finally
             {
                 sb.Dispose();
@@ -170,7 +179,13 @@ namespace AE_RemapTria
 
         #region Mouse Event
         private bool m_MouseEnter = false;
-        private bool m_MouseDown = false;
+        public void SetMouseEnterFlag(bool b)
+        {
+            m_MouseEnter = b;
+            this.Invalidate();
+		}
+
+		private bool m_MouseDown = false;
         // *********************************************************
         protected override void OnMouseEnter(EventArgs e)
         {
@@ -268,6 +283,7 @@ namespace AE_RemapTria
         protected override void OnEnabledChanged(EventArgs e)
         {
             this.Invalidate();
+            m_MouseEnter = false;
             base.OnEnabledChanged(e);
         }
         protected override void OnGotFocus(EventArgs e)
@@ -278,7 +294,32 @@ namespace AE_RemapTria
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
-            this.Invalidate();
+			this.Invalidate();
         }
-    }
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+            if((this.Focused)&&(e.KeyData==Keys.Return))
+            {
+                m_MouseDown = true;
+                this.Invalidate();
+            }
+            else
+            {
+				base.OnKeyDown(e);
+			}
+		}
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			if ((this.Focused)&&(m_MouseDown))
+			{
+				m_MouseDown = false;
+				this.Invalidate();
+                OnClick(new EventArgs());
+            }
+            else
+            {
+				base.OnKeyUp(e);
+			}
+		}
+	}
 }

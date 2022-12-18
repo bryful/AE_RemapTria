@@ -232,7 +232,7 @@ namespace AE_RemapTria
 			this.ctCU.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctCU.Name = "ctCU";
 			this.ctCU.Size = new System.Drawing.Size(280, 25);
-			this.ctCU.TabIndex = 11;
+			this.ctCU.TabIndex = 8;
 			this.ctCU.Text = "t_CaptionTextBox6";
 			this.ctCU.ValueText = "";
 			// 
@@ -259,7 +259,7 @@ namespace AE_RemapTria
 			this.ctUU.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctUU.Name = "ctUU";
 			this.ctUU.Size = new System.Drawing.Size(280, 25);
-			this.ctUU.TabIndex = 12;
+			this.ctUU.TabIndex = 9;
 			this.ctUU.Text = "t_CaptionTextBox7";
 			this.ctUU.ValueText = "";
 			// 
@@ -287,7 +287,7 @@ namespace AE_RemapTria
 			this.ctCT.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctCT.Name = "ctCT";
 			this.ctCT.Size = new System.Drawing.Size(280, 25);
-			this.ctCT.TabIndex = 0;
+			this.ctCT.TabIndex = 10;
 			this.ctCT.Text = "t_CaptionTextBox8";
 			this.ctCT.ValueText = "";
 			// 
@@ -315,7 +315,7 @@ namespace AE_RemapTria
 			this.ctUT.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.ctUT.Name = "ctUT";
 			this.ctUT.Size = new System.Drawing.Size(280, 25);
-			this.ctUT.TabIndex = 1;
+			this.ctUT.TabIndex = 11;
 			this.ctUT.Text = "t_CaptionTextBox9";
 			this.ctUT.ValueText = "";
 			// 
@@ -344,7 +344,7 @@ namespace AE_RemapTria
 			this.btnCANCEL.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCANCEL.Name = "btnCANCEL";
 			this.btnCANCEL.Size = new System.Drawing.Size(100, 30);
-			this.btnCANCEL.TabIndex = 2;
+			this.btnCANCEL.TabIndex = 13;
 			this.btnCANCEL.Text = "Cancel";
 			this.btnCANCEL.Click += new System.EventHandler(this.btnCANCEL_Click);
 			// 
@@ -373,7 +373,7 @@ namespace AE_RemapTria
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 30);
-			this.btnOK.TabIndex = 3;
+			this.btnOK.TabIndex = 12;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -420,7 +420,7 @@ namespace AE_RemapTria
 			this.t_ColorPlate2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_ColorPlate2.Name = "t_ColorPlate2";
 			this.t_ColorPlate2.Size = new System.Drawing.Size(299, 139);
-			this.t_ColorPlate2.TabIndex = 13;
+			this.t_ColorPlate2.TabIndex = 7;
 			this.t_ColorPlate2.Text = "t_ColorPlate2";
 			// 
 			// tR_ColorPlate1

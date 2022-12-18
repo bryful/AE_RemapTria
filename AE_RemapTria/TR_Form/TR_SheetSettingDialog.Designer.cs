@@ -80,7 +80,7 @@ namespace AE_RemapTria
 			this.t_Label2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Label2.Name = "t_Label2";
 			this.t_Label2.Size = new System.Drawing.Size(88, 20);
-			this.t_Label2.TabIndex = 6;
+			this.t_Label2.TabIndex = 4;
 			this.t_Label2.TabStop = false;
 			this.t_Label2.Text = "Duration";
 			// 
@@ -122,7 +122,7 @@ namespace AE_RemapTria
 			this.lbDuration.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbDuration.Name = "lbDuration";
 			this.lbDuration.Size = new System.Drawing.Size(218, 12);
-			this.lbDuration.TabIndex = 9;
+			this.lbDuration.TabIndex = 7;
 			this.lbDuration.TabStop = false;
 			// 
 			// lbName
@@ -214,7 +214,7 @@ namespace AE_RemapTria
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 25);
-			this.btnOK.TabIndex = 10;
+			this.btnOK.TabIndex = 9;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
 			// 
@@ -239,7 +239,7 @@ namespace AE_RemapTria
 			this.DurationBox1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.DurationBox1.Name = "DurationBox1";
 			this.DurationBox1.Size = new System.Drawing.Size(118, 20);
-			this.DurationBox1.TabIndex = 7;
+			this.DurationBox1.TabIndex = 5;
 			this.DurationBox1.TabStop = false;
 			this.DurationBox1.Text = "t_DurationBox1";
 			// 
@@ -264,7 +264,7 @@ namespace AE_RemapTria
 			this.tR_KeyPad1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tR_KeyPad1.Name = "tR_KeyPad1";
 			this.tR_KeyPad1.Size = new System.Drawing.Size(112, 115);
-			this.tR_KeyPad1.TabIndex = 11;
+			this.tR_KeyPad1.TabIndex = 6;
 			this.tR_KeyPad1.TabStop = false;
 			this.tR_KeyPad1.Text = "tR_KeyPad1";
 			// 
@@ -293,7 +293,7 @@ namespace AE_RemapTria
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 25);
-			this.btnCancel.TabIndex = 12;
+			this.btnCancel.TabIndex = 10;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
 			// 

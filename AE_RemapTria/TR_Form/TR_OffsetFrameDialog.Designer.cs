@@ -55,7 +55,7 @@ namespace AE_RemapTria
 			this.lbOffset.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbOffset.Name = "lbOffset";
 			this.lbOffset.Size = new System.Drawing.Size(117, 31);
-			this.lbOffset.TabIndex = 0;
+			this.lbOffset.TabIndex = 2;
 			this.lbOffset.TabStop = false;
 			this.lbOffset.Text = "OffsetFrame";
 			// 
@@ -64,9 +64,10 @@ namespace AE_RemapTria
 			this.nbOffset.Alignment = System.Drawing.StringAlignment.Far;
 			this.nbOffset.Back = System.Drawing.Color.Transparent;
 			this.nbOffset.BackColor = System.Drawing.Color.Transparent;
+			this.nbOffset.CanReturnEdit = true;
 			this.nbOffset.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.nbOffset.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
-			this.nbOffset.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(150)))));
+			this.nbOffset.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(140)))));
 			this.nbOffset.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.nbOffset.FrameWeight = new System.Windows.Forms.Padding(0, 0, 0, 1);
 			this.nbOffset.LineAlignment = System.Drawing.StringAlignment.Center;
@@ -76,7 +77,7 @@ namespace AE_RemapTria
 			this.nbOffset.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbOffset.Name = "nbOffset";
 			this.nbOffset.Size = new System.Drawing.Size(128, 25);
-			this.nbOffset.TabIndex = 1;
+			this.nbOffset.TabIndex = 3;
 			this.nbOffset.Value = 0;
 			this.nbOffset.ValueMax = 32000;
 			this.nbOffset.ValueMin = 0;
@@ -106,7 +107,7 @@ namespace AE_RemapTria
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 30);
-			this.btnOK.TabIndex = 2;
+			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -135,7 +136,7 @@ namespace AE_RemapTria
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 30);
-			this.btnCancel.TabIndex = 3;
+			this.btnCancel.TabIndex = 5;
 			this.btnCancel.Text = "Cencel";
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
@@ -156,7 +157,7 @@ namespace AE_RemapTria
 			this.lbMain.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbMain.Name = "lbMain";
 			this.lbMain.Size = new System.Drawing.Size(279, 24);
-			this.lbMain.TabIndex = 4;
+			this.lbMain.TabIndex = 1;
 			this.lbMain.TabStop = false;
 			this.lbMain.Text = "Sheet Top";
 			// 
@@ -176,14 +177,14 @@ namespace AE_RemapTria
 			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(39, 129);
-			this.t_Zebra1.TabIndex = 5;
+			this.t_Zebra1.TabIndex = 0;
 			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
 			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(110)))));
 			this.t_Zebra1.ZebraRot = 45F;
 			this.t_Zebra1.ZebraWidth = 15F;
 			// 
-			// T_OffsetFrameDialog
+			// TR_OffsetFrameDialog
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(389, 160);
@@ -198,7 +199,7 @@ namespace AE_RemapTria
 			this.KagiHeight = 20;
 			this.KagiWeight = 2;
 			this.MyFontSize = 9F;
-			this.Name = "T_OffsetFrameDialog";
+			this.Name = "TR_OffsetFrameDialog";
 			this.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(200)))));
 			this.SideCenterLength = 12;
 			this.SideCenterWeight = 0;

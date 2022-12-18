@@ -90,7 +90,10 @@ namespace AE_RemapTria
 				m_Edit.Invalidate();
 			}
 		}
-
+		public void StopEdit()
+		{
+			m_Edit.StopEdit();
+		}
 
 		public TR_CaptionTextBox()
 		{

@@ -331,13 +331,8 @@ namespace AE_RemapTria
 		// ********************************************************************
 		private void NavBarSetup()
 		{
-			m_navBar.Form = this;
-			m_navBar.SetLocSize();
-
-			if (DesignMode == false)
-			{
-				m_navBar.Show();
-			}
+			m_navBar.SetTRForm(this);
+			m_navBar.Show();
 
 		}
 		// ********************************************************************
@@ -619,7 +614,7 @@ namespace AE_RemapTria
 				sb.Color = Colors.TopBar;
 				g.FillRectangle(sb, r0);
 
-				p.Color = Colors.LineDark;
+				p.Color = Colors.MenuWaku;
 				Rectangle r = new Rectangle(0,0,this.Width-1,this.Height-1);
 				g.DrawRectangle(p, r);
 
@@ -630,7 +625,7 @@ namespace AE_RemapTria
 				g.DrawImage(VScrol.Offscr(), VScrol.Location);
 				g.DrawImage(HScrol.Offscr(), HScrol.Location);
 				g.DrawImage(tria, 0,
-					Menu.MenuHeight+Sizes.InterHeight);
+					Menu.MenuHeight);
 
 				if(IsInputMode)
 				{
@@ -646,6 +641,22 @@ namespace AE_RemapTria
 						MyFont(Grid.FontIndex,Grid.FontSize,FontStyle.Regular), 
 						sb, rr, StringFormat);
 				}
+				Rectangle ri = new Rectangle(
+					Sizes.FrameWidth2,
+					this.Height - 25,
+					Sizes.FrameWidth- Sizes.FrameWidth2,
+					25
+					);
+				sb.Color = Colors.Moji;
+				StringFormat.Alignment= StringAlignment.Far;
+				StringFormat.LineAlignment = StringAlignment.Near;
+				g.DrawString(CellData.Info,
+					MyFont(FontIndex, 8, FontStyle.Regular),
+					sb, 
+					ri,
+					StringFormat);
+
+
 			}
 			finally
 			{
@@ -1093,6 +1104,20 @@ namespace AE_RemapTria
 			//base.OnFormClosing(e);
 		}
 		*/
+		protected override void OnActivated(EventArgs e)
+		{
+			base.OnActivated(e);
+			Menu.IsActive = true;
+			Menu.ChkOffScr();
+			this.Invalidate();
+		}
+		protected override void OnDeactivate(EventArgs e)
+		{
+			base.OnDeactivate(e);
+			Menu.IsActive = false;
+			Menu.ChkOffScr();
+			this.Invalidate();
+		}
 	}
 
 }

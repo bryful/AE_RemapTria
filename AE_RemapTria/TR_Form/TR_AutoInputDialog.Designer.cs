@@ -40,21 +40,19 @@ namespace AE_RemapTria
 			this.t_Zebra1 = new AE_RemapTria.TR_Zebra();
 			this.t_Zebra2 = new AE_RemapTria.TR_Zebra();
 			this.lbCaption = new AE_RemapTria.TR_Label();
-			this.t_ColorPlate1 = new AE_RemapTria.TR_ColorPlate();
-			this.t_ColorPlate2 = new AE_RemapTria.TR_ColorPlate();
 			this.SuspendLayout();
 			// 
 			// nbStart
 			// 
 			this.nbStart.Alignment = System.Drawing.StringAlignment.Far;
-			this.nbStart.Back = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(11)))), ((int)(((byte)(25)))));
-			this.nbStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(11)))), ((int)(((byte)(25)))));
+			this.nbStart.Back = System.Drawing.Color.Transparent;
+			this.nbStart.BackColor = System.Drawing.Color.Transparent;
 			this.nbStart.CanReturnEdit = true;
 			this.nbStart.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.nbStart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(220)))), ((int)(((byte)(250)))));
 			this.nbStart.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.nbStart.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.nbStart.FrameWeight = new System.Windows.Forms.Padding(1);
+			this.nbStart.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.nbStart.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.nbStart.Location = new System.Drawing.Point(178, 77);
 			this.nbStart.MyFontIndex = 5;
@@ -62,7 +60,7 @@ namespace AE_RemapTria
 			this.nbStart.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbStart.Name = "nbStart";
 			this.nbStart.Size = new System.Drawing.Size(90, 31);
-			this.nbStart.TabIndex = 6;
+			this.nbStart.TabIndex = 3;
 			this.nbStart.Value = 0;
 			this.nbStart.ValueMax = 32000;
 			this.nbStart.ValueMin = 0;
@@ -84,7 +82,7 @@ namespace AE_RemapTria
 			this.lbStart.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbStart.Name = "lbStart";
 			this.lbStart.Size = new System.Drawing.Size(122, 32);
-			this.lbStart.TabIndex = 3;
+			this.lbStart.TabIndex = 2;
 			this.lbStart.TabStop = false;
 			this.lbStart.Text = "StartNumber";
 			// 
@@ -127,7 +125,7 @@ namespace AE_RemapTria
 			this.nbLast.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbLast.Name = "nbLast";
 			this.nbLast.Size = new System.Drawing.Size(90, 31);
-			this.nbLast.TabIndex = 7;
+			this.nbLast.TabIndex = 5;
 			this.nbLast.Value = 0;
 			this.nbLast.ValueMax = 32000;
 			this.nbLast.ValueMin = 0;
@@ -149,7 +147,7 @@ namespace AE_RemapTria
 			this.tbKoma.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbKoma.Name = "tbKoma";
 			this.tbKoma.Size = new System.Drawing.Size(110, 32);
-			this.tbKoma.TabIndex = 5;
+			this.tbKoma.TabIndex = 6;
 			this.tbKoma.TabStop = false;
 			this.tbKoma.Text = "Koma";
 			// 
@@ -171,7 +169,7 @@ namespace AE_RemapTria
 			this.nbKoma.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.nbKoma.Name = "nbKoma";
 			this.nbKoma.Size = new System.Drawing.Size(90, 31);
-			this.nbKoma.TabIndex = 8;
+			this.nbKoma.TabIndex = 7;
 			this.nbKoma.Value = 0;
 			this.nbKoma.ValueMax = 32000;
 			this.nbKoma.ValueMin = 0;
@@ -230,7 +228,7 @@ namespace AE_RemapTria
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(110, 31);
-			this.btnOK.TabIndex = 11;
+			this.btnOK.TabIndex = 9;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -250,7 +248,7 @@ namespace AE_RemapTria
 			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(234, 20);
-			this.t_Zebra1.TabIndex = 9;
+			this.t_Zebra1.TabIndex = 8;
 			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
 			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(100)))));
@@ -273,7 +271,7 @@ namespace AE_RemapTria
 			this.t_Zebra2.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra2.Name = "t_Zebra2";
 			this.t_Zebra2.Size = new System.Drawing.Size(234, 28);
-			this.t_Zebra2.TabIndex = 2;
+			this.t_Zebra2.TabIndex = 1;
 			this.t_Zebra2.TabStop = false;
 			this.t_Zebra2.Text = "t_Zebra2";
 			this.t_Zebra2.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(100)))));
@@ -297,56 +295,9 @@ namespace AE_RemapTria
 			this.lbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbCaption.Name = "lbCaption";
 			this.lbCaption.Size = new System.Drawing.Size(233, 24);
-			this.lbCaption.TabIndex = 1;
+			this.lbCaption.TabIndex = 0;
 			this.lbCaption.TabStop = false;
 			this.lbCaption.Text = "Auto Input";
-			// 
-			// t_ColorPlate1
-			// 
-			this.t_ColorPlate1.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_ColorPlate1.Back = System.Drawing.Color.Transparent;
-			this.t_ColorPlate1.BackColor = System.Drawing.Color.Transparent;
-			this.t_ColorPlate1.DotColor = System.Drawing.Color.Transparent;
-			this.t_ColorPlate1.DotLoc = new System.Drawing.Point(10, 10);
-			this.t_ColorPlate1.DotSize = new System.Drawing.Size(10, 10);
-			this.t_ColorPlate1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_ColorPlate1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-			this.t_ColorPlate1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-			this.t_ColorPlate1.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.t_ColorPlate1.FrameWeight = new System.Windows.Forms.Padding(0);
-			this.t_ColorPlate1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_ColorPlate1.Location = new System.Drawing.Point(34, 182);
-			this.t_ColorPlate1.MyFontIndex = 5;
-			this.t_ColorPlate1.MyFontSize = 12F;
-			this.t_ColorPlate1.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_ColorPlate1.Name = "t_ColorPlate1";
-			this.t_ColorPlate1.Size = new System.Drawing.Size(246, 68);
-			this.t_ColorPlate1.TabIndex = 12;
-			this.t_ColorPlate1.TabStop = false;
-			this.t_ColorPlate1.Text = "t_ColorPlate1";
-			// 
-			// t_ColorPlate2
-			// 
-			this.t_ColorPlate2.Alignment = System.Drawing.StringAlignment.Far;
-			this.t_ColorPlate2.Back = System.Drawing.Color.Transparent;
-			this.t_ColorPlate2.BackColor = System.Drawing.Color.Transparent;
-			this.t_ColorPlate2.DotColor = System.Drawing.Color.Transparent;
-			this.t_ColorPlate2.DotLoc = new System.Drawing.Point(10, 10);
-			this.t_ColorPlate2.DotSize = new System.Drawing.Size(10, 10);
-			this.t_ColorPlate2.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.t_ColorPlate2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-			this.t_ColorPlate2.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-			this.t_ColorPlate2.FrameMargin = new System.Windows.Forms.Padding(0);
-			this.t_ColorPlate2.FrameWeight = new System.Windows.Forms.Padding(0);
-			this.t_ColorPlate2.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.t_ColorPlate2.Location = new System.Drawing.Point(27, 12);
-			this.t_ColorPlate2.MyFontIndex = 5;
-			this.t_ColorPlate2.MyFontSize = 12F;
-			this.t_ColorPlate2.MyFontStyle = System.Drawing.FontStyle.Regular;
-			this.t_ColorPlate2.Name = "t_ColorPlate2";
-			this.t_ColorPlate2.Size = new System.Drawing.Size(246, 68);
-			this.t_ColorPlate2.TabIndex = 0;
-			this.t_ColorPlate2.Text = "t_ColorPlate2";
 			// 
 			// TR_AutoInputDialog
 			// 
@@ -363,8 +314,6 @@ namespace AE_RemapTria
 			this.Controls.Add(this.nbLast);
 			this.Controls.Add(this.lbStart);
 			this.Controls.Add(this.nbStart);
-			this.Controls.Add(this.t_ColorPlate1);
-			this.Controls.Add(this.t_ColorPlate2);
 			this.Edge = new System.Drawing.Rectangle(10, 10, 10, 10);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 20;
@@ -406,14 +355,12 @@ namespace AE_RemapTria
         0,
         0};
 			this.Text = "T_AutoInputcs";
-			this.Load += new System.EventHandler(this.T_AutoInputcs_Load);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private TR_MyFonts t_MyFonts1;
 		private TR_NumberBox nbStart;
 		private TR_Label lbStart;
 		private TR_Label lbEnd;
@@ -425,7 +372,5 @@ namespace AE_RemapTria
 		private TR_Zebra t_Zebra1;
 		private TR_Zebra t_Zebra2;
 		private TR_Label lbCaption;
-		private TR_ColorPlate t_ColorPlate1;
-		private TR_ColorPlate t_ColorPlate2;
 	}
 }

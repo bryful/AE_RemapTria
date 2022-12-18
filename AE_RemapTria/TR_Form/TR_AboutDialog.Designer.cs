@@ -306,8 +306,8 @@ namespace AE_RemapTria
 			this.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(200)))));
 			this.SideCenterLength = 12;
 			this.SideCount = new int[] {
-        2,
         1,
+        0,
         0};
 			this.SideInter = new int[] {
         25,
@@ -322,12 +322,12 @@ namespace AE_RemapTria
         2,
         4};
 			this.TBCount = new int[] {
-        4,
-        4,
+        2,
+        1,
         0};
 			this.TBInter = new int[] {
-        15,
-        30,
+        60,
+        120,
         120};
 			this.TBLength = new int[] {
         5,

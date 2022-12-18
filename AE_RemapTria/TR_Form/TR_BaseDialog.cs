@@ -351,21 +351,11 @@ namespace AE_RemapTria
 			{
 				foreach(Control c in this.Controls)
 				{
-					if( c is TR_DialogControl)
+					if (c is TR_DialogControl)
 					{
 						try
 						{
 							((TR_DialogControl)c).SetTRDialog(this);
-						}
-						catch
-						{
-
-						}
-					}else if (c is T_BListBox)
-					{
-						try
-						{
-							((T_BListBox)c).SetTRDialog(this);
 						}
 						catch
 						{

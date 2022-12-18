@@ -14,11 +14,6 @@ namespace AE_RemapTria
 {
 	public class TR_Frame : TR_Control
 	{
-
-		//private Rectangle Dot1 = new Rectangle(5, 5, 12, 10);
-		//private Rectangle Dot2 = new Rectangle(5, 8, 8, 4);
-		//private Rectangle Dot3 = new Rectangle(5, 9, 4, 2);
-
 		public TR_Frame()
 		{
 			FontSize = 9;
@@ -55,30 +50,7 @@ namespace AE_RemapTria
 			if (m_Size != sz) m_Size = sz;
 			ChkOffScr();
 		}
-		/*
-		private void ChkDot()
-		{
-			if (m_form != null)
-			{
-				int w = m_form.Sizes.FrameWidth2 * 2 / 3;
-				int h = m_form.Sizes.CellHeight / 2;
-				int l = (m_form.Sizes.FrameWidth2 - w) / 2;
-				int t = -h / 2;
-				int l2 = l + w;
-				Dot1 = new Rectangle(l, t, w, h);
-				w = w * 2 / 3;
-				//h = h/2;
-				t = -h / 2;
-				l = l2 - w;
-				Dot2 = new Rectangle(l, t, w, h);
-				w = w / 2;
-				h = h / 2;
-				t = -h / 2;
-				l = l2 - w;
-				Dot3 = new Rectangle(l, t, w, h);
-			}
-		}
-		*/
+
 
 		public override bool ChkMouseDown(MouseEventArgs e)
 		{
@@ -86,12 +58,22 @@ namespace AE_RemapTria
 			ret = base.ChkMouseDown(e);
 			if (m_inMouse == false) return ret;
 			if ((m_form == null) || (Sizes == null)) return ret;
-			if (e.Button == MouseButtons.Left)
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
 				int y = (m_MDownPoint.Y + Sizes.DispY) / Sizes.CellHeight;
 
 				m_form.SetCellStart(y);
 				ret = true;
+			}
+			else if((e.Button & MouseButtons.Right) == MouseButtons.Right)
+			{
+				if (m_form != null)
+				{
+					ContextMenuStrip m = m_form.MakeCMFrame();
+					Point p = Cursor.Position;
+					m.Show(p);
+					ret = true;
+				}
 			}
 			return ret;
 		}

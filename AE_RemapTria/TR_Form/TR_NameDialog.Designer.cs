@@ -55,7 +55,7 @@ namespace AE_RemapTria
 			this.lbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbCaption.Name = "lbCaption";
 			this.lbCaption.Size = new System.Drawing.Size(206, 30);
-			this.lbCaption.TabIndex = 0;
+			this.lbCaption.TabIndex = 1;
 			this.lbCaption.TabStop = false;
 			this.lbCaption.Text = "シート名を入力してください。";
 			// 
@@ -77,7 +77,7 @@ namespace AE_RemapTria
 			this.tbCaption.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbCaption.Name = "tbCaption";
 			this.tbCaption.Size = new System.Drawing.Size(202, 31);
-			this.tbCaption.TabIndex = 1;
+			this.tbCaption.TabIndex = 2;
 			this.tbCaption.Text = "AAAA";
 			// 
 			// btnOK
@@ -105,7 +105,7 @@ namespace AE_RemapTria
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 30);
-			this.btnOK.TabIndex = 2;
+			this.btnOK.TabIndex = 3;
 			this.btnOK.Text = "OK";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -134,7 +134,7 @@ namespace AE_RemapTria
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 30);
-			this.btnCancel.TabIndex = 3;
+			this.btnCancel.TabIndex = 4;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
@@ -154,7 +154,7 @@ namespace AE_RemapTria
 			this.t_Zebra1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.t_Zebra1.Name = "t_Zebra1";
 			this.t_Zebra1.Size = new System.Drawing.Size(16, 114);
-			this.t_Zebra1.TabIndex = 4;
+			this.t_Zebra1.TabIndex = 0;
 			this.t_Zebra1.TabStop = false;
 			this.t_Zebra1.Text = "t_Zebra1";
 			this.t_Zebra1.ZebraColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(150)))));
@@ -194,6 +194,7 @@ namespace AE_RemapTria
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.tbCaption);
 			this.Controls.Add(this.lbCaption);
+			this.DoubleBuffered = true;
 			this.Edge = new System.Drawing.Rectangle(10, 10, 10, 10);
 			this.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KagiHeight = 30;

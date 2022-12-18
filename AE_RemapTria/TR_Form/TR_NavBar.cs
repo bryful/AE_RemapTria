@@ -7,24 +7,18 @@ namespace AE_RemapTria
 	public partial class TR_NavBar : TR_BaseDialog
 	{
 		bool _refFlag = true;
-		[Category("_AE_Remap")]
-		public TR_Form? Form
+		public override void SetTRForm(TR_Form fm)
 		{
-			get { return base.Form; }
-			set
+			base.SetTRForm(fm);
+			if(base.Form != null)
 			{
-				base.Form = value;
-				if (base.Form != null)
-				{
-					SetLocSize();
-					SetIsFront(m_IsFront);
-					base.Form.LocationChanged += M_form_LocationChanged;
-					base.Form.SizeChanged += M_form_LocationChanged;
-					base.Form.TextChanged += M_form_TextChanged;
-				}
+				SetLocSize();
+				SetIsFront(m_IsFront);
+				base.Form.LocationChanged += M_form_LocationChanged;
+				base.Form.SizeChanged += M_form_LocationChanged;
+				base.Form.TextChanged += M_form_TextChanged;
 			}
 		}
-
 		private void M_form_TextChanged(object? sender, EventArgs e)
 		{
 			if (base.Form != null)
@@ -213,7 +207,7 @@ namespace AE_RemapTria
 		}
 		// *****************************************************************
 		
-
+		/*
 		private void button1_Click(object sender, EventArgs e)
 		{
 			if(base.Form != null)
@@ -226,6 +220,7 @@ namespace AE_RemapTria
 			}
 
 		}
+		*/
 		// *****************************************************************
 		private Point[] SR(Point[]p,Point c)
 		{
@@ -273,15 +268,16 @@ namespace AE_RemapTria
 		// *****************************************************************
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			Color moji = Color.FromArgb(0x7f, 0x8d, 0xD4);
-			Color ol = Color.FromArgb(0x43, 0x62, 0xb2);
-			Color ol1 = Color.FromArgb(0x0e, 0x12, 0x42);
-			Color ol2 = Color.FromArgb(0x2a, 0x2d, 0x60);
-			Color MenuBack = Color.FromArgb(0x34, 0x37, 0x6a);
-			Color sdw = Color.FromArgb(0x18, 0x1a, 0x2f);
+			if ((Form == null) || (Colors == null)) return;
+			Color MenuMoji = Colors.MenuMoji;
+			Color MenuWaku = Colors.MenuWaku;
+			Color MenuWaku1 = Colors.MenuWaku1;
+			Color MenuWaku2 = Colors.MenuWaku2;
+			Color MenuBack = Colors.MenuBack;
+			Color MenuSdw = Colors.MenuSdw;
 			Graphics g = e.Graphics;
-			Pen p = new Pen(ol);
-			SolidBrush sb = new SolidBrush(ol);
+			Pen p = new Pen(MenuWaku);
+			SolidBrush sb = new SolidBrush(MenuWaku);
 			try
 			{
 				//背景
@@ -293,17 +289,17 @@ namespace AE_RemapTria
 				Rectangle r = new Rectangle(20, (this.Height - w) / 2, w, w);
 				if (m_IsFront)
 				{
-					sb.Color = moji;
+					sb.Color = MenuMoji;
 				}
 				else
 				{
-					sb.Color = ol1;
+					sb.Color = MenuWaku1;
 				}
 				g.FillRectangle(sb, r);
-				p.Color = ol2;
+				p.Color = MenuWaku2;
 				p.Width = 4;
 				g.DrawRectangle(p, r);
-				p.Color = moji;
+				p.Color = MenuMoji;
 				p.Width = 2;
 				g.DrawRectangle(p, r);
 
@@ -313,7 +309,7 @@ namespace AE_RemapTria
 					StringFormat sf = new StringFormat();
 					sf.Alignment = StringAlignment.Center;
 					sf.LineAlignment = StringAlignment.Center;
-					sb.Color = moji;
+					sb.Color = MenuMoji;
 					SizeF sz = g.MeasureString(this.Text, this.Font, 1000, sf);
 					int ww = (int)sz.Width+5;
 					if (ww > this.Width - 90) ww = this.Width - 90;
@@ -322,7 +318,7 @@ namespace AE_RemapTria
 					int www = this.Width - 90 - ww;
 					if(www>5)
 					{
-						p.Color = moji;
+						p.Color = MenuMoji;
 						p.Width = 1;
 						int cy = r.Top + r.Height / 2;
 						int x0 = r.Right;
@@ -341,29 +337,29 @@ namespace AE_RemapTria
 				//外枠を描く
 				Point c = new Point(Width / 2, Height / 2);
 				p.Width = 1;
-				p.Color = ol1;
+				p.Color = MenuWaku1;
 				g.DrawPolygon(p, WPolygon(2));
-				p.Color = ol2;
+				p.Color = MenuWaku2;
 				g.DrawPolygon(p, WPolygon(3));
 				g.DrawPolygon(p, WPolygon(4));
 
 				// SDW
 				r = new Rectangle(40, 0, 30, this.Height);
-				sb.Color = sdw;
+				sb.Color = MenuSdw;
 				g.FillRectangle(sb, r);
 				r = new Rectangle(this.Width - 60, 0, 20, this.Height);
 				g.FillRectangle(sb, r);
 
 				// 横の線
 				p.Width = 6;
-				p.Color = ol2;
+				p.Color = MenuWaku2;
 				int xx = this.Width - 30;
 				g.DrawLine(p, xx, 2, xx, this.Height-4);
 				p.Width = 2;
-				p.Color = ol;
+				p.Color = MenuWaku;
 				g.DrawLine(p, xx, 0, xx, this.Height);
 
-				p.Color = ol;
+				p.Color = MenuWaku;
 				p.Width = 1;
 				g.DrawPolygon(p, WPolygon(0));
 				g.DrawPolygon(p, WPolygon(1));
@@ -372,11 +368,11 @@ namespace AE_RemapTria
 				r = new Rectangle(this.Width - 20, (this.Height - k) / 2, k, k);
 				if (m_CB)
 				{
-					sb.Color = moji;
+					sb.Color = MenuMoji;
 				}
 				else
 				{
-					sb.Color = ol2;
+					sb.Color = MenuWaku2;
 				}
 				g.FillRectangle(sb,r);
 
@@ -384,23 +380,6 @@ namespace AE_RemapTria
 			finally
 			{
 				p.Dispose();
-			}
-		}
-		private bool GetDesignMode(Control control)
-		{
-			if (control == null) return false;
-
-			bool mode = control.Site == null ? false : control.Site.DesignMode;
-
-			return mode | GetDesignMode(control.Parent);
-		}
-
-		// 本来のDesignModeを上書き
-		public new bool DesignMode
-		{
-			get
-			{
-				return GetDesignMode(this);
 			}
 		}
 	}

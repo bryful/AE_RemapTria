@@ -60,7 +60,7 @@ namespace AE_RemapTria
 			this.tbJap.MyFontSize = 10F;
 			this.tbJap.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tbJap.Name = "tbJap";
-			this.tbJap.Size = new System.Drawing.Size(158, 27);
+			this.tbJap.Size = new System.Drawing.Size(158, 46);
 			this.tbJap.TabIndex = 5;
 			this.tbJap.TextChanged += new System.EventHandler(this.tbJap_TextChanged);
 			// 
@@ -217,10 +217,11 @@ namespace AE_RemapTria
 			this.lbCaution.MyFontSize = 7F;
 			this.lbCaution.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbCaution.Name = "lbCaution";
+			this.lbCaution.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
 			this.lbCaution.Size = new System.Drawing.Size(159, 24);
 			this.lbCaution.TabIndex = 11;
 			this.lbCaution.TabStop = false;
-			this.lbCaution.Text = "Please,Push Key. MouseClick Exit";
+			this.lbCaution.Text = "Push Key. Click OK            C Clear : X Cancel";
 			this.lbCaution.Visible = false;
 			// 
 			// t_Label3

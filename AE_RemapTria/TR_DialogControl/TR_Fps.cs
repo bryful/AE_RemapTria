@@ -44,6 +44,7 @@ namespace AE_RemapTria
 			LineAlignment = StringAlignment.Center;
 			ForeColor = Color.FromArgb(255, 200, 200, 250);
 			InitializeComponent();
+
 		}
 
 		protected override void OnPaint(PaintEventArgs pe)
@@ -82,12 +83,12 @@ namespace AE_RemapTria
 				sb.Color= EnabledColor(ForeColor, m_Enabled);
 				r = new Rectangle(x, (Height - m_cbWidth) / 2, 2, m_cbWidth);
 				g.FillRectangle(sb, r);
-				r = new Rectangle(Width-3, (Height - m_cbWidth) / 2, 2, m_cbWidth);
+				r = new Rectangle(Width - 3, (Height - m_cbWidth) / 2, 2, m_cbWidth);
 				g.FillRectangle(sb, r);
 
 				Alignment = StringAlignment.Center;
 				int x2 = x+5;
-				r = new Rectangle(x2, 0, w / 2-5, Height);
+				r = new Rectangle(x2, 4, w / 2-5, Height-8);
 				if (m_fps==T_Fps.FPS24)
 				{
 					sb.Color = EnabledColor(ForeColor, m_Enabled);
@@ -99,7 +100,7 @@ namespace AE_RemapTria
 					sb.Color = EnabledColor(ForeColor, m_Enabled);
 				}
 				DrawStr(g, "24fps", sb, r);
-				r = new Rectangle(x2 + w / 2-5, 0, w / 2-5, Height);
+				r = new Rectangle(x2 + w / 2-5, 4, w / 2-5, Height-8);
 				if (m_fps == T_Fps.FPS30)
 				{
 					sb.Color = EnabledColor(ForeColor, m_Enabled);
@@ -111,6 +112,13 @@ namespace AE_RemapTria
 					sb.Color = EnabledColor(ForeColor, m_Enabled);
 				}
 				DrawStr(g, "30fps", sb, r);
+				if(this.Focused)
+				{
+					Rectangle rr = new Rectangle(0,0, Width-1, Height-1);
+					p.DashStyle= DashStyle.Dot;
+					p.Color = Color.FromArgb(75, 75, 13);
+					g.DrawRectangle(p, rr);
+				}
 			}
 			finally
 			{
@@ -121,10 +129,32 @@ namespace AE_RemapTria
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
-			if(e.X<m_cbWidth)
+			if (e.X < m_cbWidth)
 			{
 				m_Enabled = !m_Enabled;
 				this.Invalidate();
+			}
+			else
+			{
+				if (m_Enabled)
+				{
+					if (e.X < (Width - m_cbWidth) / 2)
+					{
+						if (m_fps != T_Fps.FPS24)
+						{
+							m_fps = T_Fps.FPS24;
+							this.Invalidate();
+						}
+					}
+					else
+					{
+						if (m_fps != T_Fps.FPS30)
+						{
+							m_fps = T_Fps.FPS30;
+							this.Invalidate();
+						}
+					}
+				}
 			}
 		}
 		protected override void OnGotFocus(EventArgs e)
@@ -136,6 +166,35 @@ namespace AE_RemapTria
 		{
 			base.OnLostFocus(e);
 			this.Invalidate();
+		}
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if ((this.Focused)
+				&& ((e.KeyCode == Keys.Space)|| (e.KeyCode == Keys.Return)))
+			{
+				m_Enabled= !m_Enabled;
+				this.Invalidate();
+			}
+			base.OnKeyDown(e);
+		}
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			if((this.Focused)&&(m_Enabled))
+			{
+				if(keyData == Keys.Left)
+				{
+					m_fps = T_Fps.FPS24;
+					this.Invalidate();
+					return true;
+				}
+				else if (keyData == Keys.Right)
+				{
+					m_fps = T_Fps.FPS30;
+					this.Invalidate();
+					return true;
+				}
+			}
+			return base.ProcessDialogKey(keyData);
 		}
 	}
 }

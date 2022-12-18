@@ -34,54 +34,10 @@ namespace AE_RemapTria
 			SetEventHandler(t_Zebra2);
 		}
 
-		private void T_AutoInputcs_Load(object sender, EventArgs e)
-		{
-
-		}
 		private bool CheckValue()
 		{
 			return  ((Start != Last) && (Koma > 0));
 		}
-		private int m_md = 0;
-		protected override void OnKeyDown(KeyEventArgs e)
-		{
-			if (m_md == 0)
-			{
-				if (e.KeyCode == Keys.Enter)
-				{
-					if (CheckValue())
-					{
-						m_md = 1;
-						btnOK.IsMouseDown = true;
-					}
-				}
-				else if (e.KeyCode == Keys.Escape)
-				{
-					m_md = 2;
-					btnCancel.IsMouseDown = true;
-				}
-			}
-			base.OnKeyDown(e);
-		}
-		protected override void OnKeyUp(KeyEventArgs e)
-		{
-			if (m_md != 0)
-			{
-				if (m_md == 1)
-				{
-					btnOK.IsMouseDown = false;
-					this.DialogResult = DialogResult.OK;
-				}
-				else if (m_md == 2)
-				{
-					btnCancel.IsMouseDown = false;
-					this.DialogResult = DialogResult.Cancel;
-				}
-				m_md = 0;
-			}
-			base.OnKeyUp(e);
-		}
-
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			this.DialogResult = DialogResult.Cancel;
@@ -89,10 +45,25 @@ namespace AE_RemapTria
 
 		private void btnOK_Click(object sender, EventArgs e)
 		{
-			if(CheckValue())
+			if (CheckValue())
 			{
 				this.DialogResult = DialogResult.OK;
 			}
+		}
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Escape)
+			{
+				this.DialogResult = DialogResult.Cancel;
+			}
+			base.OnKeyDown(e);
+		}
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+			nbKoma.StopEdit();
+			nbStart.StopEdit();
+			nbLast.StopEdit();
 		}
 	}
 }

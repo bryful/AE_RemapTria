@@ -118,30 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CellArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CellArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CellArrowNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CellArrowNone.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Arrow_Bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Arrow_Bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Arrow_Bottom_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Arrow_Bottom_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Arrow_Top" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Arrow_Top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Arrow_Top_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Arrow_Top_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Cursol" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Cursol.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HVS_Cursol_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HVS_Cursol_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SourceHanCodeJP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SourceHanCodeJP.ttc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

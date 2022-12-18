@@ -27,10 +27,14 @@ namespace AE_RemapTria
 		[Category("_AE_Remap")]
 		public bool CanReturnEdit
 		{
-			get { return m_CanReturnEdit; }	
+			get { return m_CanReturnEdit; }
 			set { m_CanReturnEdit = value; }
 		}
-
+		public new string Text
+		{
+			get{return base.Text;}
+			set { base.Text = value;this.Invalidate(); }
+		}
 		private StringFormat m_sf = new StringFormat();
 		private TextBox? m_TextBox = null;
 		public TR_TextBox()

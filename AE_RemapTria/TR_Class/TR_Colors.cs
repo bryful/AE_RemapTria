@@ -36,6 +36,9 @@ namespace AE_RemapTria
 		MenuMoji,
 		MenuMojiNoActive,
 		MenuWaku,
+		MenuWaku1,
+		MenuWaku2,
+		MenuSdw,
 		Transparent
 	};
 	public class TR_Colors
@@ -43,6 +46,14 @@ namespace AE_RemapTria
 		public bool _eventFlag=true;
 		public event EventHandler? ColorChangedEvent;
 
+		static public string? COLSName(COLS c)
+		{
+			return Enum.GetName(typeof(COLS),c);
+		}
+		static public string[] COLSNames()
+		{
+			return Enum.GetNames(typeof(COLS));
+		}
 		private Color[] cols = new Color[(int)COLS.Transparent];
 		static private Color[] STColors = new Color[0];
 		// *****************************************************************************
@@ -70,18 +81,21 @@ namespace AE_RemapTria
 			ret[(int)COLS.CellA_sdw] = Color.Transparent;
 			ret[(int)COLS.CellB] = Color.FromArgb(255, 245, 245);
 			ret[(int)COLS.CellB_sdw] = Color.FromArgb(255, 240, 240);
-			ret[(int)COLS.Selection] = Color.FromArgb(50, 100, 180);
+			ret[(int)COLS.Selection] = Color.FromArgb(75, 75, 150);
 			ret[(int)COLS.SelectionCaption] = Color.FromArgb(0, 75, 128);
 			ret[(int)COLS.Moji] = Color.FromArgb(120, 220, 250);
 			ret[(int)COLS.GrayMoji] = Color.FromArgb(80, 80, 150);
 			ret[(int)COLS.Gray] = Color.FromArgb(20, 20, 50);
 			ret[(int)COLS.TopBar] = Color.FromArgb(16, 32, 75);
 
-			ret[(int)COLS.MenuBack] = Color.FromArgb(0x34, 0x37, 0x6a);
-			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(0x54, 0x57, 0x8a);
-			ret[(int)COLS.MenuBackNoActive] = Color.FromArgb(75, 81, 109);
-			ret[(int)COLS.MenuMoji] = Color.FromArgb(0x9f, 0xAd, 0xF4);
+			ret[(int)COLS.MenuBack] = Color.FromArgb(52, 55, 106);
+			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(82, 85, 136);
+			ret[(int)COLS.MenuBackNoActive] = Color.FromArgb(26, 27, 53);
+			ret[(int)COLS.MenuMoji] = Color.FromArgb(159, 173, 244);
 			ret[(int)COLS.MenuWaku] = Color.FromArgb(0x43, 0x62, 0xb2);
+			ret[(int)COLS.MenuWaku1] = Color.FromArgb(0x0e, 0x12, 0x42);
+			ret[(int)COLS.MenuWaku2] = Color.FromArgb(0x2a, 0x2d, 0x60);
+			ret[(int)COLS.MenuSdw] = Color.FromArgb(0x18, 0x1a, 0x2f);
 			ret[(int)COLS.MenuMojiNoActive] = Color.FromArgb(52, 56, 78);
 
 			return ret;
@@ -108,6 +122,15 @@ namespace AE_RemapTria
 			{
 				ColorChangedEvent(this, e);
 			}
+		}
+		public Color Get(COLS c)
+		{
+			Color ret = Color.White;
+			if (((int)c >= 0) && ((int)c < (int)COLS.Transparent))
+			{
+				ret = cols[(int)c];
+			}
+			return ret;
 		}
 		//---------------------------------------
 		public Color Base
@@ -266,6 +289,21 @@ namespace AE_RemapTria
 		{
 			get { return cols[(int)COLS.MenuMojiNoActive]; }
 			set { cols[(int)COLS.MenuMojiNoActive] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuWaku1
+		{
+			get { return cols[(int)COLS.MenuWaku1]; }
+			set { cols[(int)COLS.MenuWaku1] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuWaku2
+		{
+			get { return cols[(int)COLS.MenuWaku2]; }
+			set { cols[(int)COLS.MenuWaku2] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		public Color MenuSdw
+		{
+			get { return cols[(int)COLS.MenuSdw]; }
+			set { cols[(int)COLS.MenuSdw] = value; OnColorChangedEvent(new EventArgs()); }
 		}
 	}
 }

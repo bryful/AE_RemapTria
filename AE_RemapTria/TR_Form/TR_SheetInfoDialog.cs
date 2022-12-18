@@ -56,42 +56,15 @@ namespace AE_RemapTria
 			cd.UPDATE_USER = ctUU.ValueText;
 
 		}
-		private int m_md = 0;
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (m_md == 0)
+			if (e.KeyData == Keys.Escape)
 			{
-				if (e.KeyCode == Keys.Enter)
-				{
-					m_md = 1;
-					btnOK.IsMouseDown = true;
-				}
-				else if (e.KeyCode == Keys.Escape)
-				{
-					m_md = 2;
-					btnCANCEL.IsMouseDown = true;
-				}
+				this.DialogResult = DialogResult.Cancel;
 			}
 			base.OnKeyDown(e);
 		}
-		protected override void OnKeyUp(KeyEventArgs e)
-		{
-			if (m_md != 0)
-			{
-				if (m_md == 1)
-				{
-					btnOK.IsMouseDown = false;
-					this.DialogResult = DialogResult.OK;
-				}
-				else if (m_md == 2)
-				{
-					btnCANCEL.IsMouseDown = false;
-					this.DialogResult = DialogResult.Cancel;
-				}
-				m_md = 0;
-			}
-			base.OnKeyUp(e);
-		}
+
 		public override void SetTRForm(TR_Form fm)
 		{
 			base.SetTRForm(fm);
@@ -99,6 +72,19 @@ namespace AE_RemapTria
 			{
 				SetCelLData(CellData);	
 			}
+		}
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+			
+			foreach(Control c in this.Controls)
+			{
+				if(c is TR_CaptionTextBox)
+				{
+					((TR_CaptionTextBox)c).StopEdit();
+				}
+			}
+
 		}
 	}
 }

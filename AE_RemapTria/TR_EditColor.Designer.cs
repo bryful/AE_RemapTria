@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapTria
 {
-	partial class T_VScrBar
+	partial class TR_EditColor
 	{
 		/// <summary>
 		/// 必要なデザイナー変数です。

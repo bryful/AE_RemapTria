@@ -139,6 +139,10 @@ namespace AE_RemapTria
 			if (v >= (int)T_FrameDisp.Count) v = (int)T_FrameDisp.frame;
 			m_FrameDisp = (T_FrameDisp)v;
 		}
+		public void SetFrameDisp(T_FrameDisp d)
+		{
+			m_FrameDisp = d;
+		}
 
 		// ******************************************************
 		private int m_StartKoma = 1;
