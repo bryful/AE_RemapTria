@@ -41,19 +41,20 @@
 			this.tR_EditColorList1.Back = System.Drawing.Color.Transparent;
 			this.tR_EditColorList1.BackColor = System.Drawing.Color.Transparent;
 			this.tR_EditColorList1.CaptionWidth = 155;
-			this.tR_EditColorList1.DispValue = 200;
+			this.tR_EditColorList1.DispValue = 89;
 			this.tR_EditColorList1.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.tR_EditColorList1.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.tR_EditColorList1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.tR_EditColorList1.FrameWeight = new System.Windows.Forms.Padding(0);
 			this.tR_EditColorList1.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.tR_EditColorList1.Location = new System.Drawing.Point(31, 27);
+			this.tR_EditColorList1.Location = new System.Drawing.Point(31, 25);
 			this.tR_EditColorList1.MyFontIndex = 5;
 			this.tR_EditColorList1.MyFontSize = 5F;
 			this.tR_EditColorList1.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.tR_EditColorList1.Name = "tR_EditColorList1";
-			this.tR_EditColorList1.Size = new System.Drawing.Size(411, 461);
+			this.tR_EditColorList1.Size = new System.Drawing.Size(411, 463);
 			this.tR_EditColorList1.TabIndex = 0;
+			this.tR_EditColorList1.TabStop = false;
 			this.tR_EditColorList1.Text = "tR_EditColorList1";
 			// 
 			// btnOK
@@ -75,7 +76,7 @@
 			this.btnOK.IsDrawFrame = true;
 			this.btnOK.IsMouseDown = false;
 			this.btnOK.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnOK.Location = new System.Drawing.Point(321, 508);
+			this.btnOK.Location = new System.Drawing.Point(342, 508);
 			this.btnOK.MyFontIndex = 5;
 			this.btnOK.MyFontSize = 9F;
 			this.btnOK.MyFontStyle = System.Drawing.FontStyle.Regular;
@@ -103,7 +104,7 @@
 			this.btnCancel.IsDrawFrame = true;
 			this.btnCancel.IsMouseDown = false;
 			this.btnCancel.LineAlignment = System.Drawing.StringAlignment.Center;
-			this.btnCancel.Location = new System.Drawing.Point(215, 508);
+			this.btnCancel.Location = new System.Drawing.Point(236, 508);
 			this.btnCancel.MyFontIndex = 5;
 			this.btnCancel.MyFontSize = 9F;
 			this.btnCancel.MyFontStyle = System.Drawing.FontStyle.Regular;

@@ -16,10 +16,13 @@ namespace AE_RemapTria
 		Selection,
 		Moji,
 		Kagi,
+		KagiBR,
+		KagiBRHi,
 		UnEnabledMoji,
 		UnEnabled,
 		
 		FrameDot,
+		SelectionFrame,
 
 		MenuBack,
 		MenuBackSelected,
@@ -115,14 +118,17 @@ namespace AE_RemapTria
 			ret[(int)COLS.GLineInside] = Color.FromArgb(100, 150, 200);
 			ret[(int)COLS.GLineSame] = Color.FromArgb(60, 110, 160);
 			ret[(int)COLS.GLineHor] = Color.FromArgb(70, 120, 170);
-			ret[(int)COLS.Kagi] = Color.FromArgb(30, 150, 200);
+			ret[(int)COLS.Kagi] = Color.FromArgb(80, 100, 170);
+			ret[(int)COLS.KagiBR] = Color.FromArgb(188, 191, 57);
+			ret[(int)COLS.KagiBRHi] = Color.FromArgb(242, 243, 216);
 
 			ret[(int)COLS.Selection] = Color.FromArgb(70, 70, 140);
 			ret[(int)COLS.Moji] = Color.FromArgb(120, 220, 250);
-			ret[(int)COLS.UnEnabledMoji] = Color.FromArgb(80, 80, 150);
-			ret[(int)COLS.UnEnabled] = Color.FromArgb(20, 20, 50);
+			ret[(int)COLS.UnEnabledMoji] = Color.FromArgb(8, 8, 20);
+			ret[(int)COLS.UnEnabled] = Color.FromArgb(80, 80, 100);
 
 			ret[(int)COLS.FrameDot] = Color.FromArgb(40, 160, 220);
+			ret[(int)COLS.SelectionFrame] = Color.FromArgb(50, 50, 120);
 
 			ret[(int)COLS.MenuBack] = Color.FromArgb(52, 55, 106);
 			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(82, 85, 136);
@@ -221,14 +227,30 @@ namespace AE_RemapTria
 			get { return cols[(int)COLS.Kagi]; }
 			set { cols[(int)COLS.Kagi] = value; OnColorChangedEvent(new EventArgs()); }
 		}
-		
+		//---------------------------------------
+		public Color KagiBR
+		{
+			get { return cols[(int)COLS.KagiBR]; }
+			set { cols[(int)COLS.KagiBR] = value; OnColorChangedEvent(new EventArgs()); }
+		}
+		//---------------------------------------
+		public Color KagiBRHi
+		{
+			get { return cols[(int)COLS.KagiBRHi]; }
+			set { cols[(int)COLS.KagiBRHi] = value; OnColorChangedEvent(new EventArgs()); }
+		}
 		//---------------------------------------
 		public Color Selection
 		{
 			get { return cols[(int)COLS.Selection]; }
 			set { cols[(int)COLS.Selection] = value; OnColorChangedEvent(new EventArgs()); }
 		}
-
+		//---------------------------------------
+		public Color SelectionFrame
+		{
+			get { return cols[(int)COLS.SelectionFrame]; }
+			set { cols[(int)COLS.SelectionFrame] = value; OnColorChangedEvent(new EventArgs()); }
+		}
 		//---------------------------------------
 		public Color Moji
 		{

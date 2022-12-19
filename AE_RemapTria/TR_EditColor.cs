@@ -276,6 +276,9 @@ namespace AE_RemapTria
 				dlg.Color = t;
 				if(dlg.ShowDialog() == DialogResult.OK)
 				{
+					Colors.Set(m_TargetCOLS,dlg.Color);
+					m_form.DrawAll();
+					this.Invalidate();
 
 				}
 				dlg.Dispose();

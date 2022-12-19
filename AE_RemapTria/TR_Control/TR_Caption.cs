@@ -112,7 +112,7 @@ namespace AE_RemapTria
 			}
 			p.Color = m_form.Colors.GLineInSide;
 			DrawVerLine(g, p, 
-				x, 
+				x-1, 
 				m_form.Sizes.CaptionHeight2, 
 				m_form.Sizes.CaptionHeight + m_form.Sizes.CaptionHeight2 - 1);
 			sb.Color = m_form.Colors.Moji;
@@ -126,9 +126,7 @@ namespace AE_RemapTria
 			try
 			{
 				g.Clear(Color.Transparent);
-				//とりあえず塗りつぶし
-				//Fill(g, sb);
-				//T_G.GradBG_Top(g,new Rectangle(0,0,,Width,Height);
+
 				Rectangle r = m_form.Sizes.DispCell;
 				m_form.Alignment = StringAlignment.Center;
 				for (int i = r.Left; i <= r.Right; i++)

@@ -63,6 +63,7 @@ namespace AE_RemapTria
 				m.Location = new Point(0, (i-1) * 25);
 				m.Size = new Size(this.Width - scrl.Width, 25); ;
 				m.TargetCOLS = (COLS)i;
+				m.TabStop = false;
 				m.SetTRDialog(m_dialog);
 				m.ValueChanged += M_ValueChanged;
 				m_Items.Add(m);

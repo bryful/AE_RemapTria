@@ -24,8 +24,8 @@ namespace AE_RemapTria
 		{
 			List<FuncItem> lst = new List<FuncItem>();
 
-			lst.Add(new FuncItem(InputClear, Keys.Delete, "クリア"));
-			lst.Add(new FuncItem(InputBS, Keys.Back, "BS"));
+			lst.Add(new FuncItem(InputClear, Keys.Delete, "削除"));
+			lst.Add(new FuncItem(InputBS, Keys.Back, "前を削除"));
 			lst.Add(new FuncItem(InputEnter, Keys.Enter, Keys.Return, "入力"));
 			lst.Add(new FuncItem(InputEmpty, Keys.Decimal, Keys.OemPeriod, "空セル"));
 			lst.Add(new FuncItem(InputInc, Keys.Add,Keys.Oemplus , "前の数値に1を足して入力"));
@@ -49,7 +49,7 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(FrameEnabledOFF, Keys.Control | Keys.Oem5));
 			lst.Add(new FuncItem(FrameEnabledON, Keys.Control | Keys.Oem7));
 			lst.Add(new FuncItem(HeightMax, Keys.Control | Keys.Oem5, "上下に広げる"));
-			lst.Add(new FuncItem(SheetSettings, Keys.Control | Keys.K, "シート設定"));
+			lst.Add(new FuncItem(SheetSettings, Keys.Control | Keys.K, "シート設定ダイアログ"));
 			lst.Add(new FuncItem(SetSelection1, Keys.F1));
 			lst.Add(new FuncItem(SetSelection2, Keys.F2));
 			lst.Add(new FuncItem(SetSelection3, Keys.F3));
@@ -62,33 +62,34 @@ namespace AE_RemapTria
 			lst.Add(new FuncItem(SetSelection10, Keys.F10));
 			lst.Add(new FuncItem(SetSelection11, Keys.F11));
 			lst.Add(new FuncItem(SetSelection12, Keys.F12));
-			lst.Add(new FuncItem(SelectionAll, Keys.Control | Keys.A));
-			lst.Add(new FuncItem(SelectionToEnd, Keys.Control | Keys.End));
+			lst.Add(new FuncItem(SelectionAll, Keys.Control | Keys.A,"すべて選択"));
+			lst.Add(new FuncItem(SelectionToEnd, Keys.Control | Keys.End,"最後まで選択"));
 			lst.Add(new FuncItem(Undo, Keys.Control|Keys.Z));
 			lst.Add(new FuncItem(Quit, Keys.Control | Keys.Q ,"終了"));
 			lst.Add(new FuncItem(Save, Keys.Control | Keys.S, "保存"));
 			lst.Add(new FuncItem(SaveAs, Keys.Shift | Keys.Control | Keys.S, "別名保存"));
 			lst.Add(new FuncItem(Open, Keys.Control | Keys.O, "読み込み"));
-			lst.Add(new FuncItem(Copy, Keys.Control | Keys.C));
-			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X));
-			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V));
-			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete));
+			lst.Add(new FuncItem(Copy, Keys.Control | Keys.C,"コピー"));
+			lst.Add(new FuncItem(Cut, Keys.Control | Keys.X,"カット"));
+			lst.Add(new FuncItem(Paste, Keys.Control | Keys.V,"ペースト"));
+			lst.Add(new FuncItem(ClearAll, Keys.Control | Keys.Delete,"全て削除"));
 			lst.Add(new FuncItem(CellLeftShift, Keys.Alt | Keys.Left, "セルを左へ"));
 			lst.Add(new FuncItem(CellRightShift, Keys.Alt | Keys.Right, "セルを右へ"));
 			lst.Add(new FuncItem(CellInsert, Keys.Alt | Keys.I,"セル挿入"));
 			lst.Add(new FuncItem(CellRemove, Keys.Alt | Keys.R,"セル削除"));
 			lst.Add(new FuncItem(FrameInsert, Keys.Alt |Keys.Shift| Keys.I,"フレーム挿入"));
 			lst.Add(new FuncItem(FrameRemove, Keys.Alt | Keys.Shift | Keys.R, "フレーム削除"));
-			lst.Add(new FuncItem(SeetInfoDialog, Keys.Control | Keys.K, "シート情報"));
+			lst.Add(new FuncItem(SeetInfoDialog, Keys.Control | Keys.K, "シート情報ダイアログ"));
 			lst.Add(new FuncItem(CaptionDialog, Keys.Control | Keys.E, "キャプション編集"));
-			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレーム"));
+			lst.Add(new FuncItem(OffsetFrameDialog, Keys.Alt | Keys.O, "オフセットフレームダイアログ"));
 			lst.Add(new FuncItem(AutoInputDialog, Keys.Control | Keys.J, "自動入力"));
 			lst.Add(new FuncItem(AboutDialog,  Keys.Control |Keys.F1, "このアプリについて"));
 			lst.Add(new FuncItem(KeyBindDialog, Keys.Control | Keys.L, "キーバインド"));
-			lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF Export"));
-			lst.Add(new FuncItem(ShowCMGrid,  Keys.OemBackslash, "Show M Menu"));
+			lst.Add(new FuncItem(WritePDF, Keys.Control | Keys.P, "PDF書き出し"));
+			lst.Add(new FuncItem(ShowCMGrid,  Keys.OemBackslash, "Show GridMenu"));
+			lst.Add(new FuncItem(ShowCMFrame, Keys.Oem6, "Show FrameMenu"));
 			lst.Add(new FuncItem(FrameRateDialog, Keys.Control | Keys.Y, "Fps変更"));
-			lst.Add(new FuncItem(ColorSettingDialog, Keys.Control | Keys.F12, "色変更"));
+			lst.Add(new FuncItem(ColorSettingDialog, Keys.Control | Keys.F12, "色変更ダイアログ"));
 
 			Funcs.SetFuncItems(lst.ToArray());
 		}
@@ -279,11 +280,22 @@ namespace AE_RemapTria
 		{
 			ContextMenuStrip m = MakeCMGrid();
 
-			int x = Selection.Target * Sizes.CellWidth - Sizes.DispX;
-			int y = Selection.Start * Sizes.CellHeight - Sizes.DispY;
+			int x = Selection.Target * Sizes.CellWidth - Sizes.DispX +Grid.Location.X;
+			int y = Selection.Start * Sizes.CellHeight - Sizes.DispY + Grid.Location.Y -m.Height/2;
 			x += this.Left;
 			y += this.Top;
 			m.Show(new Point(x,y));
+			return true;
+		}
+		public bool ShowCMFrame()
+		{
+			ContextMenuStrip m = MakeCMFrame();
+
+			int x = Frame.Location.X+Sizes.FrameWidth2;
+			int y = Selection.Start * Sizes.CellHeight - Sizes.DispY+Frame.Location.Y - m.Height / 2;
+			x += this.Left;
+			y += this.Top;
+			m.Show(new Point(x, y));
 			return true;
 		}
 		// ************************************************************************************

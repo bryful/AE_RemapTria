@@ -313,7 +313,7 @@ namespace AE_RemapTria
                     sb.Color = m_form.Colors.MenuMojiNoActive;
                 }
 
-                Rectangle r = new Rectangle(24-5, 4, 12, 12);
+                Rectangle r = new Rectangle(24-5, 2, 12, 12);
                 Fill(g, sb, r);
                 ////
                 for (int i = 0; i < m_TopMenuItems.Length; i++)

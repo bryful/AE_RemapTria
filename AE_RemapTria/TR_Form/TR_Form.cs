@@ -427,6 +427,7 @@ namespace AE_RemapTria
 					m_IsMouseBR = false;
 					this.Refresh();
 				}
+				m_IsMouseBR = false;
 			}
 
 			if (Grid.ChkMouseMove(e)) 
@@ -488,10 +489,8 @@ namespace AE_RemapTria
 			{
 
 			}
-			else if (m_mdPos!=MDPos.None)
-			{
-				m_mdPos = MDPos.None;
-			}
+			
+			m_mdPos = MDPos.None;
 			base.OnMouseUp(e);
 		}
 		// ********************************************************************
@@ -590,7 +589,7 @@ namespace AE_RemapTria
 				//int h0 = 23;
 				int h1 = this.Height -20 -3;
 
-				p.Color = Colors.GLineHor;
+				p.Color = Colors.Kagi;
 				p.Width = 3;
 				g.DrawLines(p, Kagi(0));
 				g.DrawLines(p, Kagi(1));
@@ -598,15 +597,15 @@ namespace AE_RemapTria
 
 				if (m_IsMouseBR)
 				{
-					sb.Color = Colors.Kagi;
+					sb.Color = Colors.KagiBR;
 					g.FillPolygon(sb, Kagi(4));
-					p.Color = Colors.GLine;
+					p.Color = Colors.KagiBRHi;
 					g.DrawLines(p, Kagi(2));
 
 				}
 				else
 				{
-					p.Color = Colors.GLine;
+					p.Color = Colors.KagiBR;
 					g.DrawLines(p, Kagi(2));
 				}
 

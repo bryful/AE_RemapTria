@@ -135,7 +135,7 @@ namespace AE_RemapTria
 			//フレームの背景
 			if (isSelected == true)
 			{
-				sb.Color = m_form.Colors.Selection;
+				sb.Color = m_form.Colors.SelectionFrame;
 				Fill(g, sb, rct);
 			}else if (isNoEnabled)
 			{
