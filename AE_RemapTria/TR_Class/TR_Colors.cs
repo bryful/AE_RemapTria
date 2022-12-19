@@ -118,7 +118,7 @@ namespace AE_RemapTria
 			ret[(int)COLS.GLineInside] = Color.FromArgb(100, 150, 200);
 			ret[(int)COLS.GLineSame] = Color.FromArgb(60, 110, 160);
 			ret[(int)COLS.GLineHor] = Color.FromArgb(70, 120, 170);
-			ret[(int)COLS.Kagi] = Color.FromArgb(80, 100, 170);
+			ret[(int)COLS.Kagi] = Color.FromArgb(133, 148, 197);
 			ret[(int)COLS.KagiBR] = Color.FromArgb(188, 191, 57);
 			ret[(int)COLS.KagiBRHi] = Color.FromArgb(242, 243, 216);
 
@@ -128,7 +128,7 @@ namespace AE_RemapTria
 			ret[(int)COLS.UnEnabled] = Color.FromArgb(80, 80, 100);
 
 			ret[(int)COLS.FrameDot] = Color.FromArgb(40, 160, 220);
-			ret[(int)COLS.SelectionFrame] = Color.FromArgb(50, 50, 120);
+			ret[(int)COLS.SelectionFrame] = Color.FromArgb(40, 40, 98);
 
 			ret[(int)COLS.MenuBack] = Color.FromArgb(52, 55, 106);
 			ret[(int)COLS.MenuBackSelected] = Color.FromArgb(82, 85, 136);
