@@ -302,6 +302,9 @@ namespace AE_RemapTria
 						m_navBar.IsFront = b;
 					}
 				}
+				string cp = Path.Combine(pf.FileDirectory, "Colors.json");
+				if(Colors.load(cp)) { }
+
 			}
 			SetLocSize();
 
@@ -317,6 +320,7 @@ namespace AE_RemapTria
 			{
 				PrefFile pf = new PrefFile(this);
 				SaveBackup(Path.Combine(pf.FileDirectory, "backup.ardj.json"));
+				Colors.Save(Path.Combine(pf.FileDirectory, "Colors.json"));
 				string kp = Path.Combine(pf.FileDirectory, KeyBaindName);
 				Funcs.Save(kp);
 				if (m_navBar!=null)
@@ -625,7 +629,9 @@ namespace AE_RemapTria
 				if(IsInputMode)
 				{
 					int x = Grid.Location.X + Selection.Target * Sizes.CellWidth - Sizes.DispX;
-					int y = Grid.Location.Y + Selection.Start * Sizes.CellHeight - Sizes.DispY;
+					int yy = Selection.Start;
+					if(yy<0) yy = 0;
+					int y = Grid.Location.Y + yy * Sizes.CellHeight - Sizes.DispY;
 					Rectangle rr = new Rectangle(x, y+2, Sizes.CellWidth, Sizes.CellHeight-4);
 					sb.Color = Color.FromArgb(5, 5, 10);
 					g.FillRectangle(sb, rr);

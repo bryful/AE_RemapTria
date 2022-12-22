@@ -49,8 +49,30 @@ namespace AE_RemapTria
 		private void btnSave_Click(object sender, EventArgs e)
 		{
 			Colors.CopyToCSharp();
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "*.json|*.json|*.*|*.*";
+			if (dlg.ShowDialog() == DialogResult.OK)
+			{
+				Colors.Save(dlg.FileName);
+			}
 		}
 
-		
+		private void BtnReset_Click(object sender, EventArgs e)
+		{
+			Colors.Reset();
+			Form.DrawAll();
+			tR_EditColorList1.Invalidate();
+		}
+
+		private void BtnLoad_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "*.json|*.json|*.*|*.*";
+			if(dlg.ShowDialog() == DialogResult.OK)
+			{
+				Colors.load(dlg.FileName);
+				Form.DrawAll();
+			}
+		}
 	}
 }

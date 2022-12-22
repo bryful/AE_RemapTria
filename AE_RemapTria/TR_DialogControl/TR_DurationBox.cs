@@ -14,7 +14,19 @@ namespace AE_RemapTria
 
     public class TR_DurationBox : TR_DialogControl
     {
-        private bool m_CanReturnEdit = true;
+		private TR_Label? m_Info = null;
+		[Category("_AE_Remap")]
+		public TR_Label? InfoLabel
+		{
+			get { return m_Info; }
+			set 
+            {
+                m_Info = value;
+                InfoDisp();
+            }
+		}
+
+		private bool m_CanReturnEdit = true;
         [Category("_AE_Remap")]
         public bool CanReturnEdit
         {
@@ -34,7 +46,8 @@ namespace AE_RemapTria
                     EndEdit();
                 }
                 m_ValueStr += $"{v}";
-                this.Invalidate();
+                InfoDisp();
+				this.Invalidate();
             }
         }
         public void AddSec()
@@ -56,7 +69,8 @@ namespace AE_RemapTria
             {
                 m_ValueStr += "+";
             }
-            this.Invalidate();
+			InfoDisp();
+			this.Invalidate();
         }
         public void BS()
         {
@@ -68,7 +82,8 @@ namespace AE_RemapTria
             if (m_ValueStr != "")
             {
                 m_ValueStr = m_ValueStr.Substring(0, m_ValueStr.Length - 1);
-                this.Invalidate();
+				InfoDisp();
+				this.Invalidate();
             }
         }
         public void CLS()
@@ -81,7 +96,8 @@ namespace AE_RemapTria
             if (m_ValueStr != "")
             {
                 m_ValueStr = "";
-                this.Invalidate();
+				InfoDisp();
+				this.Invalidate();
             }
         }
         public int FrameCount
@@ -116,7 +132,8 @@ namespace AE_RemapTria
                 int sec = value / (int)m_Fps;
                 int koma = value % (int)m_Fps;
                 m_ValueStr = $"{sec}+{koma}";
-                this.Invalidate();
+				InfoDisp();
+				this.Invalidate();
             }
         }
         public double Duration
@@ -145,15 +162,7 @@ namespace AE_RemapTria
                 }
             }
         }
-        [Category("_AE_Remap")]
-        public string Info
-        {
-            get
-            {
-
-                return m_ValueStr;
-            }
-        }
+ 
         public TR_DurationBox()
         {
             this.Size = new Size(150, 30);
@@ -288,7 +297,64 @@ namespace AE_RemapTria
             if (m_IsEdit == false) return;
             m_IsEdit = false;
             this.Controls.Remove(m_TextBox);
-        }
+            InfoDisp();
+
+		}
+		private void InfoDisp()
+        {
+			if (m_Info == null) return;
+			int v = StringTo(m_ValueStr);
+            if(v>0)
+            {
+				int sec = v / (int)m_Fps;
+				int koma = v % (int)m_Fps;
+
+				string s = $"{sec}+{koma}:({v})";
+				m_Info.Text = s;
+            }
+            else
+            {
+				m_Info.Text = "";
+			}
+			m_Info.Invalidate();
+
+		}
+
+		private int StringTo(string s)
+        {
+            int ret = -1;
+            if( s=="") return ret;
+			string[] sa = s.Split("+");
+			s = "";
+			int v = 0;
+			if (sa.Length > 0)
+			{
+				if (int.TryParse(sa[0], out v))
+				{
+                    ret = v;
+				}
+				else
+				{
+                    if(sa.Length > 1)
+                    {
+                        ret = 0;
+                    }
+                    else
+                    {
+						return -1;
+					}
+				}
+			}
+			if (sa.Length > 1)
+			{
+                ret *= (int)m_Fps;
+				if (int.TryParse(sa[1], out v))
+				{
+                    ret = ret + v;
+                }
+			}
+            return ret;
+		}
         public bool ChkEdit()
         {
             bool ret = false;
@@ -310,8 +376,15 @@ namespace AE_RemapTria
                 }
                 else
                 {
-                    return ret;
-                }
+                    if(sa.Length> 1)
+                    {
+                        s += "0";
+                    }
+                    else
+                    {
+						return ret;
+					}
+				}
             }
             if (sa.Length > 1)
             {

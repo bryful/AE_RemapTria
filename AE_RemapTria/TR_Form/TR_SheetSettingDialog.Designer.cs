@@ -89,7 +89,7 @@ namespace AE_RemapTria
 			this.lbStatus.Alignment = System.Drawing.StringAlignment.Near;
 			this.lbStatus.Back = System.Drawing.Color.Transparent;
 			this.lbStatus.BackColor = System.Drawing.Color.Transparent;
-			this.lbStatus.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.lbStatus.Font = new System.Drawing.Font("源ノ角ゴシック Code JP R", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(200)))));
 			this.lbStatus.Frame = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
 			this.lbStatus.FrameMargin = new System.Windows.Forms.Padding(0);
@@ -97,7 +97,7 @@ namespace AE_RemapTria
 			this.lbStatus.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.lbStatus.Location = new System.Drawing.Point(79, 122);
 			this.lbStatus.MyFontIndex = 5;
-			this.lbStatus.MyFontSize = 10F;
+			this.lbStatus.MyFontSize = 8F;
 			this.lbStatus.MyFontStyle = System.Drawing.FontStyle.Regular;
 			this.lbStatus.Name = "lbStatus";
 			this.lbStatus.Size = new System.Drawing.Size(187, 16);
@@ -232,6 +232,7 @@ namespace AE_RemapTria
 			this.DurationBox1.FrameCount = 150;
 			this.DurationBox1.FrameMargin = new System.Windows.Forms.Padding(0);
 			this.DurationBox1.FrameWeight = new System.Windows.Forms.Padding(0, 0, 0, 1);
+			this.DurationBox1.InfoLabel = this.lbDuration;
 			this.DurationBox1.LineAlignment = System.Drawing.StringAlignment.Center;
 			this.DurationBox1.Location = new System.Drawing.Point(179, 78);
 			this.DurationBox1.MyFontIndex = 5;

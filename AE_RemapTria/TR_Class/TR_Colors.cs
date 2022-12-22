@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AE_RemapTria
 {
@@ -40,14 +42,60 @@ namespace AE_RemapTria
 		Transparent
 	};
 
+	public class ColorJson
+	{
+		static public JsonObject ToJson(string nm,Color c)
+		{
+			JsonObject ret = new JsonObject();
+			ret.Add("name", nm);
+			ret.Add("a", c.A);
+			ret.Add("r", c.R);
+			ret.Add("g", c.G);
+			ret.Add("b", c.B);
+			return ret;
+		}
+		static public bool FromJson(JsonObject? jo, ref string n,ref Color col)
+		{
+			int? vsub(string key)
+			{
+				int? ret = null;
+				if (jo.ContainsKey(key))
+				{
+					ret = jo[key].GetValue<int?>();
+					if(ret!= null)
+					if (ret < 0) ret = 0; else if (ret > 255) ret = 255;
+				}
+				return ret;
+			}
+
+			if (jo == null) return false;
+			string key = "name";
+			if (jo.ContainsKey(key) == false) return false;
+			string? s = jo[key].GetValue<string?>();
+			if (s == null) return false;
+			int? a = vsub("a");
+			if (a == null) a = 255;
+			int? r = vsub("r");
+			if (r == null) return false;
+			int? g = vsub("g");
+			if (g == null) return false;
+			int? b = vsub("b");
+			if (b == null) return false;
+
+			col = Color.FromArgb((int)a, (int)r, (int)g, (int)b);
+			n = s;
+			return true;
+		}
+	}
+
 	public class TR_Colors
 	{
-		public bool _eventFlag=true;
+		public bool _eventFlag = true;
 		public event EventHandler? ColorChangedEvent;
 
 		static public string? COLSName(COLS c)
 		{
-			return Enum.GetName(typeof(COLS),c);
+			return Enum.GetName(typeof(COLS), c);
 		}
 		static public string[] COLSNames()
 		{
@@ -59,7 +107,12 @@ namespace AE_RemapTria
 		// *****************************************************************************
 		public TR_Colors()
 		{
-			cols= InitColors();
+			cols = InitColors();
+		}
+		// *****************************************************************************
+		public void Reset()
+		{
+			cols = InitColors();
 		}
 		// *****************************************************************************
 		public string ToCSharp()
@@ -67,7 +120,7 @@ namespace AE_RemapTria
 			string ret = "";
 			for (int i = 0; i < (int)COLS.Transparent; i++)
 			{
-				if (cols[i].A==255)
+				if (cols[i].A == 255)
 				{
 					ret += $"ret[(int)COLS.{COLSName((COLS)i)}] = Color.FromArgb({cols[i].R},{cols[i].G},{cols[i].B});\r\n";
 
@@ -79,12 +132,110 @@ namespace AE_RemapTria
 			}
 			return ret;
 		}
+		// *****************************************************************************
 		public void CopyToCSharp()
 		{
 			Clipboard.SetText(ToCSharp());
 		}
 		// *****************************************************************************
-			public void Push()
+		public JsonArray ToJson()
+		{
+			JsonArray ja = new JsonArray();
+			if (cols.Length > 1)
+			{
+				for (int i = (int)COLS.Base; i < (int)COLS.Transparent; i++)
+				{
+					string? s = COLSName((COLS)i);
+					if (s != null)
+					{
+						ja.Add(ColorJson.ToJson(s, cols[i]));
+
+					}
+				}
+			}
+			return ja;
+		}
+		// *****************************************************************************
+		public void FromJson(JsonArray? ja)
+		{
+			int IndexOF(string[] ary, string s)
+			{
+				int ret = -1;
+				for (int i = 0; i < ary.Length; i++)
+				{
+					if (ary[i] == s)
+					{
+						ret = i;
+						break;
+					}
+				}
+				return ret;
+			}
+			if (ja == null) return;
+			if (ja.Count == 0) return;
+			string[] names = Enum.GetNames(typeof(COLS));
+			foreach (var o in ja)
+			{
+				if (o is not JsonObject) continue;
+				Color c=Color.Transparent;
+				string s="";
+				if (ColorJson.FromJson((JsonObject)o, ref s, ref c))
+				{
+					int idx = IndexOF(names, s);
+					if (idx >= 0)
+					{
+						cols[idx] = c;
+					}
+				}
+			}
+		}
+		// *****************************************************************************
+		public bool Save(string p)
+		{
+			try {
+				JsonObject jo = new JsonObject();
+				jo.Add("Colors", ToJson());
+				string js	= jo.ToJsonString();
+				if (File.Exists(p)) { File.Delete(p); } 
+				File.WriteAllText(p, js);
+				return File.Exists(p);
+			}
+			catch
+			{ 
+				return false;
+			}
+		}
+		// *****************************************************************************
+		public bool load(string p)
+		{
+			bool ret = false;
+			try
+			{
+				if (File.Exists(p)==false) return ret;
+				string js = File.ReadAllText(p);
+				var doc = JsonNode.Parse(js);
+				if (doc != null)
+				{
+					JsonObject jo = (JsonObject)doc;
+					if(jo.ContainsKey("Colors"))
+					{
+						JsonArray? ary = jo["Colors"].AsArray();
+						if(ary != null)
+						{
+							FromJson(ary);
+							ret = true;
+						}
+					}
+				}
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		// *****************************************************************************
+		public void Push()
 		{
 			for(int i=0;i<(int)COLS.Transparent;i++)
 			{
