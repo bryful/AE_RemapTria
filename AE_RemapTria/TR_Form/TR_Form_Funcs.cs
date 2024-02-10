@@ -947,7 +947,7 @@ namespace AE_RemapTria
 			if (IsMultExecute) return false;
 			string d = T_Def.GetDir(p);
 			string n = T_Def.GetNameNoExt(p);
-			p = Path.Combine(d, n+".ardj.josn");
+			p = Path.Combine(d, n+".ardj.json");
 			CellData.SheetName = T_Def.GetNameNoExt(p);
 			bool ret = CellData.Save(p);
 			if (ret)
